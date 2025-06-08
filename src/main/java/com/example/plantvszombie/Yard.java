@@ -25,7 +25,7 @@ public class Yard {
                 Rectangle rectangle = new Rectangle(80,100);
                 rectangle.setFill(null);
                 rectangle.setStroke(Color.BLACK);
-                rectangle.setStrokeWidth(1);
+                rectangle.setStrokeWidth(0.5);
                 gridPane.add(rectangle,j,i);
             }
         }
