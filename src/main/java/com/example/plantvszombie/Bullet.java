@@ -42,10 +42,13 @@ public class Bullet {
             public void handle(long now) {
                 double gridX = 245.0; // Left anchor of grid
                 double gridY = 60.0;
-                double currentX = imageBullet.getTranslateX() + xPlant;
-                double currentY = imageBullet.getTranslateY() + yPlant;
-               x = (int)(currentX - ((80 - 70)/2)  - gridX / 80);
-               y = (int)(currentY - ((100-90)/2) - gridY / 100);
+                double currentX = imageBullet.getLayoutX() + imageBullet.getTranslateX();
+                double currentY = imageBullet.getLayoutY() + imageBullet.getTranslateY();
+                double cellWidth = 80;
+                double cellHeight = 100;
+
+                int x = (int) ((currentX - gridX) / cellWidth);
+                int y= (int) ((currentY - gridY) / cellHeight);
 
 
                 System.out.println("Bullet Position: X=" + x + ", Y=" + y);
