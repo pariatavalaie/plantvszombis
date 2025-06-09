@@ -137,7 +137,7 @@ import java.util.ArrayList;
             Sunflower.canplace=false;
            SunflowerB.setDisable(true); // غیرفعال کردن دکمه
             SunflowerB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
-            Sunflower.cooldown(SunflowerB);
+            S.cooldown(SunflowerB);
             planets.add(S);
             plantImage=S.image;
               S.act(yardPane);
