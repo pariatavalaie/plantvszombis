@@ -8,6 +8,7 @@ public abstract class Planet {
     int row;
     int col;
     Image image;
+   static boolean canplace=true;
     abstract  void act(Pane root);
 
 }
