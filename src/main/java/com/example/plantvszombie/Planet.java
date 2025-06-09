@@ -9,5 +9,4 @@ public abstract class Planet {
     int col;
     Image image;
     abstract  void act(Pane root);
-
 }
