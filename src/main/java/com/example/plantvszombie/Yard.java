@@ -43,6 +43,9 @@ import java.util.ArrayList;
             selected[0]="sunflower";
             System.out.println(selected[0]);
         });
+        peashooterB.setOnAction(event -> {
+            selected[0]="peashooter";
+        });
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 Rectangle rectangle = new Rectangle(GRID_X, GRID_Y);
@@ -59,6 +62,10 @@ import java.util.ArrayList;
                         placeplanet("sunflower",col,row);
                         selected[0] = null;
 
+                    }else if ("peashooter".equals(selected[0])) {
+                        System.out.println(row);
+                        placeplanet("peashooter",col,row);
+                        selected[0] = null;
                     }
                 });
             }
@@ -142,8 +149,17 @@ import java.util.ArrayList;
             plantImage=S.image;
               S.act(yardPane);
             Sun.collectedpoint-=50;
-
-
+        }
+        if(planet.equals("peashooter")&&Peashooter.canplace&&Sun.collectedpoint>=50){
+            Peashooter P=new Peashooter(col,row);
+            Peashooter.canplace=false;
+            peashooterB.setDisable(true); // غیرفعال کردن دکمه
+            peashooterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
+            planets.add(P);
+            P.cooldown(peashooterB);
+            plantImage=P.image;
+            P.act(yardPane);
+            Sun.collectedpoint-=100;
         }
         ImageView plantView = new ImageView(plantImage);
         plantView.setFitWidth(70);
