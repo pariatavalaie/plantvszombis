@@ -10,20 +10,15 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public class Bullet {
-    enum type {
-        ICY, NORMAL;
-    }
-    private double x;
-    private double y;
+    private int x;
+    private int y;
     private double speed;
-    private type typeBullet;
     private ImageView imageBullet;
 
-    public Bullet(double x, double y, double speed, type type) {
+    public Bullet(int x, int y, double speed) {
         this.x = x;
         this.y = y;
         this.speed = speed;
-        this.typeBullet = type;
     }
 
     public void shoot(Pane pane, double xPlanet, double xZombie, String type) {

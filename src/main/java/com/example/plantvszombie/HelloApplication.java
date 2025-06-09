@@ -13,8 +13,6 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         Yard yard = new Yard();
         Sun.fall(yard.yardPane);
-        Bullet b = new Bullet(100,200,3, Bullet.type.NORMAL);
-        b.shoot(yard.yardPane,300,700,"ICY");
         System.out.println(Sun.collectedpoint);
         Scene scene=new Scene(yard.yardPane,1024,626);
         stage.setScene(scene);
