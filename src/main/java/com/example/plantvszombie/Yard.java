@@ -1,4 +1,4 @@
-  package com.example.plantvszombie;
+package com.example.plantvszombie;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -13,7 +13,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
-  public class Yard {
+public class Yard {
     AnchorPane yardPane;
     GridPane gridPane;
     final double GRID_X=80;
@@ -43,6 +43,15 @@ import java.util.ArrayList;
             selected[0]="sunflower";
             System.out.println(selected[0]);
         });
+        peashooterB.setOnAction(event -> {
+            selected[0]="peashooter";
+        });
+        reapeaterB.setOnAction(event -> {
+            selected[0]="reapeater";
+        });
+        SnowpeaB.setOnAction(event -> {
+            selected[0]="snowpea";
+        });
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 Rectangle rectangle = new Rectangle(GRID_X, GRID_Y);
@@ -59,6 +68,18 @@ import java.util.ArrayList;
                         placeplanet("sunflower",col,row);
                         selected[0] = null;
 
+                    }else if ("peashooter".equals(selected[0])) {
+                        System.out.println(row);
+                        placeplanet("peashooter",col,row);
+                        selected[0] = null;
+                    }else if ("reapeater".equals(selected[0])) {
+                        System.out.println(row);
+                        placeplanet("reapeater",col,row);
+                        selected[0] = null;
+                    }else if ("snowpea".equals(selected[0])) {
+                        System.out.println(row);
+                        placeplanet("snowpea",col,row);
+                        selected[0] = null;
                     }
                 });
             }
@@ -135,15 +156,46 @@ import java.util.ArrayList;
         if (planet.equals("sunflower")&&Sunflower.canplace&&Sun.collectedpoint>=50){
             Sunflower S=new Sunflower(col,row,yardPane);
             Sunflower.canplace=false;
-           SunflowerB.setDisable(true); // غیرفعال کردن دکمه
+            SunflowerB.setDisable(true); // غیرفعال کردن دکمه
             SunflowerB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
             S.cooldown(SunflowerB);
             planets.add(S);
             plantImage=S.image;
-              S.act(yardPane);
+            S.act(yardPane);
             Sun.collectedpoint-=50;
-
-
+        } else if(planet.equals("peashooter")&&Peashooter.canplace&&Sun.collectedpoint>=50){
+            Peashooter P=new Peashooter(col,row);
+            Peashooter.canplace=false;
+            peashooterB.setDisable(true); // غیرفعال کردن دکمه
+            peashooterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
+            planets.add(P);
+            P.cooldown(peashooterB);
+            plantImage=P.image;
+            P.act(yardPane);
+            Sun.collectedpoint-=100;
+        }else if(planet.equals("reapeater")&&Repeater.canplace&&Sun.collectedpoint>=50){
+            System.out.println("repeater");
+            Repeater R=new Repeater(col,row);
+            Repeater.canplace=false;
+            reapeaterB.setDisable(true);
+            reapeaterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            planets.add(R);
+            R.cooldown(reapeaterB);
+            plantImage=R.image;
+            R.act(yardPane);
+            Sun.collectedpoint-=50;
+        }
+        else if(planet.equals("snowpea")&&SnowPea.canplace&&Sun.collectedpoint>=50){
+            SnowPea S=new SnowPea(col,row);
+            SnowPea.canplace=false;
+            SnowpeaB.setDisable(true);
+            SnowpeaB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            planets.add(S);
+            plantImage=S.image;
+            S.cooldown(SnowpeaB);
+            planets.add(S);
+            S.act(yardPane);
+            Sun.collectedpoint-=50;
         }
         ImageView plantView = new ImageView(plantImage);
         plantView.setFitWidth(70);
@@ -163,17 +215,7 @@ import java.util.ArrayList;
 
         yardPane.getChildren().add(plantView);
     }
-    static void updatebutton(Button button,int x){
-        if(Sun.collectedpoint>=50){
-            button.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            button.setDisable(false);
-        }
-        else {
 
-            button.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
-            button.setDisable(true);
-        }
-    }
 
 
 }
