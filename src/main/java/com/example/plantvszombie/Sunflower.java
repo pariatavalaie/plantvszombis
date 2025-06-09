@@ -1,7 +1,9 @@
 package com.example.plantvszombie;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -9,11 +11,10 @@ import javafx.util.Duration;
 public class Sunflower extends Planet{
     public Sunflower(int x, int y,Pane root) {
         cost=50;
-        watingtime=10;
+        watingtime=5;
         row=y;
         col=x;
         image=new Image(getClass().getResource("/sunflower.gif").toExternalForm());
-
 
     }
 
@@ -37,5 +38,15 @@ public class Sunflower extends Planet{
 
 
 
+    }
+    static void cooldown(Button b){
+        PauseTransition cooldown = new PauseTransition(Duration.seconds(5));
+        cooldown.setOnFinished(ev -> {
+            canplace= true;
+            b.setDisable(false);
+            b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            System.out.println("✅ You can place another Sunflower now");
+        });
+        cooldown.play();
     }
 }
