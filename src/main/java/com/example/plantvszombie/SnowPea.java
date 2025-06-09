@@ -12,7 +12,7 @@ public class SnowPea extends Planet{
         this.col = x;
         this.cost = 175;
         this.watingtime = 8;
-        this.image = new Image(getClass().getResource("/repeater.gif").toExternalForm());
+        this.image = new Image(getClass().getResource("/SnowPea.gif").toExternalForm());
     }
 
     @Override
@@ -27,9 +27,9 @@ public class SnowPea extends Planet{
         double y = gridY + row * 100 + (100 - 90) / 2;
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             Bullet repeater1 = new Bullet(row, col, 3);
-            Bullet repeater2 = new Bullet(row, col, 4);
+
             repeater1.shoot(root, x + 60, 800, "ICY", y);
-            repeater2.shoot(root, x + 60, 800, "ICY", y);
+
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
