@@ -9,12 +9,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public class Sunflower extends Planet{
     public Sunflower(int x, int y,Pane root) {
         cost=50;
         watingtime=5;
         row=y;
         col=x;
+        bullets = new ArrayList<Bullet>();
         image=new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm()));
 
     }

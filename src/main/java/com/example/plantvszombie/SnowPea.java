@@ -7,14 +7,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public class SnowPea extends Planet{
     public SnowPea(int x , int y) {
         this.row = y;
         this.col = x;
         this.cost = 175;
         this.watingtime = 8;
+       bullets = new ArrayList<Bullet>();
         this.image =new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm()));
     }
+
 
     @Override
     void act(Pane root) {
@@ -28,7 +32,7 @@ public class SnowPea extends Planet{
         double y = gridY + row * 100 + (100 - 90) / 2;
        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             Bullet repeater1 = new Bullet(row, col, 3);
-
+            bullets.add(repeater1);
             repeater1.shoot(root, x + 60, 800, "ICY", y);
 
         }));

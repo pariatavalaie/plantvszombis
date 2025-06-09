@@ -1,5 +1,6 @@
 package com.example.plantvszombie;
 
+import javafx.animation.Timeline;
 import javafx.scene.PointLight;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,6 +13,7 @@ public abstract class Zombies {
     int hp;
     int speed;
     ImageView image;
+    Timeline walker;
     abstract void act(Pane root);
     abstract void move(Pane root);
     public ArrayList<Bullet> bullet = new ArrayList();

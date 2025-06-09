@@ -31,6 +31,8 @@ public class Repeater extends Planet {
             Bullet repeater2 = new Bullet(row, col, 4);
             repeater1.shoot(root, x + 60, 800, "NORMAL", y);
             repeater2.shoot(root, x + 60, 800, "NORMAL", y);
+            bullets.add(repeater1);
+            bullets.add(repeater2);
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();

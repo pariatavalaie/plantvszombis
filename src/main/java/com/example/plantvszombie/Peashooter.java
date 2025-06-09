@@ -7,12 +7,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public class Peashooter extends Planet{
     public Peashooter(int x, int y) {
         this.row = y;
         this.col = x;
         this.cost = 100;
         this.watingtime = 6;
+        bullets = new ArrayList<Bullet>();
         this.image = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
     }
 
@@ -28,6 +31,7 @@ public class Peashooter extends Planet{
         double y = gridY + row * 100+ (100 - 90) / 2;
           Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1),event ->{
               Bullet peashooter = new Bullet(row,col,3);
+              bullets.add(peashooter);
               peashooter.shoot(root,x+60,800,"NORMAL",y);
           } ));
           timeline.setCycleCount(Timeline.INDEFINITE);
