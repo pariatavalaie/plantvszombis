@@ -21,7 +21,7 @@ public class Bullet {
         this.speed = speed;
     }
 
-    public void shoot(Pane pane, double xPlanet, double xZombie, String type) {
+    public void shoot(Pane pane, double xPlanet, double xZombie, String type,double y) {
         Image bullet = null;
         if (type.equals("ICY")) {
             bullet = new Image(getClass().getResource("/snow bullet.png").toExternalForm());
@@ -35,8 +35,8 @@ public class Bullet {
         TranslateTransition move = new TranslateTransition(Duration.seconds(this.speed), imageBullet);
         move.setFromX(xPlanet);
         move.setToX(xZombie);
-        move.setFromY(this.y);
-        move.setToY(this.y);
+        move.setFromY(y);
+        move.setToY(y);
         move.setOnFinished(e -> {
             pane.getChildren().remove(imageBullet);
         });

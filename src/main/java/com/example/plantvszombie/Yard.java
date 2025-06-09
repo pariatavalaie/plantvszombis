@@ -125,15 +125,7 @@ import java.util.ArrayList;
         view8.setFitHeight(64);
         view8.setFitWidth(105);
         SunflowerB.setGraphic(view8);
-        if(Sun.collectedpoint>=50){
-            SunflowerB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            SunflowerB.setDisable(false);
-        }
-        else {
-
-            SunflowerB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
-            SunflowerB.setDisable(true);
-        }
+        SunflowerB.setStyle("-fx-background-color: #fff");
         vbox.getChildren().add(SunflowerB);
         yardPane.getChildren().add(vbox);
     }
@@ -143,13 +135,14 @@ import java.util.ArrayList;
         if (planet.equals("sunflower")&&Sunflower.canplace&&Sun.collectedpoint>=50){
             Sunflower S=new Sunflower(col,row,yardPane);
             Sunflower.canplace=false;
-            SunflowerB.setDisable(true); // غیرفعال کردن دکمه
+           SunflowerB.setDisable(true); // غیرفعال کردن دکمه
             SunflowerB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
             Sunflower.cooldown(SunflowerB);
             planets.add(S);
             plantImage=S.image;
-            S.act(yardPane);
+              S.act(yardPane);
             Sun.collectedpoint-=50;
+
 
         }
         ImageView plantView = new ImageView(plantImage);
