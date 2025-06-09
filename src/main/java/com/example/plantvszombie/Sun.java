@@ -1,6 +1,8 @@
 package com.example.plantvszombie;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,7 +17,7 @@ public class Sun {
         collected = false;
     }
 
-    private   void fallingSun(Pane root, double startX, double endY) {
+    public void fallingSun(Pane root, double startX, double endY) {
         Image sun = new Image(getClass().getResource("/sun.png").toExternalForm());
         sunImage = new ImageView(sun);
         sunImage.setFitWidth(60);
@@ -38,6 +40,7 @@ public class Sun {
                 root.getChildren().remove(sunImage);
                 System.out.println("Sun collected!");
                 collectedpoint=collectedpoint+25;
+                System.out.println("collectedpoint: "+collectedpoint);
 
             }
         });
@@ -50,6 +53,14 @@ public class Sun {
             }
         });
         delay.play();
+    }
+     static void fall(Pane root) {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
+            double randomX = 245 + Math.random() * (9 * 80); // روی زمین
+            new Sun().fallingSun (root, randomX, 400); // y = 400 یعنی تا پایین زمین
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE); // بی‌نهایت اجرا بشه
+        timeline.play();
     }
 }
 
