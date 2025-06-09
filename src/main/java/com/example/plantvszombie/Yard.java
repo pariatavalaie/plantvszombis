@@ -11,7 +11,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
-public class Yard {
+import java.util.ArrayList;
+
+  public class Yard {
     AnchorPane yardPane;
     GridPane gridPane;
     final double GRID_X=80;
@@ -24,6 +26,7 @@ public class Yard {
     Button cherrybombB=new Button();
     Button JalapenoB=new Button();
     Button SunflowerB=new Button();
+    ArrayList<Planet>planets=new ArrayList<>();
 
     Yard() {
         Image yar = new Image(getClass().getResourceAsStream("Frontyard.png"));
@@ -131,8 +134,9 @@ public class Yard {
         Image plantImage=null;
         if (planet.equals("sunflower")){
             Sunflower S=new Sunflower(col,row,yardPane);
-           plantImage=new Image(getClass().getResource("/sunflower.gif").toExternalForm());
-           S.act(yardPane);
+            planets.add(S);
+            plantImage=S.image;
+            S.act(yardPane);
         }
         ImageView plantView = new ImageView(plantImage);
         plantView.setFitWidth(70);

@@ -12,6 +12,7 @@ public class Sunflower extends Planet{
         watingtime=10;
         row=y;
         col=x;
+        image=new Image(getClass().getResource("/sunflower.gif").toExternalForm());
 
 
     }
