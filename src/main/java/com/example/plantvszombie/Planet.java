@@ -1,4 +1,10 @@
 package com.example.plantvszombie;
 
-public class Planet {
+public abstract class Planet {
+    int cost;
+    int watingtime;
+    int x;
+    int y;
+    abstract  void act();
+
 }
