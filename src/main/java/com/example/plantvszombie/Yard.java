@@ -1,4 +1,4 @@
-package com.example.plantvszombie;
+ package com.example.plantvszombie;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -35,13 +35,29 @@ public class Yard {
 
     public void PaintGrid(int x, int y) {
         gridPane = new GridPane();
+        final String []selected ={""};
+        SunflowerB.setOnAction(event -> {
+            selected[0]="sunflower";
+            System.out.println(selected[0]);
+        });
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 Rectangle rectangle = new Rectangle(GRID_X, GRID_Y);
-                rectangle.setFill(null);
+                rectangle.setFill(Color.TRANSPARENT);
                 rectangle.setStroke(Color.BLACK);
                 rectangle.setStrokeWidth(0.5);
+                int row = i;
+                int col = j;
                 gridPane.add(rectangle, j, i);
+                rectangle.setOnMouseClicked(event -> {
+                    System.out.println("H");
+                    if ("sunflower".equals(selected[0])) {
+                        System.out.println(row);
+                        placeplanet("sunflower",col,row);
+                        selected[0] = null;
+
+                    }
+                });
             }
         }
         yardPane.getChildren().add(gridPane);
@@ -111,5 +127,32 @@ public class Yard {
         yardPane.getChildren().add(vbox);
     }
 
+    public void placeplanet(String planet,int col,int row){
+        Image plantImage=null;
+        if (planet.equals("sunflower")){
+           plantImage= new Image(getClass().getResource("/sunflower.gif").toExternalForm());
+        }
+        ImageView plantView = new ImageView(plantImage);
+        plantView.setFitWidth(GRID_X);
+        plantView.setFitHeight(GRID_Y);
+
+        double gridX = 245.0; // Left anchor of grid
+        double gridY = 60.0;  // Top anchor of grid
+
+        double cellWidth = 80.0;
+        double cellHeight = 100.0;
+
+        double x = gridX + col * GRID_X + (GRID_X - 70) / 2;
+        double y = gridY + row * GRID_Y + (GRID_Y - 90) / 2;
+
+        plantView.setLayoutX(x);
+        plantView.setLayoutY(y);
+
+        yardPane.getChildren().add(plantView);
+    }
 
 }
+
+
+
+
