@@ -3,6 +3,7 @@ package com.example.plantvszombie;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
@@ -12,7 +13,7 @@ public class SnowPea extends Planet{
         this.col = x;
         this.cost = 175;
         this.watingtime = 8;
-        this.image = new Image(getClass().getResource("/SnowPea.gif").toExternalForm());
+        this.image =new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm()));
     }
 
     @Override
