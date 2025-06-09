@@ -12,7 +12,7 @@ public abstract class Planet {
     int col;
     Image image;
    static boolean canplace=true;
-    abstract void act(Pane root);
+   abstract void act(Pane root);
 
     public void cooldown( Button b){
             PauseTransition cooldown = new PauseTransition(Duration.seconds(watingtime));
