@@ -130,7 +130,9 @@ public class Yard {
     public void placeplanet(String planet,int col,int row){
         Image plantImage=null;
         if (planet.equals("sunflower")){
-           plantImage= new Image(getClass().getResource("/sunflower.gif").toExternalForm());
+            Sunflower S=new Sunflower(col,row,yardPane);
+           plantImage=new Image(getClass().getResource("/sunflower.gif").toExternalForm());
+           S.act(yardPane);
         }
         ImageView plantView = new ImageView(plantImage);
         plantView.setFitWidth(70);

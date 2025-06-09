@@ -1,10 +1,13 @@
 package com.example.plantvszombie;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 
 public abstract class Planet {
     int cost;
     int watingtime;
-    int x;
-    int y;
-    abstract  void act();
+    int row;
+    int col;
+    Image image;
+    abstract  void act(Pane root);
 
 }

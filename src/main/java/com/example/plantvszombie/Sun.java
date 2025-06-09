@@ -15,13 +15,13 @@ public class Sun {
     private boolean collected ;
     public Sun() {
         collected = false;
-    }
-
-    public void fallingSun(Pane root, double startX, double endY) {
         Image sun = new Image(getClass().getResource("/sun.png").toExternalForm());
         sunImage = new ImageView(sun);
         sunImage.setFitWidth(60);
         sunImage.setFitHeight(60);
+    }
+
+    public void fallingSun(Pane root, double startX, double endY) {
         sunImage.setLayoutX(startX);
         sunImage.setLayoutY(0);
         root.getChildren().add(sunImage);
@@ -46,7 +46,7 @@ public class Sun {
         });
     }
     private void startLifespanTimer(Pane root) {
-        PauseTransition delay = new PauseTransition(Duration.seconds(10));
+        PauseTransition delay = new PauseTransition(Duration.seconds(5));
         delay.setOnFinished(e -> {
             if (!collected) {
                 root.getChildren().remove(sunImage);
@@ -62,5 +62,26 @@ public class Sun {
         timeline.setCycleCount(Timeline.INDEFINITE); // بی‌نهایت اجرا بشه
         timeline.play();
     }
+
+    public void sunflower(Pane root,double x,double y){
+        sunImage.setLayoutX(x);
+        sunImage.setLayoutY(y);
+        root.getChildren().add(sunImage);
+        sunImage.setOnMouseClicked(e -> {
+            if (!collected) {
+                collected = true;
+                root.getChildren().remove(sunImage);
+                System.out.println("Sun collected!");
+                collectedpoint=collectedpoint+25;
+                System.out.println("collectedpoint: "+collectedpoint);
+
+            }
+        });
+        startLifespanTimer(root);
+
+
+
+    }
+
 }
 
