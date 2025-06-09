@@ -1,4 +1,4 @@
- package com.example.plantvszombie;
+  package com.example.plantvszombie;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -133,8 +133,8 @@ public class Yard {
            plantImage= new Image(getClass().getResource("/sunflower.gif").toExternalForm());
         }
         ImageView plantView = new ImageView(plantImage);
-        plantView.setFitWidth(GRID_X);
-        plantView.setFitHeight(GRID_Y);
+        plantView.setFitWidth(70);
+        plantView.setFitHeight(70);
 
         double gridX = 245.0; // Left anchor of grid
         double gridY = 60.0;  // Top anchor of grid
