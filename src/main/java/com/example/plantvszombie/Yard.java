@@ -152,7 +152,7 @@ public class Yard {
     }
 
     public void placeplanet(String planet,int col,int row){
-        Image plantImage=null;
+        ImageView plantView = null;
         if (planet.equals("sunflower")&&Sunflower.canplace&&Sun.collectedpoint>=50){
             Sunflower S=new Sunflower(col,row,yardPane);
             Sunflower.canplace=false;
@@ -160,7 +160,7 @@ public class Yard {
             SunflowerB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
             S.cooldown(SunflowerB);
             planets.add(S);
-            plantImage=S.image;
+            plantView=S.image;
             S.act(yardPane);
             Sun.collectedpoint-=50;
         } else if(planet.equals("peashooter")&&Peashooter.canplace&&Sun.collectedpoint>=50){
@@ -170,7 +170,7 @@ public class Yard {
             peashooterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
             planets.add(P);
             P.cooldown(peashooterB);
-            plantImage=P.image;
+            plantView=P.image;
             P.act(yardPane);
             Sun.collectedpoint-=100;
         }else if(planet.equals("reapeater")&&Repeater.canplace&&Sun.collectedpoint>=50){
@@ -181,7 +181,7 @@ public class Yard {
             reapeaterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             planets.add(R);
             R.cooldown(reapeaterB);
-            plantImage=R.image;
+            plantView=R.image;
             R.act(yardPane);
             Sun.collectedpoint-=50;
         }
@@ -191,13 +191,13 @@ public class Yard {
             SnowpeaB.setDisable(true);
             SnowpeaB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             planets.add(S);
-            plantImage=S.image;
+            plantView=S.image;
             S.cooldown(SnowpeaB);
             planets.add(S);
             S.act(yardPane);
             Sun.collectedpoint-=50;
         }
-        ImageView plantView = new ImageView(plantImage);
+
         plantView.setFitWidth(70);
         plantView.setFitHeight(70);
 

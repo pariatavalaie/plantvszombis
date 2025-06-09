@@ -3,6 +3,7 @@ package com.example.plantvszombie;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
@@ -12,7 +13,7 @@ public class SnowPea extends Planet{
         this.col = x;
         this.cost = 175;
         this.watingtime = 8;
-        this.image = new Image(getClass().getResource("/SnowPea.gif").toExternalForm());
+        this.image =new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm()));
     }
 
     @Override
@@ -25,14 +26,14 @@ public class SnowPea extends Planet{
 
         double x = gridX + col * 80 + (80 - 70) / 2;
         double y = gridY + row * 100 + (100 - 90) / 2;
-        //Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+       Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             Bullet repeater1 = new Bullet(row, col, 3);
 
             repeater1.shoot(root, x + 60, 800, "ICY", y);
 
-        //}));
-        //timeline.setCycleCount(Timeline.INDEFINITE);
-        //timeline.play();
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
 
 
     }

@@ -3,6 +3,7 @@ package com.example.plantvszombie;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
@@ -12,7 +13,7 @@ public class Peashooter extends Planet{
         this.col = x;
         this.cost = 100;
         this.watingtime = 6;
-        this.image = new Image(getClass().getResource("/peashooter.gif").toExternalForm());
+        this.image = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
     }
 
     @Override

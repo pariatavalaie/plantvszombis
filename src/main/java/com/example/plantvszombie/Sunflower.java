@@ -5,6 +5,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
@@ -14,7 +15,7 @@ public class Sunflower extends Planet{
         watingtime=5;
         row=y;
         col=x;
-        image=new Image(getClass().getResource("/sunflower.gif").toExternalForm());
+        image=new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm()));
 
     }
 
