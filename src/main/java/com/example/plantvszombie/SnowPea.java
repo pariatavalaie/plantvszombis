@@ -25,14 +25,14 @@ public class SnowPea extends Planet{
 
         double x = gridX + col * 80 + (80 - 70) / 2;
         double y = gridY + row * 100 + (100 - 90) / 2;
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+        //Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             Bullet repeater1 = new Bullet(row, col, 3);
 
             repeater1.shoot(root, x + 60, 800, "ICY", y);
 
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+        //}));
+        //timeline.setCycleCount(Timeline.INDEFINITE);
+        //timeline.play();
 
 
     }

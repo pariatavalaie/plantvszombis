@@ -26,8 +26,8 @@ public class Sunflower extends Planet{
         double cellWidth = 80.0;
         double cellHeight = 100.0;
 
-        double x = gridX + col * 80 + (80 - 70) / 2;
-        double y = gridY + row * 100+ (100 - 90) / 2;
+        double x = gridX + col * cellWidth + (cellWidth - 70) / 2;
+        double y = gridY + row * cellHeight+ (cellHeight - 90) / 2;
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10),event ->{
             Sun Sun=new Sun();
