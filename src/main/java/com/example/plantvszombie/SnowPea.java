@@ -51,11 +51,8 @@ public class SnowPea extends Planet{
 
             if (shouldShoot&&!dead) {
                 Bullet repeater1 = new Bullet(row, col, 3);
-                Bullet repeater2 = new Bullet(row, col, 4);
-                repeater1.shoot(root, x + 60,XZ[0], "NORMAL", y);
-                repeater2.shoot(root, x + 60,XZ[0], "NORMAL", y);
+                repeater1.shoot(root, x + 60,XZ[0], "ICY", y);
                 bullets.add(repeater1);
-                bullets.add(repeater2);
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
