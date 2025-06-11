@@ -30,7 +30,12 @@ public class HelloApplication extends Application {
         stage.show();
 
         menu.Play.setOnAction(e -> {
-            play();
+            System.out.println(menu.countPlant);
+            if(menu.countPlant == 6){
+                play();
+            }else{
+                System.out.println("You have to choose 6 planets");
+            }
         });
     }
 

@@ -21,6 +21,7 @@ public class Menu {
             "Snow Pea", "Repeater", "Tall-nut", "jalapeno"};
     private boolean[] plantSelected;
     public Button Play;
+    public int countPlant = 0;
 
     Menu() {
         plantButtons = new ArrayList<>();
@@ -112,11 +113,13 @@ public class Menu {
                 if (plantSelected[index]) {
                     plantSelected[index] = false;
                     selectedPlantsNames.remove(name);
+                    countPlant--;
                     button.setEffect(null);
                 } else {
                     if (selectedPlantsNames.size() < MAX_PLANTS) {
                         plantSelected[index] = true;
                         selectedPlantsNames.add(name);
+                        countPlant++;
                         button.setEffect(shadow);
                     } else {
                         System.out.println("You can only select up to " + MAX_PLANTS + " plants!");
