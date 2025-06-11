@@ -15,10 +15,15 @@ public abstract class Planet {
     int col;
     ImageView image;
     ArrayList<Bullet> bullets;
+    boolean dead=false;
 
     abstract void act(Pane root,ArrayList<Zombies>Zombies);
 
     abstract void act(Pane root);
+    public void remove(Pane root){
+        root.getChildren().remove(image);
+        dead=true;
+    };
 
 
 }

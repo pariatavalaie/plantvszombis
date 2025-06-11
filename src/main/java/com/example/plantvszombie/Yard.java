@@ -6,10 +6,7 @@ import javafx.animation.Timeline;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -30,6 +27,7 @@ public class Yard {
     Button cherrybombB=new Button();
     Button JalapenoB=new Button();
     Button SunflowerB=new Button();
+    Button ShovelB=new Button();
     ArrayList<Planet>planets=new ArrayList<>();
     ArrayList<Zombies>Zombies=new ArrayList<>();
 
@@ -57,6 +55,10 @@ public class Yard {
         SnowpeaB.setOnAction(event -> {
             selected[0]="snowpea";
         });
+        ShovelB.setOnAction(event -> {
+            selected[0]="shovel";
+            System.out.println("shovel");
+        });
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 Rectangle rectangle = new Rectangle(GRID_X, GRID_Y);
@@ -69,9 +71,13 @@ public class Yard {
                 rectangle.setOnMouseClicked(event -> {
                     System.out.println("H");
                     boolean empty=true;
+                    Planet planet1 = null;
                     for (Planet planet : planets) {
                         if(planet.row==row && planet.col==col){
+                            planet1=planet;
+                            System.out.println(planet1.row+" "+planet1.col);
                             empty=false;
+
                         }
                     }
                     if ("sunflower".equals(selected[0])&&empty) {
@@ -90,6 +96,12 @@ public class Yard {
                     }else if ("snowpea".equals(selected[0])&&empty) {
                         System.out.println(row);
                         placeplanet("snowpea",col,row);
+                        selected[0] = null;
+                    }else if ("shovel".equals(selected[0])) {
+                        System.out.println("pak");
+                        if(planet1!=null){
+                        planet1.remove(yardPane);
+                        planets.remove(planet1);}
                         selected[0] = null;
                     }
                 });
@@ -170,7 +182,15 @@ public class Yard {
         SunflowerB.setGraphic(view8);
         SunflowerB.setStyle("-fx-background-color: #fff");
         vbox.getChildren().add(SunflowerB);
-        yardPane.getChildren().add(vbox);
+        ImageView view9=new ImageView(new Image(getClass().getResource("/Shovel.jpg").toExternalForm()));
+        view9.setFitHeight(64);
+        view9.setFitWidth(105);
+        ShovelB.setGraphic(view9);
+        ShovelB.setStyle("-fx-background-color: #fff");
+        HBox hbox = new HBox();
+        hbox.getChildren().add(vbox);
+        hbox.getChildren().add(ShovelB);
+        yardPane.getChildren().add(hbox);
     }
 
     public void placeplanet(String planet,int col,int row){
@@ -215,7 +235,6 @@ public class Yard {
             planets.add(S);
             plantView=S.image;
             S.cooldown(SnowpeaB);
-            planets.add(S);
             S.act(yardPane,Zombies);
             Sun.collectedpoint-=50;
         }

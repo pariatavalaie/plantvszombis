@@ -40,10 +40,12 @@ public class Sunflower extends Planet{
         double y = gridY + row * cellHeight+ (cellHeight - 90) / 2;
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10),event ->{
+            if (!dead){
             Sun Sun=new Sun();
-            Sun.sunflower(root,x,y);
+            Sun.sunflower(root,x,y);}
 
         }));
+
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
