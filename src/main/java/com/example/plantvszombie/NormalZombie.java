@@ -36,7 +36,7 @@ public class NormalZombie extends Zombies{
             if (x <= 0||hp <= 0) {
                 walker.stop();
                 root.getChildren().remove(image);
-                System.out.println("☠️ Zombie reached the house!");
+                System.out.println(" Zombie reached the house!");
                 return;
             }
 
@@ -48,7 +48,7 @@ public class NormalZombie extends Zombies{
             step.setToX(newX - image.getLayoutX());
             step.play();
 
-            System.out.println("🧟‍♂️ Zombie moving to col: " + x);
+            System.out.println("Zombie moving to col: " + x);
         }));
 
         walker.setCycleCount(Timeline.INDEFINITE);

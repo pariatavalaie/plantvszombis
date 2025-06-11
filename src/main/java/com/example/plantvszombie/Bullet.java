@@ -10,12 +10,14 @@ public class Bullet {
     public int x;
     public int y;
     private double speed;
-    private ImageView imageBullet;
+    public ImageView imageBullet;
+    public boolean hit;
 
     public Bullet(int x, int y, double speed) {
         this.x = x;
         this.y = y;
         this.speed = speed;
+        hit = false;
     }
 
     public void shoot(Pane pane, double xPlant, double xZombie, String type, double yPlant) {
@@ -36,6 +38,11 @@ public class Bullet {
         move.setFromY(yPlant);
         move.setToY(yPlant);
         move.play();
+        move.setOnFinished(e -> {
+            if(!hit){
+                pane.getChildren().remove(imageBullet);
+            }
+        });
 
         AnimationTimer tracker = new AnimationTimer() {
             @Override
@@ -51,7 +58,7 @@ public class Bullet {
                 int y= (int) ((currentY - gridY) / cellHeight);
 
 
-                System.out.println("Bullet Position: X=" + x + ", Y=" + y);
+                //System.out.println("Bullet Position: X=" + x + ", Y=" + y);
 
             }
         };
