@@ -1,5 +1,8 @@
 package com.example.plantvszombie;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 
@@ -27,6 +31,7 @@ public class Yard {
     Button JalapenoB=new Button();
     Button SunflowerB=new Button();
     ArrayList<Planet>planets=new ArrayList<>();
+    ArrayList<Zombies>Zombies=new ArrayList<>();
 
     Yard() {
         Image yar = new Image(getClass().getResourceAsStream("Frontyard.png"));
@@ -63,20 +68,26 @@ public class Yard {
                 gridPane.add(rectangle, j, i);
                 rectangle.setOnMouseClicked(event -> {
                     System.out.println("H");
-                    if ("sunflower".equals(selected[0])) {
+                    boolean empty=true;
+                    for (Planet planet : planets) {
+                        if(planet.row==row && planet.col==col){
+                            empty=false;
+                        }
+                    }
+                    if ("sunflower".equals(selected[0])&&empty) {
                         System.out.println(row);
                         placeplanet("sunflower",col,row);
                         selected[0] = null;
 
-                    }else if ("peashooter".equals(selected[0])) {
+                    }else if ("peashooter".equals(selected[0])&&empty) {
                         System.out.println(row);
                         placeplanet("peashooter",col,row);
                         selected[0] = null;
-                    }else if ("reapeater".equals(selected[0])) {
+                    }else if ("reapeater".equals(selected[0])&&empty) {
                         System.out.println(row);
                         placeplanet("reapeater",col,row);
                         selected[0] = null;
-                    }else if ("snowpea".equals(selected[0])) {
+                    }else if ("snowpea".equals(selected[0])&&empty) {
                         System.out.println(row);
                         placeplanet("snowpea",col,row);
                         selected[0] = null;
@@ -84,11 +95,22 @@ public class Yard {
                 });
             }
         }
+        NormalZombie A=new NormalZombie(9,4,yardPane);
+        Zombies.add(A);
+        startMovingAndDetecting(planets,A);
         yardPane.getChildren().add(gridPane);
         AnchorPane.setTopAnchor(gridPane, 60.0);
         AnchorPane.setLeftAnchor(gridPane, 245.0);
 
 
+    }
+    public void startMovingAndDetecting(ArrayList<Planet> planets,Zombies zombie) {
+        Timeline checkHit = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+            zombie.damage(planets,yardPane);
+            zombie.remove(yardPane,Zombies);
+        }));
+        checkHit.setCycleCount(Animation.INDEFINITE);
+        checkHit.play();
     }
     public void buttonpic(){
         VBox vbox = new VBox();
@@ -171,9 +193,9 @@ public class Yard {
             planets.add(P);
             P.cooldown(peashooterB);
             plantView=P.image;
-            P.act(yardPane);
+            P.act(yardPane,Zombies);
             Sun.collectedpoint-=100;
-        }else if(planet.equals("reapeater")&&Repeater.canplace&&Sun.collectedpoint>=50){
+        }else if(planet.equals("reapeater")&&Sun.collectedpoint>=50){
             System.out.println("repeater");
             Repeater R=new Repeater(col,row);
             Repeater.canplace=false;
@@ -182,7 +204,7 @@ public class Yard {
             planets.add(R);
             R.cooldown(reapeaterB);
             plantView=R.image;
-            R.act(yardPane);
+            R.act(yardPane,Zombies);
             Sun.collectedpoint-=50;
         }
         else if(planet.equals("snowpea")&&SnowPea.canplace&&Sun.collectedpoint>=50){
@@ -194,7 +216,7 @@ public class Yard {
             plantView=S.image;
             S.cooldown(SnowpeaB);
             planets.add(S);
-            S.act(yardPane);
+            S.act(yardPane,Zombies);
             Sun.collectedpoint-=50;
         }
 
@@ -215,6 +237,8 @@ public class Yard {
 
         yardPane.getChildren().add(plantView);
     }
+
+
 
 
 
