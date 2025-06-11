@@ -18,7 +18,6 @@ public class NormalZombie extends Zombies{
     }
     @Override
     void act(Pane root){
-
     }
     @Override
     void move(Pane root) {
