@@ -1,21 +1,18 @@
 package com.example.plantvszombie;
 
-import javafx.animation.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 
-public class NormalZombie extends Zombies {
-
-    public NormalZombie(int x, int y, Pane root) {
+public class ImpZombie extends Zombies{
+    public ImpZombie(int x,int y,Pane root) {
         this.x = x;
         this.y = y;
-        this.hp = 5;
-        this.speed=4;
-        this.image = new ImageView(new Image(getClass().getResource("/normalzombie.gif").toExternalForm()));
-        image.setFitHeight(80);
-        image.setFitWidth(100);
+        this.hp=3;
+        this.speed=2;
+        this.image = new ImageView(new Image(getClass().getResource("/Walking_Imp.gif").toExternalForm()));
+        image.setFitHeight(60);
+        image.setFitWidth(80);
         double startX = 245 + x * 80 + 5;
         double startY = 60 + y * 100 + 10;
 
@@ -23,13 +20,11 @@ public class NormalZombie extends Zombies {
         image.setLayoutY(startY);
 
         root.getChildren().add(image);
-
         move(root);
-    }
 
+    }
     @Override
     void act(Pane root) {
 
     }
 }
-

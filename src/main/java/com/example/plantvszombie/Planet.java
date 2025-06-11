@@ -14,19 +14,16 @@ public abstract class Planet {
     int row;
     int col;
     ImageView image;
-   static boolean canplace=true;
-   ArrayList<Bullet> bullets ;
-   abstract void act(Pane root);
+    ArrayList<Bullet> bullets;
+    boolean dead=false;
 
-    public void cooldown( Button b){
-            PauseTransition cooldown = new PauseTransition(Duration.seconds(watingtime));
-            cooldown.setOnFinished(ev -> {
-                canplace= true;
-                b.setDisable(false);
-                b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-                System.out.println("✅ You can place another Sunflower now");
-            });
-            cooldown.play();
-        }
-    }
+    abstract void act(Pane root,ArrayList<Zombies>Zombies);
 
+    abstract void act(Pane root);
+    public void remove(Pane root){
+        root.getChildren().remove(image);
+        dead=true;
+    };
+
+
+}

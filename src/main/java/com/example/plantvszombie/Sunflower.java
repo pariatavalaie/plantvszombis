@@ -9,13 +9,22 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public class Sunflower extends Planet{
+    static boolean canplace = true;
     public Sunflower(int x, int y,Pane root) {
         cost=50;
         watingtime=5;
         row=y;
         col=x;
+        bullets = new ArrayList<Bullet>();
         image=new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm()));
+
+    }
+
+    @Override
+    void act(Pane root,ArrayList<Zombies>zombies) {
 
     }
 
@@ -31,14 +40,27 @@ public class Sunflower extends Planet{
         double y = gridY + row * cellHeight+ (cellHeight - 90) / 2;
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10),event ->{
+            if (!dead){
             Sun Sun=new Sun();
-            Sun.sunflower(root,x,y);
+            Sun.sunflower(root,x,y);}
 
         }));
+
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
 
 
     }
+    public void cooldown( Button b){
+        PauseTransition cooldown = new PauseTransition(Duration.seconds(watingtime));
+        cooldown.setOnFinished(ev -> {
+            canplace= true;
+            b.setDisable(false);
+            b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            System.out.println("✅ You can place another Sunflower now");
+        });
+        cooldown.play();
+    }
 }
+

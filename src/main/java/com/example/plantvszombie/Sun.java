@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public class Sun {
-    static int collectedpoint=0;
+    static int collectedpoint=200;
     private ImageView sunImage;
     private boolean collected ;
     public Sun() {

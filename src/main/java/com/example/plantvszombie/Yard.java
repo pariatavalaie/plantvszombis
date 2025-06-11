@@ -5,17 +5,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Yard {
     AnchorPane yardPane;
     GridPane gridPane;
-    Menu menu;
     final double GRID_X=80;
     final double GRID_Y=100;
     Button SnowpeaB=new Button();
@@ -28,10 +28,9 @@ public class Yard {
     Button SunflowerB=new Button();
     ArrayList<Planet>planets=new ArrayList<>();
 
-    Yard(Menu menu) {
+    Yard() {
         Image yar = new Image(getClass().getResourceAsStream("Frontyard.png"));
         ImageView yard = new ImageView(yar);
-        this.menu = menu;
         yardPane = new AnchorPane(yard);
         PaintGrid(9, 5);
         buttonpic();
@@ -91,7 +90,7 @@ public class Yard {
 
 
     }
-    public void buttonpic() {
+    public void buttonpic(){
         VBox vbox = new VBox();
         Image Snowpea = new Image(getClass().getResource("/SnowPea.png").toExternalForm());
         ImageView view1 = new ImageView(Snowpea);
@@ -99,72 +98,56 @@ public class Yard {
         view1.setFitWidth(105);
         SnowpeaB.setGraphic(view1);
         SnowpeaB.setStyle("-fx-background-color: #fff");
-        if(check("Snow Pea")){
-            vbox.getChildren().add(SnowpeaB);
-        }
+        vbox.getChildren().add(SnowpeaB);
         Image Peashooter = new Image(getClass().getResource("/com/example/plantvszombie/peashooterCard.png").toExternalForm());
         ImageView view2 = new ImageView(Peashooter);
         view2.setFitHeight(64);
         view2.setFitWidth(105);
         peashooterB.setGraphic(view2);
         peashooterB.setStyle("-fx-background-color: #fff");
-        if(check("Peashooter")){
-            vbox.getChildren().add(peashooterB);
-        }
+        vbox.getChildren().add(peashooterB);
         Image Reapeater = new Image(getClass().getResource("/com/example/plantvszombie/repeaterCard.png").toExternalForm());
         ImageView view3 = new ImageView(Reapeater);
         view3.setFitHeight(64);
         view3.setFitWidth(105);
         reapeaterB.setGraphic(view3);
         reapeaterB.setStyle("-fx-background-color: #fff");
-        if(check("Repeater")){
-            vbox.getChildren().add(reapeaterB);
-        }
+        vbox.getChildren().add(reapeaterB);
         Image Tallnut = new Image(getClass().getResource("/TallNut.png").toExternalForm());
         ImageView view4 = new ImageView(Tallnut);
         view4.setFitHeight(64);
         view4.setFitWidth(105);
         TallnutB.setGraphic(view4);
         TallnutB.setStyle("-fx-background-color: #fff");
-        if(check("Tall-nut")){
-            vbox.getChildren().add(TallnutB);
-        }
+        vbox.getChildren().add(TallnutB);
         Image Wallnut = new Image(getClass().getResource("/com/example/plantvszombie/wallnutCard.png").toExternalForm());
         ImageView view5 = new ImageView(Wallnut);
         view5.setFitHeight(64);
         view5.setFitWidth(105);
         WallnutB.setGraphic(view5   );
         WallnutB.setStyle("-fx-background-color: #fff");
-        if(check("Wall-nut")){
-            vbox.getChildren().add(WallnutB);
-        }
+        vbox.getChildren().add(WallnutB);
         Image Cherrybomb =new Image(getClass().getResource("/com/example/plantvszombie/cherrybombCard.png").toExternalForm());
         ImageView view6 = new ImageView(Cherrybomb);
         view6.setFitHeight(64);
         view6.setFitWidth(105);
         cherrybombB.setGraphic(view6);
         cherrybombB.setStyle("-fx-background-color: #fff");
-        if(check("Cherry Bomb")){
-            vbox.getChildren().add(cherrybombB);
-        }
+        vbox.getChildren().add(cherrybombB);
         Image Jalapeno = new Image(getClass().getResource("/com/example/plantvszombie/jalapenoCard.png").toExternalForm());
         ImageView view7 = new ImageView(Jalapeno);
         view7.setFitHeight(64);
         view7.setFitWidth(105);
         JalapenoB.setGraphic(view7);
         JalapenoB.setStyle("-fx-background-color: #fff");
-        if(check("jalapeno")){
-            vbox.getChildren().add(JalapenoB);
-        }
+        vbox.getChildren().add(JalapenoB);
         Image Sunflower = new Image(getClass().getResource("/com/example/plantvszombie/sunflowerCard.png").toExternalForm());
         ImageView view8 = new ImageView(Sunflower);
         view8.setFitHeight(64);
         view8.setFitWidth(105);
         SunflowerB.setGraphic(view8);
         SunflowerB.setStyle("-fx-background-color: #fff");
-        if(check("Sunflower")){
-            vbox.getChildren().add(SunflowerB);
-        }
+        vbox.getChildren().add(SunflowerB);
         yardPane.getChildren().add(vbox);
     }
 
@@ -233,17 +216,6 @@ public class Yard {
         yardPane.getChildren().add(plantView);
     }
 
-    public boolean check(String name){
-        List selected = menu.getSelectedPlantsNames();
-        System.out.println(selected.size());
-        for(int i=0 ; i<selected.size() ; i++){
-            if(name.equals(selected.get(i))){
-                System.out.println(selected.get(i));
-                return true;
-            }
-        }
-        return false;
-    }
 
 
 }
