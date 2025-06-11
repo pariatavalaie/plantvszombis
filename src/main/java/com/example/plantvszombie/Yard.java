@@ -110,23 +110,23 @@ public class Yard {
                 });
             }
         }
-        Zombies A=new ImpZombie(9,4,yardPane);
-        Zombies.add(A);
-        startMovingAndDetecting(planets,A);
+
         yardPane.getChildren().add(gridPane);
         AnchorPane.setTopAnchor(gridPane, 60.0);
         AnchorPane.setLeftAnchor(gridPane, 245.0);
 
 
     }
-    public void startMovingAndDetecting(ArrayList<Planet> planets,Zombies zombie) {
-        Timeline checkHit = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-            zombie.damage(planets,yardPane);
-            zombie.remove(yardPane,Zombies);
-        }));
-        checkHit.setCycleCount(Animation.INDEFINITE);
-        checkHit.play();
+    public void startMovingAndDetecting() {
+        // جلوگیری از ConcurrentModificationException با ایجاد کپی
+        ArrayList<Zombies> zombieCopy = new ArrayList<>(Zombies);
+
+        for (Zombies zombie : zombieCopy) {
+            zombie.damage(planets, yardPane);
+            zombie.remove(yardPane, Zombies);
+        }
     }
+
     public void buttonpic(){
         VBox vbox = new VBox();
         Image Snowpea = new Image(getClass().getResource("/SnowPea.png").toExternalForm());

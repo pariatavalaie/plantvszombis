@@ -37,6 +37,8 @@ public class HelloApplication extends Application {
     private void play() {
         Yard yard = new Yard(menu);
         Sun.fall(yard.yardPane);
+        ZombieWaveManger zw = new ZombieWaveManger(yard);
+        zw.start();
         Scene scene1 = new Scene(yard.yardPane, 1024, 626);
         stage.setScene(scene1);
         stage.setResizable(false);
