@@ -1,19 +1,16 @@
 package com.example.plantvszombie;
 
-import javafx.animation.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 
-public class NormalZombie extends Zombies {
-
-    public NormalZombie(int x, int y, Pane root) {
+public class ConeheadZombie extends Zombies{
+    public ConeheadZombie(int x, int y,Pane root) {
         this.x = x;
         this.y = y;
-        this.hp = 5;
+        this.hp =7;
         this.speed=4;
-        this.image = new ImageView(new Image(getClass().getResource("/normalzombie.gif").toExternalForm()));
+        this.image = new ImageView(new Image(getClass().getResource("/Conehead_Zombie.gif").toExternalForm()));
         image.setFitHeight(80);
         image.setFitWidth(100);
         double startX = 245 + x * 80 + 5;
@@ -23,7 +20,6 @@ public class NormalZombie extends Zombies {
         image.setLayoutY(startY);
 
         root.getChildren().add(image);
-
         move(root);
     }
 
@@ -32,4 +28,3 @@ public class NormalZombie extends Zombies {
 
     }
 }
-

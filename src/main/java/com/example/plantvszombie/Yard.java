@@ -95,7 +95,7 @@ public class Yard {
                 });
             }
         }
-        NormalZombie A=new NormalZombie(9,4,yardPane);
+        Zombies A=new ImpZombie(9,4,yardPane);
         Zombies.add(A);
         startMovingAndDetecting(planets,A);
         yardPane.getChildren().add(gridPane);
