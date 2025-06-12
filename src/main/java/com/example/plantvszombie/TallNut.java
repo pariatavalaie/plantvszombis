@@ -15,7 +15,7 @@ public class TallNut extends Planet{
     public TallNut(int x,int y) {
         this.row=y;
         this.col=x;
-        health=16;
+       this.health=16;
         watingtime=7;
         bullets=new ArrayList<>();
         this.eatimage=new ImageView(new Image(getClass().getResource("/Tallnut3.gif").toExternalForm()));

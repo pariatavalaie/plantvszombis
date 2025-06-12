@@ -16,7 +16,7 @@ public class WallNut extends Planet{
         this.row=y;
         this.col=x;
         watingtime=5;
-        health=10;
+        this.health=10;
         this.bullets=new ArrayList<>();
         this.eatimage=new ImageView(new Image(getClass().getResource("/walnut_half_life.gif").toExternalForm()));
         this.image=new ImageView(new Image(getClass().getResource("/walnut_full_life.gif").toExternalForm()));

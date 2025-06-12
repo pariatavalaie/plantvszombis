@@ -17,8 +17,8 @@ public class Repeater extends Planet {
     public Repeater(int x, int y) {
         this.row = y;
         this.col = x;
-        watingtime = 7;
-        health=4;
+        this.watingtime = 7;
+        this.health=4;
         bullets=new ArrayList<>();
         this.image =new ImageView( new Image(getClass().getResource("/repeater.gif").toExternalForm()));
         this.eatimage =new ImageView( new Image(getClass().getResource("/repeater.gif").toExternalForm()));
