@@ -18,6 +18,7 @@ public class TallNut extends Planet{
         this.cost=125;
         this.watingtime=7;
         bullets=new ArrayList<>();
+        this.eatimage=new ImageView(new Image(getClass().getResource("/Tallnut3.gif").toExternalForm()));
         this.image=new ImageView(new Image(getClass().getResource("/TallNut1.gif").toExternalForm()));
 
     }

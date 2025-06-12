@@ -137,6 +137,7 @@ public class Yard {
         for (Zombies zombie : zombieCopy) {
             zombie.damage(planets, yardPane);
             zombie.remove(yardPane, Zombies);
+            zombie.checkAndEatPlant(planets, yardPane);
         }
     }
 

@@ -15,6 +15,7 @@ public abstract class Planet {
     int col;
     int health;
     ImageView image;
+    ImageView eatimage;
     ArrayList<Bullet> bullets;
     boolean dead=false;
 

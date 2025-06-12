@@ -16,6 +16,7 @@ public class NormalZombie extends Zombies {
         this.image = new ImageView(new Image(getClass().getResource("/normalzombie.gif").toExternalForm()));
         image.setFitHeight(80);
         image.setFitWidth(100);
+        this.eatimage = new ImageView(new Image(getClass().getResource("/Zombie_Eat.gif").toExternalForm()));
         double startX = 245 + x * 80 + 5;
         double startY = 60 + y * 100 + 10;
 
