@@ -19,7 +19,6 @@ public abstract class Zombies {
     int hp;
     int speed;
     ImageView image;
-    ImageView eatimage;
     Timeline walker;
     abstract void act(Pane root);
      void move(Pane root){
@@ -94,8 +93,6 @@ public abstract class Zombies {
                 Timeline eating = new Timeline(new KeyFrame(Duration.seconds(0.5), e -> {
                     bites[0]++;
                     p.image.setImage(p.eatimage.getImage());
-
-
 
                     if (bites[0] >= p.health) {
                         walker.play();
