@@ -30,15 +30,15 @@ public class ZombieWaveManger {
         gameTime++;
         yard.startMovingAndDetecting();
 
-        // اجرای امواج مختلف
+
         if (gameTime <= 120) waveStage1();
         else if (gameTime <= 240) waveStage2();
         // else if (gameTime <= 65) waveStage3();
         // else if (gameTime <= 100) waveStage4();
 
         // حملات ویژه
-        //if (gameTime >= 26 && gameTime <= 33) halfAttack(); // حمله نیمه بازی
-        //if (gameTime >= 47 && gameTime <= 60) finalAttack(); // حمله پایانی
+        //if (gameTime >= 26 && gameTime <= 33) halfAttack();
+        //if (gameTime >= 47 && gameTime <= 60) finalAttack();
     }
 
     private void waveStage1() {

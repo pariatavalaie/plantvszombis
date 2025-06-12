@@ -62,6 +62,12 @@ public class Yard {
             selected[0]="shovel";
             System.out.println("shovel");
         });
+        WallnutB.setOnAction(event -> {
+            selected[0]="wallnut";
+        });
+        TallnutB.setOnAction(event -> {
+            selected[0]="tallnut";
+        });
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 Rectangle rectangle = new Rectangle(GRID_X, GRID_Y);
@@ -106,6 +112,13 @@ public class Yard {
                             planet1.remove(yardPane);
                             planets.remove(planet1);}
                         selected[0] = null;
+                    }else if ("wallnut".equals(selected[0])) {
+                        placeplanet("wallnut",col,row);
+                        selected[0] = null;
+                    } else if ("tallnut".equals(selected[0])) {
+                        placeplanet("tallnut",col,row);
+                        selected[0] = null;
+
                     }
                 });
             }
@@ -255,6 +268,24 @@ public class Yard {
             plantView=S.image;
             S.cooldown(SnowpeaB);
             S.act(yardPane,Zombies);
+            Sun.collectedpoint-=50;
+        }else if (planet.equals("wallnut")&&WallNut.canplace){
+            WallNut w=new WallNut(col,row);
+            WallNut.canplace=false;
+            WallnutB.setDisable(true);
+            WallnutB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            planets.add(w);
+            plantView=w.image;
+            w.cooldown(WallnutB);
+            Sun.collectedpoint-=50;
+        }else if(planet.equals("tallnut")&&TallNut.canplace){
+            TallNut t=new TallNut(col,row);
+            TallNut.canplace=false;
+            TallnutB.setDisable(true);
+            TallnutB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            planets.add(t);
+            plantView=t.image;
+            t.cooldown(WallnutB);
             Sun.collectedpoint-=50;
         }
 
