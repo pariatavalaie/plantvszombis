@@ -13,6 +13,7 @@ public abstract class Planet {
     int watingtime;
     int row;
     int col;
+    int health;
     ImageView image;
     ArrayList<Bullet> bullets;
     boolean dead=false;

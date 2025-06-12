@@ -17,6 +17,7 @@ public class Sunflower extends Planet{
         cost=50;
         watingtime=5;
         row=y;
+        health=4;
         col=x;
         bullets = new ArrayList<Bullet>();
         image=new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm()));

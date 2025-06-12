@@ -18,6 +18,7 @@ public class Repeater extends Planet {
         this.col = x;
         this.cost = 200;
         this.watingtime = 7;
+        health=4;
         bullets=new ArrayList<>();
         this.image =new ImageView( new Image(getClass().getResource("/repeater.gif").toExternalForm()));
     }
