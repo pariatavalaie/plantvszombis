@@ -3,7 +3,9 @@ package com.example.plantvszombie;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -30,6 +32,7 @@ public class Yard {
     Button JalapenoB=new Button();
     Button SunflowerB=new Button();
     Button ShovelB=new Button();
+    Label sunpoint=new Label();
     ArrayList<Planet>planets=new ArrayList<>();
     ArrayList<Zombies>Zombies=new ArrayList<>();
 
@@ -38,6 +41,15 @@ public class Yard {
         ImageView yard = new ImageView(yar);
         this.menu = menu;
         yardPane = new AnchorPane(yard);
+        sunpoint.setText("☀\uFE0F"+Sun.collectedpoint);
+        sunpoint.setStyle(
+                "-fx-font-size: 26px;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-font-family: 'Segoe UI Emoji';"
+        );
+        sunpoint.setLayoutX(850);
+        sunpoint.setLayoutY(8);
+        yardPane.getChildren().add(sunpoint);
         PaintGrid(9, 5);
         buttonpic();
     }
@@ -131,7 +143,6 @@ public class Yard {
 
     }
     public void startMovingAndDetecting() {
-        // جلوگیری از ConcurrentModificationException با ایجاد کپی
         ArrayList<Zombies> zombieCopy = new ArrayList<>(Zombies);
 
         for (Zombies zombie : zombieCopy) {
@@ -228,7 +239,7 @@ public class Yard {
 
     public void placeplanet(String planet,int col,int row){
         ImageView plantView = null;
-        if (planet.equals("sunflower")&&Sunflower.canplace&&Sun.collectedpoint>=50){
+        if (planet.equals("sunflower")&&Sunflower.canplace){
             Sunflower S=new Sunflower(col,row,yardPane);
             Sunflower.canplace=false;
             SunflowerB.setDisable(true); // غیرفعال کردن دکمه
@@ -237,18 +248,18 @@ public class Yard {
             planets.add(S);
             plantView=S.image;
             S.act(yardPane);
-            Sun.collectedpoint-=50;
-        } else if(planet.equals("peashooter")&&Peashooter.canplace&&Sun.collectedpoint>=50){
+            Sun.collectedpoint-=Sunflower.cost;
+        } else if(planet.equals("peashooter")&&Peashooter.canplace){
             Peashooter P=new Peashooter(col,row);
             Peashooter.canplace=false;
-            peashooterB.setDisable(true); // غیرفعال کردن دکمه
-            peashooterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
+            peashooterB.setDisable(true);
+            peashooterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             planets.add(P);
             P.cooldown(peashooterB);
             plantView=P.image;
             P.act(yardPane,Zombies);
-            Sun.collectedpoint-=100;
-        }else if(planet.equals("reapeater")&&Sun.collectedpoint>=50){
+            Sun.collectedpoint-=Peashooter.cost;
+        }else if(planet.equals("reapeater")){
             System.out.println("repeater");
             Repeater R=new Repeater(col,row);
             Repeater.canplace=false;
@@ -258,9 +269,9 @@ public class Yard {
             R.cooldown(reapeaterB);
             plantView=R.image;
             R.act(yardPane,Zombies);
-            Sun.collectedpoint-=50;
+            Sun.collectedpoint-= Repeater.cost;
         }
-        else if(planet.equals("snowpea")&&SnowPea.canplace&&Sun.collectedpoint>=50){
+        else if(planet.equals("snowpea")&&SnowPea.canplace){
             SnowPea S=new SnowPea(col,row);
             SnowPea.canplace=false;
             SnowpeaB.setDisable(true);
@@ -269,7 +280,7 @@ public class Yard {
             plantView=S.image;
             S.cooldown(SnowpeaB);
             S.act(yardPane,Zombies);
-            Sun.collectedpoint-=50;
+            Sun.collectedpoint-=SnowPea.cost;
         }else if (planet.equals("wallnut")&&WallNut.canplace){
             WallNut w=new WallNut(col,row);
             WallNut.canplace=false;
@@ -278,7 +289,7 @@ public class Yard {
             planets.add(w);
             plantView=w.image;
             w.cooldown(WallnutB);
-            Sun.collectedpoint-=50;
+            Sun.collectedpoint-=WallNut.cost;
         }else if(planet.equals("tallnut")&&TallNut.canplace){
             TallNut t=new TallNut(col,row);
             TallNut.canplace=false;
@@ -287,7 +298,7 @@ public class Yard {
             planets.add(t);
             plantView=t.image;
             t.cooldown(WallnutB);
-            Sun.collectedpoint-=50;
+            Sun.collectedpoint-=TallNut.cost;
         }
 
         plantView.setFitWidth(70);
@@ -318,6 +329,62 @@ public class Yard {
         }
         return false;
     }
+    public void Updatebutton() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {
+            if (Sun.collectedpoint >= Peashooter.cost && Peashooter.canplace) {
+                peashooterB.setDisable(false);
+                peashooterB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                peashooterB.setDisable(true);
+                peashooterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+
+            if (Sun.collectedpoint >= Repeater.cost && Repeater.canplace) {
+                reapeaterB.setDisable(false);
+                reapeaterB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                reapeaterB.setDisable(true);
+                reapeaterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+            if (Sun.collectedpoint >= Sunflower.cost && Sunflower.canplace) {
+                SunflowerB.setDisable(false);
+                SunflowerB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                SunflowerB.setDisable(true);
+                SunflowerB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+
+            if (Sun.collectedpoint >= WallNut.cost && WallNut.canplace) {
+                WallnutB.setDisable(false);
+                WallnutB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                WallnutB.setDisable(true);
+                WallnutB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+            if (Sun.collectedpoint >= TallNut.cost && TallNut.canplace) {
+                TallnutB.setDisable(false);
+                TallnutB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                TallnutB.setDisable(true);
+                TallnutB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+
+            if (Sun.collectedpoint >= SnowPea.cost && SnowPea.canplace) {
+                SnowpeaB.setDisable(false);
+                SnowpeaB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                SnowpeaB.setDisable(true);
+                SnowpeaB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+            sunpoint.setText("☀\uFE0F"+Sun.collectedpoint);
+            sunpoint.setLayoutX(850);
+            sunpoint.setLayoutY(8);
+
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
 
 
 

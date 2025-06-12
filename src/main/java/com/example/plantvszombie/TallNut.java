@@ -11,12 +11,12 @@ import java.util.ArrayList;
 
 public class TallNut extends Planet{
     static boolean canplace=true;
+    static final int cost=125;
     public TallNut(int x,int y) {
         this.row=y;
         this.col=x;
-        this.health=16;
-        this.cost=125;
-        this.watingtime=7;
+        health=16;
+        watingtime=7;
         bullets=new ArrayList<>();
         this.eatimage=new ImageView(new Image(getClass().getResource("/Tallnut3.gif").toExternalForm()));
         this.image=new ImageView(new Image(getClass().getResource("/TallNut1.gif").toExternalForm()));
@@ -36,9 +36,10 @@ public class TallNut extends Planet{
         PauseTransition cooldown = new PauseTransition(Duration.seconds(watingtime));
         cooldown.setOnFinished(ev -> {
             canplace= true;
-            b.setDisable(false);
-            b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            System.out.println("✅ You can place another Sunflower now");
+            if(cost<=Sun.collectedpoint){
+                b.setDisable(false);
+                b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+                System.out.println("✅ You can place another Sunflower now");}
         });
         cooldown.play();
     }

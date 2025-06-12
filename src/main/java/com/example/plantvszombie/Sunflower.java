@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class Sunflower extends Planet{
     static boolean canplace = true;
+    static final int cost=50;
     public Sunflower(int x, int y,Pane root) {
-        cost=50;
         watingtime=5;
         row=y;
         health=4;
@@ -58,9 +58,10 @@ public class Sunflower extends Planet{
         PauseTransition cooldown = new PauseTransition(Duration.seconds(watingtime));
         cooldown.setOnFinished(ev -> {
             canplace= true;
+            if(cost<=Sun.collectedpoint){
             b.setDisable(false);
             b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            System.out.println("✅ You can place another Sunflower now");
+            System.out.println("✅ You can place another Sunflower now");}
         });
         cooldown.play();
     }

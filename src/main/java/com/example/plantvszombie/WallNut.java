@@ -11,12 +11,12 @@ import java.util.ArrayList;
 
 public class WallNut extends Planet{
     static boolean canplace=true;
+    static final int cost=50;
     public WallNut(int x,int y){
         this.row=y;
         this.col=x;
-        this.cost=50;
-        this.watingtime=5;
-        this.health=10;
+        watingtime=5;
+        health=10;
         this.bullets=new ArrayList<>();
         this.eatimage=new ImageView(new Image(getClass().getResource("/walnut_half_life.gif").toExternalForm()));
         this.image=new ImageView(new Image(getClass().getResource("/walnut_full_life.gif").toExternalForm()));
@@ -35,9 +35,10 @@ public class WallNut extends Planet{
         PauseTransition cooldown = new PauseTransition(Duration.seconds(watingtime));
         cooldown.setOnFinished(ev -> {
             canplace= true;
-            b.setDisable(false);
-            b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            System.out.println("✅ You can place another Sunflower now");
+            if(cost<=Sun.collectedpoint){
+                b.setDisable(false);
+                b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+                System.out.println("✅ You can place another Sunflower now");}
         });
         cooldown.play();
     }

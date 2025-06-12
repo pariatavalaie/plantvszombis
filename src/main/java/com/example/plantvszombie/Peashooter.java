@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 public class Peashooter extends Planet{
     static boolean canplace = true;
+    static final int cost=100;
     public Peashooter(int x, int y) {
         this.row = y;
         this.col = x;
-        this.cost = 100;
-        this.watingtime = 6;
+        watingtime = 6;
         health=4;
         bullets = new ArrayList<Bullet>();
         this.image = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
@@ -66,12 +66,14 @@ public class Peashooter extends Planet{
         PauseTransition cooldown = new PauseTransition(Duration.seconds(watingtime));
         cooldown.setOnFinished(ev -> {
             canplace= true;
-            b.setDisable(false);
-            b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            System.out.println("✅ You can place another Sunflower now");
+            if(cost<=Sun.collectedpoint){
+                b.setDisable(false);
+                b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+                System.out.println("✅ You can place another Sunflower now");}
         });
         cooldown.play();
     }
+
 }
 
 

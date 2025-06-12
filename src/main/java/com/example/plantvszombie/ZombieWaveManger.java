@@ -2,9 +2,11 @@ package com.example.plantvszombie;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.control.Label;
 import javafx.util.Duration;
 
 import java.util.Random;
+
 
 public class ZombieWaveManger {
     Timeline maintimeline;
@@ -19,7 +21,7 @@ public class ZombieWaveManger {
 
     private void setupTimeline() {
         maintimeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> tick()));
-        maintimeline.setCycleCount(480); // بازی 60 ثانیه است
+        maintimeline.setCycleCount(480);
     }
 
     public void start() {
@@ -29,8 +31,6 @@ public class ZombieWaveManger {
     private void tick() {
         gameTime++;
         yard.startMovingAndDetecting();
-
-
 
         if (gameTime <= 120) waveStage1();
         else if (gameTime <= 240) waveStage2();

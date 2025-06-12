@@ -41,6 +41,7 @@ public class HelloApplication extends Application {
 
     private void play() {
         Yard yard = new Yard(menu);
+       yard.Updatebutton();
         Sun.fall(yard.yardPane);
         ZombieWaveManger zw = new ZombieWaveManger(yard);
         zw.start();
