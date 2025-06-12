@@ -21,6 +21,7 @@ public class Sunflower extends Planet{
         col=x;
         bullets = new ArrayList<Bullet>();
         image=new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm()));
+        eatimage=new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm()));
 
     }
 

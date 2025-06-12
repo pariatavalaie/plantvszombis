@@ -21,6 +21,7 @@ public class Peashooter extends Planet{
         health=4;
         bullets = new ArrayList<Bullet>();
         this.image = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
+        this.image = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
     }
     public void act(Pane root) {
 

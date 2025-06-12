@@ -21,6 +21,7 @@ public class Repeater extends Planet {
         health=4;
         bullets=new ArrayList<>();
         this.image =new ImageView( new Image(getClass().getResource("/repeater.gif").toExternalForm()));
+        this.eatimage =new ImageView( new Image(getClass().getResource("/repeater.gif").toExternalForm()));
     }
     void act(Pane root) {}
 

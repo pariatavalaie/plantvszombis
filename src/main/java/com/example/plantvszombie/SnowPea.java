@@ -20,6 +20,7 @@ public class SnowPea extends Planet{
         this.watingtime = 8;
        bullets = new ArrayList<Bullet>();
         this.image =new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm()));
+        this.eatimage =new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm()));
     }
 
     @Override
