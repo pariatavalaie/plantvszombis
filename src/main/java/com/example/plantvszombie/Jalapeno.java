@@ -13,12 +13,11 @@ import java.util.ArrayList;
 
 public class Jalapeno extends Planet {
     static boolean canplace = true;
-    static int cost;
+    static int cost=125;
     public Jalapeno(int x , int y) {
         this.row = y;
         this.col = x;
         this.watingtime = 6;
-        cost = 125;
         this.image = new ImageView( new Image(getClass().getResource("/jalapeno.gif").toExternalForm()));
         bullets = new ArrayList<Bullet>();
     }

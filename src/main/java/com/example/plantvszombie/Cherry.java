@@ -13,9 +13,8 @@ import java.util.ArrayList;
 
 public class Cherry extends Planet{
     static boolean canplace = true;
-    static int cost;
+    static int cost=200;
     public Cherry(int x , int y) {
-       cost = 200;
         this.row = y;
         this.col = x;
         this.watingtime = 2;

@@ -2,7 +2,6 @@ package com.example.plantvszombie;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -52,6 +51,7 @@ public class HelloApplication extends Application {
         ZombieWaveManger zw = new ZombieWaveManger(yard);
         zw.start();
         yard.Updatebutton();
+        yard.addSaveLoadButtons();
         Scene scene1 = new Scene(yard.yardPane, 1024, 626);
         stage.setScene(scene1);
         stage.setResizable(false);

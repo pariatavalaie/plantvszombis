@@ -9,7 +9,7 @@ import java.util.Random;
 public class ZombieWaveManger {
     Timeline maintimeline;
     Yard yard;
-    int gameTime;
+    static int gameTime;
 
     ZombieWaveManger(Yard yard) {
         this.yard = yard;
