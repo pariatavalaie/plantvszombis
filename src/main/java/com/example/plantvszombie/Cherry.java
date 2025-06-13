@@ -11,15 +11,15 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Cherry extends Planet{
+public class Cherry extends Planet {
     static boolean canplace = true;
-    static int cost;
-    public Cherry(int x , int y) {
-       cost = 200;
+    static int cost = 200;
+
+    public Cherry(int x, int y) {
         this.row = y;
         this.col = x;
         this.watingtime = 2;
-        this.image = new ImageView( new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm()));
+        this.image = new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm()));
         bullets = new ArrayList<Bullet>();
     }
 
@@ -45,26 +45,28 @@ public class Cherry extends Planet{
 
                 // بررسی اینکه آیا زامبی در محدوده 3x3 قرار دارد یا خیر
                 // باید مطمئن بشیم که زامبی حداکثر یک خونه با Cherry فاصله داره
-                if (distanceX <= cellWidth / 2 * 3 && distanceY <= cellHeight / 2 * 3){
-                    //z.image = new ImageView( new Image(getClass().getResource("/burntZombie.gif").toExternalForm()));
-                        z.hp = 0; // کشتن زامبی بعد از یک ثانیه
-            }}
-        }));
-        timeline.setCycleCount(1);
+                if (distanceX <= cellWidth / 2 * 3 && distanceY <= cellHeight / 2 * 3) {
+                    PauseTransition pause = new PauseTransition(Duration.millis(1));
+                    pause.setOnFinished(ev-> {
+                        z.hp = 0;
+                    });
+                    z.image.setImage(z.deadZombie.getImage());
+                }
+            } }));
+         timeline.setCycleCount(1);
         timeline.play();
     }
 
 
-
     @Override
-    void act(Pane root){
+    void act(Pane root) {
 
     }
 
-    public void cooldown(Button b){
+    public void cooldown(Button b) {
         PauseTransition cooldown = new PauseTransition(Duration.seconds(watingtime));
         cooldown.setOnFinished(ev -> {
-            canplace= true;
+            canplace = true;
             b.setDisable(false);
             b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
             System.out.println("✅ You can place another Sunflower now");
