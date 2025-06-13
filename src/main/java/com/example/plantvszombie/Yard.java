@@ -266,7 +266,7 @@ public class Yard {
 
     public void placeplanet(String planet,int col,int row){
         ImageView plantView = null;
-        if (planet.equals("sunflower")&&Sunflower.canplace&&Sun.collectedpoint>=50){
+        if (planet.equals("sunflower")&&Sunflower.canplace){
             Sunflower S=new Sunflower(col,row,yardPane);
             Sunflower.canplace=false;
             SunflowerB.setDisable(true); // غیرفعال کردن دکمه
@@ -275,8 +275,8 @@ public class Yard {
             planets.add(S);
             plantView=S.image;
             S.act(yardPane);
-            Sun.collectedpoint-=50;
-        } else if(planet.equals("peashooter")&&Peashooter.canplace&&Sun.collectedpoint>=50){
+            Sun.collectedpoint-=Sunflower.cost;
+        } else if(planet.equals("peashooter")&&Peashooter.canplace){
             Peashooter P=new Peashooter(col,row);
             Peashooter.canplace=false;
             peashooterB.setDisable(true); // غیرفعال کردن دکمه
@@ -285,8 +285,8 @@ public class Yard {
             P.cooldown(peashooterB);
             plantView=P.image;
             P.act(yardPane,Zombies);
-            Sun.collectedpoint-=100;
-        }else if(planet.equals("reapeater")&&Sun.collectedpoint>=50){
+            Sun.collectedpoint-=Peashooter.cost;
+        }else if(planet.equals("reapeater")&&Repeater.canplace){
             System.out.println("repeater");
             Repeater R=new Repeater(col,row);
             Repeater.canplace=false;
@@ -296,9 +296,9 @@ public class Yard {
             R.cooldown(reapeaterB);
             plantView=R.image;
             R.act(yardPane,Zombies);
-            Sun.collectedpoint-=50;
+            Sun.collectedpoint-=Repeater.cost;
         }
-        else if(planet.equals("snowpea")&&SnowPea.canplace&&Sun.collectedpoint>=50){
+        else if(planet.equals("snowpea")&&SnowPea.canplace){
             SnowPea S=new SnowPea(col,row);
             SnowPea.canplace=false;
             SnowpeaB.setDisable(true);
@@ -308,7 +308,7 @@ public class Yard {
             S.cooldown(SnowpeaB);
             S.act(yardPane,Zombies);
             Sun.collectedpoint-=50;
-        }else if(planet.equals("cherrybomb") && Cherry.canplace&&Sun.collectedpoint>=50){
+        }else if(planet.equals("cherrybomb") && Cherry.canplace){
             Cherry C=new Cherry(col,row);
             Cherry.canplace=false;
             cherrybombB.setDisable(true);
@@ -323,8 +323,8 @@ public class Yard {
                 );
                 timeline.play();
             }
-            Sun.collectedpoint-=50;
-        }else if(planet.equals("jalapeno") && Jalapeno.canplace&&Sun.collectedpoint>=50) {
+            Sun.collectedpoint-=Cherry.cost;
+        }else if(planet.equals("jalapeno") && Jalapeno.canplace) {
             Jalapeno J = new Jalapeno(col, row);
             Jalapeno.canplace = false;
             JalapenoB.setDisable(true);
@@ -340,7 +340,7 @@ public class Yard {
                 );
                 timeline.play();
             }
-            Sun.collectedpoint -= 50;
+            Sun.collectedpoint -= Jalapeno.cost;
         }else if (planet.equals("wallnut")&&WallNut.canplace){
                 WallNut w=new WallNut(col,row);
                 WallNut.canplace=false;
@@ -436,6 +436,20 @@ public class Yard {
             } else {
                 SnowpeaB.setDisable(true);
                 SnowpeaB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+            if (Sun.collectedpoint >= Cherry.cost && Cherry.canplace) {
+                cherrybombB.setDisable(false);
+                cherrybombB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                cherrybombB.setDisable(true);
+                cherrybombB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+            if (Sun.collectedpoint >= Jalapeno.cost && Jalapeno.canplace) {
+                JalapenoB.setDisable(false);
+                JalapenoB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                JalapenoB.setDisable(true);
+                JalapenoB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             }
             sunpoint.setText("☀\uFE0F"+Sun.collectedpoint);
             sunpoint.setLayoutX(850);

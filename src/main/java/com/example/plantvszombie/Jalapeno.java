@@ -18,7 +18,7 @@ public class Jalapeno extends Planet {
         this.row = y;
         this.col = x;
         this.watingtime = 6;
-        cost = 50;
+        cost = 125;
         this.image = new ImageView( new Image(getClass().getResource("/jalapeno.gif").toExternalForm()));
         bullets = new ArrayList<Bullet>();
     }
