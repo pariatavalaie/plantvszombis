@@ -23,6 +23,7 @@ public class Yard {
     final double GRID_X=80;
     final double GRID_Y=100;
     Menu menu;
+    ImageView yard;
     Button SnowpeaB=new Button();
     Button peashooterB=new Button();
     Button reapeaterB=new Button();
@@ -38,7 +39,7 @@ public class Yard {
 
     Yard(Menu menu) {
         Image yar = new Image(getClass().getResourceAsStream("Frontyard.png"));
-        ImageView yard = new ImageView(yar);
+         yard = new ImageView(yar);
         this.menu = menu;
         yardPane = new AnchorPane(yard);
         sunpoint.setText("☀\uFE0F"+Sun.collectedpoint);
@@ -460,111 +461,6 @@ public class Yard {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-    }
-    public void saveGame(String filename) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
-            List<PlantState> plantStates = new ArrayList<>();
-            for (Planet planet : planets) {
-                plantStates.add(new PlantState(
-                        planet.getClass().getSimpleName(),
-                        planet.row,
-                        planet.col,
-                        planet.health
-                ));
-            }
-
-            List<ZombieState> zombieStates = new ArrayList<>();
-            for (Zombies zombie : Zombies) {
-                zombieStates.add(new ZombieState(
-                        zombie.getClass().getSimpleName(),
-                        zombie.x,
-                        zombie.y,
-                        zombie.hp
-                ));
-            }
-
-            GameState gameState = new GameState(
-                    Sun.collectedpoint,
-                    plantStates,
-                    zombieStates,
-                    ZombieWaveManger.gameTime
-            );
-
-            oos.writeObject(gameState);
-            System.out.println("Game saved successfully!");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public void loadGame(String filename) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
-            GameState gameState = (GameState) ois.readObject();
-
-            // Reset current game state
-            yardPane.getChildren().removeIf(node -> node instanceof ImageView);
-            planets.clear();
-            Zombies.clear();
-
-            // Restore sun points
-            Sun.collectedpoint = gameState.getSunPoints();
-            sunpoint.setText("☀\uFE0F" + Sun.collectedpoint);
-
-            // Restore plants
-            for (PlantState plantState : gameState.getPlants()) {
-                placeplanet(
-                        plantState.getType().toLowerCase(),
-                        plantState.getCol(),
-                        plantState.getRow()
-                );
-                // Update plant health if needed
-                for (Planet planet : planets) {
-                    if (planet.row == plantState.getRow() && planet.col == plantState.getCol()) {
-                        planet.health = plantState.getHealth();
-                        break;
-                    }
-                }
-            }
-
-            // Restore zombies
-            for (ZombieState zombieState : gameState.getZombies()) {
-                switch (zombieState.getType()) {
-                    case "NormalZombie":
-                        Zombies.add(new NormalZombie(zombieState.getX(), zombieState.getY(), yardPane));
-                        break;
-                    case "ConeheadZombie":
-                        Zombies.add(new ConeheadZombie(zombieState.getX(), zombieState.getY(), yardPane));
-                        break;
-                    // سایر انواع زامبی‌ها...
-                }
-                // Update zombie health if needed
-                for (Zombies zombie : Zombies) {
-                    if (zombie.x == zombieState.getX() && zombie.y == zombieState.getY()) {
-                        zombie.hp = zombieState.getHp();
-                        break;
-                    }
-                }
-            }
-
-            // Restore game time (if needed)
-            ZombieWaveManger.gameTime = gameState.getGameTime();
-
-            System.out.println("Game loaded successfully!");
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-    // در کلاس Yard
-    public void addSaveLoadButtons() {
-        Button saveButton = new Button("Save Game");
-        saveButton.setOnAction(e -> saveGame("savegame.dat"));
-
-        Button loadButton = new Button("Load Game");
-        loadButton.setOnAction(e -> loadGame("savegame.dat"));
-
-        HBox buttonBox = new HBox(10, saveButton, loadButton);
-        buttonBox.setLayoutX(400);
-        buttonBox.setLayoutY(10);
-        yardPane.getChildren().add(buttonBox);
     }
 
 

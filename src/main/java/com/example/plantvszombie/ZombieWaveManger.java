@@ -10,6 +10,8 @@ public class ZombieWaveManger {
     Timeline maintimeline;
     Yard yard;
     static int gameTime;
+    boolean win = false;
+    boolean lose = false;
 
     ZombieWaveManger(Yard yard) {
         this.yard = yard;
@@ -19,6 +21,10 @@ public class ZombieWaveManger {
 
     private void setupTimeline() {
         maintimeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> tick()));
+        maintimeline.setOnFinished(event -> {
+            if(!win){
+            lose = true;}
+        });
         maintimeline.setCycleCount(480); // بازی 60 ثانیه است
     }
 
@@ -109,6 +115,13 @@ public class ZombieWaveManger {
 
             }
         }
+    }
+    private void endgame(){
+        for (Zombies zombie: yard.Zombies) {
+            if(zombie.inHouse&&!win){
+            lose = true;}
+        }
+
     }
 
 

@@ -108,7 +108,6 @@ public abstract class Zombies {
                 }));
                 eating.setCycleCount(p.health);
                 eating.play();
-
                 break;
             }
         }

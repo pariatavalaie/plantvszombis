@@ -43,8 +43,8 @@ public class Jalapeno extends Planet {
     }
 
     public void cooldown(Button b){
-        PauseTransition cooldown = new PauseTransition(Duration.seconds(watingtime));
-        cooldown.setOnFinished(ev -> {
+       cooldown = new PauseTransition(Duration.seconds(watingtime));
+       cooldown.setOnFinished(ev -> {
             canplace= true;
             b.setDisable(false);
             b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");

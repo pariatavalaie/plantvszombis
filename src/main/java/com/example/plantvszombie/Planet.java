@@ -17,6 +17,7 @@ public abstract class Planet {
     ImageView eatimage;
     ArrayList<Bullet> bullets;
     boolean dead=false;
+    PauseTransition cooldown;
 
     abstract void act(Pane root,ArrayList<Zombies>Zombies);
 

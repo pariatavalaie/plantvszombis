@@ -63,7 +63,7 @@ public class SnowPea extends Planet{
 
     }
     public void cooldown( Button b){
-        PauseTransition cooldown = new PauseTransition(Duration.seconds(watingtime));
+        cooldown = new PauseTransition(Duration.seconds(watingtime));
         cooldown.setOnFinished(ev -> {
             canplace= true;
             if(cost<=Sun.collectedpoint){
