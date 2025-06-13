@@ -440,6 +440,7 @@ public class Yard {
             sunpoint.setLayoutX(850);
             sunpoint.setLayoutY(8);
 
+
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();

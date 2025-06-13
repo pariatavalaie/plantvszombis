@@ -17,6 +17,7 @@ public class Repeater extends Planet {
     public Repeater(int x, int y) {
         this.row = y;
         this.col = x;
+
         this.watingtime = 7;
         this.health=4;
         bullets=new ArrayList<>();

@@ -72,6 +72,7 @@ public class Peashooter extends Planet{
                 System.out.println("✅ You can place another Sunflower now");}
         });
         cooldown.play();
+
     }
 
 }
