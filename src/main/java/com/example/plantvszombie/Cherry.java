@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Cherry extends Planet {
     static boolean canplace = true;
-    static int cost = 200;
+    static int cost = 150;
 
     public Cherry(int x, int y) {
         this.row = y;
@@ -46,13 +46,15 @@ public class Cherry extends Planet {
                 // بررسی اینکه آیا زامبی در محدوده 3x3 قرار دارد یا خیر
                 // باید مطمئن بشیم که زامبی حداکثر یک خونه با Cherry فاصله داره
                 if (distanceX <= cellWidth / 2 * 3 && distanceY <= cellHeight / 2 * 3) {
-                    PauseTransition pause = new PauseTransition(Duration.millis(1));
+                    PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(ev-> {
                         z.hp = 0;
                     });
+                    pause.play();
                     z.image.setImage(z.deadZombie.getImage());
                 }
             } }));
+
          timeline.setCycleCount(1);
         timeline.play();
     }
