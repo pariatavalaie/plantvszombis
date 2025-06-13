@@ -26,7 +26,12 @@ public class Jalapeno extends Planet {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
         for(Zombies z : Zombies){
             if(z.y == this.row&&z.x<=8){
-                z.hp = 0;
+                PauseTransition pause = new PauseTransition(Duration.seconds(1));
+                pause.setOnFinished(ev-> {
+                    z.hp = 0;
+                });
+                pause.play();
+                z.image.setImage(z.deadZombie.getImage());
             }
         }
         }));
