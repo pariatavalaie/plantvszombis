@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Jalapeno extends Planet {
     static boolean canplace = true;
-    static int cost=125;
+    static int cost = 125;
     public Jalapeno(int x , int y) {
         this.row = y;
         this.col = x;
@@ -25,7 +25,7 @@ public class Jalapeno extends Planet {
     void act(Pane pene , ArrayList<Zombies> Zombies){
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
         for(Zombies z : Zombies){
-            if(z.y == this.row){
+            if(z.y == this.row&&z.x<=8){
                 z.hp = 0;
             }
         }
