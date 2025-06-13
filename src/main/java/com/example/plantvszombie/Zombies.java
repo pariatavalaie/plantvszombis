@@ -21,6 +21,7 @@ public abstract class Zombies {
     ImageView image;
     ImageView deadZombie;
     Timeline walker;
+    boolean inHouse=false;
     abstract void act(Pane root);
      void move(Pane root){
         walker = new Timeline(new KeyFrame(Duration.seconds(speed), e -> {
@@ -111,6 +112,11 @@ public abstract class Zombies {
                 break;
             }
         }
+    }
+    public void init(){
+         if(x<0){
+             inHouse=true;
+         }
     }
 
 
