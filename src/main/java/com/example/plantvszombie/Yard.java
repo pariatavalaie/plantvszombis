@@ -62,6 +62,12 @@ public class Yard {
             selected[0]="shovel";
             System.out.println("shovel");
         });
+        cherrybombB.setOnAction(event -> {
+            selected[0]="cherrybomb";
+        });
+        JalapenoB.setOnAction(event -> {
+            selected[0]="jalapeno";
+        });
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 Rectangle rectangle = new Rectangle(GRID_X, GRID_Y);
@@ -106,6 +112,14 @@ public class Yard {
                             planet1.remove(yardPane);
                             planets.remove(planet1);}
                         selected[0] = null;
+                    }else if("cherrybomb".equals(selected[0])) {
+                        System.out.println(row);
+                        placeplanet("cherrybomb",col,row);
+                        selected[0] = null;
+                    }else if("jalapeno".equals(selected[0])) {
+                        System.out.println(row);
+                        placeplanet("jalapeno",col,row);
+                        selected[0] = null;
                     }
                 });
             }
@@ -117,6 +131,14 @@ public class Yard {
 
 
     }
+    private Planet findPlanet(int col, int row) {
+        for (Planet planet : planets) {
+            if (planet.row == row && planet.col == col) {
+                return planet;
+            }
+        }
+        return null;
+    }
     public void startMovingAndDetecting() {
         // جلوگیری از ConcurrentModificationException با ایجاد کپی
         ArrayList<Zombies> zombieCopy = new ArrayList<>(Zombies);
@@ -125,6 +147,11 @@ public class Yard {
             zombie.damage(planets, yardPane);
             zombie.remove(yardPane, Zombies);
         }
+    }
+
+    private void removePlanet(Planet planet) {
+        planet.remove(yardPane); // فرض بر اینکه متد remove در کلاس Planet وجود دارد
+        planets.remove(planet);
     }
 
     public void buttonpic(){
@@ -255,6 +282,39 @@ public class Yard {
             plantView=S.image;
             S.cooldown(SnowpeaB);
             S.act(yardPane,Zombies);
+            Sun.collectedpoint-=50;
+        }else if(planet.equals("cherrybomb") && Cherry.canplace&&Sun.collectedpoint>=50){
+            Cherry C=new Cherry(col,row);
+            Cherry.canplace=false;
+            cherrybombB.setDisable(true);
+            planets.add(C);
+            plantView=C.image;
+            C.cooldown(cherrybombB);
+            C.act(yardPane,Zombies);
+            Planet cherry = findPlanet(col,row);
+            if (cherry != null) {
+                Timeline timeline = new Timeline(
+                        new KeyFrame(Duration.seconds(2), e -> removePlanet(cherry))
+                );
+                timeline.play();
+            }
+            Sun.collectedpoint-=50;
+        }else if(planet.equals("jalapeno") && Jalapeno.canplace&&Sun.collectedpoint>=50){
+            Jalapeno J = new Jalapeno(col,row);
+            Jalapeno.canplace=false;
+            JalapenoB.setDisable(true);
+            JalapenoB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            planets.add(J);
+            plantView=J.image;
+            J.cooldown(JalapenoB);
+            J.act(yardPane,Zombies);
+            Planet jalapeno = findPlanet(col,row);
+            if (jalapeno != null) {
+                Timeline timeline = new Timeline(
+                        new KeyFrame(Duration.seconds(2), e -> removePlanet(jalapeno))
+                );
+                timeline.play();
+            }
             Sun.collectedpoint-=50;
         }
 
