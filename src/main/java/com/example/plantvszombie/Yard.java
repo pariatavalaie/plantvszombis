@@ -19,8 +19,8 @@ import java.util.List;
 public class Yard {
     AnchorPane yardPane;
     GridPane gridPane;
-    final double GRID_X=80;
-    final double GRID_Y=100;
+    static final double GRID_X=80;
+    static final double GRID_Y=100;
     Menu menu;
     Button SnowpeaB=new Button();
     Button peashooterB=new Button();
