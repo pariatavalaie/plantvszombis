@@ -13,6 +13,9 @@ public class ImpZombie extends Zombies{
         this.image = new ImageView(new Image(getClass().getResource("/Walking_Imp.gif").toExternalForm()));
         image.setFitHeight(60);
         image.setFitWidth(80);
+        this.deadZombie = new ImageView(new Image(getClass().getResource("/burntZombie.gif").toExternalForm()));
+        deadZombie.setFitHeight(80);
+        deadZombie.setFitWidth(100);
         double startX = 245 + x * 80 + 5;
         double startY = 60 + y * 100 + 10;
 

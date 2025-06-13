@@ -55,7 +55,7 @@ public class ZombieWaveManger {
     }
 
     private void waveStage3() {
-        if (gameTime % 2 == 0) {
+        if (gameTime % 12 == 0) { //10 zombie
             spawnZombie("Normal", 1);
             spawnZombie("Conehead", 1);
             spawnZombie("Screendor", 1);
@@ -63,7 +63,7 @@ public class ZombieWaveManger {
     }
 
     private void waveStage4() {
-        if (gameTime % 2 == 0) {
+        if (gameTime % 6 == 0) { //20 zombie
             spawnZombie("Normal", 2);
             spawnZombie("Conehead", 2);
             spawnZombie("Screendor", 2);

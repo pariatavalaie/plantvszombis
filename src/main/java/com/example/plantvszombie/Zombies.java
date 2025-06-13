@@ -19,6 +19,7 @@ public abstract class Zombies {
     int hp;
     int speed;
     ImageView image;
+    ImageView deadZombie;
     Timeline walker;
     abstract void act(Pane root);
      void move(Pane root){

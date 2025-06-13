@@ -11,6 +11,9 @@ public class ScreendoorZombie extends Zombies{
      this.hp=10;
      this.speed=4;
      this.image = new ImageView(new Image(getClass().getResource("/HDplus_screendoor.png").toExternalForm()));
+     this.deadZombie = new ImageView(new Image(getClass().getResource("/burntZombie.gif").toExternalForm()));
+     deadZombie.setFitHeight(80);
+     deadZombie.setFitWidth(100);
      image.setFitHeight(80);
      image.setFitWidth(100);
      double startX = 245 + x * 80 + 5;
