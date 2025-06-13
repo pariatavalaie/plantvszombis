@@ -13,14 +13,15 @@ import java.util.ArrayList;
 
 public class Repeater extends Planet {
     static boolean canplace = true;
+    static final int cost=200;
     public Repeater(int x, int y) {
         this.row = y;
         this.col = x;
-        this.cost = 200;
         this.watingtime = 7;
-        health=4;
+        this.health=4;
         bullets=new ArrayList<>();
         this.image =new ImageView( new Image(getClass().getResource("/repeater.gif").toExternalForm()));
+        this.eatimage =new ImageView( new Image(getClass().getResource("/repeater.gif").toExternalForm()));
     }
     void act(Pane root) {}
 
@@ -64,11 +65,11 @@ public class Repeater extends Planet {
         PauseTransition cooldown = new PauseTransition(Duration.seconds(watingtime));
         cooldown.setOnFinished(ev -> {
             canplace= true;
-            b.setDisable(false);
-            b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            System.out.println("✅ You can place another Sunflower now");
+            if(cost<=Sun.collectedpoint){
+                b.setDisable(false);
+                b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+                System.out.println("✅ You can place another Sunflower now");}
         });
         cooldown.play();
     }
 }
-

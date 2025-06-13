@@ -9,12 +9,12 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public abstract class Planet {
-    int cost;
     int watingtime;
     int row;
     int col;
     int health;
     ImageView image;
+    ImageView eatimage;
     ArrayList<Bullet> bullets;
     boolean dead=false;
 

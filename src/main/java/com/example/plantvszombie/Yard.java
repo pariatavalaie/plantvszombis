@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -29,6 +30,7 @@ public class Yard {
     Button cherrybombB=new Button();
     Button JalapenoB=new Button();
     Button SunflowerB=new Button();
+    Label sunpoint=new Label();
     Button ShovelB=new Button();
     ArrayList<Planet>planets=new ArrayList<>();
     ArrayList<Zombies>Zombies=new ArrayList<>();
@@ -38,6 +40,15 @@ public class Yard {
         ImageView yard = new ImageView(yar);
         this.menu = menu;
         yardPane = new AnchorPane(yard);
+        sunpoint.setText("☀\uFE0F"+Sun.collectedpoint);
+        sunpoint.setStyle(
+                "-fx-font-size: 26px;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-font-family: 'Segoe UI Emoji';"
+        );
+        sunpoint.setLayoutX(850);
+        sunpoint.setLayoutY(8);
+        yardPane.getChildren().add(sunpoint);
         PaintGrid(9, 5);
         buttonpic();
     }
@@ -67,6 +78,12 @@ public class Yard {
         });
         JalapenoB.setOnAction(event -> {
             selected[0]="jalapeno";
+        });
+        WallnutB.setOnAction(event -> {
+            selected[0]="wallnut";
+        });
+        TallnutB.setOnAction(event -> {
+            selected[0]="tallnut";
         });
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
@@ -112,14 +129,21 @@ public class Yard {
                             planet1.remove(yardPane);
                             planets.remove(planet1);}
                         selected[0] = null;
-                    }else if("cherrybomb".equals(selected[0])) {
+                    }else if("cherrybomb".equals(selected[0])&&empty) {
                         System.out.println(row);
                         placeplanet("cherrybomb",col,row);
                         selected[0] = null;
-                    }else if("jalapeno".equals(selected[0])) {
+                    }else if("jalapeno".equals(selected[0])&&empty) {
                         System.out.println(row);
                         placeplanet("jalapeno",col,row);
                         selected[0] = null;
+                    }else if ("wallnut".equals(selected[0])&&empty) {
+                        placeplanet("wallnut",col,row);
+                        selected[0] = null;
+                    } else if ("tallnut".equals(selected[0])&&empty) {
+                        placeplanet("tallnut",col,row);
+                        selected[0] = null;
+
                     }
                 });
             }
@@ -346,6 +370,62 @@ public class Yard {
         }
         return false;
     }
+    public void Updatebutton() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {
+            if (Sun.collectedpoint >= Peashooter.cost && Peashooter.canplace) {
+                peashooterB.setDisable(false);
+                peashooterB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                peashooterB.setDisable(true);
+                peashooterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+
+            if (Sun.collectedpoint >= Repeater.cost && Repeater.canplace) {
+                reapeaterB.setDisable(false);
+                reapeaterB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                reapeaterB.setDisable(true);
+                reapeaterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+            if (Sun.collectedpoint >= Sunflower.cost && Sunflower.canplace) {
+                SunflowerB.setDisable(false);
+                SunflowerB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                SunflowerB.setDisable(true);
+                SunflowerB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+
+            if (Sun.collectedpoint >= WallNut.cost && WallNut.canplace) {
+                WallnutB.setDisable(false);
+                WallnutB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                WallnutB.setDisable(true);
+                WallnutB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+            if (Sun.collectedpoint >= TallNut.cost && TallNut.canplace) {
+                TallnutB.setDisable(false);
+                TallnutB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                TallnutB.setDisable(true);
+                TallnutB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+
+            if (Sun.collectedpoint >= SnowPea.cost && SnowPea.canplace) {
+                SnowpeaB.setDisable(false);
+                SnowpeaB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                SnowpeaB.setDisable(true);
+                SnowpeaB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+            sunpoint.setText("☀\uFE0F"+Sun.collectedpoint);
+            sunpoint.setLayoutX(850);
+            sunpoint.setLayoutY(8);
+
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
 
 
 
