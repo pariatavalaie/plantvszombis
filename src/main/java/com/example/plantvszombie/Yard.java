@@ -3,7 +3,6 @@ package com.example.plantvszombie;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -31,8 +30,8 @@ public class Yard {
     Button cherrybombB=new Button();
     Button JalapenoB=new Button();
     Button SunflowerB=new Button();
-    Button ShovelB=new Button();
     Label sunpoint=new Label();
+    Button ShovelB=new Button();
     ArrayList<Planet>planets=new ArrayList<>();
     ArrayList<Zombies>Zombies=new ArrayList<>();
 
@@ -73,6 +72,12 @@ public class Yard {
         ShovelB.setOnAction(event -> {
             selected[0]="shovel";
             System.out.println("shovel");
+        });
+        cherrybombB.setOnAction(event -> {
+            selected[0]="cherrybomb";
+        });
+        JalapenoB.setOnAction(event -> {
+            selected[0]="jalapeno";
         });
         WallnutB.setOnAction(event -> {
             selected[0]="wallnut";
@@ -124,10 +129,18 @@ public class Yard {
                             planet1.remove(yardPane);
                             planets.remove(planet1);}
                         selected[0] = null;
-                    }else if ("wallnut".equals(selected[0])) {
+                    }else if("cherrybomb".equals(selected[0])&&empty) {
+                        System.out.println(row);
+                        placeplanet("cherrybomb",col,row);
+                        selected[0] = null;
+                    }else if("jalapeno".equals(selected[0])&&empty) {
+                        System.out.println(row);
+                        placeplanet("jalapeno",col,row);
+                        selected[0] = null;
+                    }else if ("wallnut".equals(selected[0])&&empty) {
                         placeplanet("wallnut",col,row);
                         selected[0] = null;
-                    } else if ("tallnut".equals(selected[0])) {
+                    } else if ("tallnut".equals(selected[0])&&empty) {
                         placeplanet("tallnut",col,row);
                         selected[0] = null;
 
@@ -142,14 +155,27 @@ public class Yard {
 
 
     }
+    private Planet findPlanet(int col, int row) {
+        for (Planet planet : planets) {
+            if (planet.row == row && planet.col == col) {
+                return planet;
+            }
+        }
+        return null;
+    }
     public void startMovingAndDetecting() {
+        // جلوگیری از ConcurrentModificationException با ایجاد کپی
         ArrayList<Zombies> zombieCopy = new ArrayList<>(Zombies);
 
         for (Zombies zombie : zombieCopy) {
             zombie.damage(planets, yardPane);
             zombie.remove(yardPane, Zombies);
-            zombie.checkAndEatPlant(planets, yardPane);
         }
+    }
+
+    private void removePlanet(Planet planet) {
+        planet.remove(yardPane); // فرض بر اینکه متد remove در کلاس Planet وجود دارد
+        planets.remove(planet);
     }
 
     public void buttonpic(){
@@ -239,7 +265,7 @@ public class Yard {
 
     public void placeplanet(String planet,int col,int row){
         ImageView plantView = null;
-        if (planet.equals("sunflower")&&Sunflower.canplace){
+        if (planet.equals("sunflower")&&Sunflower.canplace&&Sun.collectedpoint>=50){
             Sunflower S=new Sunflower(col,row,yardPane);
             Sunflower.canplace=false;
             SunflowerB.setDisable(true); // غیرفعال کردن دکمه
@@ -248,18 +274,18 @@ public class Yard {
             planets.add(S);
             plantView=S.image;
             S.act(yardPane);
-            Sun.collectedpoint-=Sunflower.cost;
-        } else if(planet.equals("peashooter")&&Peashooter.canplace){
+            Sun.collectedpoint-=50;
+        } else if(planet.equals("peashooter")&&Peashooter.canplace&&Sun.collectedpoint>=50){
             Peashooter P=new Peashooter(col,row);
             Peashooter.canplace=false;
-            peashooterB.setDisable(true);
-            peashooterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            peashooterB.setDisable(true); // غیرفعال کردن دکمه
+            peashooterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
             planets.add(P);
             P.cooldown(peashooterB);
             plantView=P.image;
             P.act(yardPane,Zombies);
-            Sun.collectedpoint-=Peashooter.cost;
-        }else if(planet.equals("reapeater")){
+            Sun.collectedpoint-=100;
+        }else if(planet.equals("reapeater")&&Sun.collectedpoint>=50){
             System.out.println("repeater");
             Repeater R=new Repeater(col,row);
             Repeater.canplace=false;
@@ -269,9 +295,9 @@ public class Yard {
             R.cooldown(reapeaterB);
             plantView=R.image;
             R.act(yardPane,Zombies);
-            Sun.collectedpoint-= Repeater.cost;
+            Sun.collectedpoint-=50;
         }
-        else if(planet.equals("snowpea")&&SnowPea.canplace){
+        else if(planet.equals("snowpea")&&SnowPea.canplace&&Sun.collectedpoint>=50){
             SnowPea S=new SnowPea(col,row);
             SnowPea.canplace=false;
             SnowpeaB.setDisable(true);
@@ -280,25 +306,40 @@ public class Yard {
             plantView=S.image;
             S.cooldown(SnowpeaB);
             S.act(yardPane,Zombies);
-            Sun.collectedpoint-=SnowPea.cost;
-        }else if (planet.equals("wallnut")&&WallNut.canplace){
-            WallNut w=new WallNut(col,row);
-            WallNut.canplace=false;
-            WallnutB.setDisable(true);
-            WallnutB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
-            planets.add(w);
-            plantView=w.image;
-            w.cooldown(WallnutB);
-            Sun.collectedpoint-=WallNut.cost;
-        }else if(planet.equals("tallnut")&&TallNut.canplace){
-            TallNut t=new TallNut(col,row);
-            TallNut.canplace=false;
-            TallnutB.setDisable(true);
-            TallnutB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
-            planets.add(t);
-            plantView=t.image;
-            t.cooldown(WallnutB);
-            Sun.collectedpoint-=TallNut.cost;
+            Sun.collectedpoint-=50;
+        }else if(planet.equals("cherrybomb") && Cherry.canplace&&Sun.collectedpoint>=50){
+            Cherry C=new Cherry(col,row);
+            Cherry.canplace=false;
+            cherrybombB.setDisable(true);
+            planets.add(C);
+            plantView=C.image;
+            C.cooldown(cherrybombB);
+            C.act(yardPane,Zombies);
+            Planet cherry = findPlanet(col,row);
+            if (cherry != null) {
+                Timeline timeline = new Timeline(
+                        new KeyFrame(Duration.seconds(2), e -> removePlanet(cherry))
+                );
+                timeline.play();
+            }
+            Sun.collectedpoint-=50;
+        }else if(planet.equals("jalapeno") && Jalapeno.canplace&&Sun.collectedpoint>=50){
+            Jalapeno J = new Jalapeno(col,row);
+            Jalapeno.canplace=false;
+            JalapenoB.setDisable(true);
+            JalapenoB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            planets.add(J);
+            plantView=J.image;
+            J.cooldown(JalapenoB);
+            J.act(yardPane,Zombies);
+            Planet jalapeno = findPlanet(col,row);
+            if (jalapeno != null) {
+                Timeline timeline = new Timeline(
+                        new KeyFrame(Duration.seconds(2), e -> removePlanet(jalapeno))
+                );
+                timeline.play();
+            }
+            Sun.collectedpoint-=50;
         }
 
         plantView.setFitWidth(70);

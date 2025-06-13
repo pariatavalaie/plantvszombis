@@ -73,4 +73,3 @@ public class Repeater extends Planet {
         cooldown.play();
     }
 }
-

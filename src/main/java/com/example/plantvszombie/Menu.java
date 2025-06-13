@@ -21,6 +21,8 @@ public class Menu {
             "Snow Pea", "Repeater", "Tall-nut", "jalapeno"};
     private boolean[] plantSelected;
     public Button Play;
+    public Button StartGame;
+    public Button Exit;
     public int countPlant = 0;
 
     Menu() {
@@ -29,6 +31,20 @@ public class Menu {
         selectedPlantsNames = new ArrayList<>();
         selectionCountLabel = new Label();
         plantSelected = new boolean[8];
+        StartGame = new Button();
+        Image image2 = new Image(getClass().getResource("/startgame.png").toExternalForm());
+        ImageView imageView2 = new ImageView(image2);
+        imageView2.setPreserveRatio(true);
+        StartGame.setGraphic(imageView2);
+        StartGame.setLayoutX(340);
+        StartGame.setLayoutY(470);
+        Exit = new Button();
+        Image image1 = new Image(getClass().getResource("/existinguser.png").toExternalForm());
+        ImageView imageView1 = new ImageView(image1);
+        imageView1.setPreserveRatio(true);
+        Exit.setGraphic(imageView1);
+        Exit.setLayoutX(340);
+        Exit.setLayoutY(550);
     }
 
     public VBox getMenuPane() {
@@ -48,6 +64,7 @@ public class Menu {
         ImageView imageView1 = new ImageView(image1);
         imageView1.setPreserveRatio(true);
         Play.setGraphic(imageView1);
+
 
 
         int count = 0;

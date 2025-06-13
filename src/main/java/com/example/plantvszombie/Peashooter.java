@@ -21,7 +21,7 @@ public class Peashooter extends Planet{
         this.health=4;
         bullets = new ArrayList<Bullet>();
         this.image = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
-        this.image = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
+        this.eatimage = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
     }
     public void act(Pane root) {
 
@@ -55,8 +55,8 @@ public class Peashooter extends Planet{
                 bullets.add(repeater1);
             }
         }));
-          timeline.setCycleCount(Timeline.INDEFINITE);
-          timeline.play();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
 
 
 
@@ -75,5 +75,4 @@ public class Peashooter extends Planet{
     }
 
 }
-
 
