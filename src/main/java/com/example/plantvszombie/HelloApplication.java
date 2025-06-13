@@ -51,7 +51,6 @@ public class HelloApplication extends Application {
         ZombieWaveManger zw = new ZombieWaveManger(yard);
         zw.start();
         yard.Updatebutton();
-        yard.addSaveLoadButtons();
         Scene scene1 = new Scene(yard.yardPane, 1024, 626);
         stage.setScene(scene1);
         stage.setResizable(false);
