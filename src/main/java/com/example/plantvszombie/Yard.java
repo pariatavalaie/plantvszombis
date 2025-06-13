@@ -323,26 +323,45 @@ public class Yard {
                 timeline.play();
             }
             Sun.collectedpoint-=50;
-        }else if(planet.equals("jalapeno") && Jalapeno.canplace&&Sun.collectedpoint>=50){
-            Jalapeno J = new Jalapeno(col,row);
-            Jalapeno.canplace=false;
+        }else if(planet.equals("jalapeno") && Jalapeno.canplace&&Sun.collectedpoint>=50) {
+            Jalapeno J = new Jalapeno(col, row);
+            Jalapeno.canplace = false;
             JalapenoB.setDisable(true);
             JalapenoB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             planets.add(J);
-            plantView=J.image;
+            plantView = J.image;
             J.cooldown(JalapenoB);
-            J.act(yardPane,Zombies);
-            Planet jalapeno = findPlanet(col,row);
+            J.act(yardPane, Zombies);
+            Planet jalapeno = findPlanet(col, row);
             if (jalapeno != null) {
                 Timeline timeline = new Timeline(
                         new KeyFrame(Duration.seconds(2), e -> removePlanet(jalapeno))
                 );
                 timeline.play();
             }
-            Sun.collectedpoint-=50;
-        }
+            Sun.collectedpoint -= 50;
+        }else if (planet.equals("wallnut")&&WallNut.canplace){
+                WallNut w=new WallNut(col,row);
+                WallNut.canplace=false;
+                WallnutB.setDisable(true);
+                WallnutB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+                planets.add(w);
+                plantView=w.image;
+                w.cooldown(WallnutB);
+                Sun.collectedpoint-=WallNut.cost;
+            }else if(planet.equals("tallnut")&&TallNut.canplace){
+                TallNut t=new TallNut(col,row);
+                TallNut.canplace=false;
+                TallnutB.setDisable(true);
+                TallnutB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+                planets.add(t);
+                plantView=t.image;
+                t.cooldown(WallnutB);
+                Sun.collectedpoint-=TallNut.cost;
+            }
 
-        plantView.setFitWidth(70);
+
+            plantView.setFitWidth(70);
         plantView.setFitHeight(70);
 
         double gridX = 245.0; // Left anchor of grid
