@@ -19,6 +19,7 @@ public class Jalapeno extends Planet {
         this.col = x;
         this.watingtime = 6;
         this.image = new ImageView( new Image(getClass().getResource("/jalapeno.gif").toExternalForm()));
+        this.eatimage=new ImageView( new Image(getClass().getResource("/jalapeno.gif").toExternalForm()));
         bullets = new ArrayList<Bullet>();
     }
     @Override
@@ -46,9 +47,10 @@ public class Jalapeno extends Planet {
        cooldown = new PauseTransition(Duration.seconds(watingtime));
        cooldown.setOnFinished(ev -> {
             canplace= true;
-            b.setDisable(false);
-            b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            System.out.println("✅ You can place another Sunflower now");
+           if(Sun.collectedpoint>=cost){
+               b.setDisable(false);
+               b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+               System.out.println("✅ You can place another Sunflower now");}
         });
         cooldown.play();
     }
