@@ -12,25 +12,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
+    public boolean day;
     private final int MAX_PLANTS = 6;
     private List<Button> plantButtons;
     private List<String> selectedPlantsNames;
-    private Label selectionCountLabel;
     public AnchorPane MenuPane;
     public String[] plantNames = {"Sunflower", "Peashooter", "Wall-nut", "Cherry Bomb",
-            "Snow Pea", "Repeater", "Tall-nut", "jalapeno"};
+            "Snow Pea", "Repeater", "Tall-nut", "jalapeno", "Hypno", "Puff", "Scaredy", "Doom", "Ice", "bean", "Grave", "blover", "plantern"};
     private boolean[] plantSelected;
     public Button Play;
     public Button StartGame;
     public Button Exit;
+    public Button Day;
+    public Button Night;
     public int countPlant = 0;
 
     Menu() {
         plantButtons = new ArrayList<>();
         MenuPane = new AnchorPane();
         selectedPlantsNames = new ArrayList<>();
-        selectionCountLabel = new Label();
-        plantSelected = new boolean[8];
+        plantSelected = new boolean[14];
         StartGame = new Button();
         Image image2 = new Image(getClass().getResource("/startgame.png").toExternalForm());
         ImageView imageView2 = new ImageView(image2);
@@ -45,6 +46,24 @@ public class Menu {
         Exit.setGraphic(imageView1);
         Exit.setLayoutX(340);
         Exit.setLayoutY(550);
+        Day = new Button();
+        Image image3 = new Image(getClass().getResourceAsStream("Frontyard.png"));
+        ImageView imageView3 = new ImageView(image3);
+        imageView3.setFitHeight(64);
+        imageView3.setFitWidth(105);
+        imageView3.setPreserveRatio(true);
+        Day.setGraphic(imageView3);
+        Day.setLayoutX(340);
+        Day.setLayoutY(60);
+        Night = new Button();
+        Image image4 = new Image(getClass().getResource("/Night_11zon.png").toExternalForm());
+        ImageView imageView4 = new ImageView(image4);
+        imageView4.setPreserveRatio(true);
+        imageView4.setFitHeight(64);
+        imageView4.setFitWidth(105);
+        Night.setGraphic(imageView4);
+        Night.setLayoutX(100);
+        Night.setLayoutY(50);
     }
 
     public VBox getMenuPane() {
@@ -59,12 +78,19 @@ public class Menu {
         menu2.setPadding(new Insets(20));
         menu2.setAlignment(Pos.CENTER);
 
+        HBox menu3 = new HBox(10);
+        menu3.setPadding(new Insets(20));
+        menu3.setAlignment(Pos.CENTER);
+
+        HBox menu4 = new HBox(10);
+        menu4.setPadding(new Insets(20));
+        menu4.setAlignment(Pos.CENTER);
+
         Play = new Button();
         Image image1 = new Image(getClass().getResource("/play.png").toExternalForm());
         ImageView imageView1 = new ImageView(image1);
         imageView1.setPreserveRatio(true);
         Play.setGraphic(imageView1);
-
 
 
         int count = 0;
@@ -112,6 +138,51 @@ public class Menu {
                 view = new ImageView(image);
                 view.setFitHeight(64);
                 view.setFitWidth(105);
+            } else if (name.equals("Hypno")) {
+                image = new Image(getClass().getResource("/HypnoShroomSeed.png").toExternalForm());
+                view = new ImageView(image);
+                view.setFitHeight(64);
+                view.setFitWidth(105);
+            } else if (name.equals("Puff")) {
+                image = new Image(getClass().getResource("/PuffShroomSeed.png").toExternalForm());
+                view = new ImageView(image);
+                view.setFitHeight(64);
+                view.setFitWidth(105);
+            } else if (name.equals("Scaredy")) {
+                image = new Image(getClass().getResource("/ScaredyShroomSeed.png").toExternalForm());
+                view = new ImageView(image);
+                view.setFitHeight(64);
+                view.setFitWidth(105);
+            } else if (name.equals("Doom")) {
+                image = new Image(getClass().getResource("/DoomShroomSeed.png").toExternalForm());
+                view = new ImageView(image);
+                view.setFitHeight(64);
+                view.setFitWidth(105);
+            } else if (name.equals("Ice")) {
+                image = new Image(getClass().getResource("/IceShroomSeed.png").toExternalForm());
+                view = new ImageView(image);
+                view.setFitHeight(64);
+                view.setFitWidth(105);
+            } else if (name.equals("bean")) {
+                image = new Image(getClass().getResource("/bean.png").toExternalForm());
+                view = new ImageView(image);
+                view.setFitHeight(64);
+                view.setFitWidth(105);
+            } else if (name.equals("Grave")) {
+                image = new Image(getClass().getResource("/GraveBusterSeed.png").toExternalForm());
+                view = new ImageView(image);
+                view.setFitHeight(64);
+                view.setFitWidth(105);
+            } else if (name.equals("blover")) {
+                image = new Image(getClass().getResource("/BloverSeed.png").toExternalForm());
+                view = new ImageView(image);
+                view.setFitHeight(64);
+                view.setFitWidth(105);
+            } else if (name.equals("plantern")) {
+                image = new Image(getClass().getResource("/PlanternSeed.png").toExternalForm());
+                view = new ImageView(image);
+                view.setFitHeight(64);
+                view.setFitWidth(105);
             }
             Button button = new Button(name);
             button.setGraphic(view);
@@ -124,6 +195,16 @@ public class Menu {
             shadow.setOffsetY(10.0);
 
             plantButtons.add(button);
+
+            if (name.equals("Grave") && day) {
+                plantButtons.remove(button);
+            } else if (name.equals("plantern") && day) {
+                plantButtons.remove(button);
+            } else if (name.equals("blover") && day) {
+                plantButtons.remove(button);
+            }
+
+
             final int index = i;
 
             button.setOnAction(e -> {
@@ -142,25 +223,53 @@ public class Menu {
                         System.out.println("You can only select up to " + MAX_PLANTS + " plants!");
                     }
                 }
-                updateSelectionCountLabel();
             });
 
             if (count < 4) {
                 menu1.getChildren().add(button);
-            } else {
+                if (name.equals("Grave") && day) {
+                    menu1.getChildren().remove(button);
+                } else if (name.equals("plantern") && day) {
+                    menu1.getChildren().remove(button);
+                } else if (name.equals("blover") && day) {
+                    menu1.getChildren().remove(button);
+                }
+            } else if (count < 8) {
                 menu2.getChildren().add(button);
+                if (name.equals("Grave") && day) {
+                    menu2.getChildren().remove(button);
+                } else if (name.equals("plantern") && day) {
+                    menu2.getChildren().remove(button);
+                } else if (name.equals("blover") && day) {
+                    menu2.getChildren().remove(button);
+                }
+            } else if (count < 12) {
+                menu3.getChildren().add(button);
+                if (name.equals("Grave") && day) {
+                    menu3.getChildren().remove(button);
+                } else if (name.equals("plantern") && day) {
+                    menu3.getChildren().remove(button);
+                } else if (name.equals("blover") && day) {
+                    menu3.getChildren().remove(button);
+                }
+            } else {
+                menu4.getChildren().add(button);
+                if (name.equals("Grave") && day) {
+                    menu4.getChildren().remove(button);
+                } else if (name.equals("plantern") && day) {
+                    menu4.getChildren().remove(button);
+                } else if (name.equals("blover") && day) {
+                    menu4.getChildren().remove(button);
+                }
             }
             count++;
         }
 
 
-        menuContainer.getChildren().addAll(menu1, menu2, Play);
+        menuContainer.getChildren().addAll(menu1, menu2, menu3, menu4, Play);
         return menuContainer;
     }
 
-    private void updateSelectionCountLabel() {
-        selectionCountLabel.setText("Selected: " + selectedPlantsNames.size() + "/" + MAX_PLANTS);
-    }
 
     public List getSelectedPlantsNames() {
         return selectedPlantsNames;

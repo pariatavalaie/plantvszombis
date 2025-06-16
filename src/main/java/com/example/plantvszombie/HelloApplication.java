@@ -7,13 +7,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-
 import java.io.IOException;
 
 public class HelloApplication extends Application {
     public Stage stage;
-    public Menu menu;
+    public Menu menu = new Menu();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -27,7 +25,6 @@ public class HelloApplication extends Application {
         yard.setFitHeight(626);
         yard.setFitWidth(1024);
         Pane pane = new Pane();
-        Menu menu = new Menu();
         pane.getChildren().add(yard);
         pane.getChildren().add(menu.Exit);
         pane.getChildren().add(menu.StartGame);
@@ -40,13 +37,13 @@ public class HelloApplication extends Application {
             stage.close();
         });
         menu.StartGame.setOnAction(e -> {
-           play2();
+           menu2();
         });
 
     }
 
     private void play() {
-        Yard yard = new Yard(menu);
+        Yard yard = new Yard(menu,menu.day);
         Sun.fall(yard.yardPane);
         ZombieWaveManger zw = new ZombieWaveManger(yard);
         zw.start();
@@ -56,15 +53,15 @@ public class HelloApplication extends Application {
         stage.setResizable(false);
         stage.show();
     }
-    private void play2(){
-        menu = new Menu();
+    private void play2() {
         Image yar = new Image(getClass().getResource("/Lawn.jpg").toExternalForm());
         ImageView yard = new ImageView(yar);
         yard.setFitHeight(626);
         yard.setFitWidth(1024);
         Pane pane = new Pane(yard);
         VBox menuPane = menu.getMenuPane();
-        menuPane.setLayoutY(150);
+        System.out.println(menu.day);
+        menuPane.setLayoutY(80);
         menuPane.setLayoutX(140);
         pane.getChildren().add(menuPane);
         Scene menuScene = new Scene(pane, 1024, 626);
@@ -79,6 +76,28 @@ public class HelloApplication extends Application {
                 System.out.println("You have to choose 6 planets");
             }
         });
+    }
+    private void menu2(){
+        Image yar = new Image(getClass().getResource("/choose level.png").toExternalForm());
+        ImageView yard = new ImageView(yar);
+        yard.setFitHeight(626);
+        yard.setFitWidth(1024);
+        Pane pane = new Pane(yard);
+        pane.getChildren().add(menu.Day);
+        pane.getChildren().add(menu.Night);
+        Scene menuScene = new Scene(pane, 1024, 626);
+        stage.setScene(menuScene);
+        stage.show();
+
+        menu.Day.setOnAction(e -> {
+            menu.day = true;
+            play2();
+        });
+        menu.Night.setOnAction(e -> {
+            menu.day = false;
+            //play2();
+        });
+
     }
 
     public static void main(String[] args) {
