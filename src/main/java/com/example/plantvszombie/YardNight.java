@@ -21,7 +21,7 @@ public class YardNight {
 
     YardNight() {
         yardNightGrid = new GridPane();
-        Image yar = new Image(getClass().getResourceAsStream("Night.webp"));
+        Image yar = new Image(getClass().getResourceAsStream("/Night_11zon.png"));
         ImageView yard = new ImageView(yar);
         yardNight = new AnchorPane(yard);
         ButtonPick();
