@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Scaredy extends Planet{
     static boolean canplace=true;
     static final int cost=25;
+    public boolean scared;
     public Scaredy(int x,int y) {
         this.col = x;
         this.row = y;
@@ -21,6 +22,7 @@ public class Scaredy extends Planet{
         this.image = new ImageView( new Image(getClass().getResource("/Scaredy-shroom.png").toExternalForm()));
         this.eatimage=new ImageView( new Image(getClass().getResource("/Scaredy-Shroom_Hiding.png").toExternalForm()));
         bullets = new ArrayList<>();
+        scared=false;
     }
     @Override
     void act(Pane root , ArrayList<Zombies> zombies) {
@@ -39,7 +41,10 @@ public class Scaredy extends Planet{
             boolean shouldShoot = false;
             for (Zombies z :zombies ) {
                 double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
-                if (z.y == row && zombieX > col&&z.x<=8) {
+                if(z.y == row && z.x - col <= 2 && z.x<=8) {
+                    scared=true;
+                    this.image.setImage(this.eatimage.getImage());
+                }else if (!scared&&z.y == row && z.x > col && z.x<=8) {
                     shouldShoot = true;
                     XZ[0] = zombieX; // نزدیک‌ترین زامبی
                     break;
@@ -48,7 +53,7 @@ public class Scaredy extends Planet{
 
             if (shouldShoot&&!dead) {
                 Bullet scary = new Bullet(row, col, 3);
-                scary.shoot(root, x + 60,XZ[0], "MUSHROOM", y);
+                scary.shoot(root, x + 60,XZ[0], "MUSHROOM", y + 20);
                 bullets.add(scary);
             }
         }));

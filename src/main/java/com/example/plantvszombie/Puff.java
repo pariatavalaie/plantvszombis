@@ -47,7 +47,7 @@ public class Puff extends Planet{
 
             if (shouldShoot&&!dead) {
                 Bullet puff = new Bullet(row, col, 3);
-                puff.shoot(root, x + 60,XZ[0], "MUSHROOM", y+40);
+                puff.shoot(root, x + 60,XZ[0], "PUFF", y+40);
                 bullets.add(puff);
             }
         }));
