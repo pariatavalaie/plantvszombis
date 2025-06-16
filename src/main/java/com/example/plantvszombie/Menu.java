@@ -104,7 +104,7 @@ public class Menu {
             if(!day && name.equals("bean")){
                 continue;
             }
-            if (name.equals("Sunflower")) {
+             else if (name.equals("Sunflower")) {
                 image = new Image(getClass().getResource("/com/example/plantvszombie/sunflowerCard.png").toExternalForm());
                 view = new ImageView(image);
                 view.setFitHeight(64);
