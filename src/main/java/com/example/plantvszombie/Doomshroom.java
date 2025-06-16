@@ -44,12 +44,11 @@ public class Doomshroom extends Planet{
                 double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
                 double zombieY = z.image.getLayoutY() + z.image.getTranslateY();
 
-                // محاسبه فاصله بین زامبی و Cherry
+
                 double distanceX = Math.abs(zombieX - cherryX);
                 double distanceY = Math.abs(zombieY - cherryY);
 
-                // بررسی اینکه آیا زامبی در محدوده 3x3 قرار دارد یا خیر
-                // باید مطمئن بشیم که زامبی حداکثر یک خونه با Cherry فاصله داره
+
                 if (distanceX <= cellWidth / 2 * 4 && distanceY <= cellHeight / 2 * 4) {
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(ev-> {

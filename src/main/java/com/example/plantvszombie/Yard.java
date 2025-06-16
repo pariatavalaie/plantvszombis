@@ -15,7 +15,9 @@ import javafx.util.Duration;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Yard {
     AnchorPane yardPane;
@@ -47,7 +49,7 @@ public class Yard {
     ArrayList<Zombies>Zombies=new ArrayList<>();
     Fog fog;
     boolean day;
-
+    private Set<String> lockedCells = new HashSet<>(); // مثل "3,5"
     Yard(Menu menu,boolean day) {
         Image yar;
         if(day){
@@ -153,6 +155,12 @@ public class Yard {
 
                         }
                     }
+                    String cellKey = row + "," + col;
+                    if (lockedCells.contains(cellKey)) {
+                        System.out.println("این سلول سوخته و قابل استفاده نیست.");
+                        return;
+                    }
+
                     if ("sunflower".equals(selected[0])&&empty) {
                         System.out.println(row);
                         placeplanet("sunflower",col,row);
@@ -515,11 +523,17 @@ public class Yard {
             C.cooldown(DoomB);
             C.act(yardPane,Zombies);
             Planet cherry = findPlanet(col,row);
-            C.explode=true;
+            lockedCells.add(row + "," + col);
             if (cherry != null) {
                 Timeline timeline = new Timeline(
-                        new KeyFrame(Duration.seconds(2), e -> removePlanet(cherry))
-                );
+                        new KeyFrame(Duration.seconds(2), e -> {
+                            removePlanet(cherry);
+                            Rectangle burned = new Rectangle(GRID_X, GRID_Y);
+                            burned.setFill(Color.DARKGRAY);
+                            burned.setOpacity(0.6);
+                            gridPane.add(burned, col, row);
+                        }));
+
                 timeline.play();
             }
             Sun.collectedpoint-=Doomshroom.cost;
