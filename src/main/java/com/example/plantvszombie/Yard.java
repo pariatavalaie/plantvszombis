@@ -196,6 +196,9 @@ public class Yard {
                     }else if("Doom".equals(selected[0])&&empty) {
                         placeplanet("Doom",col,row);
                         selected[0] = null;
+                    }else if("Scaredy".equals(selected[0])&&empty) {
+                        placeplanet("Scaredy",col,row);
+                        selected[0] = null;
                     }
                 });
             }
@@ -520,6 +523,15 @@ public class Yard {
                 timeline.play();
             }
             Sun.collectedpoint-=Doomshroom.cost;
+        }else if(planet.equals("Scaredy")&&Scaredy.canplace){
+            Scaredy C=new Scaredy(col,row);
+            Scaredy.canplace=false;
+            ScaredyB.setDisable(true);
+            planets.add(C);
+            plantView=C.image;
+            C.cooldown(ScaredyB);
+            C.act(yardPane,Zombies);
+            Sun.collectedpoint-=Scaredy.cost;
         }
 
 

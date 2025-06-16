@@ -55,6 +55,8 @@ public class HelloApplication extends Application {
         stage.show();
     }
     private void play2() {
+
+
         Image yar = new Image(getClass().getResource("/choose level.png").toExternalForm());
         ImageView yard = new ImageView(yar);
         yard.setFitHeight(626);

@@ -28,6 +28,8 @@ public class Bullet {
             bullet = new Image(getClass().getResource("/pea.png").toExternalForm());
         }else if (type.equals("MUSHROOM")) {
             bullet = new Image(getClass().getResource("/bullet_11zon.png").toExternalForm());
+        }else if(type.equals("PUFF")) {
+            bullet = new Image(getClass().getResource("/mushroom.bullet_11zon.png").toExternalForm());
         }
         imageBullet = new ImageView(bullet);
         imageBullet.setFitHeight(25);

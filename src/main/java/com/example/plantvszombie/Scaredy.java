@@ -8,47 +8,53 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 
-public class Puff extends Planet{
-    static boolean canplace = true;
-    static final int cost=0;
-    public Puff(int x , int y) {
-        this.row = y;
+public class Scaredy extends Planet{
+    static boolean canplace=true;
+    static final int cost=25;
+    public boolean scared;
+    public Scaredy(int x,int y) {
         this.col = x;
-        this.health = 4;
-        this.watingtime = 1;
-        bullets = new ArrayList<Bullet>();
-        image=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
-        eatimage=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
+        this.row = y;
+        this.watingtime = 2;
+        this.health=3;
+        this.image = new ImageView( new Image(getClass().getResource("/Scaredy-shroom.png").toExternalForm()));
+        this.eatimage=new ImageView( new Image(getClass().getResource("/Scaredy-Shroom_Hiding.png").toExternalForm()));
+        bullets = new ArrayList<>();
+        scared=false;
     }
     @Override
-    void act(Pane root,ArrayList<Zombies>zombies){
+    void act(Pane root , ArrayList<Zombies> zombies) {
         double gridX = 245.0; // Left anchor of grid
         double gridY = 60.0;  // Top anchor of grid
 
         double cellWidth = 80.0;
         double cellHeight = 100.0;
-        final double[]XZ={0};
         double x = gridX + col * 80 + (80 - 70) / 2;
         double y = gridY + row * 100 + (100 - 90) / 2;
+        final double[]XZ={0};
+
+
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             boolean shouldShoot = false;
             for (Zombies z :zombies ) {
                 double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
-                if (z.y == row && z.x-col<=4 &&z.x<=8) {
+                if(z.y == row && z.x - col <= 2 && z.x<=8) {
+                    scared=true;
+                    this.image.setImage(this.eatimage.getImage());
+                }else if (!scared&&z.y == row && z.x > col && z.x<=8) {
                     shouldShoot = true;
-                    XZ[0] = zombieX;
+                    XZ[0] = zombieX; // نزدیک‌ترین زامبی
                     break;
                 }
             }
 
             if (shouldShoot&&!dead) {
-                Bullet puff = new Bullet(row, col, 3);
-                puff.shoot(root, x + 60,XZ[0], "PUFF", y+40);
-                bullets.add(puff);
+                Bullet scary = new Bullet(row, col, 3);
+                scary.shoot(root, x + 60,XZ[0], "MUSHROOM", y + 20);
+                bullets.add(scary);
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);

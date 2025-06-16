@@ -101,7 +101,10 @@ public class Menu {
             if (day && (name.equals("Grave") || name.equals("plantern") || name.equals("blover"))) {
                 continue;
             }
-            if (name.equals("Sunflower")) {
+            if(!day && name.equals("bean")){
+                continue;
+            }
+             else if (name.equals("Sunflower")) {
                 image = new Image(getClass().getResource("/com/example/plantvszombie/sunflowerCard.png").toExternalForm());
                 view = new ImageView(image);
                 view.setFitHeight(64);
