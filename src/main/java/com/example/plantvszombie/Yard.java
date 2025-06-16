@@ -209,6 +209,9 @@ public class Yard {
                     } else if ("Plantern".equals(selected[0])&&empty) {
                         placeplanet("Plantern",col,row);
                         selected[0] = null;
+                    }else if("Blover".equals(selected[0])&&empty) {
+                        placeplanet("Blover",col,row);
+                        selected[0] = null;
                     }
                 });
             }
@@ -520,6 +523,7 @@ public class Yard {
             Doomshroom C=new Doomshroom(col,row);
             Doomshroom.canplace=false;
             DoomB.setDisable(true);
+            DoomB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(C);
             plantView=C.image;
             C.cooldown(DoomB);
@@ -543,6 +547,7 @@ public class Yard {
             Scaredy C=new Scaredy(col,row);
             Scaredy.canplace=false;
             ScaredyB.setDisable(true);
+            DoomB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(C);
             plantView=C.image;
             C.cooldown(ScaredyB);
@@ -557,6 +562,16 @@ public class Yard {
             p.cooldown(PlanternB);
             p.act(yardPane);
             Sun.collectedpoint-=Plantern.cost;
+        } else if (planet.equals("Blover")&&Blover.canplace) {
+            Blover b=new Blover(col,row,fog);
+            Blover.canplace=false;
+            BloverB.setDisable(true);
+            BloverB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            planets.add(b);
+            plantView=b.image;
+            b.cooldown(BloverB);
+            b.act(yardPane);
+            Sun.collectedpoint-=Blover.cost;
         }
 
 
@@ -599,7 +614,8 @@ public class Yard {
                 Cherry.cost,
                 Jalapeno.cost,
                 Doomshroom.cost,
-                Plantern.cost
+                Plantern.cost,
+                Blover.cost
         };
 
         boolean[] canplaces = {
@@ -612,7 +628,8 @@ public class Yard {
                 Cherry.canplace,
                 Jalapeno.canplace,
                 Doomshroom.canplace,
-                Plantern.canplace
+                Plantern.canplace,
+                Blover.canplace
         };
         Button[] buttons = {
                 peashooterB,
@@ -624,7 +641,8 @@ public class Yard {
                 cherrybombB,
                 JalapenoB,
                 DoomB,
-                PlanternB
+                PlanternB,
+                BloverB
         };
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {
