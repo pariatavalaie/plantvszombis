@@ -45,12 +45,14 @@ public class Yard {
     Button BloverB = new Button();
     ArrayList<Planet>planets=new ArrayList<>();
     ArrayList<Zombies>Zombies=new ArrayList<>();
+    Fog fog;
 
     Yard(Menu menu,boolean day) {
         Image yar = new Image(getClass().getResourceAsStream("Frontyard.png"));
          yard = new ImageView(yar);
         this.menu = menu;
         yardPane = new AnchorPane(yard);
+        fog = new Fog(yardPane);
         sunpoint.setText("☀\uFE0F"+Sun.collectedpoint);
         sunpoint.setStyle(
                 "-fx-font-size: 26px;" +
