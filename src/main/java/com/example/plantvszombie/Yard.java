@@ -157,7 +157,6 @@ public class Yard {
                     }
                     String cellKey = row + "," + col;
                     if (lockedCells.contains(cellKey)) {
-                        System.out.println("این سلول سوخته و قابل استفاده نیست.");
                         return;
                     }
 
@@ -206,6 +205,9 @@ public class Yard {
                         selected[0] = null;
                     }else if("Scaredy".equals(selected[0])&&empty) {
                         placeplanet("Scaredy",col,row);
+                        selected[0] = null;
+                    } else if ("Plantern".equals(selected[0])&&empty) {
+                        placeplanet("Plantern",col,row);
                         selected[0] = null;
                     }
                 });
@@ -546,6 +548,15 @@ public class Yard {
             C.cooldown(ScaredyB);
             C.act(yardPane,Zombies);
             Sun.collectedpoint-=Scaredy.cost;
+        }else if(planet.equals("Plantern")&&Plantern.canplace){
+            Plantern p=new Plantern(col,row,fog);
+            Plantern.canplace=false;
+            PlanternB.setDisable(true);
+            planets.add(p);
+            plantView=p.image;
+            p.cooldown(PlanternB);
+            p.act(yardPane);
+            Sun.collectedpoint-=Plantern.cost;
         }
 
 
@@ -577,82 +588,64 @@ public class Yard {
         }
         return false;
     }
-    public void Updatebutton() {
+    public void updateButtons() {
+        int[] costs = {
+                Peashooter.cost,
+                Repeater.cost,
+                Sunflower.cost,
+                WallNut.cost,
+                TallNut.cost,
+                SnowPea.cost,
+                Cherry.cost,
+                Jalapeno.cost,
+                Doomshroom.cost,
+                Plantern.cost
+        };
+
+        boolean[] canplaces = {
+                Peashooter.canplace,
+                Repeater.canplace,
+                Sunflower.canplace,
+                WallNut.canplace,
+                TallNut.canplace,
+                SnowPea.canplace,
+                Cherry.canplace,
+                Jalapeno.canplace,
+                Doomshroom.canplace,
+                Plantern.canplace
+        };
+        Button[] buttons = {
+                peashooterB,
+                reapeaterB,
+                SunflowerB,
+                WallnutB,
+                TallnutB,
+                SnowpeaB,
+                cherrybombB,
+                JalapenoB,
+                DoomB,
+                PlanternB
+        };
+
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {
-            if (Sun.collectedpoint >= Peashooter.cost && Peashooter.canplace) {
-                peashooterB.setDisable(false);
-                peashooterB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            } else {
-                peashooterB.setDisable(true);
-                peashooterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            for (int i = 0; i < costs.length; i++) {
+                if (Sun.collectedpoint >= costs[i] && canplaces[i]) {
+                    buttons[i].setDisable(false);
+                    buttons[i].setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+                } else {
+                    buttons[i].setDisable(true);
+                    buttons[i].setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+                }
             }
-
-            if (Sun.collectedpoint >= Repeater.cost && Repeater.canplace) {
-                reapeaterB.setDisable(false);
-                reapeaterB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            } else {
-                reapeaterB.setDisable(true);
-                reapeaterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
-            }
-            if (Sun.collectedpoint >= Sunflower.cost && Sunflower.canplace) {
-                SunflowerB.setDisable(false);
-                SunflowerB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            } else {
-                SunflowerB.setDisable(true);
-                SunflowerB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
-            }
-
-            if (Sun.collectedpoint >= WallNut.cost && WallNut.canplace) {
-                WallnutB.setDisable(false);
-                WallnutB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            } else {
-                WallnutB.setDisable(true);
-                WallnutB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
-            }
-            if (Sun.collectedpoint >= TallNut.cost && TallNut.canplace) {
-                TallnutB.setDisable(false);
-                TallnutB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            } else {
-                TallnutB.setDisable(true);
-                TallnutB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
-            }
-
-            if (Sun.collectedpoint >= SnowPea.cost && SnowPea.canplace) {
-                SnowpeaB.setDisable(false);
-                SnowpeaB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            } else {
-                SnowpeaB.setDisable(true);
-                SnowpeaB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
-            }
-            if (Sun.collectedpoint >= Cherry.cost && Cherry.canplace) {
-                cherrybombB.setDisable(false);
-                cherrybombB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            } else {
-                cherrybombB.setDisable(true);
-                cherrybombB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
-            }
-            if (Sun.collectedpoint >= Jalapeno.cost && Jalapeno.canplace) {
-                JalapenoB.setDisable(false);
-                JalapenoB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            } else {
-                JalapenoB.setDisable(true);
-                cherrybombB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
-            }  if (Sun.collectedpoint >= Doomshroom.cost && Doomshroom.canplace) {
-                DoomB.setDisable(false);
-                DoomB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            } else {
-                DoomB.setDisable(true);
-                DoomB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
-            }
-            sunpoint.setText("☀\uFE0F"+Sun.collectedpoint);
+            sunpoint.setText("☀\uFE0F" + Sun.collectedpoint);
             sunpoint.setLayoutX(850);
             sunpoint.setLayoutY(8);
-
-
         }));
+
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
+
 
 }
 
