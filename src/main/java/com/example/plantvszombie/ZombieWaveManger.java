@@ -1,6 +1,7 @@
 package com.example.plantvszombie;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
@@ -12,7 +13,6 @@ public class ZombieWaveManger {
     static int gameTime;
     boolean win = false;
     boolean lose = false;
-
     ZombieWaveManger(Yard yard) {
         this.yard = yard;
         gameTime = 0;
@@ -29,11 +29,14 @@ public class ZombieWaveManger {
     }
 
     public void start() {
+        yard.fog.enterSlowly();
         maintimeline.play();
     }
 
     private void tick() {
         gameTime++;
+
+
         yard.startMovingAndDetecting();
 
         // اجرای امواج مختلف
@@ -45,6 +48,8 @@ public class ZombieWaveManger {
         // حملات ویژه
         //if (gameTime >= 26 && gameTime <= 33) halfAttack(); // حمله نیمه بازی
         //if (gameTime >= 47 && gameTime <= 60) finalAttack(); // حمله پایانی
+       yard.fog.bringFogToFront(yard.yardPane);
+
     }
 
     private void waveStage1() {
