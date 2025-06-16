@@ -46,13 +46,22 @@ public class Yard {
     ArrayList<Planet>planets=new ArrayList<>();
     ArrayList<Zombies>Zombies=new ArrayList<>();
     Fog fog;
+    boolean day;
 
     Yard(Menu menu,boolean day) {
-        Image yar = new Image(getClass().getResourceAsStream("Frontyard.png"));
+        Image yar;
+        if(day){
+         yar = new Image(getClass().getResourceAsStream("Frontyard.png"));}
+        else{
+            yar =new Image(getClass().getResource("/Night_11zon.png").toExternalForm());
+        }
          yard = new ImageView(yar);
+        yard.setFitWidth(1024);
+        yard.setFitHeight(626);
         this.menu = menu;
         yardPane = new AnchorPane(yard);
         fog = new Fog(yardPane);
+        this.day = day;
         sunpoint.setText("☀\uFE0F"+Sun.collectedpoint);
         sunpoint.setStyle(
                 "-fx-font-size: 26px;" +
@@ -189,6 +198,7 @@ public class Yard {
         }
 
         yardPane.getChildren().add(gridPane);
+
         AnchorPane.setTopAnchor(gridPane, 60.0);
         AnchorPane.setLeftAnchor(gridPane, 245.0);
 

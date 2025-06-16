@@ -43,8 +43,9 @@ public class HelloApplication extends Application {
     }
 
     private void play() {
-        Yard yard = new Yard(menu,menu.day);
-        Sun.fall(yard.yardPane);
+        Yard yard = new Yard(menu, menu.day);
+        if(menu.day){
+        Sun.fall(yard.yardPane);}
         ZombieWaveManger zw = new ZombieWaveManger(yard);
         zw.start();
         yard.Updatebutton();
@@ -95,7 +96,7 @@ public class HelloApplication extends Application {
         });
         menu.Night.setOnAction(e -> {
             menu.day = false;
-            //play2();
+            play2();
         });
 
     }
