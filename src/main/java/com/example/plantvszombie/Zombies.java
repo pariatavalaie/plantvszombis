@@ -93,7 +93,11 @@ public abstract class Zombies {
                 final int[] bites = {0};
                 Image temp=image.getImage();
                 Timeline eating = new Timeline(new KeyFrame(Duration.seconds(0.5), e -> {
+                   if (this.isAlive()){
                     bites[0]++;
+                   }if(!isAlive()){
+                       p.health=p.health-bites[0];
+                    }
                     p.image.setImage(p.eatimage.getImage());
 
                     if (bites[0] >= p.health) {
