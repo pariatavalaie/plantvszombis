@@ -20,7 +20,7 @@ public class Fog {
     private double currentTranslateX = 0;
 
     public Fog(Pane root) {
-        Image imageView = new Image(getClass().getResource("/Fog.jpg").toExternalForm());
+        Image imageView = new Image(getClass().getResource("/giphy (1).gif").toExternalForm());
 
         fogRect = new Rectangle(1024, 626);
         fogRect.setFill(new ImagePattern(imageView));

@@ -578,6 +578,7 @@ public class Yard {
         plantView.setFitWidth(70);
         plantView.setFitHeight(70);
 
+
         double gridX = 245.0; // Left anchor of grid
         double gridY = 60.0;  // Top anchor of grid
 
