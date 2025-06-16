@@ -192,6 +192,10 @@ public class Yard {
                         selected[0] = null;
                     } else if("Puff".equals(selected[0])&&empty) {
                         placeplanet("Puff",col,row);
+                        selected[0] = null;
+                    }else if("Doom".equals(selected[0])&&empty) {
+                        placeplanet("Doom",col,row);
+                        selected[0] = null;
                     }
                 });
             }
@@ -499,6 +503,22 @@ public class Yard {
             plantView=P.image;
             P.cooldown(PuffB);
             P.act(yardPane, Zombies);
+          }else if(planet.equals("Doom")&&Doomshroom.canplace){
+            Doomshroom C=new Doomshroom(col,row);
+            Doomshroom.canplace=false;
+            DoomB.setDisable(true);
+            planets.add(C);
+            plantView=C.image;
+            C.cooldown(DoomB);
+            C.act(yardPane,Zombies);
+            Planet cherry = findPlanet(col,row);
+            if (cherry != null) {
+                Timeline timeline = new Timeline(
+                        new KeyFrame(Duration.seconds(2), e -> removePlanet(cherry))
+                );
+                timeline.play();
+            }
+            Sun.collectedpoint-=Doomshroom.cost;
         }
 
 
@@ -590,6 +610,12 @@ public class Yard {
             } else {
                 JalapenoB.setDisable(true);
                 cherrybombB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }  if (Sun.collectedpoint >= Doomshroom.cost && Doomshroom.canplace) {
+                DoomB.setDisable(false);
+                DoomB.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                DoomB.setDisable(true);
+                DoomB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             }
             sunpoint.setText("☀\uFE0F"+Sun.collectedpoint);
             sunpoint.setLayoutX(850);

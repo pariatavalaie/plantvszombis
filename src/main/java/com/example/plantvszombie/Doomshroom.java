@@ -11,20 +11,22 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Cherry extends Planet {
+public class Doomshroom extends Planet{
     static boolean canplace = true;
-    static int cost = 150;
+    static int cost = 125;
 
-    public Cherry(int x, int y) {
+    public Doomshroom(int x,int y) {
         this.row = y;
         this.col = x;
-        this.watingtime = 2;
         this.health = 4;
-        this.image = new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm()));
-        this.eatimage=new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm()));
+        this.watingtime =5;
         bullets = new ArrayList<Bullet>();
+        image=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
+        eatimage=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
     }
 
+    @Override
+    void act(Pane root) {}
 
     @Override
     void act(Pane root, ArrayList<Zombies> Zombies) {
@@ -47,7 +49,7 @@ public class Cherry extends Planet {
 
                 // بررسی اینکه آیا زامبی در محدوده 3x3 قرار دارد یا خیر
                 // باید مطمئن بشیم که زامبی حداکثر یک خونه با Cherry فاصله داره
-                if (distanceX <= cellWidth / 2 * 3 && distanceY <= cellHeight / 2 * 3) {
+                if (distanceX <= cellWidth / 2 * 4 && distanceY <= cellHeight / 2 * 4) {
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(ev-> {
                         z.hp = 0;
@@ -57,26 +59,18 @@ public class Cherry extends Planet {
                 }
             } }));
 
-         timeline.setCycleCount(1);
+        timeline.setCycleCount(1);
         timeline.play();
     }
-
-
-    @Override
-    void act(Pane root) {
-
-    }
-
-    public void cooldown(Button b) {
-        PauseTransition cooldown = new PauseTransition(Duration.seconds(watingtime));
+    public void cooldown(Button b){
+        cooldown = new PauseTransition(Duration.seconds(watingtime));
         cooldown.setOnFinished(ev -> {
-            canplace = true;
+            canplace= true;
             if(Sun.collectedpoint>=cost){
-            b.setDisable(false);
-            b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            System.out.println("✅ You can place another Sunflower now");}
+                b.setDisable(false);
+                b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+                System.out.println("✅ You can place another Sunflower now");}
         });
         cooldown.play();
     }
 }
-
