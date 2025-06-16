@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class Doomshroom extends Planet{
     static boolean canplace = true;
     static int cost = 125;
+    boolean explode = false;
 
     public Doomshroom(int x,int y) {
         this.row = y;
@@ -21,8 +22,8 @@ public class Doomshroom extends Planet{
         this.health = 4;
         this.watingtime =5;
         bullets = new ArrayList<Bullet>();
-        image=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
-        eatimage=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
+        image=new ImageView(new Image(getClass().getResource("/DoomShroom1.gif").toExternalForm()));
+        eatimage=new ImageView(new Image(getClass().getResource("/DoomShroom1.gif").toExternalForm()));
     }
 
     @Override

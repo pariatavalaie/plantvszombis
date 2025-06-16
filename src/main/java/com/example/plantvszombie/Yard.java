@@ -515,6 +515,7 @@ public class Yard {
             C.cooldown(DoomB);
             C.act(yardPane,Zombies);
             Planet cherry = findPlanet(col,row);
+            C.explode=true;
             if (cherry != null) {
                 Timeline timeline = new Timeline(
                         new KeyFrame(Duration.seconds(2), e -> removePlanet(cherry))
