@@ -1,8 +1,11 @@
 package com.example.plantvszombie;
 
 import javafx.animation.TranslateTransition;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -17,8 +20,10 @@ public class Fog {
     private double currentTranslateX = 0;
 
     public Fog(Pane root) {
+        Image imageView = new Image(getClass().getResource("/Fog.jpg").toExternalForm());
+
         fogRect = new Rectangle(1024, 626);
-        fogRect.setFill(Color.rgb(100, 100, 100, 0.7));
+        fogRect.setFill(new ImagePattern(imageView));
 
         fogRect.setLayoutX(1024);
         fogRect.setLayoutY(0);
