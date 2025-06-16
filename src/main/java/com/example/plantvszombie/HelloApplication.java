@@ -54,15 +54,15 @@ public class HelloApplication extends Application {
         stage.show();
     }
     private void play2() {
-        Image yar = new Image(getClass().getResource("/Lawn.jpg").toExternalForm());
+        Image yar = new Image(getClass().getResource("/choose level.png").toExternalForm());
         ImageView yard = new ImageView(yar);
         yard.setFitHeight(626);
         yard.setFitWidth(1024);
         Pane pane = new Pane(yard);
         VBox menuPane = menu.getMenuPane();
         System.out.println(menu.day);
-        menuPane.setLayoutY(80);
-        menuPane.setLayoutX(140);
+        menuPane.setLayoutY(50);
+        menuPane.setLayoutX(190);
         pane.getChildren().add(menuPane);
         Scene menuScene = new Scene(pane, 1024, 626);
         stage.setScene(menuScene);
@@ -78,7 +78,7 @@ public class HelloApplication extends Application {
         });
     }
     private void menu2(){
-        Image yar = new Image(getClass().getResource("/choose level.png").toExternalForm());
+        Image yar = new Image(getClass().getResource("/Lawn.jpg").toExternalForm());
         ImageView yard = new ImageView(yar);
         yard.setFitHeight(626);
         yard.setFitWidth(1024);
