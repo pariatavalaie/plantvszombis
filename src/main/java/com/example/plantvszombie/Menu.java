@@ -31,7 +31,7 @@ public class Menu {
         plantButtons = new ArrayList<>();
         MenuPane = new AnchorPane();
         selectedPlantsNames = new ArrayList<>();
-        plantSelected = new boolean[14];
+        plantSelected = new boolean[17];
         StartGame = new Button();
         Image image2 = new Image(getClass().getResource("/startgame.png").toExternalForm());
         ImageView imageView2 = new ImageView(image2);
@@ -98,6 +98,9 @@ public class Menu {
             String name = plantNames[i];
             Image image;
             ImageView view = null;
+            if (day && (name.equals("Grave") || name.equals("plantern") || name.equals("blover"))) {
+                continue;
+            }
             if (name.equals("Sunflower")) {
                 image = new Image(getClass().getResource("/com/example/plantvszombie/sunflowerCard.png").toExternalForm());
                 view = new ImageView(image);
@@ -184,6 +187,7 @@ public class Menu {
                 view.setFitHeight(64);
                 view.setFitWidth(105);
             }
+
             Button button = new Button(name);
             button.setGraphic(view);
             button.setStyle("-fx-background-color: #fff");
@@ -196,13 +200,7 @@ public class Menu {
 
             plantButtons.add(button);
 
-            if (name.equals("Grave") && day) {
-                plantButtons.remove(button);
-            } else if (name.equals("plantern") && day) {
-                plantButtons.remove(button);
-            } else if (name.equals("blover") && day) {
-                plantButtons.remove(button);
-            }
+
 
 
             final int index = i;

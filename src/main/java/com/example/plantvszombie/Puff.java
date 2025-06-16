@@ -18,7 +18,7 @@ public class Puff extends Planet{
         this.row = y;
         this.col = x;
         this.health = 4;
-        this.watingtime = 5;
+        this.watingtime = 1;
         bullets = new ArrayList<Bullet>();
         image=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
         eatimage=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
@@ -38,7 +38,7 @@ public class Puff extends Planet{
             boolean shouldShoot = false;
             for (Zombies z :zombies ) {
                 double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
-                if (z.y == row && z.x+4>=col&&z.x<=8) {
+                if (z.y == row && z.x-col<=4 &&z.x<=8) {
                     shouldShoot = true;
                     XZ[0] = zombieX;
                     break;
