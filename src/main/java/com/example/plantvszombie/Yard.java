@@ -601,11 +601,6 @@ public class Yard {
         timeline.play();
     }
 
-
-
-
-
-
 }
 
 
