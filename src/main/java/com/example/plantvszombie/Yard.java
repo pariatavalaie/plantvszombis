@@ -3,6 +3,7 @@ package com.example.plantvszombie;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -10,6 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 
 import java.util.*;
@@ -29,7 +32,11 @@ public class Yard {
     Button cherrybombB=new Button();
     Button JalapenoB=new Button();
     Button SunflowerB=new Button();
-    Label sunpoint=new Label();
+
+    Text number;
+    TextFlow sunpointFlow;
+
+
     Button ShovelB=new Button();
     Button HypnoB = new Button();
     Button PuffB = new Button();
@@ -60,15 +67,22 @@ public class Yard {
         yardPane = new AnchorPane(yard);
         fog = new Fog(yardPane);
         this.day = day;
-        sunpoint.setText("☀\uFE0F"+Sun.collectedpoint);
-        sunpoint.setStyle(
-                "-fx-font-size: 26px;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-font-family: 'Segoe UI Emoji';"
+        Text emoji = new Text("☀️");
+        emoji.setFill(Color.GOLD);
+        emoji.setStyle("-fx-font-size: 26px; -fx-font-family: 'Segoe UI Emoji';");
+
+        number = new Text(String.valueOf(Sun.collectedpoint));
+        number.setFill(Color.BLACK);
+        number.setStyle("-fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI Emoji';");
+
+        sunpointFlow = new TextFlow(emoji, number);
+        sunpointFlow.setStyle(
+                "-fx-background-color: #fffacd;" +
+                        "-fx-padding: 4px 0px;" +
+                        "-fx-background-radius: 8px;"
         );
-        sunpoint.setLayoutX(850);
-        sunpoint.setLayoutY(8);
-        yardPane.getChildren().add(sunpoint);
+
+
         PaintGrid(9, 5);
         buttonpic();
     }
@@ -261,7 +275,8 @@ public class Yard {
 
     public void buttonpic() {
         VBox vbox = new VBox();
-
+        vbox.setSpacing(10);
+        vbox.setPadding(new Insets(10));
         addPlantCard(vbox, "Snow Pea", SnowpeaB, "/SnowPea.png");
         addPlantCard(vbox, "Peashooter", peashooterB, "/com/example/plantvszombie/peashooterCard.png");
         addPlantCard(vbox, "Repeater", reapeaterB, "/com/example/plantvszombie/repeaterCard.png");
@@ -283,9 +298,11 @@ public class Yard {
         ImageView shovelView = createImageView("/Shovel.jpg");
         ShovelB.setGraphic(shovelView);
         ShovelB.setStyle("-fx-background-color: #fff");
-
+        VBox vbox2 = new VBox();
+        vbox2.getChildren().addAll(ShovelB,sunpointFlow);
+        vbox2.setSpacing(10);
         HBox hbox = new HBox();
-        hbox.getChildren().addAll(vbox, ShovelB);
+        hbox.getChildren().addAll(vbox, vbox2);
         yardPane.getChildren().add(hbox);
     }
 
@@ -647,9 +664,9 @@ public class Yard {
                     buttons[i].setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
                 }
             }
-            sunpoint.setText("☀\uFE0F" + Sun.collectedpoint);
-            sunpoint.setLayoutX(850);
-            sunpoint.setLayoutY(8);
+
+            number.setText(String.valueOf(Sun.collectedpoint));
+
         }));
 
         timeline.setCycleCount(Timeline.INDEFINITE);

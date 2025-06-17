@@ -34,6 +34,7 @@ public abstract class Zombies {
             if (x <= 0 && direction == -1 || x >= 8 && direction == 1 || hp <= 0) {
                 walker.stop();
                 root.getChildren().remove(image);
+                hp=0;
                 System.out.println("Zombie reached the end!");
                 return;
             }

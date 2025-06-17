@@ -46,23 +46,24 @@ public class StoneGrave {
         Zombies zombie;
 
         double chance = random.nextFloat();
-        if (chance < 0.9) {
-            zombie=new NormalZombie(x,y,pane);
-            z.add(zombie);
-            remove(graves);
-        }else if (chance < 0.8) {
-            zombie=new ScreendoorZombie(x,y,pane);
-            z.add(zombie);
-            remove(graves);
-        }else if (chance < 0.7) {
-            zombie=new ConeheadZombie(x,y,pane);
-            z.add(zombie);
-            remove(graves);
-        }else if (chance < 0.6) {
-            zombie=new ImpZombie(x,y,pane);
-            z.add(zombie);
-            remove(graves);
-        }});
+            if (chance < 0.6) {
+                zombie = new ImpZombie(x, y, pane);
+                z.add(zombie);
+                remove(graves);
+            } else if (chance < 0.7) {
+                zombie = new ConeheadZombie(x, y, pane);
+                z.add(zombie);
+                remove(graves);
+            } else if (chance < 0.8) {
+                zombie = new ScreendoorZombie(x, y, pane);
+                z.add(zombie);
+                remove(graves);
+            } else if (chance < 0.9) {
+                zombie = new NormalZombie(x, y, pane);
+                z.add(zombie);
+                remove(graves);
+            }
+        });
         stop.play();
 
     }
