@@ -29,7 +29,7 @@ public class ZombieWaveManger {
     }
 
     public void start() {
-        yard.fog.enterSlowly();
+       yard.fog.enterSlowly();
         maintimeline.play();
     }
 

@@ -221,6 +221,9 @@ public class Yard {
                         selected[0] = null;
                     }else if("Ice".equals(selected[0])&&empty) {
                         placeplanet("Ice",col,row);
+                    } else if ("Hypno".equals(selected[0])&&empty) {
+                        placeplanet("Hypno",col,row);
+                        selected[0] = null;
                     }
                 });
             }
@@ -250,11 +253,12 @@ public class Yard {
             zombie.damage(planets, yardPane);
             zombie.remove(yardPane, Zombies);
             zombie.checkAndEatPlant(planets, yardPane);
+            zombie.checkAndEatZombie(Zombies, yardPane);
         }
     }
 
     private void removePlanet(Planet planet) {
-        planet.remove(yardPane); // فرض بر اینکه متد remove در کلاس Planet وجود دارد
+        planet.remove(yardPane);
         planets.remove(planet);
 
     }
@@ -500,6 +504,10 @@ public class Yard {
             }
             if(x instanceof Iceshroom){planets.remove(x);x.eatimage.setImage(x.image.getImage());
             }
+            if(x instanceof Hypnoshroom){
+                ( (Hypnoshroom) x ).active=true;
+                x.eatimage.setImage(x.image.getImage());
+            }
 
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
                 removePlanet(b);
@@ -523,6 +531,21 @@ public class Yard {
             }
             Sun.collectedpoint-=Iceshroom.cost;
 
+
+        } else if (planet.equals("Hypno")&&Hypnoshroom.canplace) {
+            Hypnoshroom h=new Hypnoshroom(col,row);
+            Hypnoshroom.canplace=false;
+            HypnoB.setDisable(true);
+            HypnoB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            planets.add(h);
+            h.cooldown(HypnoB);
+            plantView=h.eatimage;
+            if(!day){
+                h.active=true;
+                plantView=h.image;
+                h.act(yardPane,Zombies);
+            }
+            Sun.collectedpoint-=Hypnoshroom.cost;
 
         }
 
@@ -568,6 +591,7 @@ public class Yard {
                 Blover.cost,
                 Bean.cost,
                 Iceshroom.cost,
+                Hypnoshroom.cost,
 
         };
 
@@ -585,6 +609,7 @@ public class Yard {
                 Blover.canplace,
                 Bean.canplace,
                 Iceshroom.canplace,
+                Hypnoshroom.canplace,
         };
         Button[] buttons = {
                 peashooterB,
@@ -599,7 +624,8 @@ public class Yard {
                 PlanternB,
                 BloverB,
                 BeanB,
-                IceB
+                IceB,
+                HypnoB,
         };
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {

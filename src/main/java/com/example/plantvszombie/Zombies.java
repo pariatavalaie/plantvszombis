@@ -1,9 +1,11 @@
 package com.example.plantvszombie;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.scene.PointLight;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -23,17 +25,20 @@ public abstract class Zombies {
     Timeline walker=null;
     Timeline eating=null;
     boolean inHouse=false;
+    boolean isHypnotized=false;
+    boolean fighting=false;
+    public int direction = -1;
     abstract void act(Pane root);
-     void move(Pane root){
+    void move(Pane root){
         walker = new Timeline(new KeyFrame(Duration.seconds(speed), e -> {
-            if (x <= 0||hp <= 0) {
+            if (x <= 0 && direction == -1 || x >= 8 && direction == 1 || hp <= 0) {
                 walker.stop();
                 root.getChildren().remove(image);
-                System.out.println(" Zombie reached the house!");
+                System.out.println("Zombie reached the end!");
                 return;
             }
 
-            x--;
+            x += direction;
 
             double newX = 245 + x * 80 + 5;
 
@@ -47,6 +52,25 @@ public abstract class Zombies {
         walker.setCycleCount(Timeline.INDEFINITE);
         walker.play();
     }
+    public void reverseDirection() {
+        if(isHypnotized){
+        direction *= -1;
+
+        image.setScaleX(image.getScaleX() * -1); // برعکس شدن تصویر
+
+        if (walker != null) {
+            walker.stop();
+        }
+
+        move((Pane) image.getParent());
+            ColorAdjust blueTint = new ColorAdjust();
+            blueTint.setHue(-0.6);
+            blueTint.setSaturation(1.0);
+            blueTint.setBrightness(0.5);
+
+            image.setEffect(blueTint);}
+    }
+
 
 
     public void damage  (ArrayList<Planet> planets,Pane root) {
@@ -103,6 +127,7 @@ public abstract class Zombies {
                     bites[0]++;
                     p.image.setImage(p.eatimage.getImage());
 
+
                     if (bites[0] >= p.health) {
                         walker.play();
                         image.setImage(temp);
@@ -114,6 +139,49 @@ public abstract class Zombies {
                 eating.setCycleCount(p.health);
                 eatingRef[0] = eating;
                 eating.play();
+                break;
+            }
+        }
+    }
+    public void checkAndEatZombie(ArrayList<Zombies> Zombie, Pane root) {
+        if (!isAlive()) return;
+
+        for (Zombies other : Zombie) {
+            if (other == this || !other.isAlive()) continue;
+
+            if (this.x==other.x && this.y==other.y) {
+
+
+                if (!(this.isHypnotized ^ other.isHypnotized)) return;
+
+                // جلوگیری از شروع چندباره جنگ
+                if (this.fighting || other.fighting) return;
+
+                this.fighting = true;
+                other.fighting = true;
+
+                if (this.walker != null) this.walker.stop();
+                if (other.walker != null) other.walker.stop();
+                Timeline[] fightRef = new Timeline[1];
+                Timeline fight = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+                    if (!this.isAlive() || !other.isAlive()) {
+                        this.fighting = false;
+                        other.fighting = false;
+
+                        if (this.walker != null) this.walker.play();
+                        if (other.walker != null) other.walker.play();
+                        fightRef[0].stop();
+                        return;
+                    }
+
+                    this.hp--;
+                    other.hp--;
+                }));
+
+                fight.setCycleCount(Animation.INDEFINITE);
+                fightRef[0] = fight;
+                fight.play();
+
                 break;
             }
         }
