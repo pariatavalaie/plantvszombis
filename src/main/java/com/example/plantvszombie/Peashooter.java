@@ -19,6 +19,7 @@ public class Peashooter extends Planet{
         this.col = x;
         this.watingtime = 6;
         this.health=4;
+        this.dayplanet=true;
         bullets = new ArrayList<Bullet>();
         this.image = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
         this.eatimage = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));

@@ -9,29 +9,25 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class WallNut extends Planet{
-    static boolean canplace=true;
-    static final int cost=50;
-    public WallNut(int x,int y){
-        this.row=y;
-        this.col=x;
-        watingtime=5;
-        this.health=10;
+public class Bean extends Planet{
+    static boolean canplace = true;
+    static int cost = 75;
+    public Bean(int x, int y) {
+        this.row = y;
+        this.col = x;
+        this.watingtime = 2;
+        this.health = 4;
         this.dayplanet=true;
-        this.bullets=new ArrayList<>();
-        this.eatimage=new ImageView(new Image(getClass().getResource("/walnut_half_life.gif").toExternalForm()));
-        this.image=new ImageView(new Image(getClass().getResource("/walnut_full_life.gif").toExternalForm()));
+        this.image = new ImageView(new Image(getClass().getResource("/CoffeeBean2.gif").toExternalForm()));
+        this.eatimage=new ImageView(new Image(getClass().getResource("/CoffeeBean2.gif").toExternalForm()));
+        bullets = new ArrayList<Bullet>();
     }
 
     @Override
-    void act(Pane root) {
-
-    }
+    void act(Pane root, ArrayList<Zombies> Zombies) {}
 
     @Override
-    void act(Pane root, ArrayList<Zombies> Zombies) {
-
-    }
+    void act(Pane root) {}
     public void cooldown( Button b){
         cooldown = new PauseTransition(Duration.seconds(watingtime));
         cooldown.setOnFinished(ev -> {

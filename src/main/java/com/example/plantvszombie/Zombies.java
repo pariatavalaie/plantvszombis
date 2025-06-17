@@ -20,7 +20,8 @@ public abstract class Zombies {
     int speed;
     ImageView image;
     ImageView deadZombie;
-    Timeline walker;
+    Timeline walker=null;
+    Timeline eating=null;
     boolean inHouse=false;
     abstract void act(Pane root);
      void move(Pane root){
@@ -50,10 +51,9 @@ public abstract class Zombies {
 
     public void damage  (ArrayList<Planet> planets,Pane root) {
         for (Planet p : planets) {
-            Iterator<Bullet> it = p.bullets.iterator(); // برای حذف گلوله بعد برخورد
+            Iterator<Bullet> it = p.bullets.iterator();
             while (it.hasNext()) {
                 Bullet b = it.next();
-                // اگر زامبی زنده است و با گلوله برخورد داشته
                 if (isAlive() && this.collidesWith(b,root)) {
                     hp--;
                     System.out.println("Zombie HP: " + hp);
@@ -92,12 +92,15 @@ public abstract class Zombies {
 
                 final int[] bites = {0};
                 Image temp=image.getImage();
-                Timeline eating = new Timeline(new KeyFrame(Duration.seconds(0.5), e -> {
-                   if (this.isAlive()){
-                    bites[0]++;
-                   }if(!isAlive()){
-                       p.health=p.health-bites[0];
+                Timeline[] eatingRef = new Timeline[1];
+                 eating = new Timeline(new KeyFrame(Duration.seconds(0.5), e -> {
+                    if (!isAlive()) {
+                        if (walker != null) walker.play();
+                        eatingRef[0].stop();
+                        return;
                     }
+
+                    bites[0]++;
                     p.image.setImage(p.eatimage.getImage());
 
                     if (bites[0] >= p.health) {
@@ -106,11 +109,10 @@ public abstract class Zombies {
                         p.remove(root);
                         planets.remove(p);
 
-
-
                     }
                 }));
                 eating.setCycleCount(p.health);
+                eatingRef[0] = eating;
                 eating.play();
                 break;
             }

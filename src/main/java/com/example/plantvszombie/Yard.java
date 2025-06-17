@@ -9,11 +9,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-
-import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -133,6 +130,9 @@ public class Yard {
         BloverB.setOnAction(event -> {
             selected[0]="Blover";
         });
+        BeanB.setOnAction(event -> {
+            selected[0]="Bean";
+        });
 
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
@@ -146,9 +146,13 @@ public class Yard {
                 rectangle.setOnMouseClicked(event -> {
                     System.out.println("H");
                     boolean empty=true;
+                    boolean bean=false;
                     Planet planet1 = null;
                     for (Planet planet : planets) {
                         if(planet.row==row && planet.col==col){
+                            if(!planet.dayplanet){
+                                bean=true;
+                            }
                             planet1=planet;
                             System.out.println(planet1.row+" "+planet1.col);
                             empty=false;
@@ -212,6 +216,11 @@ public class Yard {
                     }else if("Blover".equals(selected[0])&&empty) {
                         placeplanet("Blover",col,row);
                         selected[0] = null;
+                    }else if("Bean".equals(selected[0])&&bean) {
+                        placeplanet("Bean",col,row);
+                        selected[0] = null;
+                    }else if("Ice".equals(selected[0])&&empty) {
+                        placeplanet("Ice",col,row);
                     }
                 });
             }
@@ -224,6 +233,7 @@ public class Yard {
 
 
     }
+
     private Planet findPlanet(int col, int row) {
         for (Planet planet : planets) {
             if (planet.row == row && planet.col == col) {
@@ -233,7 +243,7 @@ public class Yard {
         return null;
     }
     public void startMovingAndDetecting() {
-        // جلوگیری از ConcurrentModificationException با ایجاد کپی
+
         ArrayList<Zombies> zombieCopy = new ArrayList<>(Zombies);
 
         for (Zombies zombie : zombieCopy) {
@@ -246,174 +256,56 @@ public class Yard {
     private void removePlanet(Planet planet) {
         planet.remove(yardPane); // فرض بر اینکه متد remove در کلاس Planet وجود دارد
         planets.remove(planet);
+
     }
 
-    public void buttonpic(){
+    public void buttonpic() {
         VBox vbox = new VBox();
-        Image Snowpea = new Image(getClass().getResource("/SnowPea.png").toExternalForm());
-        ImageView view1 = new ImageView(Snowpea);
-        view1.setFitHeight(64);
-        view1.setFitWidth(105);
-        SnowpeaB.setGraphic(view1);
-        SnowpeaB.setStyle("-fx-background-color: #fff");
-        if(check("Snow Pea")){
-            vbox.getChildren().add(SnowpeaB);
-        }
-        Image Peashooter = new Image(getClass().getResource("/com/example/plantvszombie/peashooterCard.png").toExternalForm());
-        ImageView view2 = new ImageView(Peashooter);
-        view2.setFitHeight(64);
-        view2.setFitWidth(105);
-        peashooterB.setGraphic(view2);
-        peashooterB.setStyle("-fx-background-color: #fff");
-        if(check("Peashooter")){
-            vbox.getChildren().add(peashooterB);
-        }
-        Image Reapeater = new Image(getClass().getResource("/com/example/plantvszombie/repeaterCard.png").toExternalForm());
-        ImageView view3 = new ImageView(Reapeater);
-        view3.setFitHeight(64);
-        view3.setFitWidth(105);
-        reapeaterB.setGraphic(view3);
-        reapeaterB.setStyle("-fx-background-color: #fff");
-        if(check("Repeater")){
-            vbox.getChildren().add(reapeaterB);
-        }
-        Image Tallnut = new Image(getClass().getResource("/TallNut.png").toExternalForm());
-        ImageView view4 = new ImageView(Tallnut);
-        view4.setFitHeight(64);
-        view4.setFitWidth(105);
-        TallnutB.setGraphic(view4);
-        TallnutB.setStyle("-fx-background-color: #fff");
-        if(check("Tall-nut")){
-            vbox.getChildren().add(TallnutB);
-        }
-        Image Wallnut = new Image(getClass().getResource("/com/example/plantvszombie/wallnutCard.png").toExternalForm());
-        ImageView view5 = new ImageView(Wallnut);
-        view5.setFitHeight(64);
-        view5.setFitWidth(105);
-        WallnutB.setGraphic(view5   );
-        WallnutB.setStyle("-fx-background-color: #fff");
-        if(check("Wall-nut")){
-            vbox.getChildren().add(WallnutB);
-        }
-        Image Cherrybomb =new Image(getClass().getResource("/com/example/plantvszombie/cherrybombCard.png").toExternalForm());
-        ImageView view6 = new ImageView(Cherrybomb);
-        view6.setFitHeight(64);
-        view6.setFitWidth(105);
-        cherrybombB.setGraphic(view6);
-        cherrybombB.setStyle("-fx-background-color: #fff");
-        if(check("Cherry Bomb")){
-            vbox.getChildren().add(cherrybombB);
-        }
-        Image Jalapeno = new Image(getClass().getResource("/com/example/plantvszombie/jalapenoCard.png").toExternalForm());
-        ImageView view7 = new ImageView(Jalapeno);
-        view7.setFitHeight(64);
-        view7.setFitWidth(105);
-        JalapenoB.setGraphic(view7);
-        JalapenoB.setStyle("-fx-background-color: #fff");
-        if(check("jalapeno")){
-            vbox.getChildren().add(JalapenoB);
-        }
-        Image Sunflower = new Image(getClass().getResource("/com/example/plantvszombie/sunflowerCard.png").toExternalForm());
-        ImageView view8 = new ImageView(Sunflower);
-        view8.setFitHeight(64);
-        view8.setFitWidth(105);
-        SunflowerB.setGraphic(view8);
-        SunflowerB.setStyle("-fx-background-color: #fff");
-        if(check("Sunflower")){
-            vbox.getChildren().add(SunflowerB);
-        }
-        ImageView view9=new ImageView(new Image(getClass().getResource("/Shovel.jpg").toExternalForm()));
-        view9.setFitHeight(64);
-        view9.setFitWidth(105);
-        ShovelB.setGraphic(view9);
+
+        addPlantCard(vbox, "Snow Pea", SnowpeaB, "/SnowPea.png");
+        addPlantCard(vbox, "Peashooter", peashooterB, "/com/example/plantvszombie/peashooterCard.png");
+        addPlantCard(vbox, "Repeater", reapeaterB, "/com/example/plantvszombie/repeaterCard.png");
+        addPlantCard(vbox, "Tall-nut", TallnutB, "/TallNut.png");
+        addPlantCard(vbox, "Wall-nut", WallnutB, "/com/example/plantvszombie/wallnutCard.png");
+        addPlantCard(vbox, "Cherry Bomb", cherrybombB, "/com/example/plantvszombie/cherrybombCard.png");
+        addPlantCard(vbox, "jalapeno", JalapenoB, "/com/example/plantvszombie/jalapenoCard.png");
+        addPlantCard(vbox, "Sunflower", SunflowerB, "/com/example/plantvszombie/sunflowerCard.png");
+        addPlantCard(vbox, "Hypno", HypnoB, "/HypnoShroomSeed.png");
+        addPlantCard(vbox, "Puff", PuffB, "/PuffShroomSeed.png");
+        addPlantCard(vbox, "Scaredy", ScaredyB, "/ScaredyShroomSeed.png");
+        addPlantCard(vbox, "Doom", DoomB, "/DoomShroomSeed.png");
+        addPlantCard(vbox, "Ice", IceB, "/IceShroomSeed.png");
+        addPlantCard(vbox, "bean", BeanB, "/bean.png");
+        addPlantCard(vbox, "plantern", PlanternB, "/PlanternSeed.png");
+        addPlantCard(vbox, "blover", BloverB, "/BloverSeed.png");
+        addPlantCard(vbox, "Grave", GraveB, "/GraveBusterSeed.png");
+
+        ImageView shovelView = createImageView("/Shovel.jpg");
+        ShovelB.setGraphic(shovelView);
         ShovelB.setStyle("-fx-background-color: #fff");
-        Image Hypo = new Image(getClass().getResource("/HypnoShroomSeed.png").toExternalForm());
-        ImageView view10 = new ImageView(Hypo);
-        view10.setFitHeight(64);
-        view10.setFitWidth(105);
-        HypnoB.setGraphic(view10);
-        HypnoB.setStyle("-fx-background-color: #fff");
-        if(check("Hypno")){
-            vbox.getChildren().add(HypnoB);
-        }
-        Image Puff = new Image(getClass().getResource("/PuffShroomSeed.png").toExternalForm());
-        ImageView view11 = new ImageView(Puff);
-        view11.setFitHeight(64);
-        view11.setFitWidth(105);
-        PuffB.setGraphic(view11);
-        PuffB.setStyle("-fx-background-color: #fff");
-        if(check("Puff")){
-            vbox.getChildren().add(PuffB);
-        }
-        Image Scared = new Image(getClass().getResource("/ScaredyShroomSeed.png").toExternalForm());
-        ImageView view12 = new ImageView(Scared);
-        view12.setFitHeight(64);
-        view12.setFitWidth(105);
-        ScaredyB.setGraphic(view12);
-        ScaredyB.setStyle("-fx-background-color: #fff");
-        if(check("Scaredy")){
-            vbox.getChildren().add(ScaredyB);
-        }
-        Image Doom = new Image(getClass().getResource("/DoomShroomSeed.png").toExternalForm());
-        ImageView view13 = new ImageView(Doom);
-        view13.setFitHeight(64);
-        view13.setFitWidth(105);
-        DoomB.setGraphic(view13);
-        DoomB.setStyle("-fx-background-color: #fff");
-        if(check("Doom")){
-            vbox.getChildren().add(DoomB);
-        }
-        Image Ice = new Image(getClass().getResource("/IceShroomSeed.png").toExternalForm());
-        ImageView view14 = new ImageView(Ice);
-        view14.setFitHeight(64);
-        view14.setFitWidth(105);
-        IceB.setGraphic(view14);
-        IceB.setStyle("-fx-background-color: #fff");
-        if(check("Ice")){
-            vbox.getChildren().add(IceB);
-        }
-        Image bean = new Image(getClass().getResource("/bean.png").toExternalForm());
-        ImageView view15 = new ImageView(bean);
-        view15.setFitHeight(64);
-        view15.setFitWidth(105);
-        BeanB.setGraphic(view15);
-        BeanB.setStyle("-fx-background-color: #fff");
-        if(check("bean")){
-            vbox.getChildren().add(BeanB);
-        }
-        Image plantern = new Image(getClass().getResource("/PlanternSeed.png").toExternalForm());
-        ImageView view16 = new ImageView(plantern);
-        view16.setFitHeight(64);
-        view16.setFitWidth(105);
-        PlanternB.setGraphic(view16);
-        PlanternB.setStyle("-fx-background-color: #fff");
-        if(check("plantern")){
-            vbox.getChildren().add(PlanternB);
-        }
-        Image blover = new Image(getClass().getResource("/BloverSeed.png").toExternalForm());
-        ImageView view17 = new ImageView(blover);
-        view17.setFitHeight(64);
-        view17.setFitWidth(105);
-        BloverB.setGraphic(view17);
-        BloverB.setStyle("-fx-background-color: #fff");
-        if(check("blover")){
-            vbox.getChildren().add(BloverB);
-        }
-        Image Grave = new Image(getClass().getResource("/GraveBusterSeed.png").toExternalForm());
-        ImageView view18 = new ImageView(Grave);
-        view18.setFitHeight(64);
-        view18.setFitWidth(105);
-        GraveB.setGraphic(view18);
-        GraveB.setStyle("-fx-background-color: #fff");
-        if(check("Grave")){
-            vbox.getChildren().add(GraveB);
-        }
 
         HBox hbox = new HBox();
-        hbox.getChildren().add(vbox);
-        hbox.getChildren().add(ShovelB);
+        hbox.getChildren().addAll(vbox, ShovelB);
         yardPane.getChildren().add(hbox);
     }
+
+    private void addPlantCard(VBox vbox, String name, Button button, String imagePath) {
+        ImageView view = createImageView(imagePath);
+        button.setGraphic(view);
+        button.setStyle("-fx-background-color: #fff");
+        if (check(name)) {
+            vbox.getChildren().add(button);
+        }
+    }
+
+    private ImageView createImageView(String path) {
+        Image image = new Image(getClass().getResource(path).toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(64);
+        imageView.setFitWidth(105);
+        return imageView;
+    }
+
 
     public void placeplanet(String planet,int col,int row){
         ImageView plantView = null;
@@ -518,15 +410,18 @@ public class Yard {
             planets.add(P);
             plantView=P.image;
             P.cooldown(PuffB);
-            P.act(yardPane, Zombies);
+            if(!day){
+            P.act(yardPane, Zombies);}
           }else if(planet.equals("Doom")&&Doomshroom.canplace){
             Doomshroom C=new Doomshroom(col,row);
             Doomshroom.canplace=false;
             DoomB.setDisable(true);
             DoomB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(C);
-            plantView=C.image;
+            plantView=C.eatimage;
             C.cooldown(DoomB);
+            if(!day){
+            plantView=C.image;
             C.act(yardPane,Zombies);
             Planet cherry = findPlanet(col,row);
             lockedCells.add(row + "," + col);
@@ -541,17 +436,18 @@ public class Yard {
                         }));
 
                 timeline.play();
-            }
+            }}
             Sun.collectedpoint-=Doomshroom.cost;
         }else if(planet.equals("Scaredy")&&Scaredy.canplace){
             Scaredy C=new Scaredy(col,row);
             Scaredy.canplace=false;
             ScaredyB.setDisable(true);
-            DoomB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            ScaredyB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(C);
             plantView=C.image;
             C.cooldown(ScaredyB);
-            C.act(yardPane,Zombies);
+            if(!day){
+                C.act(yardPane,Zombies);}
             Sun.collectedpoint-=Scaredy.cost;
         }else if(planet.equals("Plantern")&&Plantern.canplace){
             Plantern p=new Plantern(col,row,fog);
@@ -560,7 +456,8 @@ public class Yard {
             planets.add(p);
             plantView=p.image;
             p.cooldown(PlanternB);
-            p.act(yardPane);
+            if(!day){
+                p.act(yardPane);}
             Sun.collectedpoint-=Plantern.cost;
         } else if (planet.equals("Blover")&&Blover.canplace) {
             Blover b=new Blover(col,row,fog);
@@ -570,8 +467,63 @@ public class Yard {
             planets.add(b);
             plantView=b.image;
             b.cooldown(BloverB);
-            b.act(yardPane);
+            if(!day){
+            b.act(yardPane);}
             Sun.collectedpoint-=Blover.cost;
+        } else if(planet.equals("Bean")&&Bean.canplace) {
+            Bean b=new Bean(col,row);
+            Bean.canplace=false;
+            BeanB.setDisable(true);
+            BeanB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            b.cooldown(BeanB);
+            planets.add(b);
+            plantView=b.image;
+            Planet x=findPlanet(col,row);
+            x.act(yardPane);
+            x.act(yardPane,Zombies);
+            if(x instanceof Doomshroom){
+                Planet cherry = findPlanet(x.col,x.row);
+                lockedCells.add(x.row + "," + x.col);
+                x.eatimage.setImage(x.image.getImage());
+                if (cherry != null) {
+                    Timeline timeline = new Timeline(
+                            new KeyFrame(Duration.seconds(1), e -> {
+                                removePlanet(cherry);
+                                Rectangle burned = new Rectangle(GRID_X, GRID_Y);
+                                burned.setFill(Color.DARKGRAY);
+                                burned.setOpacity(0.6);
+                                gridPane.add(burned, col, row);
+                            }));
+
+                    timeline.play();}
+
+            }
+            if(x instanceof Iceshroom){planets.remove(x);x.eatimage.setImage(x.image.getImage());
+            }
+
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+                removePlanet(b);
+            }));
+            timeline.play();
+            Sun.collectedpoint-=Bean.cost;
+
+        }else if(planet.equals("Ice")&&Iceshroom.canplace) {
+            Iceshroom i=new Iceshroom(col,row);
+            Iceshroom.canplace=false;
+            IceB.setDisable(true);
+            IceB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            i.cooldown(IceB);
+            planets.add(i);
+            plantView=i.eatimage;
+            if(!day){
+                i.act(yardPane,Zombies);
+                plantView=i.image;
+                planets.remove(i);
+
+            }
+            Sun.collectedpoint-=Iceshroom.cost;
+
+
         }
 
 
@@ -581,9 +533,6 @@ public class Yard {
 
         double gridX = 245.0; // Left anchor of grid
         double gridY = 60.0;  // Top anchor of grid
-
-        double cellWidth = 80.0;
-        double cellHeight = 100.0;
 
         double x = gridX + col * GRID_X + (GRID_X - 70) / 2;
         double y = gridY + row * GRID_Y + (GRID_Y - 90) / 2;
@@ -616,7 +565,10 @@ public class Yard {
                 Jalapeno.cost,
                 Doomshroom.cost,
                 Plantern.cost,
-                Blover.cost
+                Blover.cost,
+                Bean.cost,
+                Iceshroom.cost,
+
         };
 
         boolean[] canplaces = {
@@ -630,7 +582,9 @@ public class Yard {
                 Jalapeno.canplace,
                 Doomshroom.canplace,
                 Plantern.canplace,
-                Blover.canplace
+                Blover.canplace,
+                Bean.canplace,
+                Iceshroom.canplace,
         };
         Button[] buttons = {
                 peashooterB,
@@ -643,7 +597,9 @@ public class Yard {
                 JalapenoB,
                 DoomB,
                 PlanternB,
-                BloverB
+                BloverB,
+                BeanB,
+                IceB
         };
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {

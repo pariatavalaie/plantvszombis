@@ -19,6 +19,7 @@ public class SnowPea extends Planet{
         this.col = x;
         this.health=4;
         this.watingtime = 8;
+        this.dayplanet=true;
         bullets = new ArrayList<Bullet>();
         this.image =new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm()));
         this.eatimage =new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm()));

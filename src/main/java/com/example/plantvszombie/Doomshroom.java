@@ -14,16 +14,16 @@ import java.util.ArrayList;
 public class Doomshroom extends Planet{
     static boolean canplace = true;
     static int cost = 125;
-    boolean explode = false;
 
     public Doomshroom(int x,int y) {
         this.row = y;
         this.col = x;
         this.health = 4;
         this.watingtime =5;
+        this.dayplanet=false;
         bullets = new ArrayList<Bullet>();
         image=new ImageView(new Image(getClass().getResource("/DoomShroom1.gif").toExternalForm()));
-        eatimage=new ImageView(new Image(getClass().getResource("/DoomShroom1.gif").toExternalForm()));
+        eatimage=new ImageView(new Image(getClass().getResource("/DoomShroom3.gif").toExternalForm()));
     }
 
     @Override

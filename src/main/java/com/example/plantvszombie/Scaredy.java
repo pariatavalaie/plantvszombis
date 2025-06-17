@@ -18,6 +18,7 @@ public class Scaredy extends Planet{
         this.col = x;
         this.row = y;
         this.watingtime = 2;
+        this.dayplanet=false;
         this.health=3;
         this.image = new ImageView( new Image(getClass().getResource("/Scaredy-shroom.png").toExternalForm()));
         this.eatimage=new ImageView( new Image(getClass().getResource("/Scaredy-Shroom_Hiding.png").toExternalForm()));

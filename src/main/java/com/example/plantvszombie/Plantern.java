@@ -25,6 +25,7 @@ public class Plantern extends Planet {
         this.fog = fog;
         this.watingtime = 3;
         this.health = 4;
+        this.dayplanet=false;
         bullets = new ArrayList<>();
         this.image = new ImageView(new Image(getClass().getResource("/Animated_Plantern.gif").toExternalForm()));
         this.eatimage = new ImageView(new Image(getClass().getResource("/Animated_Plantern.gif").toExternalForm()));

@@ -18,12 +18,14 @@ public abstract class Planet {
     ArrayList<Bullet> bullets;
     boolean dead=false;
     PauseTransition cooldown;
+    Boolean dayplanet;
 
     abstract void act(Pane root,ArrayList<Zombies>Zombies);
 
     abstract void act(Pane root);
     public void remove(Pane root){
         root.getChildren().remove(image);
+        root.getChildren().remove(eatimage);
         dead=true;
     };
 

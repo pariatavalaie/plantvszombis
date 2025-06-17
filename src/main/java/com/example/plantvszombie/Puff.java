@@ -19,6 +19,7 @@ public class Puff extends Planet{
         this.col = x;
         this.health = 4;
         this.watingtime = 1;
+        this.dayplanet = false;
         bullets = new ArrayList<Bullet>();
         image=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
         eatimage=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
