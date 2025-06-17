@@ -11,10 +11,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 
 public class Yard {
     AnchorPane yardPane;
@@ -44,6 +42,7 @@ public class Yard {
     Button BloverB = new Button();
     ArrayList<Planet>planets=new ArrayList<>();
     ArrayList<Zombies>Zombies=new ArrayList<>();
+    ArrayList<StoneGrave>graves=new ArrayList<>();
     Fog fog;
     boolean day;
     private Set<String> lockedCells = new HashSet<>(); // مثل "3,5"
@@ -76,63 +75,26 @@ public class Yard {
 
     public void PaintGrid(int x, int y) {
         gridPane = new GridPane();
-        final String []selected ={""};
-        SunflowerB.setOnAction(event -> {
-            selected[0]="sunflower";
-            System.out.println(selected[0]);
-        });
-        peashooterB.setOnAction(event -> {
-            selected[0]="peashooter";
-        });
-        reapeaterB.setOnAction(event -> {
-            selected[0]="reapeater";
-        });
-        SnowpeaB.setOnAction(event -> {
-            selected[0]="snowpea";
-        });
-        ShovelB.setOnAction(event -> {
-            selected[0]="shovel";
-            System.out.println("shovel");
-        });
-        cherrybombB.setOnAction(event -> {
-            selected[0]="cherrybomb";
-        });
-        JalapenoB.setOnAction(event -> {
-            selected[0]="jalapeno";
-        });
-        WallnutB.setOnAction(event -> {
-            selected[0]="wallnut";
-        });
-        TallnutB.setOnAction(event -> {
-            selected[0]="tallnut";
-        });
-        HypnoB.setOnAction(event -> {
-            selected[0]="Hypno";
-        });
-        PuffB.setOnAction(event -> {
-            selected[0]="Puff";
-        });
-        IceB.setOnAction(event -> {
-            selected[0]="Ice";
-        });
-        ScaredyB.setOnAction(event -> {
-            selected[0]="Scaredy";
-        });
-        DoomB.setOnAction(event -> {
-            selected[0]="Doom";
-        });
-        PlanternB.setOnAction(event -> {
-            selected[0]="Plantern";
-        });
-        GraveB.setOnAction(event -> {
-            selected[0]="Grave";
-        });
-        BloverB.setOnAction(event -> {
-            selected[0]="Blover";
-        });
-        BeanB.setOnAction(event -> {
-            selected[0]="Bean";
-        });
+        final String[] selected = {""};
+
+        setSelectAction(SunflowerB, selected, "sunflower");
+        setSelectAction(peashooterB, selected, "peashooter");
+        setSelectAction(reapeaterB, selected, "reapeater");
+        setSelectAction(SnowpeaB, selected, "snowpea");
+        setSelectAction(ShovelB, selected, "shovel");
+        setSelectAction(cherrybombB, selected, "cherrybomb");
+        setSelectAction(JalapenoB, selected, "jalapeno");
+        setSelectAction(WallnutB, selected, "wallnut");
+        setSelectAction(TallnutB, selected, "tallnut");
+        setSelectAction(HypnoB, selected, "Hypno");
+        setSelectAction(PuffB, selected, "Puff");
+        setSelectAction(IceB, selected, "Ice");
+        setSelectAction(ScaredyB, selected, "Scaredy");
+        setSelectAction(DoomB, selected, "Doom");
+        setSelectAction(PlanternB, selected, "Plantern");
+        setSelectAction(GraveB, selected, "Grave");
+        setSelectAction(BloverB, selected, "Blover");
+        setSelectAction(BeanB, selected, "Bean");
 
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
@@ -140,89 +102,56 @@ public class Yard {
                 rectangle.setFill(Color.TRANSPARENT);
                 rectangle.setStroke(Color.BLACK);
                 rectangle.setStrokeWidth(0.5);
-                int row = i;
-                int col = j;
+                int row = i, col = j;
                 gridPane.add(rectangle, j, i);
-                rectangle.setOnMouseClicked(event -> {
-                    System.out.println("H");
-                    boolean empty=true;
-                    boolean bean=false;
-                    Planet planet1 = null;
-                    for (Planet planet : planets) {
-                        if(planet.row==row && planet.col==col){
-                            if(!planet.dayplanet){
-                                bean=true;
-                            }
-                            planet1=planet;
-                            System.out.println(planet1.row+" "+planet1.col);
-                            empty=false;
 
+                rectangle.setOnMouseClicked(event -> {
+                    boolean empty = true;
+                    boolean bean = false;
+                    Planet planet1 = null;
+
+                    for (Planet planet : planets) {
+                        if (planet.row == row && planet.col == col) {
+                            if (!planet.dayplanet) bean = true;
+                            planet1 = planet;
+                            empty = false;
                         }
                     }
+
+                    for (StoneGrave grave : graves) {
+                        if (grave.x == row && grave.y == col) {
+                            empty = false;
+                        }
+                    }
+
                     String cellKey = row + "," + col;
-                    if (lockedCells.contains(cellKey)) {
+                    if (lockedCells.contains(cellKey)) return;
+
+                    String sel = selected[0];
+
+                    if ("shovel".equals(sel)) {
+                        if (planet1 != null) {
+                            planet1.remove(yardPane);
+                            planets.remove(planet1);
+                        }
+                        selected[0] = null;
                         return;
                     }
 
-                    if ("sunflower".equals(selected[0])&&empty) {
-                        System.out.println(row);
-                        placeplanet("sunflower",col,row);
+                    if ("Bean".equals(sel) && bean) {
+                        placeplanet("Bean", col, row);
                         selected[0] = null;
+                        return;
+                    }
 
-                    }else if ("peashooter".equals(selected[0])&&empty) {
-                        System.out.println(row);
-                        placeplanet("peashooter",col,row);
+                    if ("Grave".equals(sel) && findStoneGrave(col, row) != null) {
+                        placeplanet("Grave", col, row);
                         selected[0] = null;
-                    }else if ("reapeater".equals(selected[0])&&empty) {
-                        System.out.println(row);
-                        placeplanet("reapeater",col,row);
-                        selected[0] = null;
-                    }else if ("snowpea".equals(selected[0])&&empty) {
-                        System.out.println(row);
-                        placeplanet("snowpea",col,row);
-                        selected[0] = null;
-                    }else if ("shovel".equals(selected[0])) {
-                        System.out.println("pak");
-                        if(planet1!=null){
-                            planet1.remove(yardPane);
-                            planets.remove(planet1);}
-                        selected[0] = null;
-                    }else if("cherrybomb".equals(selected[0])&&empty) {
-                        System.out.println(row);
-                        placeplanet("cherrybomb",col,row);
-                        selected[0] = null;
-                    }else if("jalapeno".equals(selected[0])&&empty) {
-                        System.out.println(row);
-                        placeplanet("jalapeno",col,row);
-                        selected[0] = null;
-                    }else if ("wallnut".equals(selected[0])&&empty) {
-                        placeplanet("wallnut",col,row);
-                        selected[0] = null;
-                    } else if ("tallnut".equals(selected[0])&&empty) {
-                        placeplanet("tallnut",col,row);
-                        selected[0] = null;
-                    } else if("Puff".equals(selected[0])&&empty) {
-                        placeplanet("Puff",col,row);
-                        selected[0] = null;
-                    }else if("Doom".equals(selected[0])&&empty) {
-                        placeplanet("Doom",col,row);
-                        selected[0] = null;
-                    }else if("Scaredy".equals(selected[0])&&empty) {
-                        placeplanet("Scaredy",col,row);
-                        selected[0] = null;
-                    } else if ("Plantern".equals(selected[0])&&empty) {
-                        placeplanet("Plantern",col,row);
-                        selected[0] = null;
-                    }else if("Blover".equals(selected[0])&&empty) {
-                        placeplanet("Blover",col,row);
-                        selected[0] = null;
-                    }else if("Bean".equals(selected[0])&&bean) {
-                        placeplanet("Bean",col,row);
-                        selected[0] = null;
-                    }else if("Ice".equals(selected[0])&&empty) {
-                        placeplanet("Ice",col,row);
-                    } else if ("Hypno".equals(selected[0])&&empty) {
-                        placeplanet("Hypno",col,row);
+                        return;
+                    }
+
+                    if (empty && isPlaceable(sel)) {
+                        placeplanet(sel, col, row);
                         selected[0] = null;
                     }
                 });
@@ -231,10 +160,69 @@ public class Yard {
 
         yardPane.getChildren().add(gridPane);
 
+        if (!day) {
+            PaintStone(yardPane, x, y);
+        }
+
         AnchorPane.setTopAnchor(gridPane, 60.0);
         AnchorPane.setLeftAnchor(gridPane, 245.0);
+    }
+
+    private void setSelectAction(Button button, String[] selected, String name) {
+        button.setOnAction(e -> {
+            selected[0] = name;
+
+        });
+    }
+
+    private boolean isPlaceable(String sel) {
+        return Arrays.asList(
+                "sunflower", "peashooter", "reapeater", "snowpea",
+                "cherrybomb", "jalapeno", "wallnut", "tallnut",
+                "Puff", "Doom", "Scaredy", "Plantern",
+                "Blover", "Ice", "Hypno"
+        ).contains(sel);
+    }
+
+    private void PaintStone(Pane pane, int x, int y) {
+        Random random = new Random();
+        int numberOfGraves = 5; // تعداد سنگ‌قبرهایی که اول بازی ظاهر می‌شن
+
+        for (int i = 0; i < numberOfGraves; i++) {
+            int col, row;
+            boolean positionOccupied;
+
+            do {
+                col = random.nextInt(x); // انتخاب تصادفی ستون
+                row = random.nextInt(y); // انتخاب تصادفی سطر
+                positionOccupied = false;
+
+                // بررسی اینکه گیاهی در این مکان نباشه
+                for (Planet planet : planets) {
+                    if (planet.col == col && planet.row == row) {
+                        positionOccupied = true;
+                        break;
+                    }
+                }
 
 
+                for (StoneGrave grave : graves) {
+                    int dx = Math.abs(grave.x - col);
+                    int dy = Math.abs(grave.y - row);
+                    if ((dx == 0 && dy == 0) || (dx + dy == 1)) {
+
+                        positionOccupied = true;
+                        break;
+                    }
+                }
+
+            } while (positionOccupied);
+
+            StoneGrave grave = new StoneGrave(col, row, pane);
+            graves.add(grave);
+
+            grave.spawnZombie(Zombies, graves);
+        }
     }
 
     private Planet findPlanet(int col, int row) {
@@ -261,6 +249,14 @@ public class Yard {
         planet.remove(yardPane);
         planets.remove(planet);
 
+    }
+    private StoneGrave findStoneGrave(int col, int row) {
+        for (StoneGrave grave : graves) {
+            if(grave.x == col && grave.y == row) {
+                return grave;
+            }
+        }
+        return null;
     }
 
     public void buttonpic() {
@@ -547,6 +543,16 @@ public class Yard {
             }
             Sun.collectedpoint-=Hypnoshroom.cost;
 
+        }else if(planet.equals("Grave")&&GraveBuster.canplace) {
+            GraveBuster g=new GraveBuster(col,row);
+            GraveBuster.canplace=false;
+            GraveB.setDisable(true);
+            GraveB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            StoneGrave s=findStoneGrave(col,row);
+            s.remove(graves);
+            g.act(yardPane);
+            plantView=g.image;
+            Sun.collectedpoint-=GraveBuster.cost;
         }
 
 
@@ -592,6 +598,7 @@ public class Yard {
                 Bean.cost,
                 Iceshroom.cost,
                 Hypnoshroom.cost,
+                GraveBuster.cost,
 
         };
 
@@ -610,6 +617,7 @@ public class Yard {
                 Bean.canplace,
                 Iceshroom.canplace,
                 Hypnoshroom.canplace,
+                GraveBuster.canplace,
         };
         Button[] buttons = {
                 peashooterB,
@@ -626,6 +634,7 @@ public class Yard {
                 BeanB,
                 IceB,
                 HypnoB,
+                GraveB
         };
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {
