@@ -42,7 +42,7 @@ public class Scaredy extends Planet{
             boolean shouldShoot = false;
             for (Zombies z :zombies ) {
                 double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
-                if(z.y == row && z.x - col <= 2 && z.x<=8) {
+                if(z.y == row && z.x - col <= 2 && z.x<=8&&zombieX>x) {
                     scared=true;
                     this.image.setImage(this.eatimage.getImage());
                 }else if (!scared&&z.y == row && z.x > col && z.x<=8) {

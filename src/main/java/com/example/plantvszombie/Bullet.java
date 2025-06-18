@@ -21,9 +21,6 @@ public class Bullet {
     }
 
     public void shoot(Pane pane, double xPlant, double xZombie, String type, double yPlant) {
-        if (xZombie <= xPlant) {
-            return;
-        }
 
         Image bullet = null;
         if (type.equals("ICY")) {

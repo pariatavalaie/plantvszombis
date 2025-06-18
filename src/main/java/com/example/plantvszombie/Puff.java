@@ -39,7 +39,7 @@ public class Puff extends Planet{
             boolean shouldShoot = false;
             for (Zombies z :zombies ) {
                 double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
-                if (z.y == row && z.x-col<=4 &&z.x<=8) {
+                if (z.y == row && z.x-col<=4 &&z.x<=8&&zombieX>x) {
                     shouldShoot = true;
                     XZ[0] = zombieX;
                     break;
