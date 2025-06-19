@@ -18,8 +18,6 @@ public class HelloApplication extends Application {
         this.stage = stage;
         stage.setTitle("Plant Vs Zombie");
         stage.setResizable(false);
-
-
         Image image = new Image(getClass().getResource("/first page_11zon.png").toExternalForm());
         ImageView yard = new ImageView(image);
         yard.setFitHeight(626);
@@ -67,6 +65,7 @@ public class HelloApplication extends Application {
         menuPane.setLayoutY(50);
         menuPane.setLayoutX(190);
         pane.getChildren().add(menuPane);
+        pane.getChildren().add(menu.Back);
         Scene menuScene = new Scene(pane, 1024, 626);
         stage.setScene(menuScene);
         stage.show();
@@ -79,6 +78,10 @@ public class HelloApplication extends Application {
                 System.out.println("You have to choose 6 planets");
             }
         });
+        menu.Back.setOnAction(e -> {
+            menu2();
+            menu=new Menu();
+        });
     }
     private void menu2(){
         Image yar = new Image(getClass().getResource("/Lawn.jpg").toExternalForm());
@@ -88,6 +91,7 @@ public class HelloApplication extends Application {
         Pane pane = new Pane(yard);
         pane.getChildren().add(menu.Day);
         pane.getChildren().add(menu.Night);
+        pane.getChildren().add(menu.Back);
         Scene menuScene = new Scene(pane, 1024, 626);
         stage.setScene(menuScene);
         stage.show();
@@ -99,6 +103,13 @@ public class HelloApplication extends Application {
         menu.Night.setOnAction(e -> {
             menu.day = false;
             play2();
+        });
+        menu.Back.setOnAction(e -> {
+            try {
+                start(stage);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
     }

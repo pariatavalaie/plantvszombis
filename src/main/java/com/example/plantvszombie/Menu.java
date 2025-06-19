@@ -8,6 +8,8 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class Menu {
     public Button Exit;
     public Button Day;
     public Button Night;
+    public Button Back;
     public int countPlant = 0;
 
     Menu() {
@@ -64,6 +67,15 @@ public class Menu {
         Night.setGraphic(imageView4);
         Night.setLayoutX(100);
         Night.setLayoutY(50);
+        ImageView back = new ImageView(getClass().getResource("/back.png").toExternalForm());
+        Back=new Button();
+        Circle arrow = new Circle();
+        Back.setShape(arrow);
+        Back.setGraphic(back);
+        Back.setLayoutX(900);
+        Back.setLayoutY(10);
+        Back.setStyle("-fx-background-color: #fff");
+
     }
 
     public VBox getMenuPane() {
@@ -274,5 +286,11 @@ public class Menu {
 
     public List getSelectedPlantsNames() {
         return selectedPlantsNames;
+    }
+    public void reset(){
+        selectedPlantsNames.clear();
+        countPlant = 0;
+        plantSelected=new boolean[MAX_PLANTS];
+
     }
 }
