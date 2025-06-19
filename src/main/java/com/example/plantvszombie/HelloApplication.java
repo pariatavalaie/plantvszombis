@@ -2,6 +2,7 @@ package com.example.plantvszombie;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -75,7 +76,9 @@ public class HelloApplication extends Application {
             if(menu.countPlant == 6){
                 play();
             }else{
-                System.out.println("You have to choose 6 planets");
+                Alert eror = new Alert(Alert.AlertType.WARNING);
+                eror.setHeaderText("\"You have to choose 6 planets\"");
+                eror.showAndWait();
             }
         });
         menu.Back.setOnAction(e -> {

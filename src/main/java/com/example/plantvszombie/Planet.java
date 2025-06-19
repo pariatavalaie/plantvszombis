@@ -8,6 +8,8 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
+import static com.example.plantvszombie.Sunflower.cost;
+
 public abstract class Planet {
     int watingtime;
     int row;
@@ -28,6 +30,7 @@ public abstract class Planet {
         root.getChildren().remove(eatimage);
         dead=true;
     };
+
 
 
 }

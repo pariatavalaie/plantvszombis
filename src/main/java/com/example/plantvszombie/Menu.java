@@ -69,12 +69,10 @@ public class Menu {
         Night.setLayoutY(50);
         ImageView back = new ImageView(getClass().getResource("/back.png").toExternalForm());
         Back=new Button();
-        Circle arrow = new Circle();
-        Back.setShape(arrow);
+        Back.setShape( new Circle());
         Back.setGraphic(back);
         Back.setLayoutX(900);
         Back.setLayoutY(10);
-        Back.setStyle("-fx-background-color: #fff");
 
     }
 
@@ -287,10 +285,5 @@ public class Menu {
     public List getSelectedPlantsNames() {
         return selectedPlantsNames;
     }
-    public void reset(){
-        selectedPlantsNames.clear();
-        countPlant = 0;
-        plantSelected=new boolean[MAX_PLANTS];
 
-    }
 }
