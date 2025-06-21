@@ -277,6 +277,7 @@ public class Yard {
         VBox vbox = new VBox();
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(10));
+        vbox.getChildren().add(sunpointFlow);
         addPlantCard(vbox, "Snow Pea", SnowpeaB, "/SnowPea.png");
         addPlantCard(vbox, "Peashooter", peashooterB, "/com/example/plantvszombie/peashooterCard.png");
         addPlantCard(vbox, "Repeater", reapeaterB, "/com/example/plantvszombie/repeaterCard.png");
@@ -298,11 +299,8 @@ public class Yard {
         ImageView shovelView = createImageView("/Shovel.jpg");
         ShovelB.setGraphic(shovelView);
         ShovelB.setStyle("-fx-background-color: #fff");
-        VBox vbox2 = new VBox();
-        vbox2.getChildren().addAll(ShovelB,sunpointFlow);
-        vbox2.setSpacing(10);
         HBox hbox = new HBox();
-        hbox.getChildren().addAll(vbox, vbox2);
+        hbox.getChildren().addAll(vbox, ShovelB);
         yardPane.getChildren().add(hbox);
     }
 
