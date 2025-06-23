@@ -28,6 +28,7 @@ public class Menu {
     public Button Day;
     public Button Night;
     public Button Back;
+    public Button Loadgame;
     public int countPlant = 0;
 
     Menu() {
@@ -38,14 +39,27 @@ public class Menu {
         StartGame = new Button();
         Image image2 = new Image(getClass().getResource("/startgame.png").toExternalForm());
         ImageView imageView2 = new ImageView(image2);
+        imageView2.setFitWidth(200);
+        imageView2.setFitHeight(60);
         imageView2.setPreserveRatio(true);
         StartGame.setGraphic(imageView2);
         StartGame.setLayoutX(340);
-        StartGame.setLayoutY(470);
+        StartGame.setLayoutY(390);
+        Loadgame = new Button();
+        Image image = new Image(getClass().getResource("/loadgame.png").toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(200);
+        imageView.setFitHeight(60);
+        imageView.setPreserveRatio(true);
+        Loadgame.setGraphic(imageView);
+        Loadgame.setLayoutX(340);
+        Loadgame.setLayoutY(470);
         Exit = new Button();
         Image image1 = new Image(getClass().getResource("/existinguser.png").toExternalForm());
         ImageView imageView1 = new ImageView(image1);
         imageView1.setPreserveRatio(true);
+        imageView1.setFitWidth(200);
+        imageView1.setFitHeight(60);
         Exit.setGraphic(imageView1);
         Exit.setLayoutX(340);
         Exit.setLayoutY(550);

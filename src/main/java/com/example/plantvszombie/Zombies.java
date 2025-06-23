@@ -115,8 +115,6 @@ public abstract class Zombies {
 
                 if (walker != null) walker.stop();
 
-
-                final int[] bites = {0};
                 Image temp=image.getImage();
                 Timeline[] eatingRef = new Timeline[1];
                  eating = new Timeline(new KeyFrame(Duration.seconds(0.5), e -> {
@@ -126,11 +124,12 @@ public abstract class Zombies {
                         return;
                     }
 
-                    bites[0]++;
+
+                    p.health--;
                     p.image.setImage(p.eatimage.getImage());
 
 
-                    if (bites[0] >= p.health) {
+                    if ( p.health< 0) {
                         walker.play();
                         image.setImage(temp);
                         p.remove(root);
@@ -157,7 +156,6 @@ public abstract class Zombies {
 
                 if (!(this.isHypnotized ^ other.isHypnotized)) return;
 
-                // جلوگیری از شروع چندباره جنگ
                 if (this.fighting || other.fighting) return;
 
                 this.fighting = true;
@@ -195,8 +193,20 @@ public abstract class Zombies {
              inHouse=true;
          }
     }
+    public ZombieState getState() {
 
+        return new ZombieState(
+                this.getClass().getSimpleName(),
+                this.x,
+                this.y,
+                this.hp,
+                this.direction,
+                this.isHypnotized,
+                this.inHouse,
+                this.fighting
 
+        );
+    }
 
 
 

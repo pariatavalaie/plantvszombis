@@ -22,7 +22,7 @@ public class Yard {
     GridPane gridPane;
     static final double GRID_X=80;
     static final double GRID_Y=100;
-    Menu menu;
+    List <String> selected;
     ImageView yard;
     Button SnowpeaB=new Button();
     Button peashooterB=new Button();
@@ -32,11 +32,8 @@ public class Yard {
     Button cherrybombB=new Button();
     Button JalapenoB=new Button();
     Button SunflowerB=new Button();
-
     Text number;
     TextFlow sunpointFlow;
-
-
     Button ShovelB=new Button();
     Button HypnoB = new Button();
     Button PuffB = new Button();
@@ -53,7 +50,7 @@ public class Yard {
     Fog fog;
     boolean day;
     private Set<String> lockedCells = new HashSet<>(); // مثل "3,5"
-    Yard(Menu menu,boolean day) {
+    Yard(List<String> selected,boolean day) {
         Image yar;
         if(day){
          yar = new Image(getClass().getResourceAsStream("Frontyard.png"));}
@@ -63,25 +60,22 @@ public class Yard {
          yard = new ImageView(yar);
         yard.setFitWidth(1024);
         yard.setFitHeight(626);
-        this.menu = menu;
+        this.selected = selected;
         yardPane = new AnchorPane(yard);
         fog = new Fog(yardPane);
         this.day = day;
         Text emoji = new Text("☀️");
         emoji.setFill(Color.GOLD);
         emoji.setStyle("-fx-font-size: 26px; -fx-font-family: 'Segoe UI Emoji';");
-
         number = new Text(String.valueOf(Sun.collectedpoint));
         number.setFill(Color.BLACK);
         number.setStyle("-fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI Emoji';");
-
         sunpointFlow = new TextFlow(emoji, number);
         sunpointFlow.setStyle(
                 "-fx-background-color: #fffacd;" +
                         "-fx-padding: 4px 0px;" +
                         "-fx-background-radius: 8px;"
         );
-
 
         PaintGrid(9, 5);
         buttonpic();
@@ -587,7 +581,6 @@ public class Yard {
         yardPane.getChildren().add(plantView);
     }
     public boolean check(String name){
-        List selected = menu.getSelectedPlantsNames();
         System.out.println(selected.size());
         for(int i=0 ; i<selected.size() ; i++){
             if(name.equals(selected.get(i))){

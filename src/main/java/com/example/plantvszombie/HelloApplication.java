@@ -21,6 +21,7 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     public Stage stage;
     public Menu menu = new Menu();
+    SaveManger saveManger = new SaveManger();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -33,6 +34,7 @@ public class HelloApplication extends Application {
         yard.setFitWidth(1024);
         Pane pane = new Pane();
         pane.getChildren().add(yard);
+        pane.getChildren().add(menu.Loadgame);
         pane.getChildren().add(menu.Exit);
         pane.getChildren().add(menu.StartGame);
         Scene scene = new Scene(pane, 1024, 626);
@@ -46,11 +48,20 @@ public class HelloApplication extends Application {
         menu.StartGame.setOnAction(e -> {
            menu2();
         });
+        menu.Loadgame.setOnAction(e -> {
+            Yard yard1= saveManger.loadGame("save.dat");
+            yard1.updateButtons();
+            Scene scene1 = new Scene(yard1.yardPane, 1024, 626);
+            System.out.println(ZombieWaveManger.gameTime);
+            stage.setScene(scene1);
+            stage.setResizable(false);
+            stage.show();
+        });
 
     }
 
     private void play() {
-        Yard yard = new Yard(menu, menu.day);
+        Yard yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
         ImageView pause=new ImageView(new Image(getClass().getResource("/pause.png").toExternalForm()));
         pause.setFitHeight(50);
         pause.setFitWidth(50);
@@ -60,7 +71,7 @@ public class HelloApplication extends Application {
         pauseButton.setGraphic(pause);
         pauseButton.setShape(new Circle());
         pauseButton.setOnAction(e -> {
-                    showPauseMenu(yard.yardPane);
+                    showPauseMenu(yard.yardPane,yard);
                     AnimationManager.pauseAll();
                 }
         );
@@ -140,7 +151,7 @@ public class HelloApplication extends Application {
         });
 
     }
-    private void showPauseMenu(Pane root) {
+    private void showPauseMenu(Pane root,Yard yard) {
 
         Rectangle overlay = new Rectangle(1000, 600, Color.rgb(0, 0, 0, 0.5));
 
@@ -166,6 +177,7 @@ public class HelloApplication extends Application {
         });
 
         saveButton.setOnAction(e -> {
+            saveManger.saveGame(yard,"save.dat");
             root.getChildren().remove(pauseGroup);
             AnimationManager.resumeAll();
         });
