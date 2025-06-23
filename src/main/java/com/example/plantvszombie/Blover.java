@@ -41,6 +41,7 @@ public class Blover extends Planet{
         restoreTimeline.setOnFinished(e -> {
             this.remove(root);
         });
+        AnimationManager.register(restoreTimeline);
     }
     public void cooldown( Button b){
         cooldown = new PauseTransition(Duration.seconds(watingtime));

@@ -59,6 +59,7 @@ public class Repeater extends Planet {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        AnimationManager.register(timeline);
 
 
     }

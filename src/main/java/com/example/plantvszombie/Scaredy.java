@@ -60,6 +60,7 @@ public class Scaredy extends Planet{
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        AnimationManager.register(timeline);
 
 
     }

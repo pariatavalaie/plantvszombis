@@ -65,6 +65,8 @@ public class Iceshroom extends Planet{
             }));
             timeline.play();
         });
+        AnimationManager.register(unfreeze);
+
 
     }
     public void cooldown(Button b){

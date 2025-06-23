@@ -40,6 +40,7 @@ public class Jalapeno extends Planet {
         }));
         timeline.setCycleCount(1);
         timeline.play();
+        AnimationManager.register(timeline);
     }
     @Override
     void act(Pane pane){

@@ -40,7 +40,9 @@ public class Plantern extends Planet {
             lightUpdater = new Timeline(new KeyFrame(Duration.seconds(0.3), e -> updateLight()));
             lightUpdater.setCycleCount(Timeline.INDEFINITE);
             lightUpdater.play();
+            AnimationManager.register(lightUpdater);
         }
+
     }
 
     private void updateLight() {

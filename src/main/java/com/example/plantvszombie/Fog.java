@@ -37,6 +37,7 @@ public class Fog {
         TranslateTransition fogTransition = new TranslateTransition(Duration.seconds(20), fogRect);
         fogTransition.setToX(-512); // حرکت به سمت وسط صفحه
         fogTransition.play();
+        AnimationManager.register(fogTransition);
     }
 
     public void bringFogToFront(Pane root) {

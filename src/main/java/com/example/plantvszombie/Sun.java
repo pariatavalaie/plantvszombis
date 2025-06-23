@@ -32,6 +32,7 @@ public class Sun {
            startLifespanTimer(root);
         });
         fall.play();
+        AnimationManager.register(fall);
 
 
         sunImage.setOnMouseClicked(e -> {
@@ -53,6 +54,7 @@ public class Sun {
             }
         });
         delay.play();
+        AnimationManager.register(delay);
     }
      static void fall(Pane root) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
@@ -61,6 +63,7 @@ public class Sun {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE); // بی‌نهایت اجرا بشه
         timeline.play();
+        AnimationManager.register(timeline);
     }
 
     public void sunflower(Pane root,double x,double y){
@@ -78,6 +81,7 @@ public class Sun {
             }
         });
         startLifespanTimer(root);
+
 
 
 

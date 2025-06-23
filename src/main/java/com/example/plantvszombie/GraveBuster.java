@@ -37,6 +37,7 @@ public class GraveBuster extends Planet{
             remove(root);
         });
         pause.play();
+        AnimationManager.register(pause);
     }
     public void cooldown(Button b) {
         cooldown = new PauseTransition(Duration.seconds(watingtime));

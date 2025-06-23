@@ -43,6 +43,7 @@ public class Hypnoshroom extends Planet{
         }}));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        AnimationManager.register(timeline);
     }
     public void cooldown(Button b){
         cooldown = new PauseTransition(Duration.seconds(watingtime));

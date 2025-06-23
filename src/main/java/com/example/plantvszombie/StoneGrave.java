@@ -65,6 +65,7 @@ public class StoneGrave {
             }
         });
         stop.play();
+        AnimationManager.register(stop);
 
     }
     public void remove(ArrayList<StoneGrave>graves) {

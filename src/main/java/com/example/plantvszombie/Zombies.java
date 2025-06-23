@@ -52,6 +52,7 @@ public abstract class Zombies {
 
         walker.setCycleCount(Timeline.INDEFINITE);
         walker.play();
+        AnimationManager.register(walker);
     }
     public void reverseDirection() {
         if(isHypnotized){
@@ -140,6 +141,7 @@ public abstract class Zombies {
                 eating.setCycleCount(p.health);
                 eatingRef[0] = eating;
                 eating.play();
+                AnimationManager.register(eatingRef[0]);
                 break;
             }
         }
@@ -182,6 +184,7 @@ public abstract class Zombies {
                 fight.setCycleCount(Animation.INDEFINITE);
                 fightRef[0] = fight;
                 fight.play();
+                AnimationManager.register(fightRef[0]);
 
                 break;
             }

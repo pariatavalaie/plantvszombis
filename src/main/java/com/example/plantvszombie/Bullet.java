@@ -48,14 +48,7 @@ public class Bullet {
                 pane.getChildren().remove(imageBullet);
             }
         });
-
-        AnimationTimer tracker = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                // همین کد قبلی برای چک کردن موقعیت گلوله
-            }
-        };
-        tracker.start();
+        AnimationManager.register(move);
     }
 
 }

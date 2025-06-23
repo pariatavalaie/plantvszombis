@@ -1,12 +1,20 @@
 package com.example.plantvszombie;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -43,6 +51,22 @@ public class HelloApplication extends Application {
 
     private void play() {
         Yard yard = new Yard(menu, menu.day);
+        ImageView pause=new ImageView(new Image(getClass().getResource("/pause.png").toExternalForm()));
+        pause.setFitHeight(50);
+        pause.setFitWidth(50);
+        Button pauseButton = new Button();
+        pauseButton.setLayoutX(285);
+        pauseButton.setLayoutY(10);
+        pauseButton.setGraphic(pause);
+        pauseButton.setShape(new Circle());
+        pauseButton.setOnAction(e -> {
+                    showPauseMenu(yard.yardPane);
+                    AnimationManager.pauseAll();
+                }
+        );
+        yard.yardPane.getChildren().add(pauseButton);
+
+
         if(menu.day){
         Sun.fall(yard.yardPane);}
         ZombieWaveManger zw = new ZombieWaveManger(yard);
@@ -116,6 +140,42 @@ public class HelloApplication extends Application {
         });
 
     }
+    private void showPauseMenu(Pane root) {
+
+        Rectangle overlay = new Rectangle(1000, 600, Color.rgb(0, 0, 0, 0.5));
+
+        VBox pauseMenu = new VBox(20);
+        pauseMenu.setAlignment(Pos.CENTER);
+        pauseMenu.setLayoutX(300);
+        pauseMenu.setLayoutY(150);
+        pauseMenu.setSpacing(10);
+
+        Button resumeButton = new Button("▶️resume");
+        Button saveButton = new Button("💾 save");
+        Button exitButton = new Button("❌ exit");
+
+        pauseMenu.getChildren().addAll(resumeButton, saveButton, exitButton);
+
+       StackPane pauseGroup = new StackPane(overlay, pauseMenu);
+        root.getChildren().add(pauseGroup);
+
+
+        resumeButton.setOnAction(e -> {
+            root.getChildren().remove(pauseGroup);
+            AnimationManager.resumeAll();
+        });
+
+        saveButton.setOnAction(e -> {
+            root.getChildren().remove(pauseGroup);
+            AnimationManager.resumeAll();
+        });
+
+
+        exitButton.setOnAction(e -> {
+            Platform.exit();
+        });
+    }
+
     public static void main(String[] args) {
         launch();
     }

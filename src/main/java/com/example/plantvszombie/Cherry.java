@@ -57,6 +57,7 @@ public class Cherry extends Planet {
                     z.image.setImage(z.deadZombie.getImage());
                 }
             } }));
+        AnimationManager.register(timeline);
 
          timeline.setCycleCount(1);
         timeline.play();

@@ -58,6 +58,7 @@ public class Peashooter extends Planet{
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        AnimationManager.register(timeline);
 
 
 
