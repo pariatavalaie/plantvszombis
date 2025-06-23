@@ -150,7 +150,7 @@ public class HelloApplication extends Application {
         pauseMenu.setLayoutY(150);
         pauseMenu.setSpacing(10);
 
-        Button resumeButton = new Button("▶️resume");
+        Button resumeButton = new Button("▶ resume");
         Button saveButton = new Button("💾 save");
         Button exitButton = new Button("❌ exit");
 
