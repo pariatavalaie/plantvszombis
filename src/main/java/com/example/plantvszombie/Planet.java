@@ -1,5 +1,6 @@
 package com.example.plantvszombie;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,6 +31,28 @@ public abstract class Planet {
         root.getChildren().remove(eatimage);
         dead=true;
     };
+    abstract String gettype();
+    public  PlanetState getState() {
+
+        return new PlanetState(
+            this.col,this.row,this.gettype(),health,bullets,false);
+    }
+    public void cooldown( Button b,Runnable setCanPlaceTrue,int cost){
+
+        cooldown = new PauseTransition(Duration.seconds(this.watingtime));
+        cooldown.setOnFinished(ev -> {
+            Planet self = this;
+            if (cost <= Sun.collectedpoint) {
+                Platform.runLater(() -> {
+                b.setDisable(false);
+                b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+                System.out.println("✅ You can place another Sunflower now");});
+            }
+
+            setCanPlaceTrue.run();
+        });
+        cooldown.play();
+    }
 
 
 

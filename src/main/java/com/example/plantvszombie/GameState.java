@@ -71,4 +71,24 @@ public class GameState implements Serializable {
 
 
 }
+class PlanetState implements Serializable {
+    private int x, y;
+    private String type;
+    private int health;
+    private double cooldown;
+    ArrayList<Bullet> bullets;
+    private ArrayList<BulletState>bulletStates;
+    private boolean other;
+    PlanetState(int x, int y, String type, int health, ArrayList<Bullet> bullets,boolean other) {
+        this.x = x;
+        this.y = y;
+        this.type = type;
+        this.health = health;
+        this.bullets = bullets;
+        this.other = other;
+    }
+
+
+}
+class BulletState{}
 
