@@ -41,7 +41,6 @@ public abstract class Planet {
 
         cooldown = new PauseTransition(Duration.seconds(this.watingtime));
         cooldown.setOnFinished(ev -> {
-            Planet self = this;
             if (cost <= Sun.collectedpoint) {
                 Platform.runLater(() -> {
                 b.setDisable(false);

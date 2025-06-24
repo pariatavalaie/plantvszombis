@@ -24,7 +24,7 @@ public class Yard {
     static final double GRID_Y=100;
     List <String> selected;
     ImageView yard;
-    Button SnowpeaB=new Button();
+   /* Button SnowpeaB=new Button();
     Button peashooterB=new Button();
     Button reapeaterB=new Button();
     Button TallnutB=new Button();
@@ -42,14 +42,15 @@ public class Yard {
     Button IceB = new Button();
     Button BeanB = new Button();
     Button PlanternB = new Button();
-    Button GraveB = new Button();
-    Button BloverB = new Button();
+   // Button GraveB = new Button();
+   // Button BloverB = new Button();*/
     ArrayList<Planet>planets=new ArrayList<>();
     ArrayList<Zombies>Zombies=new ArrayList<>();
     ArrayList<StoneGrave>graves=new ArrayList<>();
     Fog fog;
     boolean day;
     private Set<String> lockedCells = new HashSet<>(); // مثل "3,5"
+    ButtonManager buttonManager;
     Yard(List<String> selected,boolean day) {
         Image yar;
         if(day){
@@ -67,7 +68,7 @@ public class Yard {
         Text emoji = new Text("☀️");
         emoji.setFill(Color.GOLD);
         emoji.setStyle("-fx-font-size: 26px; -fx-font-family: 'Segoe UI Emoji';");
-        number = new Text(String.valueOf(Sun.collectedpoint));
+       /* number = new Text(String.valueOf(Sun.collectedpoint));
         number.setFill(Color.BLACK);
         number.setStyle("-fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI Emoji';");
         sunpointFlow = new TextFlow(emoji, number);
@@ -75,35 +76,17 @@ public class Yard {
                 "-fx-background-color: #fffacd;" +
                         "-fx-padding: 4px 0px;" +
                         "-fx-background-radius: 8px;"
-        );
-
+        );*/
+        buttonManager=new ButtonManager(selected);
+        System.out.println(selected);
+        buttonManager.addTo(yardPane);
         PaintGrid(9, 5);
-        buttonpic();
+
     }
 
     public void PaintGrid(int x, int y) {
         gridPane = new GridPane();
         final String[] selected = {""};
-
-        setSelectAction(SunflowerB, selected, "sunflower");
-        setSelectAction(peashooterB, selected, "peashooter");
-        setSelectAction(reapeaterB, selected, "reapeater");
-        setSelectAction(SnowpeaB, selected, "snowpea");
-        setSelectAction(ShovelB, selected, "shovel");
-        setSelectAction(cherrybombB, selected, "cherrybomb");
-        setSelectAction(JalapenoB, selected, "jalapeno");
-        setSelectAction(WallnutB, selected, "wallnut");
-        setSelectAction(TallnutB, selected, "tallnut");
-        setSelectAction(HypnoB, selected, "Hypno");
-        setSelectAction(PuffB, selected, "Puff");
-        setSelectAction(IceB, selected, "Ice");
-        setSelectAction(ScaredyB, selected, "Scaredy");
-        setSelectAction(DoomB, selected, "Doom");
-        setSelectAction(PlanternB, selected, "Plantern");
-        setSelectAction(GraveB, selected, "Grave");
-        setSelectAction(BloverB, selected, "Blover");
-        setSelectAction(BeanB, selected, "Bean");
-
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 Rectangle rectangle = new Rectangle(GRID_X, GRID_Y);
@@ -135,7 +118,8 @@ public class Yard {
                     String cellKey = row + "," + col;
                     if (lockedCells.contains(cellKey)) return;
 
-                    String sel = selected[0];
+                    String sel =buttonManager.getSelected();
+                    buttonManager.clearSelected();
 
                     if ("shovel".equals(sel)) {
                         if (planet1 != null) {
@@ -146,8 +130,8 @@ public class Yard {
                         return;
                     }
 
-                    if ("Bean".equals(sel) && bean) {
-                        placeplanet("Bean", col, row);
+                    if ("bean".equals(sel) && bean) {
+                        placeplanet("bean", col, row);
                         selected[0] = null;
                         return;
                     }
@@ -176,19 +160,12 @@ public class Yard {
         AnchorPane.setLeftAnchor(gridPane, 245.0);
     }
 
-    private void setSelectAction(Button button, String[] selected, String name) {
-        button.setOnAction(e -> {
-            selected[0] = name;
 
-        });
-    }
 
     private boolean isPlaceable(String sel) {
         return Arrays.asList(
-                "sunflower", "peashooter", "reapeater", "snowpea",
-                "cherrybomb", "jalapeno", "wallnut", "tallnut",
-                "Puff", "Doom", "Scaredy", "Plantern",
-                "Blover", "Ice", "Hypno"
+                "Sunflower", "Peashooter", "Wall-nut", "Cherry Bomb",
+                "Snow Pea", "Repeater", "Tall-nut", "jalapeno", "Hypno", "Puff", "Scaredy", "Doom", "Ice", "blover", "plantern"
         ).contains(sel);
     }
 
@@ -267,106 +244,59 @@ public class Yard {
         return null;
     }
 
-    public void buttonpic() {
-        VBox vbox = new VBox();
-        vbox.setSpacing(10);
-        vbox.setPadding(new Insets(10));
-        vbox.getChildren().add(sunpointFlow);
-        addPlantCard(vbox, "Snow Pea", SnowpeaB, "/SnowPea.png");
-        addPlantCard(vbox, "Peashooter", peashooterB, "/com/example/plantvszombie/peashooterCard.png");
-        addPlantCard(vbox, "Repeater", reapeaterB, "/com/example/plantvszombie/repeaterCard.png");
-        addPlantCard(vbox, "Tall-nut", TallnutB, "/TallNut.png");
-        addPlantCard(vbox, "Wall-nut", WallnutB, "/com/example/plantvszombie/wallnutCard.png");
-        addPlantCard(vbox, "Cherry Bomb", cherrybombB, "/com/example/plantvszombie/cherrybombCard.png");
-        addPlantCard(vbox, "jalapeno", JalapenoB, "/com/example/plantvszombie/jalapenoCard.png");
-        addPlantCard(vbox, "Sunflower", SunflowerB, "/com/example/plantvszombie/sunflowerCard.png");
-        addPlantCard(vbox, "Hypno", HypnoB, "/HypnoShroomSeed.png");
-        addPlantCard(vbox, "Puff", PuffB, "/PuffShroomSeed.png");
-        addPlantCard(vbox, "Scaredy", ScaredyB, "/ScaredyShroomSeed.png");
-        addPlantCard(vbox, "Doom", DoomB, "/DoomShroomSeed.png");
-        addPlantCard(vbox, "Ice", IceB, "/IceShroomSeed.png");
-        addPlantCard(vbox, "bean", BeanB, "/bean.png");
-        addPlantCard(vbox, "plantern", PlanternB, "/PlanternSeed.png");
-        addPlantCard(vbox, "blover", BloverB, "/BloverSeed.png");
-        addPlantCard(vbox, "Grave", GraveB, "/GraveBusterSeed.png");
-
-        ImageView shovelView = createImageView("/Shovel.jpg");
-        ShovelB.setGraphic(shovelView);
-        ShovelB.setStyle("-fx-background-color: #fff");
-        HBox hbox = new HBox();
-        hbox.getChildren().addAll(vbox, ShovelB);
-        yardPane.getChildren().add(hbox);
-    }
-
-    private void addPlantCard(VBox vbox, String name, Button button, String imagePath) {
-        ImageView view = createImageView(imagePath);
-        button.setGraphic(view);
-        button.setStyle("-fx-background-color: #fff");
-        if (check(name)) {
-            vbox.getChildren().add(button);
-        }
-    }
-
-    private ImageView createImageView(String path) {
-        Image image = new Image(getClass().getResource(path).toExternalForm());
-        ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(64);
-        imageView.setFitWidth(105);
-        return imageView;
-    }
-
 
     public void placeplanet(String planet,int col,int row){
         ImageView plantView = null;
-        if (planet.equals("sunflower")&&Sunflower.canplace){
+        if (planet.equals("Sunflower")&&Sunflower.canplace){
             Sunflower S=new Sunflower(col,row,yardPane);
             Sunflower.canplace=false;
-            SunflowerB.setDisable(true); // غیرفعال کردن دکمه
-            SunflowerB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
-            S.cooldown(SunflowerB,()->Sunflower.canplace=true,Sunflower.cost);
+            buttonManager.getButton("Sunflower").setDisable(true); // غیرفعال کردن دکمه
+            buttonManager.getButton("Sunflower").setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
+            S.cooldown( buttonManager.getButton("Sunflower"),()->Sunflower.canplace=true,Sunflower.cost);
             planets.add(S);
             plantView=S.image;
             S.act(yardPane);
             Sun.collectedpoint-=Sunflower.cost;
-        } else if(planet.equals("peashooter")&&Peashooter.canplace){
+        } else if(planet.equals("Peashooter")&&Peashooter.canplace){
             Peashooter P=new Peashooter(col,row);
             Peashooter.canplace=false;
-            peashooterB.setDisable(true); // غیرفعال کردن دکمه
-            peashooterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
+            buttonManager.getButton("Peashooter").setDisable(true); // غیرفعال کردن دکمه
+            buttonManager.getButton("Peashooter").setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
             planets.add(P);
-            P.cooldown(peashooterB,()->Peashooter.canplace=true,Peashooter.cost);
+            P.cooldown( buttonManager.getButton("Peashooter"),()->Peashooter.canplace=true,Peashooter.cost);
             plantView=P.image;
             P.act(yardPane,Zombies);
             Sun.collectedpoint-=Peashooter.cost;
-        }else if(planet.equals("reapeater")&&Repeater.canplace){
+        }else if(planet.equals("Repeater")&&Repeater.canplace){
             System.out.println("repeater");
             Repeater R=new Repeater(col,row);
             Repeater.canplace=false;
-            reapeaterB.setDisable(true);
-            reapeaterB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            buttonManager.getButton( "Repeater").setDisable(true);
+            buttonManager.getButton( "Repeater").setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             planets.add(R);
-            R.cooldown(reapeaterB,()->Repeater.canplace=true,Repeater.cost);
+            R.cooldown(buttonManager.getButton( "Repeater"),()->Repeater.canplace=true,Repeater.cost);
             plantView=R.image;
             R.act(yardPane,Zombies);
             Sun.collectedpoint-=Repeater.cost;
         }
-        else if(planet.equals("snowpea")&&SnowPea.canplace){
+        else if(planet.equals("Snow Pea")&&SnowPea.canplace){
             SnowPea S=new SnowPea(col,row);
             SnowPea.canplace=false;
-            SnowpeaB.setDisable(true);
-            SnowpeaB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            buttonManager.getButton("Snow Pea").setDisable(true);
+            buttonManager.getButton("Snow Pea").setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             planets.add(S);
             plantView=S.image;
-            S.cooldown(SnowpeaB,()->SnowPea.canplace=true,SnowPea.cost);
+            S.cooldown(buttonManager.getButton("Snow Pea"),()->SnowPea.canplace=true,SnowPea.cost);
             S.act(yardPane,Zombies);
             Sun.collectedpoint-=50;
-        }else if(planet.equals("cherrybomb") && Cherry.canplace){
+        }else if(planet.equals("Cherry Bomb") && Cherry.canplace){
             Cherry C=new Cherry(col,row);
             Cherry.canplace=false;
-            cherrybombB.setDisable(true);
+            buttonManager.getButton("Cherry Bomb").setDisable(true);
+            buttonManager.getButton("Cherry Bomb").setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             planets.add(C);
             plantView=C.image;
-            C.cooldown(cherrybombB,()->Cherry.canplace=true,Cherry.cost);
+            C.cooldown(buttonManager.getButton("Cherry Bomb"),()->Cherry.canplace=true,Cherry.cost);
             C.act(yardPane,Zombies);
             Planet cherry = findPlanet(col,row);
             if (cherry != null) {
@@ -379,11 +309,11 @@ public class Yard {
         }else if(planet.equals("jalapeno") && Jalapeno.canplace) {
             Jalapeno J = new Jalapeno(col, row);
             Jalapeno.canplace = false;
-            JalapenoB.setDisable(true);
-            JalapenoB.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            buttonManager.getButton("jalapeno").setDisable(true);
+            buttonManager.getButton("jalapeno").setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             planets.add(J);
             plantView = J.image;
-            J.cooldown(JalapenoB,()->Jalapeno.canplace=true,Jalapeno.cost);
+            J.cooldown(buttonManager.getButton("jalapeno"),()->Jalapeno.canplace=true,Jalapeno.cost);
             J.act(yardPane, Zombies);
             Planet jalapeno = findPlanet(col, row);
             if (jalapeno != null) {
@@ -393,42 +323,42 @@ public class Yard {
                 timeline.play();
             }
             Sun.collectedpoint -= Jalapeno.cost;
-        }else if (planet.equals("wallnut")&&WallNut.canplace){
+        }else if (planet.equals("Wall-nut")&&WallNut.canplace){
                 WallNut w=new WallNut(col,row);
                 WallNut.canplace=false;
-                WallnutB.setDisable(true);
-                WallnutB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            buttonManager.getButton("Wall-nut").setDisable(true);
+            buttonManager.getButton("Wall-nut").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
                 planets.add(w);
                 plantView=w.image;
-                w.cooldown(WallnutB,()->WallNut.canplace=true,WallNut.cost);
+                w.cooldown(buttonManager.getButton("Wall-nut"),()->WallNut.canplace=true,WallNut.cost);
                 Sun.collectedpoint-=WallNut.cost;
-            }else if(planet.equals("tallnut")&&TallNut.canplace){
+            }else if(planet.equals("Tall-nut")&&TallNut.canplace){
                 TallNut t=new TallNut(col,row);
                 TallNut.canplace=false;
-                TallnutB.setDisable(true);
-                TallnutB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            buttonManager.getButton("Tall-nut").setDisable(true);
+            buttonManager.getButton("Tall-nut").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
                 planets.add(t);
                 plantView=t.image;
-                t.cooldown(TallnutB,()->TallNut.canplace=true,TallNut.cost);
+                t.cooldown(buttonManager.getButton("Tall-nut"),()->TallNut.canplace=true,TallNut.cost);
                 Sun.collectedpoint-=TallNut.cost;
             }else if(planet.equals("Puff")&&Puff.canplace){
             Puff P=new Puff(col,row);
             Puff.canplace=false;
-            PuffB.setDisable(true);
-            PuffB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            buttonManager.getButton("Puff").setDisable(true);
+            buttonManager.getButton("Puff").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(P);
             plantView=P.image;
-            P.cooldown(PuffB,()->Puff.canplace=true,Puff.cost);
+            P.cooldown(buttonManager.getButton("Puff"),()->Puff.canplace=true,Puff.cost);
             if(!day){
             P.act(yardPane, Zombies);}
           }else if(planet.equals("Doom")&&Doomshroom.canplace){
             Doomshroom C=new Doomshroom(col,row);
             Doomshroom.canplace=false;
-            DoomB.setDisable(true);
-            DoomB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            buttonManager.getButton("Doom").setDisable(true);
+            buttonManager.getButton("Doom").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(C);
             plantView=C.eatimage;
-            C.cooldown(DoomB,()->Doomshroom.canplace=true,Doomshroom.cost);
+            C.cooldown( buttonManager.getButton("Doom"),()->Doomshroom.canplace=true,Doomshroom.cost);
             if(!day){
             plantView=C.image;
             C.act(yardPane,Zombies);
@@ -450,43 +380,44 @@ public class Yard {
         }else if(planet.equals("Scaredy")&&Scaredy.canplace){
             Scaredy C=new Scaredy(col,row);
             Scaredy.canplace=false;
-            ScaredyB.setDisable(true);
-            ScaredyB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            buttonManager.getButton("Scaredy").setDisable(true);
+            buttonManager.getButton("Scaredy").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(C);
             plantView=C.image;
-            C.cooldown(ScaredyB,()->Scaredy.canplace=true,Scaredy.cost);
+            C.cooldown(buttonManager.getButton("Scaredy"),()->Scaredy.canplace=true,Scaredy.cost);
             if(!day){
                 C.act(yardPane,Zombies);}
             Sun.collectedpoint-=Scaredy.cost;
-        }else if(planet.equals("Plantern")&&Plantern.canplace){
+        }else if(planet.equals("plantern")&&Plantern.canplace){
             Plantern p=new Plantern(col,row,fog);
             Plantern.canplace=false;
-            PlanternB.setDisable(true);
+            buttonManager.getButton("plantern").setDisable(true);
+            buttonManager.getButton("plantern").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(p);
             plantView=p.image;
-            p.cooldown(PlanternB,()->Plantern.canplace=true,Plantern.cost);
+            p.cooldown(buttonManager.getButton("plantern"),()->Plantern.canplace=true,Plantern.cost);
             if(!day){
                 p.act(yardPane);}
             Sun.collectedpoint-=Plantern.cost;
-        } else if (planet.equals("Blover")&&Blover.canplace) {
+        } else if (planet.equals("blover")&&Blover.canplace) {
             Blover b=new Blover(col,row,fog);
             Blover.canplace=false;
-            BloverB.setDisable(true);
-            BloverB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            buttonManager.getButton("blover").setDisable(true);
+            buttonManager.getButton("blover").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(b);
             plantView=b.image;
-            b.cooldown(BloverB,()->Blover.canplace=true,Blover.cost);
+            b.cooldown(buttonManager.getButton("blover"),()->Blover.canplace=true,Blover.cost);
             if(!day){
             b.act(yardPane);}
             Sun.collectedpoint-=Blover.cost;
-        } else if(planet.equals("Bean")&&Bean.canplace) {
+        } else if(planet.equals("bean")&&Bean.canplace) {
             Bean b=new Bean(col,row);
             Bean.canplace=false;
-            BeanB.setDisable(true);
-            BeanB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            buttonManager.getButton("bean").setDisable(true);
+            buttonManager.getButton("bean").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(b);
             plantView=b.image;
-            b.cooldown(BeanB,()->Bean.canplace=true,Bean.cost);
+            b.cooldown(buttonManager.getButton("bean"),()->Bean.canplace=true,Bean.cost);
             Planet x=findPlanet(col,row);
             x.act(yardPane);
             x.act(yardPane,Zombies);
@@ -523,12 +454,12 @@ public class Yard {
         }else if(planet.equals("Ice")&&Iceshroom.canplace) {
             Iceshroom i=new Iceshroom(col,row);
             Iceshroom.canplace=false;
-            IceB.setDisable(true);
-            IceB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            buttonManager.getButton("Ice").setDisable(true);
+            buttonManager.getButton("Ice").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(i);
             plantView=i.eatimage;
             System.out.println(Iceshroom.canplace);
-            i.cooldown(IceB,()->Iceshroom.canplace=true,Iceshroom.cost);
+            i.cooldown(buttonManager.getButton("Ice"),()->Iceshroom.canplace=true,Iceshroom.cost);
             if(!day){
                 i.act(yardPane,Zombies);
                 plantView=i.image;
@@ -541,10 +472,10 @@ public class Yard {
         } else if (planet.equals("Hypno")&&Hypnoshroom.canplace) {
             Hypnoshroom h=new Hypnoshroom(col,row);
             Hypnoshroom.canplace=false;
-            HypnoB.setDisable(true);
-            HypnoB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            buttonManager.getButton("Hypno").setDisable(true);
+            buttonManager.getButton("Hypno").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(h);
-            h.cooldown(HypnoB,()->Hypnoshroom.canplace=true,Hypnoshroom.cost);
+            h.cooldown(buttonManager.getButton("Hypno"),()->Hypnoshroom.canplace=true,Hypnoshroom.cost);
             plantView=h.eatimage;
             if(!day){
                 h.active=true;
@@ -556,9 +487,9 @@ public class Yard {
         }else if(planet.equals("Grave")&&GraveBuster.canplace) {
             GraveBuster g=new GraveBuster(col,row);
             GraveBuster.canplace=false;
-            GraveB.setDisable(true);
-            GraveB.setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
-            g.cooldown(GraveB,()->GraveBuster.canplace=true,GraveBuster.cost);
+            buttonManager.getButton("Grave").setDisable(true);
+            buttonManager.getButton("Grave").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
+            g.cooldown(buttonManager.getButton("Grave"),()->GraveBuster.canplace=true,GraveBuster.cost);
             StoneGrave s=findStoneGrave(col,row);
             s.remove(graves);
             g.act(yardPane);
@@ -609,48 +540,20 @@ public class Yard {
                 Iceshroom.cost,
                 Hypnoshroom.cost,
                 GraveBuster.cost,
+                Puff.cost,
+                Scaredy.cost,
 
         };
+       String[] names={"Peashooter","Repeater","Sunflower", "Wall-nut","Tall-nut","Snow Pea","Cherry Bomb","jalapeno",
+               "Doom", "plantern","blover", "bean", "Ice", "Hypno","Grave","Puff","Scaredy" };
 
-        boolean[] canplaces = {
-                Peashooter.canplace,
-                Repeater.canplace,
-                Sunflower.canplace,
-                WallNut.canplace,
-                TallNut.canplace,
-                SnowPea.canplace,
-                Cherry.canplace,
-                Jalapeno.canplace,
-                Doomshroom.canplace,
-                Plantern.canplace,
-                Blover.canplace,
-                Bean.canplace,
-                Iceshroom.canplace,
-                Hypnoshroom.canplace,
-                GraveBuster.canplace,
-        };
-        Button[] buttons = {
-                peashooterB,
-                reapeaterB,
-                SunflowerB,
-                WallnutB,
-                TallnutB,
-                SnowpeaB,
-                cherrybombB,
-                JalapenoB,
-                DoomB,
-                PlanternB,
-                BloverB,
-                BeanB,
-                IceB,
-                HypnoB,
-                GraveB
-        };
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {
-
+            Map<String, Boolean> canPlaceMap = new HashMap<>();
+            Map<String, Integer> costMap = new HashMap<>();
             for (int i = 0; i < costs.length; i++) {
-                boolean canPlace = canplaces[i];
+
+               boolean canPlace = false;
                 switch (i) {
                     case 0: canPlace = Peashooter.canplace; break;
                     case 1: canPlace = Repeater.canplace; break;
@@ -667,18 +570,15 @@ public class Yard {
                     case 12: canPlace = Iceshroom.canplace; break;
                     case 13: canPlace = Hypnoshroom.canplace; break;
                     case 14: canPlace = GraveBuster.canplace; break;
+                    case 15: canPlace = Puff.canplace; break;
+                    case 16: canPlace = Scaredy.canplace; break;
                     default: canPlace = false;
                 }
-                if (canPlace&&Sun.collectedpoint >= costs[i] ) {
-                    buttons[i].setDisable(false);
-                    buttons[i].setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-                } else {
-                    buttons[i].setDisable(true);
-                    buttons[i].setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
-                }
-            }
+                costMap.put(names[i], costs[i]);
+                canPlaceMap.put(names[i], canPlace);
 
-            number.setText(String.valueOf(Sun.collectedpoint));
+            }
+            buttonManager.update(canPlaceMap,costMap,Sun.collectedpoint);
 
         }));
 
