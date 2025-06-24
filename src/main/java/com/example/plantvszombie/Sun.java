@@ -9,10 +9,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public class Sun {
     static int collectedpoint=200;
     private ImageView sunImage;
     private boolean collected ;
+    static ArrayList<Sun> suns = new ArrayList<Sun>();
     public Sun() {
         collected = false;
         Image sun = new Image(getClass().getResource("/sun.png").toExternalForm());
@@ -38,6 +41,7 @@ public class Sun {
         sunImage.setOnMouseClicked(e -> {
             if (!collected) {
                 collected = true;
+                suns.remove(this);
                 root.getChildren().remove(sunImage);
                 System.out.println("Sun collected!");
                 collectedpoint=collectedpoint+25;
@@ -50,6 +54,7 @@ public class Sun {
         PauseTransition delay = new PauseTransition(Duration.seconds(5));
         delay.setOnFinished(e -> {
             if (!collected) {
+                suns.remove(this);
                 root.getChildren().remove(sunImage);
             }
         });
@@ -59,7 +64,9 @@ public class Sun {
      static void fall(Pane root) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
             double randomX = 245 + Math.random() * (9 * 80); // روی زمین
-            new Sun().fallingSun (root, randomX, 400); // y = 400 یعنی تا پایین زمین
+            Sun sun = new Sun();
+            suns.add(sun);
+           sun.fallingSun (root, randomX, 400); // y = 400 یعنی تا پایین زمین
         }));
         timeline.setCycleCount(Timeline.INDEFINITE); // بی‌نهایت اجرا بشه
         timeline.play();
@@ -73,6 +80,7 @@ public class Sun {
         sunImage.setOnMouseClicked(e -> {
             if (!collected) {
                 collected = true;
+                suns.remove(this);
                 root.getChildren().remove(sunImage);
                 System.out.println("Sun collected!");
                 collectedpoint=collectedpoint+25;
@@ -86,6 +94,23 @@ public class Sun {
 
 
     }
+    public SunState getState() {
+        SunState state = new SunState();
+        state.x = sunImage.getLayoutX();
+        state.y = sunImage.getLayoutY();
+        state.isFalling = (sunImage.getTranslateY() > 0); // یا با فلگ جدا دقیق‌تر
+        return state;
+    }
+    public static Sun fromState(SunState state, Pane root) {
+        Sun sun = new Sun();
+        if (state.isFalling) {
+            sun.fallingSun(root, state.x, 400);
+        } else {
+            sun.sunflower(root, state.x, state.y);
+        }
+        return sun;
+    }
+
 
 }
 

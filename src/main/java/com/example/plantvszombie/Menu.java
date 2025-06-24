@@ -2,6 +2,7 @@ package com.example.plantvszombie;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
@@ -245,7 +246,10 @@ public class Menu {
                         countPlant++;
                         button.setEffect(shadow);
                     } else {
-                        System.out.println("You can only select up to " + MAX_PLANTS + " plants!");
+
+                        Alert eror = new Alert(Alert.AlertType.WARNING);
+                        eror.setHeaderText("\"You can only select up to 6 plants!\"");
+                        eror.showAndWait();
                     }
                 }
             });

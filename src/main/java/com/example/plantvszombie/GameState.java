@@ -9,12 +9,17 @@ public class GameState implements Serializable {
     boolean day;
     int gametime;
     int sunpoint;
-     GameState(ArrayList<ZombieState> zombies, List<String> selected, boolean day, int gametime, int sunpoint) {
+    FogState fogState;
+    ArrayList<SunState> suns;
+     GameState(ArrayList<ZombieState> zombies, List<String> selected, boolean day, int gametime, int sunpoint,Fog fog,ArrayList<SunState>suns) {
          this.zombies = zombies;
          this.selected = selected;
          this.day = day;
          this.gametime = gametime;
          this.sunpoint = sunpoint;
+         this.fogState= fog.buildState();
+         this.suns = suns;
+
 
 
      }
@@ -91,4 +96,29 @@ class PlanetState implements Serializable {
 
 }
 class BulletState{}
+
+ class FogState implements Serializable {
+    public double currentTranslateX;
+    public boolean isVisible;
+    public List<LanternHoleState> holes = new ArrayList<>();
+}
+class LanternHoleState implements Serializable {
+    public double centerX;
+    public double centerY;
+    public double radius;
+
+    public LanternHoleState(double x, double y, double r) {
+        this.centerX = x;
+        this.centerY = y;
+        this.radius = r;
+    }
+}
+
+ class SunState implements Serializable {
+    public double x;
+    public double y;
+    public boolean isFalling; // true: fallingSun | false: sunflower
+}
+
+
 

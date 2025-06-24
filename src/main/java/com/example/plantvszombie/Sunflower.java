@@ -44,8 +44,9 @@ public class Sunflower extends Planet{
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10),event ->{
             if (!dead){
-            Sun Sun=new Sun();
-            Sun.sunflower(root,x,y);}
+            Sun sun=new Sun();
+            Sun.suns.add(sun);
+            sun.sunflower(root,x,y);}
 
         }));
 

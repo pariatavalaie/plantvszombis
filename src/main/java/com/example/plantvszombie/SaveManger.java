@@ -14,7 +14,11 @@ public class SaveManger {
             for (Zombies z : yard.Zombies) {
                 zombieStates.add(z.getState());
             }
-            GameState gameState = new GameState(zombieStates,yard.selected,yard.day,ZombieWaveManger.gameTime,Sun.collectedpoint);
+            ArrayList<SunState> sunStates = new ArrayList<>();
+            for (Sun s : Sun.suns) {
+                sunStates.add(s.getState());
+            }
+            GameState gameState = new GameState(zombieStates,yard.selected,yard.day,ZombieWaveManger.gameTime,Sun.collectedpoint,yard.fog,sunStates);
             out.writeObject(gameState);
 
 
@@ -26,12 +30,20 @@ public class SaveManger {
                 GameState gameState = (GameState) in.readObject();
                 Yard yard=new Yard(gameState.selected,gameState.day);
                 yard.updateButtons();
+                yard.fog.restoreState(gameState.fogState);
                 for (ZombieState z : gameState.zombies) {
                     yard.Zombies.add(ZombieFactory.createFromState(z,yard.yardPane));
                 }
-                Sun.collectedpoint=gameState.sunpoint;
+                for (SunState s : gameState.suns){
+                 Sun.suns.add(Sun.fromState(s,yard.yardPane));
+                }
                 ZombieWaveManger zw=new ZombieWaveManger(yard);
                 ZombieWaveManger.gameTime=gameState.gametime;
+                zw.start();
+
+                Sun.collectedpoint=gameState.sunpoint;
+
+
 
                 return yard;
 
@@ -53,6 +65,12 @@ public class SaveManger {
             case "ScreendoorZombie":
                 z = new ScreendoorZombie(state.getX(), state.getY(), pane);
                 break;
+            case "ImpZombie":
+                z = new ImpZombie(state.getX(), state.getY(), pane);
+                break;
+                case "ConeheadZombie":
+                    z = new ConeheadZombie(state.getX(), state.getY(), pane);
+                    break;
             default:
                 throw new IllegalArgumentException("Unknown zombie type: " + state.getType());
         }

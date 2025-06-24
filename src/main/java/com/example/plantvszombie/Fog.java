@@ -34,11 +34,18 @@ public class Fog {
     }
 
     public void enterSlowly() {
+        double currentX = fogRect.getTranslateX(); // موقعیت فعلی
+        double targetX = -512; // مقصد مه
+
         TranslateTransition fogTransition = new TranslateTransition(Duration.seconds(20), fogRect);
-        fogTransition.setToX(-512); // حرکت به سمت وسط صفحه
+        fogTransition.setFromX(currentX); // ← از جای فعلی
+        fogTransition.setToX(targetX);
+        // ← به جای نهایی
+
         fogTransition.play();
         AnimationManager.register(fogTransition);
     }
+
 
     public void bringFogToFront(Pane root) {
         fogRect.toFront();
@@ -75,6 +82,7 @@ public class Fog {
     public Rectangle getFogRect() {
         return fogRect;
     }
+
     public void hideTemporarily() {
         currentTranslateX = fogRect.getTranslateX();
         fogRect.setVisible(false);
@@ -84,4 +92,28 @@ public class Fog {
         fogRect.setVisible(true);
         fogRect.setTranslateX(currentTranslateX);
     }
+    public FogState buildState() {
+        FogState state = new FogState();
+        state.currentTranslateX = fogRect.getTranslateX();
+        state.isVisible = fogRect.isVisible();
+        for (Circle c : holes) {
+            state.holes.add(new LanternHoleState(c.getCenterX(), c.getCenterY(), c.getRadius()));
+        }
+        return state;
+    }
+
+    public void restoreState(FogState state) {
+        this.currentTranslateX = state.currentTranslateX;
+        fogRect.setTranslateX(state.currentTranslateX);
+        fogRect.setVisible(state.isVisible);
+
+        System.out.println("S");
+        holes.clear();
+        for (LanternHoleState hs : state.holes) {
+            Circle hole = new Circle(hs.centerX, hs.centerY, hs.radius);
+            holes.add(hole);
+        }
+        updateClip();
+    }
+
 }
