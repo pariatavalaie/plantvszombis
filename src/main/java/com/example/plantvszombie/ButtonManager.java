@@ -105,7 +105,7 @@ public class ButtonManager {
         Image image = new Image(getClass().getResource(path).toExternalForm());
         ImageView iv = new ImageView(image);
         iv.setFitWidth(105);
-        iv.setFitHeight(64);
+        iv.setFitHeight(60);
         return iv;
     }
 
