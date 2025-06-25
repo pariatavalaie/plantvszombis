@@ -65,7 +65,7 @@ public class Menu {
         Exit.setLayoutX(580);
         Exit.setLayoutY(400);
         Day = new Button();
-        Image image3 = new Image(getClass().getResourceAsStream("Frontyard.png"));
+        Image image3 = new Image(getClass().getResource("/day.jpg").toExternalForm());
         ImageView imageView3 = new ImageView(image3);
         imageView3.setFitHeight(64);
         imageView3.setFitWidth(105);
@@ -74,7 +74,7 @@ public class Menu {
         Day.setLayoutX(340);
         Day.setLayoutY(60);
         Night = new Button();
-        Image image4 = new Image(getClass().getResource("/Night_11zon.png").toExternalForm());
+        Image image4 = new Image(getClass().getResource("/night.png").toExternalForm());
         ImageView imageView4 = new ImageView(image4);
         imageView4.setPreserveRatio(true);
         imageView4.setFitHeight(64);
