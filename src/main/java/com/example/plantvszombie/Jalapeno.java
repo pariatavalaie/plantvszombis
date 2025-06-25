@@ -48,6 +48,6 @@ public class Jalapeno extends Planet {
 
     @Override
     String gettype() {
-        return "Jalapeno";
+        return "jalapeno";
     }
 }

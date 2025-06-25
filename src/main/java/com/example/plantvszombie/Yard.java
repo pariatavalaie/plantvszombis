@@ -1,18 +1,13 @@
 package com.example.plantvszombie;
 
-import javafx.animation.Animation;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 
 import java.util.*;
@@ -24,26 +19,6 @@ public class Yard {
     static final double GRID_Y=100;
     List <String> selected;
     ImageView yard;
-   /* Button SnowpeaB=new Button();
-    Button peashooterB=new Button();
-    Button reapeaterB=new Button();
-    Button TallnutB=new Button();
-    Button WallnutB=new Button();
-    Button cherrybombB=new Button();
-    Button JalapenoB=new Button();
-    Button SunflowerB=new Button();
-    Text number;
-    TextFlow sunpointFlow;
-    Button ShovelB=new Button();
-    Button HypnoB = new Button();
-    Button PuffB = new Button();
-    Button ScaredyB = new Button();
-    Button DoomB = new Button();
-    Button IceB = new Button();
-    Button BeanB = new Button();
-    Button PlanternB = new Button();
-   // Button GraveB = new Button();
-   // Button BloverB = new Button();*/
     ArrayList<Planet>planets=new ArrayList<>();
     ArrayList<Zombies>Zombies=new ArrayList<>();
     ArrayList<StoneGrave>graves=new ArrayList<>();
@@ -65,18 +40,6 @@ public class Yard {
         yardPane = new AnchorPane(yard);
         fog = new Fog(yardPane);
         this.day = day;
-        Text emoji = new Text("☀️");
-        emoji.setFill(Color.GOLD);
-        emoji.setStyle("-fx-font-size: 26px; -fx-font-family: 'Segoe UI Emoji';");
-       /* number = new Text(String.valueOf(Sun.collectedpoint));
-        number.setFill(Color.BLACK);
-        number.setStyle("-fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI Emoji';");
-        sunpointFlow = new TextFlow(emoji, number);
-        sunpointFlow.setStyle(
-                "-fx-background-color: #fffacd;" +
-                        "-fx-padding: 4px 0px;" +
-                        "-fx-background-radius: 8px;"
-        );*/
         buttonManager=new ButtonManager(selected);
         System.out.println(selected);
         buttonManager.addTo(yardPane);
@@ -210,7 +173,7 @@ public class Yard {
         }
     }
 
-    private Planet findPlanet(int col, int row) {
+    public Planet findPlanet(int col, int row) {
         for (Planet planet : planets) {
             if (planet.row == row && planet.col == col) {
                 return planet;
@@ -438,7 +401,7 @@ public class Yard {
                     timeline.play();}
 
             }
-            if(x instanceof Iceshroom){planets.remove(x);x.eatimage.setImage(x.image.getImage());
+            if(x instanceof Iceshroom){if(x.dead==true){planets.remove(x);};x.eatimage.setImage(x.image.getImage());
             }
             if(x instanceof Hypnoshroom){
                 ( (Hypnoshroom) x ).active=true;
@@ -463,7 +426,10 @@ public class Yard {
             if(!day){
                 i.act(yardPane,Zombies);
                 plantView=i.image;
-                planets.remove(i);
+                if(i.dead==true){
+                    planets.remove(i);
+                }
+
 
             }
             Sun.collectedpoint-=Iceshroom.cost;
@@ -513,16 +479,7 @@ public class Yard {
 
         yardPane.getChildren().add(plantView);
     }
-    public boolean check(String name){
-        System.out.println(selected.size());
-        for(int i=0 ; i<selected.size() ; i++){
-            if(name.equals(selected.get(i))){
-                System.out.println(selected.get(i));
-                return true;
-            }
-        }
-        return false;
-    }
+
     public void updateButtons() {
         int[] costs = {
                 Peashooter.cost,

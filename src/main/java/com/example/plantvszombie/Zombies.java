@@ -96,7 +96,7 @@ public abstract class Zombies {
         }
     }
     public boolean collidesWith(Bullet b,Pane root) {
-      if(Math.abs(image.getLayoutX()+image.getTranslateX() - (b.imageBullet.getLayoutX()+b.imageBullet.getTranslateX())) <= 80&&Math.abs(image.getLayoutY()+image.getTranslateY() - (b.imageBullet.getLayoutY()+b.imageBullet.getTranslateY())) <= 100&&y==b.x) {
+      if(Math.abs(image.getLayoutX()+image.getTranslateX() - (b.imageBullet.getLayoutX()+b.imageBullet.getTranslateX())) <= 80&&Math.abs(image.getLayoutY()+image.getTranslateY() - (b.imageBullet.getLayoutY()+b.imageBullet.getTranslateY())) <= 100&&y==b.y) {
           System.out.println("Q");
           root.getChildren().remove(b.imageBullet);
           b.hit=true;

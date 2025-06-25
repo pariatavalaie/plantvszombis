@@ -36,6 +36,6 @@ public class TallNut extends Planet{
 
     @Override
     String gettype() {
-        return "tallnut";
+        return"Tall-nut";
     }
 }

@@ -75,6 +75,6 @@ public class Plantern extends Planet {
 
     @Override
     String gettype() {
-        return "Plantern";
+        return "plantern";
     }
 }

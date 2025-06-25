@@ -35,6 +35,6 @@ public class WallNut extends Planet{
 
     @Override
     String gettype() {
-        return "wallnut";
+        return "Wall-nut";
     }
 }

@@ -47,6 +47,6 @@ public class Blover extends Planet{
 
     @Override
     String gettype() {
-        return  "Blover";
+        return  "blover";
     }
 }

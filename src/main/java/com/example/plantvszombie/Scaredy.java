@@ -53,8 +53,8 @@ public class Scaredy extends Planet{
             }
 
             if (shouldShoot&&!dead) {
-                Bullet scary = new Bullet(row, col, 3);
-                scary.shoot(root, x + 60,XZ[0], "MUSHROOM", y + 20);
+                Bullet scary = new Bullet(col, row, 3, "MUSHROOM");
+                scary.shoot(root, x + 60,XZ[0], y + 20);
                 bullets.add(scary);
             }
         }));
@@ -72,6 +72,29 @@ public class Scaredy extends Planet{
 
     @Override
     String gettype() {
-        return "Scaredy";
+        return  "Scaredy";
+    }
+
+    @Override
+    public PlanetState getState() {
+        PlanetState baseState = super.getState();
+        boolean scaredValue = this.scared;
+
+        return new OtherPlanetState(
+                baseState.col,
+                baseState.row,
+                baseState.type,
+                baseState.health,
+                baseState.dead,
+                baseState.bulletStates,
+                baseState.remainingCooldown,
+                scaredValue
+        );
+    }
+
+    @Override
+    public void loadpplanet(PlanetState planetState, Pane root) {
+        super.loadpplanet(planetState, root);
+        this.scared=((OtherPlanetState)planetState).other;
     }
 }

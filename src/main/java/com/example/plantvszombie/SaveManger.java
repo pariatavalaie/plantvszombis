@@ -18,7 +18,11 @@ public class SaveManger {
             for (Sun s : Sun.suns) {
                 sunStates.add(s.getState());
             }
-            GameState gameState = new GameState(zombieStates,yard.selected,yard.day,ZombieWaveManger.gameTime,Sun.collectedpoint,yard.fog,sunStates);
+            ArrayList<PlanetState> planetStates = new ArrayList<>();
+            for (Planet p:yard.planets) {
+                planetStates.add(p.getState());
+            }
+            GameState gameState = new GameState(zombieStates,yard.selected,yard.day,ZombieWaveManger.gameTime,Sun.collectedpoint,yard.fog,sunStates,planetStates);
             out.writeObject(gameState);
 
 
@@ -37,6 +41,14 @@ public class SaveManger {
                 for (SunState s : gameState.suns){
                  Sun.suns.add(Sun.fromState(s,yard.yardPane));
                 }
+                for (PlanetState p : gameState.planets) {
+                    Planet.on();
+                    yard.placeplanet(p.type, p.col, p.row);
+                    Planet planet=yard.findPlanet(p.col,p.row);
+                    planet.loadpplanet(p,yard.yardPane);
+
+                }
+
                 ZombieWaveManger zw=new ZombieWaveManger(yard);
                 ZombieWaveManger.gameTime=gameState.gametime;
                 zw.start();
@@ -79,6 +91,10 @@ public class SaveManger {
         z.isHypnotized=(state.isHypnotized());
         z.inHouse=(state.isInHouse());
         z.fighting=(state.isFighting());
+        if(z.isHypnotized){
+            z.direction*=-1;
+            z.reverseDirection();
+        }
         return z;
     }
 }
