@@ -25,7 +25,7 @@ public class ZombieWaveManger {
             if(!win){
             lose = true;}
         });
-        maintimeline.setCycleCount(480); // بازی 60 ثانیه است
+        maintimeline.setCycleCount(480);
     }
 
     public void start() {
@@ -75,7 +75,7 @@ public class ZombieWaveManger {
     }
 
     private void waveStage4() {
-        if (gameTime % 6 == 0) { //20 zombie
+        if (gameTime % 12 == 0) { //10 zombie
             spawnZombie("Normal", 2);
             spawnZombie("Conehead", 2);
             spawnZombie("Screendor", 2);
