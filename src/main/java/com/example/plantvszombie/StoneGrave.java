@@ -21,8 +21,8 @@ public class StoneGrave {
         this.y = y;
         zombieSpawned = false;
         image =new ImageView( new Image(getClass().getResource("/Lost_City_Gravestone_HD.png").toExternalForm()));
-        image.setFitHeight(80);
-        image.setFitWidth(100);
+        image.setFitHeight(70);
+        image.setFitWidth(90);
         double startX = 245 + x * 80 + 5;
         double startY = 60 + y * 100 + 10;
 
@@ -71,8 +71,8 @@ public class StoneGrave {
     public void remove(ArrayList<StoneGrave>graves) {
         pane.getChildren().remove(image);
         graves.remove(this);
-         stop.stop();
-            }
+        stop.stop();
+    }
 
 
 }
