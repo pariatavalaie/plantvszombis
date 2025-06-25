@@ -1,6 +1,5 @@
 package com.example.plantvszombie;
 
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 import java.io.*;
@@ -43,7 +42,7 @@ public class SaveManger {
                 }
                 for (PlanetState p : gameState.planets) {
                     Planet.on();
-                    yard.placeplanet(p.type, p.col, p.row);
+                    yard.placePlanet(p.type, p.col, p.row);
                     Planet planet=yard.findPlanet(p.col,p.row);
                     planet.loadpplanet(p,yard.yardPane);
 

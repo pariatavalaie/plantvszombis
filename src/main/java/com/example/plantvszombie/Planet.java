@@ -63,7 +63,8 @@ public abstract class Planet {
 
 
     public void cooldown( Button b,Runnable setCanPlaceTrue,int cost){
-
+        b.setDisable(true); // غیرفعال کردن دکمه
+        b.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
         cooldown = new PauseTransition(Duration.seconds(this.watingtime));
         cooldown.setOnFinished(ev -> {
             if (cost <= Sun.collectedpoint) {
