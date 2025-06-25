@@ -49,6 +49,7 @@ public class HelloApplication extends Application {
         });
         menu.Loadgame.setOnAction(e -> {
             Yard yard1= saveManger.loadGame("save.dat");
+            pauseButton(yard1);
             yard1.updateButtons();
             Scene scene1 = new Scene(yard1.yardPane, 1024, 626);
             System.out.println(ZombieWaveManger.gameTime);
@@ -61,22 +62,7 @@ public class HelloApplication extends Application {
 
     private void play() {
         Yard yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
-        ImageView pause=new ImageView(new Image(getClass().getResource("/pause.png").toExternalForm()));
-        pause.setFitHeight(50);
-        pause.setFitWidth(50);
-        Button pauseButton = new Button();
-        pauseButton.setLayoutX(285);
-        pauseButton.setLayoutY(10);
-        pauseButton.setGraphic(pause);
-        pauseButton.setShape(new Circle());
-        pauseButton.setOnAction(e -> {
-                    showPauseMenu(yard.yardPane,yard);
-                    AnimationManager.pauseAll();
-                }
-        );
-        yard.yardPane.getChildren().add(pauseButton);
-
-
+        pauseButton(yard);
         if(menu.day){
         Sun.fall(yard.yardPane);}
         ZombieWaveManger zw = new ZombieWaveManger(yard);
@@ -88,8 +74,6 @@ public class HelloApplication extends Application {
         stage.show();
     }
     private void play2() {
-
-
         Image yar = new Image(getClass().getResource("/choose level.png").toExternalForm());
         ImageView yard = new ImageView(yar);
         yard.setFitHeight(626);
@@ -150,7 +134,7 @@ public class HelloApplication extends Application {
         });
 
     }
-    private void showPauseMenu(Pane root,Yard yard) {
+    private void showPauseMenu(Yard yard) {
 
         Rectangle overlay = new Rectangle(1000, 600, Color.rgb(0, 0, 0, 0.5));
 
@@ -167,17 +151,17 @@ public class HelloApplication extends Application {
         pauseMenu.getChildren().addAll(resumeButton, saveButton, exitButton);
 
        StackPane pauseGroup = new StackPane(overlay, pauseMenu);
-        root.getChildren().add(pauseGroup);
+        yard.yardPane.getChildren().add(pauseGroup);
 
 
         resumeButton.setOnAction(e -> {
-            root.getChildren().remove(pauseGroup);
+            yard.yardPane.getChildren().remove(pauseGroup);
             AnimationManager.resumeAll();
         });
 
         saveButton.setOnAction(e -> {
             saveManger.saveGame(yard,"save.dat");
-            root.getChildren().remove(pauseGroup);
+            yard.yardPane.getChildren().remove(pauseGroup);
             AnimationManager.resumeAll();
         });
 
@@ -185,6 +169,22 @@ public class HelloApplication extends Application {
         exitButton.setOnAction(e -> {
             Platform.exit();
         });
+    }
+    private void pauseButton(Yard yard) { ImageView pause=new ImageView(new Image(getClass().getResource("/pause.png").toExternalForm()));
+        pause.setFitHeight(50);
+        pause.setFitWidth(50);
+        Button pauseButton = new Button();
+        pauseButton.setLayoutX(285);
+        pauseButton.setLayoutY(10);
+        pauseButton.setGraphic(pause);
+        pauseButton.setShape(new Circle());
+        pauseButton.setOnAction(e -> {
+                    showPauseMenu(yard);
+                    AnimationManager.pauseAll();
+                }
+        );
+        yard.yardPane.getChildren().add(pauseButton);
+
     }
 
     public static void main(String[] args) {
