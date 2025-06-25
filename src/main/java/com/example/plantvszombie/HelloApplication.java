@@ -27,7 +27,7 @@ public class HelloApplication extends Application {
         this.stage = stage;
         stage.setTitle("Plant Vs Zombie");
         stage.setResizable(false);
-        Image image = new Image(getClass().getResource("/firstBackground.jpg").toExternalForm());
+        Image image = new Image(getClass().getResource("/firstpage.png").toExternalForm());
         ImageView yard = new ImageView(image);
         yard.setFitHeight(626);
         yard.setFitWidth(1024);
