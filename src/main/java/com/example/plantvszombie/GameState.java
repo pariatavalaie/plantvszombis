@@ -117,6 +117,7 @@ class LanternHoleState implements Serializable {
  class SunState implements Serializable {
     public double x;
     public double y;
+    public double z;
     public boolean isFalling; // true: fallingSun | false: sunflower
 }
 

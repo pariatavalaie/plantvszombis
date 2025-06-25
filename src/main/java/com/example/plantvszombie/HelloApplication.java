@@ -51,6 +51,8 @@ public class HelloApplication extends Application {
             Yard yard1= saveManger.loadGame("save.dat");
             pauseButton(yard1);
             yard1.updateButtons();
+            if(yard1.day){
+                Sun.fall(yard1.yardPane);}
             Scene scene1 = new Scene(yard1.yardPane, 1024, 626);
             System.out.println(ZombieWaveManger.gameTime);
             stage.setScene(scene1);

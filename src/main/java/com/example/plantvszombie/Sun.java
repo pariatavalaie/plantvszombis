@@ -24,13 +24,13 @@ public class Sun {
         sunImage.setFitHeight(60);
     }
 
-    public void fallingSun(Pane root, double startX, double endY) {
+    public void fallingSun(Pane root, double startX, double startY) {
         sunImage.setLayoutX(startX);
         sunImage.setLayoutY(0);
         root.getChildren().add(sunImage);
         TranslateTransition fall = new TranslateTransition(Duration.seconds(5), sunImage);
-        fall.setFromY(0);
-        fall.setToY(endY);
+        fall.setFromY(startY);
+        fall.setToY(400);
         fall.setOnFinished(e -> {
            startLifespanTimer(root);
         });
@@ -66,7 +66,7 @@ public class Sun {
             double randomX = 245 + Math.random() * (9 * 80); // روی زمین
             Sun sun = new Sun();
             suns.add(sun);
-           sun.fallingSun (root, randomX, 400); // y = 400 یعنی تا پایین زمین
+           sun.fallingSun (root, randomX, 0); // y = 400 یعنی تا پایین زمین
         }));
         timeline.setCycleCount(Timeline.INDEFINITE); // بی‌نهایت اجرا بشه
         timeline.play();
@@ -98,13 +98,14 @@ public class Sun {
         SunState state = new SunState();
         state.x = sunImage.getLayoutX();
         state.y = sunImage.getLayoutY();
+        state.z=sunImage.getTranslateY();
         state.isFalling = (sunImage.getTranslateY() > 0); // یا با فلگ جدا دقیق‌تر
         return state;
     }
     public static Sun fromState(SunState state, Pane root) {
         Sun sun = new Sun();
         if (state.isFalling) {
-            sun.fallingSun(root, state.x, 400);
+            sun.fallingSun(root, state.x, state.z);
         } else {
             sun.sunflower(root, state.x, state.y);
         }
