@@ -2,15 +2,12 @@ package com.example.plantvszombie;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,7 +107,7 @@ public class Fog {
         System.out.println("S");
         holes.clear();
         for (LanternHoleState hs : state.holes) {
-            Circle hole = new Circle(hs.centerX, hs.centerY, hs.radius);
+            Circle hole = new Circle(hs.getCenterX(), hs.getCenterY(), hs.getRadius());
             holes.add(hole);
         }
         updateClip();

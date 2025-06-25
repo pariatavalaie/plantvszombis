@@ -95,6 +95,6 @@ public class Scaredy extends Planet{
     @Override
     public void loadpplanet(PlanetState planetState, Pane root) {
         super.loadpplanet(planetState, root);
-        this.scared=((OtherPlanetState)planetState).other;
+        this.scared=((OtherPlanetState)planetState).isOther();
     }
 }

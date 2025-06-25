@@ -7,8 +7,8 @@ public class GameState implements Serializable {
     ArrayList<ZombieState> zombies;
     List <String> selected;
     boolean day;
-    int gametime;
-    int sunpoint;
+    int gameTime;
+    int sunPoint;
     FogState fogState;
     ArrayList<SunState> suns;
     ArrayList<PlanetState>planets;
@@ -16,22 +16,42 @@ public class GameState implements Serializable {
          this.zombies = zombies;
          this.selected = selected;
          this.day = day;
-         this.gametime = gametime;
-         this.sunpoint = sunpoint;
+         this.gameTime = gametime;
+         this.sunPoint = sunpoint;
          this.fogState= fog.buildState();
          this.suns = suns;
          this.planets = planets;
-
-
-
+     }
+     public int getGametime() {
+         return gameTime;
+     }
+     public int getSunpoint() {
+         return sunPoint;
+     }
+     public boolean isDay() {
+         return day;
+     }
+     public FogState getFogState() {
+         return fogState;
+     }
+     public ArrayList<SunState> getSuns() {
+         return suns;
+     }
+     public ArrayList<PlanetState> getPlanets() {
+         return planets;
+     }
+     public ArrayList<ZombieState> getZombies() {
+         return zombies;
+     }
+     public List<String> getSelected() {
+         return selected;
      }
 
 
 }
 
-
  class ZombieState implements Serializable {
-    private String type; // مثلا "NormalZombie"
+    private String type;
     private int x, y;
     private int hp;
     private int direction;
@@ -49,7 +69,6 @@ public class GameState implements Serializable {
         this.isHypnotized = isHypnotized;
         this.inHouse = inHouse;
         this.fighting = fighting;
-
     }
     public String getType() {
         return type;
@@ -75,8 +94,6 @@ public class GameState implements Serializable {
     public boolean isFighting() {
         return fighting;
     }
-
-
 }
  class PlanetState implements Serializable {
     public int col, row;
@@ -97,9 +114,13 @@ public class GameState implements Serializable {
 }
 class OtherPlanetState extends PlanetState implements Serializable {
     boolean other;
-    public OtherPlanetState(int col, int row, String type, int health, boolean dead,ArrayList<BulletState>bulletStates, double remainingCooldown,boolean other) {
+
+    public OtherPlanetState(int col, int row, String type, int health, boolean dead, ArrayList<BulletState> bulletStates, double remainingCooldown, boolean other) {
         super(col, row, type, health, dead, bulletStates, remainingCooldown);
-        other = this.other;
+        this.other = other;
+    }
+    public boolean isOther() {
+        return other;
     }
 
 }
@@ -115,7 +136,7 @@ class BulletState implements Serializable {
     public double xzombie;
     public boolean hit;
 
-    public BulletState(int x, int y, double speed, String type, double translateX, double translateY,double xzombie ,boolean hit) {
+    public BulletState(int x, int y, double speed, String type, double translateX, double translateY, double xzombie, boolean hit) {
         this.x = x;
         this.y = y;
         this.speed = speed;
@@ -125,7 +146,32 @@ class BulletState implements Serializable {
         this.xzombie = xzombie;
         this.hit = hit;
     }
-     }
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+    public double getSpeed() {
+        return speed;
+    }
+    public String getType() {
+        return type;
+    }
+    public double getTranslateX() {
+        return translateX;
+    }
+    public double getTranslateY() {
+        return translateY;
+    }
+    public double getXzombie() {
+        return xzombie;
+    }
+    public boolean isHit() {
+        return hit;
+    }
+
+}
 
  class FogState implements Serializable {
     public double currentTranslateX;
@@ -142,14 +188,23 @@ class LanternHoleState implements Serializable {
         this.centerY = y;
         this.radius = r;
     }
+    public double getCenterX() {
+        return centerX;
+    }
+    public double getCenterY() {
+        return centerY;
+    }
+    public double getRadius() {
+        return radius;
+    }
 }
 
  class SunState implements Serializable {
-    public double x;
-    public double y;
-    public double z;
-    public boolean isFalling; // true: fallingSun | false: sunflower
-}
+     public double x;
+     public double y;
+     public double z;
+     public boolean isFalling; // true: fallingSun | false: sunflower
+ }
 
 
 

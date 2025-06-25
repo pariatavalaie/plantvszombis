@@ -44,7 +44,7 @@ public class Menu {
         imageView2.setFitHeight(190);
         imageView2.setPreserveRatio(true);
         StartGame.setGraphic(imageView2);
-        StartGame.setLayoutX(360);
+        StartGame.setLayoutX(360 );
         StartGame.setLayoutY(400);
         Loadgame = new Button();
         Image image = new Image(getClass().getResource("/loadgame.png").toExternalForm());
