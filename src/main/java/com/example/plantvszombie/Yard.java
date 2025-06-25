@@ -401,7 +401,7 @@ public class Yard {
                     timeline.play();}
 
             }
-            if(x instanceof Iceshroom){planets.remove(x);x.eatimage.setImage(x.image.getImage());
+            if(x instanceof Iceshroom){if(x.dead==true){planets.remove(x);};x.eatimage.setImage(x.image.getImage());
             }
             if(x instanceof Hypnoshroom){
                 ( (Hypnoshroom) x ).active=true;
@@ -426,7 +426,10 @@ public class Yard {
             if(!day){
                 i.act(yardPane,Zombies);
                 plantView=i.image;
-                planets.remove(i);
+                if(i.dead==true){
+                    planets.remove(i);
+                }
+
 
             }
             Sun.collectedpoint-=Iceshroom.cost;

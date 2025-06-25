@@ -62,6 +62,7 @@ public class Iceshroom extends Planet{
         unfreeze.setOnFinished(event -> {
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
                 remove(root);
+                dead=true;
             }));
             timeline.play();
         });

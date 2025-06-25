@@ -91,6 +91,10 @@ public class SaveManger {
         z.isHypnotized=(state.isHypnotized());
         z.inHouse=(state.isInHouse());
         z.fighting=(state.isFighting());
+        if(z.isHypnotized){
+            z.direction*=-1;
+            z.reverseDirection();
+        }
         return z;
     }
 }
