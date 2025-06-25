@@ -261,13 +261,10 @@ public class Yard {
             plantView=C.image;
             C.cooldown(buttonManager.getButton("Cherry Bomb"),()->Cherry.canplace=true,Cherry.cost);
             C.act(yardPane,Zombies);
-            Planet cherry = findPlanet(col,row);
-            if (cherry != null) {
                 Timeline timeline = new Timeline(
-                        new KeyFrame(Duration.seconds(2), e -> removePlanet(cherry))
+                        new KeyFrame(Duration.seconds(2), e -> removePlanet(C))
                 );
                 timeline.play();
-            }
             Sun.collectedpoint-=Cherry.cost;
         }else if(planet.equals("jalapeno") && Jalapeno.canplace) {
             Jalapeno J = new Jalapeno(col, row);
@@ -278,13 +275,10 @@ public class Yard {
             plantView = J.image;
             J.cooldown(buttonManager.getButton("jalapeno"),()->Jalapeno.canplace=true,Jalapeno.cost);
             J.act(yardPane, Zombies);
-            Planet jalapeno = findPlanet(col, row);
-            if (jalapeno != null) {
                 Timeline timeline = new Timeline(
-                        new KeyFrame(Duration.seconds(2), e -> removePlanet(jalapeno))
+                        new KeyFrame(Duration.seconds(2), e -> removePlanet(J))
                 );
                 timeline.play();
-            }
             Sun.collectedpoint -= Jalapeno.cost;
         }else if (planet.equals("Wall-nut")&&WallNut.canplace){
                 WallNut w=new WallNut(col,row);
@@ -325,12 +319,10 @@ public class Yard {
             if(!day){
             plantView=C.image;
             C.act(yardPane,Zombies);
-            Planet cherry = findPlanet(col,row);
             lockedCells.add(row + "," + col);
-            if (cherry != null) {
                 Timeline timeline = new Timeline(
                         new KeyFrame(Duration.seconds(2), e -> {
-                            removePlanet(cherry);
+                            removePlanet(C);
                             Rectangle burned = new Rectangle(GRID_X, GRID_Y);
                             burned.setFill(Color.DARKGRAY);
                             burned.setOpacity(0.6);
@@ -338,7 +330,7 @@ public class Yard {
                         }));
 
                 timeline.play();
-            }}
+            }
             Sun.collectedpoint-=Doomshroom.cost;
         }else if(planet.equals("Scaredy")&&Scaredy.canplace){
             Scaredy C=new Scaredy(col,row);
