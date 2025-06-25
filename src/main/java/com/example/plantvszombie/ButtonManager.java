@@ -1,0 +1,136 @@
+package com.example.plantvszombie;
+
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+
+import java.util.*;
+
+public class ButtonManager {
+    private final Map<String, Button> buttons = new LinkedHashMap<>();
+    private final VBox panel = new VBox(10);
+    private String selected = null;
+    private final List<String> selectedList;
+    private final Button shovelButton;
+    private Text number;
+    TextFlow sunpointFlow;
+
+    public ButtonManager(List<String> selectedList) {
+        this.selectedList = selectedList;
+        this.shovelButton = new Button();
+        Text emoji = new Text("☀️");
+        emoji.setFill(Color.GOLD);
+        emoji.setStyle("-fx-font-size: 26px; -fx-font-family: 'Segoe UI Emoji';");
+        number = new Text(String.valueOf(Sun.collectedpoint));
+        number.setFill(Color.BLACK);
+        number.setStyle("-fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI Emoji';");
+        sunpointFlow = new TextFlow(emoji, number);
+        sunpointFlow.setStyle(
+                "-fx-background-color: #fffacd;" +
+                        "-fx-padding: 4px 0px;" +
+                        "-fx-background-radius: 8px;"
+        );
+        panel.setPadding(new Insets(10));
+        initializeButtons();
+    }
+
+    private void initializeButtons() {
+        panel.getChildren().add(sunpointFlow);
+        for (String name : selectedList) {
+            String imagePath = getImagePath(name);
+            Button btn = new Button();
+            btn.setGraphic(createImageView(imagePath));
+            btn.setStyle("-fx-background-color: #fff");
+            btn.setOnAction(e -> selected = name);
+            buttons.put(name, btn);
+            panel.getChildren().add(btn);
+        }
+        setupShovelButton();
+    }
+
+    private void setupShovelButton() {
+        ImageView shovelView = createImageView("/Shovel.jpg");
+        shovelButton.setGraphic(shovelView);
+        shovelButton.setStyle("-fx-background-color: #fff");
+        shovelButton.setOnAction(e -> selected = "shovel");
+    }
+
+    public void addTo(Pane root) {
+        HBox box = new HBox(panel, shovelButton);
+        root.getChildren().add(box);
+    }
+
+    public void update(Map<String, Boolean> canPlaceMap, Map<String, Integer> costMap, int sunPoints) {
+        for (String name : buttons.keySet()) {
+            Button btn = buttons.get(name);
+            boolean canPlace = canPlaceMap.getOrDefault(name, false);
+            int cost = costMap.getOrDefault(name, 9999);
+            if (canPlace && sunPoints >= cost) {
+                btn.setDisable(false);
+                btn.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+            } else {
+                btn.setDisable(true);
+                btn.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
+            }
+        }
+        number.setText(String.valueOf(Sun.collectedpoint));
+
+    }
+
+    public String getSelected() {
+        return selected;
+    }
+
+    public void clearSelected() {
+        selected = null;
+    }
+
+    public Button getButton(String name) {
+        return buttons.get(name);
+    }
+
+    public VBox getPanel() {
+        return panel;
+    }
+
+    private ImageView createImageView(String path) {
+        Image image = new Image(getClass().getResource(path).toExternalForm());
+        ImageView iv = new ImageView(image);
+        iv.setFitWidth(105);
+        iv.setFitHeight(64);
+        return iv;
+    }
+
+    private String getImagePath(String name) {
+        switch (name) {
+            case "Snow Pea": return "/SnowPea.png";
+            case "Peashooter": return "/com/example/plantvszombie/peashooterCard.png";
+            case "Repeater": return "/com/example/plantvszombie/repeaterCard.png";
+            case "Tall-nut": return "/TallNut.png";
+            case "Wall-nut": return "/com/example/plantvszombie/wallnutCard.png";
+            case "Cherry Bomb": return "/com/example/plantvszombie/cherrybombCard.png";
+            case "jalapeno": return "/com/example/plantvszombie/jalapenoCard.png";
+            case "Sunflower": return "/com/example/plantvszombie/sunflowerCard.png";
+            case "Hypno": return "/HypnoShroomSeed.png";
+            case "Puff": return "/PuffShroomSeed.png";
+            case "Scaredy": return "/ScaredyShroomSeed.png";
+            case "Doom": return "/DoomShroomSeed.png";
+            case "Ice": return "/IceShroomSeed.png";
+            case "bean": return "/bean.png";
+            case "plantern": return "/PlanternSeed.png";
+            case "blover": return "/BloverSeed.png";
+            case "Grave": return "/GraveBusterSeed.png";
+            default: return "/bean.png";
+        }
+    }
+
+}
+

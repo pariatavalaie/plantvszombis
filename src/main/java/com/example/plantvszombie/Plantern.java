@@ -25,6 +25,7 @@ public class Plantern extends Planet {
         this.fog = fog;
         this.watingtime = 3;
         this.health = 4;
+        this.dayplanet=false;
         bullets = new ArrayList<>();
         this.image = new ImageView(new Image(getClass().getResource("/Animated_Plantern.gif").toExternalForm()));
         this.eatimage = new ImageView(new Image(getClass().getResource("/Animated_Plantern.gif").toExternalForm()));
@@ -39,7 +40,9 @@ public class Plantern extends Planet {
             lightUpdater = new Timeline(new KeyFrame(Duration.seconds(0.3), e -> updateLight()));
             lightUpdater.setCycleCount(Timeline.INDEFINITE);
             lightUpdater.play();
+            AnimationManager.register(lightUpdater);
         }
+
     }
 
     private void updateLight() {
@@ -69,15 +72,9 @@ public class Plantern extends Planet {
             fog.removeLanternHole(currentHole);
         }
     }
-    public void cooldown( Button b){
-        cooldown = new PauseTransition(Duration.seconds(watingtime));
-        cooldown.setOnFinished(ev -> {
-            canplace= true;
-            if(cost<=Sun.collectedpoint){
-                b.setDisable(false);
-                b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-                System.out.println("✅ You can place another Sunflower now");}
-        });
-        cooldown.play();
+
+    @Override
+    String gettype() {
+        return "Plantern";
     }
 }

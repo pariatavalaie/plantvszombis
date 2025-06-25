@@ -19,6 +19,7 @@ public class Peashooter extends Planet{
         this.col = x;
         this.watingtime = 6;
         this.health=4;
+        this.dayplanet=true;
         bullets = new ArrayList<Bullet>();
         this.image = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
         this.eatimage = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
@@ -57,23 +58,16 @@ public class Peashooter extends Planet{
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        AnimationManager.register(timeline);
 
 
 
 
     }
-    public void cooldown( Button b){
-        cooldown = new PauseTransition(Duration.seconds(watingtime));
-        cooldown.setOnFinished(ev -> {
-            canplace= true;
-            if(cost<=Sun.collectedpoint){
-                b.setDisable(false);
-                b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-                System.out.println("✅ You can place another Sunflower now");}
-        });
-        cooldown.play();
 
+    @Override
+    String gettype() {
+        return "peashooter";
     }
-
 }
 

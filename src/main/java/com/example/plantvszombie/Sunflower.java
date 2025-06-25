@@ -19,6 +19,7 @@ public class Sunflower extends Planet{
         row=y;
         health=4;
         col=x;
+        this.dayplanet=true;
         bullets = new ArrayList<Bullet>();
         image=new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm()));
         eatimage=new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm()));
@@ -43,27 +44,23 @@ public class Sunflower extends Planet{
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10),event ->{
             if (!dead){
-            Sun Sun=new Sun();
-            Sun.sunflower(root,x,y);}
+            Sun sun=new Sun();
+            Sun.suns.add(sun);
+            sun.sunflower(root,x,y);}
 
         }));
 
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        AnimationManager.register(timeline);
 
 
 
     }
-    public void cooldown( Button b){
-      cooldown = new PauseTransition(Duration.seconds(watingtime));
-        cooldown.setOnFinished(ev -> {
-            canplace= true;
-            if(cost<=Sun.collectedpoint){
-            b.setDisable(false);
-            b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            System.out.println("✅ You can place another Sunflower now");}
-        });
-        cooldown.play();
+
+    @Override
+    String gettype() {
+        return "sunflower";
     }
 }
 

@@ -14,16 +14,16 @@ import java.util.ArrayList;
 public class Doomshroom extends Planet{
     static boolean canplace = true;
     static int cost = 125;
-    boolean explode = false;
 
     public Doomshroom(int x,int y) {
         this.row = y;
         this.col = x;
         this.health = 4;
         this.watingtime =5;
+        this.dayplanet=false;
         bullets = new ArrayList<Bullet>();
         image=new ImageView(new Image(getClass().getResource("/DoomShroom1.gif").toExternalForm()));
-        eatimage=new ImageView(new Image(getClass().getResource("/DoomShroom1.gif").toExternalForm()));
+        eatimage=new ImageView(new Image(getClass().getResource("/DoomShroom3.gif").toExternalForm()));
     }
 
     @Override
@@ -44,12 +44,11 @@ public class Doomshroom extends Planet{
                 double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
                 double zombieY = z.image.getLayoutY() + z.image.getTranslateY();
 
-                // محاسبه فاصله بین زامبی و Cherry
+
                 double distanceX = Math.abs(zombieX - cherryX);
                 double distanceY = Math.abs(zombieY - cherryY);
 
-                // بررسی اینکه آیا زامبی در محدوده 3x3 قرار دارد یا خیر
-                // باید مطمئن بشیم که زامبی حداکثر یک خونه با Cherry فاصله داره
+
                 if (distanceX <= cellWidth / 2 * 4 && distanceY <= cellHeight / 2 * 4) {
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(ev-> {
@@ -59,19 +58,14 @@ public class Doomshroom extends Planet{
                     z.image.setImage(z.deadZombie.getImage());
                 }
             } }));
+        AnimationManager.register(timeline);
 
         timeline.setCycleCount(1);
         timeline.play();
     }
-    public void cooldown(Button b){
-        cooldown = new PauseTransition(Duration.seconds(watingtime));
-        cooldown.setOnFinished(ev -> {
-            canplace= true;
-            if(Sun.collectedpoint>=cost){
-                b.setDisable(false);
-                b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-                System.out.println("✅ You can place another Sunflower now");}
-        });
-        cooldown.play();
+
+    @Override
+    String gettype() {
+        return "Doom";
     }
 }

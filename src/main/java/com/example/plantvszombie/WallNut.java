@@ -17,6 +17,7 @@ public class WallNut extends Planet{
         this.col=x;
         watingtime=5;
         this.health=10;
+        this.dayplanet=true;
         this.bullets=new ArrayList<>();
         this.eatimage=new ImageView(new Image(getClass().getResource("/walnut_half_life.gif").toExternalForm()));
         this.image=new ImageView(new Image(getClass().getResource("/walnut_full_life.gif").toExternalForm()));
@@ -31,15 +32,9 @@ public class WallNut extends Planet{
     void act(Pane root, ArrayList<Zombies> Zombies) {
 
     }
-    public void cooldown( Button b){
-        cooldown = new PauseTransition(Duration.seconds(watingtime));
-        cooldown.setOnFinished(ev -> {
-            canplace= true;
-            if(cost<=Sun.collectedpoint){
-                b.setDisable(false);
-                b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-                System.out.println("✅ You can place another Sunflower now");}
-        });
-        cooldown.play();
+
+    @Override
+    String gettype() {
+        return "wallnut";
     }
 }

@@ -19,6 +19,7 @@ public class Puff extends Planet{
         this.col = x;
         this.health = 4;
         this.watingtime = 1;
+        this.dayplanet = false;
         bullets = new ArrayList<Bullet>();
         image=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
         eatimage=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
@@ -38,7 +39,7 @@ public class Puff extends Planet{
             boolean shouldShoot = false;
             for (Zombies z :zombies ) {
                 double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
-                if (z.y == row && z.x-col<=4 &&z.x<=8) {
+                if (z.y == row && z.x-col<=4 &&z.x<=8&&zombieX>x) {
                     shouldShoot = true;
                     XZ[0] = zombieX;
                     break;
@@ -53,6 +54,7 @@ public class Puff extends Planet{
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        AnimationManager.register(timeline);
 
 
     }
@@ -60,15 +62,9 @@ public class Puff extends Planet{
     void act(Pane root){
 
     }
-    public void cooldown( Button b){
-        cooldown = new PauseTransition(Duration.seconds(watingtime));
-        cooldown.setOnFinished(ev -> {
-            canplace= true;
-            if(cost<=Sun.collectedpoint){
-                b.setDisable(false);
-                b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-                System.out.println("✅ You can place another Sunflower now");}
-        });
-        cooldown.play();
+
+    @Override
+    String gettype() {
+        return "Puff";
     }
 }

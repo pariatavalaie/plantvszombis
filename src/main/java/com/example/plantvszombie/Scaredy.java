@@ -18,6 +18,7 @@ public class Scaredy extends Planet{
         this.col = x;
         this.row = y;
         this.watingtime = 2;
+        this.dayplanet=false;
         this.health=3;
         this.image = new ImageView( new Image(getClass().getResource("/Scaredy-shroom.png").toExternalForm()));
         this.eatimage=new ImageView( new Image(getClass().getResource("/Scaredy-Shroom_Hiding.png").toExternalForm()));
@@ -41,7 +42,7 @@ public class Scaredy extends Planet{
             boolean shouldShoot = false;
             for (Zombies z :zombies ) {
                 double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
-                if(z.y == row && z.x - col <= 2 && z.x<=8) {
+                if(z.y == row && z.x - col <= 2 && z.x<=8&&zombieX>x) {
                     scared=true;
                     this.image.setImage(this.eatimage.getImage());
                 }else if (!scared&&z.y == row && z.x > col && z.x<=8) {
@@ -59,6 +60,7 @@ public class Scaredy extends Planet{
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        AnimationManager.register(timeline);
 
 
     }
@@ -66,15 +68,10 @@ public class Scaredy extends Planet{
     void act(Pane root){
 
     }
-    public void cooldown( Button b){
-        cooldown = new PauseTransition(Duration.seconds(watingtime));
-        cooldown.setOnFinished(ev -> {
-            canplace= true;
-            if(cost<=Sun.collectedpoint){
-                b.setDisable(false);
-                b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-                System.out.println("✅ You can place another Sunflower now");}
-        });
-        cooldown.play();
+
+
+    @Override
+    String gettype() {
+        return "Scaredy";
     }
 }

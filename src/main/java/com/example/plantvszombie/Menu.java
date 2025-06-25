@@ -2,12 +2,15 @@ package com.example.plantvszombie;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,8 @@ public class Menu {
     public Button Exit;
     public Button Day;
     public Button Night;
+    public Button Back;
+    public Button Loadgame;
     public int countPlant = 0;
 
     Menu() {
@@ -35,14 +40,27 @@ public class Menu {
         StartGame = new Button();
         Image image2 = new Image(getClass().getResource("/startgame.png").toExternalForm());
         ImageView imageView2 = new ImageView(image2);
+        imageView2.setFitWidth(200);
+        imageView2.setFitHeight(60);
         imageView2.setPreserveRatio(true);
         StartGame.setGraphic(imageView2);
         StartGame.setLayoutX(340);
-        StartGame.setLayoutY(470);
+        StartGame.setLayoutY(390);
+        Loadgame = new Button();
+        Image image = new Image(getClass().getResource("/loadgame.png").toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(200);
+        imageView.setFitHeight(60);
+        imageView.setPreserveRatio(true);
+        Loadgame.setGraphic(imageView);
+        Loadgame.setLayoutX(340);
+        Loadgame.setLayoutY(470);
         Exit = new Button();
         Image image1 = new Image(getClass().getResource("/existinguser.png").toExternalForm());
         ImageView imageView1 = new ImageView(image1);
         imageView1.setPreserveRatio(true);
+        imageView1.setFitWidth(200);
+        imageView1.setFitHeight(60);
         Exit.setGraphic(imageView1);
         Exit.setLayoutX(340);
         Exit.setLayoutY(550);
@@ -64,6 +82,13 @@ public class Menu {
         Night.setGraphic(imageView4);
         Night.setLayoutX(100);
         Night.setLayoutY(50);
+        ImageView back = new ImageView(getClass().getResource("/back.png").toExternalForm());
+        Back=new Button();
+        Back.setShape( new Circle());
+        Back.setGraphic(back);
+        Back.setLayoutX(900);
+        Back.setLayoutY(10);
+
     }
 
     public VBox getMenuPane() {
@@ -221,7 +246,10 @@ public class Menu {
                         countPlant++;
                         button.setEffect(shadow);
                     } else {
-                        System.out.println("You can only select up to " + MAX_PLANTS + " plants!");
+
+                        Alert eror = new Alert(Alert.AlertType.WARNING);
+                        eror.setHeaderText("\"You can only select up to 6 plants!\"");
+                        eror.showAndWait();
                     }
                 }
             });
@@ -275,4 +303,5 @@ public class Menu {
     public List getSelectedPlantsNames() {
         return selectedPlantsNames;
     }
+
 }

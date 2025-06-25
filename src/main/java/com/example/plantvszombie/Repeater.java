@@ -17,7 +17,7 @@ public class Repeater extends Planet {
     public Repeater(int x, int y) {
         this.row = y;
         this.col = x;
-
+        this.dayplanet=true;
         this.watingtime = 7;
         this.health=4;
         bullets=new ArrayList<>();
@@ -59,18 +59,13 @@ public class Repeater extends Planet {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        AnimationManager.register(timeline);
 
 
     }
-    public void cooldown( Button b){
-        cooldown = new PauseTransition(Duration.seconds(watingtime));
-        cooldown.setOnFinished(ev -> {
-            canplace= true;
-            if(cost<=Sun.collectedpoint){
-                b.setDisable(false);
-                b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-                System.out.println("✅ You can place another Sunflower now");}
-        });
-        cooldown.play();
+
+    @Override
+    String gettype() {
+        return "reapeater";
     }
 }

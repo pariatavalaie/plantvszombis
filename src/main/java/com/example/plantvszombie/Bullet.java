@@ -21,14 +21,15 @@ public class Bullet {
     }
 
     public void shoot(Pane pane, double xPlant, double xZombie, String type, double yPlant) {
+
         Image bullet = null;
         if (type.equals("ICY")) {
             bullet = new Image(getClass().getResource("/snow bullet.png").toExternalForm());
         } else if (type.equals("NORMAL")) {
             bullet = new Image(getClass().getResource("/pea.png").toExternalForm());
-        }else if (type.equals("MUSHROOM")) {
+        } else if (type.equals("MUSHROOM")) {
             bullet = new Image(getClass().getResource("/bullet_11zon.png").toExternalForm());
-        }else if(type.equals("PUFF")) {
+        } else if(type.equals("PUFF")) {
             bullet = new Image(getClass().getResource("/mushroom.bullet_11zon.png").toExternalForm());
         }
         imageBullet = new ImageView(bullet);
@@ -47,25 +48,7 @@ public class Bullet {
                 pane.getChildren().remove(imageBullet);
             }
         });
-
-        AnimationTimer tracker = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                double gridX = 245.0; // Left anchor of grid
-                double gridY = 60.0;
-                double currentX = imageBullet.getLayoutX() + imageBullet.getTranslateX();
-                double currentY = imageBullet.getLayoutY() + imageBullet.getTranslateY();
-                double cellWidth = 80;
-                double cellHeight = 100;
-
-                int x = (int) ((currentX - gridX) / cellWidth);
-                int y= (int) ((currentY - gridY) / cellHeight);
-
-
-                //System.out.println("Bullet Position: X=" + x + ", Y=" + y);
-
-            }
-        };
-        tracker.start();
+        AnimationManager.register(move);
     }
+
 }

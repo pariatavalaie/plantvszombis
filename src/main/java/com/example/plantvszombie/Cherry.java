@@ -20,6 +20,7 @@ public class Cherry extends Planet {
         this.col = x;
         this.watingtime = 2;
         this.health = 4;
+        this.dayplanet=true;
         this.image = new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm()));
         this.eatimage=new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm()));
         bullets = new ArrayList<Bullet>();
@@ -56,6 +57,7 @@ public class Cherry extends Planet {
                     z.image.setImage(z.deadZombie.getImage());
                 }
             } }));
+        AnimationManager.register(timeline);
 
          timeline.setCycleCount(1);
         timeline.play();
@@ -67,16 +69,10 @@ public class Cherry extends Planet {
 
     }
 
-    public void cooldown(Button b) {
-        PauseTransition cooldown = new PauseTransition(Duration.seconds(watingtime));
-        cooldown.setOnFinished(ev -> {
-            canplace = true;
-            if(Sun.collectedpoint>=cost){
-            b.setDisable(false);
-            b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-            System.out.println("✅ You can place another Sunflower now");}
-        });
-        cooldown.play();
+
+    @Override
+    String gettype() {
+        return "cherrybomb" ;
     }
 }
 
