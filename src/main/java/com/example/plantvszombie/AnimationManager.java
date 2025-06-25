@@ -22,10 +22,4 @@ public class AnimationManager {
         }
     }
 
-    public static void stopAndClearAll() {
-        for (Animation a : animations) {
-            a.stop();
-        }
-        animations.clear();
-    }
 }
