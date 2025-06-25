@@ -72,7 +72,7 @@ public class Cherry extends Planet {
 
     @Override
     String gettype() {
-        return "cherrybomb" ;
+        return "Cherry Bomb";
     }
 }
 

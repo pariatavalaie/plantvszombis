@@ -60,7 +60,7 @@ public class Sunflower extends Planet{
 
     @Override
     String gettype() {
-        return "sunflower";
+        return "Sunflower";
     }
 }
 

@@ -66,6 +66,6 @@ public class Repeater extends Planet {
 
     @Override
     String gettype() {
-        return "reapeater";
+        return "Repeater";
     }
 }

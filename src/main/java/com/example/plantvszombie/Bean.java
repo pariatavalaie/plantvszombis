@@ -32,6 +32,6 @@ public class Bean extends Planet{
 
     @Override
     String gettype() {
-        return"Bean";
+        return"bean";
     }
 }

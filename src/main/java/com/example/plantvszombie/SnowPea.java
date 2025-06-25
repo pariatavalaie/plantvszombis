@@ -67,7 +67,7 @@ public class SnowPea extends Planet{
 
     @Override
     String gettype() {
-        return "snowpea";
+        return "Snow Pea";
     }
 }
 

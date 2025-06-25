@@ -72,6 +72,6 @@ public class Scaredy extends Planet{
 
     @Override
     String gettype() {
-        return "Scaredy";
+        return  "Scaredy";
     }
 }

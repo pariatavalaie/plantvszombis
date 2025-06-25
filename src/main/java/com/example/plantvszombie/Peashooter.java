@@ -67,7 +67,7 @@ public class Peashooter extends Planet{
 
     @Override
     String gettype() {
-        return "peashooter";
+        return "Peashooter";
     }
 }
 
