@@ -27,15 +27,15 @@ public class HelloApplication extends Application {
         this.stage = stage;
         stage.setTitle("Plant Vs Zombie");
         stage.setResizable(false);
-        Image image = new Image(getClass().getResource("/first page_11zon.png").toExternalForm());
+        Image image = new Image(getClass().getResource("/firstpage.png").toExternalForm());
         ImageView yard = new ImageView(image);
         yard.setFitHeight(626);
         yard.setFitWidth(1024);
         Pane pane = new Pane();
         pane.getChildren().add(yard);
-        pane.getChildren().add(menu.Loadgame);
-        pane.getChildren().add(menu.Exit);
         pane.getChildren().add(menu.StartGame);
+        pane.getChildren().add(menu.Exit);
+        pane.getChildren().add(menu.Loadgame);
         Scene scene = new Scene(pane, 1024, 626);
         stage.setScene(scene);
         stage.setResizable(false);

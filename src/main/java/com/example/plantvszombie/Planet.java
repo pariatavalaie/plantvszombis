@@ -49,8 +49,8 @@ public abstract class Planet {
     public void loadpplanet(PlanetState planetState,Pane root){
         this.dead=planetState.dead;
         for (BulletState bullet: planetState.bulletStates){
-            Bullet bullet1=new Bullet(bullet.x,bullet.y,bullet.speed,bullet.type);
-            bullet1.shoot(root, bullet.translateX, bullet.xzombie,bullet.translateY);
+            Bullet bullet1=new Bullet(bullet.x,bullet.y,bullet.getSpeed(),bullet.getType());
+            bullet1.shoot(root, bullet.getTranslateX(), bullet.getXzombie(),bullet.getTranslateY());
             bullets.add(bullet1);
         }
         if(planetState.remainingCooldown!=0){

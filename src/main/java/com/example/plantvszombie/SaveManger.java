@@ -31,16 +31,16 @@ public class SaveManger {
         public Yard loadGame(String filePath) {
             try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filePath))) {
                 GameState gameState = (GameState) in.readObject();
-                Yard yard=new Yard(gameState.selected,gameState.day);
+                Yard yard=new Yard(gameState.getSelected(),gameState.isDay());
                 yard.updateButtons();
-                yard.fog.restoreState(gameState.fogState);
-                for (ZombieState z : gameState.zombies) {
+                yard.fog.restoreState(gameState.getFogState());
+                for (ZombieState z : gameState.getZombies()) {
                     yard.Zombies.add(ZombieFactory.createFromState(z,yard.yardPane));
                 }
-                for (SunState s : gameState.suns){
+                for (SunState s : gameState.getSuns()){
                  Sun.suns.add(Sun.fromState(s,yard.yardPane));
                 }
-                for (PlanetState p : gameState.planets) {
+                for (PlanetState p : gameState.getPlanets()) {
                     Planet.on();
                     yard.placePlanet(p.type, p.col, p.row);
                     Planet planet=yard.findPlanet(p.col,p.row);
@@ -49,10 +49,10 @@ public class SaveManger {
                 }
 
                 ZombieWaveManger zw=new ZombieWaveManger(yard);
-                ZombieWaveManger.gameTime=gameState.gametime;
+                ZombieWaveManger.gameTime=gameState.getGametime();
                 zw.start();
 
-                Sun.collectedpoint=gameState.sunpoint;
+                Sun.collectedpoint=gameState.getSunpoint();
 
 
 

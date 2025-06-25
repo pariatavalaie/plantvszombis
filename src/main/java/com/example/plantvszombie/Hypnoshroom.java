@@ -71,6 +71,6 @@ public class Hypnoshroom extends Planet{
     @Override
     public void loadpplanet(PlanetState planetState, Pane root) {
         super.loadpplanet(planetState, root);
-        this.active=((OtherPlanetState)planetState).other;
+        this.active=((OtherPlanetState)planetState).isOther();
     }
 }
