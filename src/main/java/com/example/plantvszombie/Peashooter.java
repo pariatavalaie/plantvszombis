@@ -51,8 +51,8 @@ public class Peashooter extends Planet{
             }
 
             if (shouldShoot&&!dead) {
-                Bullet repeater1 = new Bullet(row, col, 3);
-                repeater1.shoot(root, x + 60,XZ[0], "NORMAL", y);
+                Bullet repeater1 = new Bullet(col, row, 3,"NORMAL");
+                repeater1.shoot(root, x + 60,XZ[0],  y);
                 bullets.add(repeater1);
             }
         }));

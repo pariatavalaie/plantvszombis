@@ -173,7 +173,7 @@ public class Yard {
         }
     }
 
-    private Planet findPlanet(int col, int row) {
+    public Planet findPlanet(int col, int row) {
         for (Planet planet : planets) {
             if (planet.row == row && planet.col == col) {
                 return planet;

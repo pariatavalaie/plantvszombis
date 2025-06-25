@@ -47,8 +47,8 @@ public class Puff extends Planet{
             }
 
             if (shouldShoot&&!dead) {
-                Bullet puff = new Bullet(row, col, 3);
-                puff.shoot(root, x + 60,XZ[0], "PUFF", y+40);
+                Bullet puff = new Bullet(col, row, 3,"PUFF");
+                puff.shoot(root, x + 60,XZ[0] , y+40);
                 bullets.add(puff);
             }
         }));
@@ -67,4 +67,6 @@ public class Puff extends Planet{
     String gettype() {
         return "Puff";
     }
+
+
 }

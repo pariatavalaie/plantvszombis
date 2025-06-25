@@ -49,10 +49,10 @@ public class Repeater extends Planet {
             }
 
             if (shouldShoot&&!dead) {
-                Bullet repeater1 = new Bullet(row, col, 3);
-                Bullet repeater2 = new Bullet(row, col, 4);
-                repeater1.shoot(root, x + 60,XZ[0], "NORMAL", y);
-                repeater2.shoot(root, x + 60,XZ[0], "NORMAL", y);
+                Bullet repeater1 = new Bullet(col, row, 3, "NORMAL");
+                Bullet repeater2 = new Bullet(col,row, 4, "NORMAL");
+                repeater1.shoot(root, x + 60,XZ[0], y);
+                repeater2.shoot(root, x + 60,XZ[0],  y);
                 bullets.add(repeater1);
                 bullets.add(repeater2);
             }

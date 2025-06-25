@@ -9,18 +9,23 @@ import javafx.util.Duration;
 public class Bullet {
     public int x;
     public int y;
-    private double speed;
+    public double speed;
+    public double xpalnet;
+    public double ypalnet;
+    public double xzombie;
     public ImageView imageBullet;
     public boolean hit;
+    public String type;
 
-    public Bullet(int x, int y, double speed) {
+    public Bullet(int x, int y, double speed,String type) {
         this.x = x;
         this.y = y;
         this.speed = speed;
         hit = false;
+        this.type = type;
     }
 
-    public void shoot(Pane pane, double xPlant, double xZombie, String type, double yPlant) {
+    public void shoot(Pane pane, double xPlant, double xZombie,  double yPlant) {
 
         Image bullet = null;
         if (type.equals("ICY")) {
@@ -36,6 +41,9 @@ public class Bullet {
         imageBullet.setFitHeight(25);
         imageBullet.setFitWidth(25);
         pane.getChildren().add(imageBullet);
+        this.xpalnet = xPlant;
+        this.ypalnet = yPlant;
+        this.xzombie = xZombie;
 
         TranslateTransition move = new TranslateTransition(Duration.seconds(this.speed), imageBullet);
         move.setFromX(xPlant);

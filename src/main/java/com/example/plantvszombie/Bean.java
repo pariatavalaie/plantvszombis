@@ -34,4 +34,5 @@ public class Bean extends Planet{
     String gettype() {
         return"bean";
     }
+
 }

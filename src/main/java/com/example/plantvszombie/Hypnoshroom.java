@@ -50,4 +50,27 @@ public class Hypnoshroom extends Planet{
     String gettype() {
         return"Hypno";
     }
+
+    @Override
+    public PlanetState getState() {
+        PlanetState baseState = super.getState();
+        boolean scaredValue = this.active;
+
+        return new OtherPlanetState(
+                baseState.col,
+                baseState.row,
+                baseState.type,
+                baseState.health,
+                baseState.dead,
+                baseState.bulletStates,
+                baseState.remainingCooldown,
+                scaredValue
+        );
+    }
+
+    @Override
+    public void loadpplanet(PlanetState planetState, Pane root) {
+        super.loadpplanet(planetState, root);
+        this.active=((OtherPlanetState)planetState).other;
+    }
 }
