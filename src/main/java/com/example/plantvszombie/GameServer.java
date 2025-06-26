@@ -20,6 +20,10 @@ public class GameServer {
                     System.out.println("Client connected: " + socket.getInetAddress());
                     ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                     ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+                    out.writeObject(new NetworkMessage("initial", yard.selected));
+                    out.flush();
+                    out.writeObject(new NetworkMessage("initialday", yard.day));
+                    out.flush();
                     clients.add(out);
                     sendInitialState(out);
                     new Thread((Runnable) new RequestHandler (out)).start();

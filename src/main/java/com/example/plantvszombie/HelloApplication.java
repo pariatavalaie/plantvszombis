@@ -19,6 +19,7 @@ public class HelloApplication extends Application {
     public Stage stage;
     public Menu menu = new Menu();
     SaveManger saveManger = new SaveManger();
+    boolean isMultiplayer = false;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -72,11 +73,14 @@ public class HelloApplication extends Application {
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
 
         serverBtn.setOnAction(e -> {
+            isMultiplayer = true;
+            menu2();
             dialog.close();
-            startMultiplayerGame(true);
+
         });
 
         clientBtn.setOnAction(e -> {
+            isMultiplayer = true;
             TextInputDialog ipDialog = new TextInputDialog("localhost");
             ipDialog.setTitle("Enter Server IP");
             ipDialog.setHeaderText("Join as Client");
@@ -99,7 +103,7 @@ public class HelloApplication extends Application {
     private void startMultiplayerGame(boolean isServer, String host) {
         Yard yard;
         if (isServer) {
-            yard = new Yard(menu.getSelectedPlantsNames(), true);
+            yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
             pauseButton(yard);
            // if (menu.day)
             Sun.fall(yard.yardPane);
@@ -110,16 +114,15 @@ public class HelloApplication extends Application {
             zw.start();
 
         } else {
-            yard = new Yard(menu.getSelectedPlantsNames(), true);
-            pauseButton(yard);
-            yard.updateButtons();
-
             try {
-                GameClient client = new GameClient(host, 54321, yard);
-                yard.client = client;
+                GameClient client = new GameClient(host, 54321);
+                yard =client.clientYard;
+                yard.updateButtons();
             } catch (IOException e) {
                 showError("Cannot connect to server.");
                 return;
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -155,7 +158,8 @@ public class HelloApplication extends Application {
         stage.setScene(menuScene);
 
         menu.Play.setOnAction(e -> {
-            if (menu.countPlant == 6) play();
+            if (menu.countPlant == 6&&!isMultiplayer) play();
+            if(isMultiplayer) startMultiplayerGame(true);
             else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("You have to choose 6 plants");

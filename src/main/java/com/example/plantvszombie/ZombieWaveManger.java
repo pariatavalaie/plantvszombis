@@ -38,8 +38,6 @@ public class ZombieWaveManger {
         gameTime++;
 
 
-        yard.startMovingAndDetecting();
-
         // اجرای امواج مختلف
         if (gameTime <= 120) waveStage1();
         //else if (gameTime <= 240) waveStage2();

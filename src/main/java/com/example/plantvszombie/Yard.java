@@ -22,8 +22,6 @@ public class Yard {
     ArrayList<Planet>planets=new ArrayList<>();
     ArrayList<Zombies>Zombies=new ArrayList<>();
     ArrayList<StoneGrave>graves=new ArrayList<>();
-    public boolean isServer = false;
-    public GameClient client;
     Fog fog;
     boolean day;
     private Set<String> lockedCells = new HashSet<>(); // مثل "3,5"
@@ -534,6 +532,8 @@ public class Yard {
 
             }
             buttonManager.update(canPlaceMap,costMap,Sun.collectedpoint);
+            startMovingAndDetecting();
+
 
         }));
 
