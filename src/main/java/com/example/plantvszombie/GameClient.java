@@ -2,6 +2,8 @@ package com.example.plantvszombie;
 
 import java.io.*;
 import java.net.*;
+import java.util.List;
+
 import javafx.application.Platform;
 
 public class GameClient {
@@ -46,6 +48,25 @@ public class GameClient {
                      // متد انیمیشن خورشید
                     S.fallingSun(clientYard.yardPane, ss.getX(),0);
                 }
+                case "INITIAL_ZOMBIES" -> {
+                    List<ZombieState> zsList = (List<ZombieState>) msg.data;
+                    for (ZombieState zs : zsList) {
+                            Zombies z = ZombieFactory.createFromState(zs, clientYard.yardPane);
+                            clientYard.Zombies.add(z);
+
+                    }
+
+                }
+                case ("INITIAL_SUNS") ->{
+                    List<SunState> sunsList = (List<SunState>) msg.data;
+                    for (SunState sun : sunsList) {
+                        Sun s=new Sun();
+                        Sun.suns.add(s);
+                        s.fallingSun(clientYard.yardPane, sun.getX(),sun.getZ());
+                    }
+
+                }
+
 
                 // می‌تونی پیام‌های دیگه مثل حذف زامبی یا خورشید رو هم اضافه کنی
             }

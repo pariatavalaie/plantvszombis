@@ -21,6 +21,7 @@ public class GameServer {
                     ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                     ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
                     clients.add(out);
+                    sendInitialState(out);
                     new Thread((Runnable) new RequestHandler (out)).start();
                 }
             } catch (IOException e) {
@@ -34,6 +35,29 @@ public class GameServer {
 
     public static void notifySunSpawn(SunState ss) {
         broadcast(new NetworkMessage("SPAWN_SUN", ss));
+    }
+    public static void sendInitialState(ObjectOutputStream out) {
+        try {
+            // ساخت یک پیام با همه زامبی‌های فعلی
+            List<ZombieState> currentZombies = new ArrayList<>();
+            for (Zombies z : yard.Zombies) {
+                currentZombies.add(z.getState());
+            }
+            List<SunState> currentSuns = new ArrayList<>();
+            for (Sun s:Sun.suns) {
+                if(s.isFalling){
+                    currentSuns.add(s.getState());
+                }
+            }
+            NetworkMessage initialStateMsg = new NetworkMessage("INITIAL_ZOMBIES", currentZombies);
+            out.writeObject(initialStateMsg);
+            out.flush();
+            NetworkMessage sunMsg = new NetworkMessage("INITIAL_SUNS", currentSuns);
+            out.writeObject(sunMsg);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
