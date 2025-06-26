@@ -24,16 +24,6 @@ public class WallNut extends Planet{
     }
 
     @Override
-    void act(Pane root) {
-
-    }
-
-    @Override
-    void act(Pane root, ArrayList<Zombies> Zombies) {
-
-    }
-
-    @Override
     String gettype() {
         return "Wall-nut";
     }

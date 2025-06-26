@@ -9,9 +9,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class Hypnoshroom extends Planet{
+public class Hypnoshroom extends Planet implements Act{
     boolean active=false;
     static boolean canplace = true;
     static final int cost=75;
@@ -27,11 +28,7 @@ public class Hypnoshroom extends Planet{
     }
 
     @Override
-    void act(Pane root) {
-    }
-
-    @Override
-    void act(Pane root, ArrayList<Zombies> Zombies) {
+    public void act(Pane root, ArrayList<Zombies> Zombies) {
         boolean[] firsttime={true};
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100),event -> {
         for (Zombies z : Zombies) {

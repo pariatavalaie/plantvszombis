@@ -11,7 +11,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Puff extends Planet{
+public class Puff extends Planet implements Act{
     static boolean canplace = true;
     static final int cost=0;
     public Puff(int x , int y) {
@@ -25,7 +25,7 @@ public class Puff extends Planet{
         eatimage=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
     }
     @Override
-    void act(Pane root,ArrayList<Zombies>zombies){
+    public void act(Pane root,ArrayList<Zombies>zombies){
         double gridX = 245.0; // Left anchor of grid
         double gridY = 60.0;  // Top anchor of grid
 
@@ -55,13 +55,9 @@ public class Puff extends Planet{
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
         AnimationManager.register(timeline);
-
-
     }
-    @Override
-    void act(Pane root){
 
-    }
+
 
     @Override
     String gettype() {

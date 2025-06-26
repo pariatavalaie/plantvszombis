@@ -11,7 +11,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Blover extends Planet{
+public class Blover extends Planet implements specialAct{
     static boolean canplace = true;
     static final int cost = 100;
     private Fog fog;
@@ -28,12 +28,7 @@ public class Blover extends Planet{
     }
 
     @Override
-    void act(Pane root, ArrayList<Zombies> Zombies) {
-
-    }
-
-    @Override
-    void act(Pane root) {
+   public void act(Pane root) {
         fog.hideTemporarily();
 
         Timeline restoreTimeline = new Timeline(new KeyFrame(Duration.seconds(5), e -> fog.restore()));

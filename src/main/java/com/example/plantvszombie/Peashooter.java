@@ -9,9 +9,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class Peashooter extends Planet{
+public class Peashooter extends Planet implements Act{
     static boolean canplace = true;
     static final int cost=100;
     public Peashooter(int x, int y) {
@@ -24,12 +25,8 @@ public class Peashooter extends Planet{
         this.image = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
         this.eatimage = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
     }
-    public void act(Pane root) {
-
-    }
-
     @Override
-    void act(Pane root,ArrayList<Zombies>Zombies) {
+    public void act(Pane root,ArrayList<Zombies>Zombies) {
         double gridX = 245.0; // Left anchor of grid
         double gridY = 60.0;  // Top anchor of grid
 

@@ -8,9 +8,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class Scaredy extends Planet{
+public class Scaredy extends Planet implements Act{
     static boolean canplace=true;
     static final int cost=25;
     public boolean scared;
@@ -26,7 +28,7 @@ public class Scaredy extends Planet{
         scared=false;
     }
     @Override
-    void act(Pane root , ArrayList<Zombies> zombies) {
+    public void act(Pane root , ArrayList<Zombies> zombies) {
         double gridX = 245.0; // Left anchor of grid
         double gridY = 60.0;  // Top anchor of grid
 
@@ -34,27 +36,26 @@ public class Scaredy extends Planet{
         double cellHeight = 100.0;
         double x = gridX + col * 80 + (80 - 70) / 2;
         double y = gridY + row * 100 + (100 - 90) / 2;
-        final double[]XZ={0};
-
+        final double[] XZ = {0};
 
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             boolean shouldShoot = false;
-            for (Zombies z :zombies ) {
+            for (Zombies z : zombies) {
                 double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
-                if(z.y == row && z.x - col <= 2 && z.x<=8&&zombieX>x) {
-                    scared=true;
+                if (z.y == row && z.x - col <= 2 && z.x <= 8 && zombieX > x) {
+                    scared = true;
                     this.image.setImage(this.eatimage.getImage());
-                }else if (!scared&&z.y == row && z.x > col && z.x<=8) {
+                } else if (!scared && z.y == row && z.x > col && z.x <= 8) {
                     shouldShoot = true;
                     XZ[0] = zombieX; // نزدیک‌ترین زامبی
                     break;
                 }
             }
 
-            if (shouldShoot&&!dead) {
+            if (shouldShoot && !dead) {
                 Bullet scary = new Bullet(col, row, 3, "MUSHROOM");
-                scary.shoot(root, x + 60,XZ[0], y + 20);
+                scary.shoot(root, x + 60, XZ[0], y + 20);
                 bullets.add(scary);
             }
         }));
@@ -64,12 +65,6 @@ public class Scaredy extends Planet{
 
 
     }
-    @Override
-    void act(Pane root){
-
-    }
-
-
     @Override
     String gettype() {
         return  "Scaredy";

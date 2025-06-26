@@ -11,7 +11,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Doomshroom extends Planet{
+public class Doomshroom extends Planet implements Act{
     static boolean canplace = true;
     static int cost = 125;
 
@@ -27,10 +27,7 @@ public class Doomshroom extends Planet{
     }
 
     @Override
-    void act(Pane root) {}
-
-    @Override
-    void act(Pane root, ArrayList<Zombies> Zombies) {
+    public void act(Pane root, ArrayList<Zombies> Zombies) {
         double gridX = 245.0;
         double gridY = 60.0;
         double cellWidth = 80.0;

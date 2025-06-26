@@ -11,7 +11,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class SnowPea extends Planet{
+public class SnowPea extends Planet implements Act{
     static boolean canplace = true;
     static final int cost=175;
     public SnowPea(int x , int y) {
@@ -26,12 +26,7 @@ public class SnowPea extends Planet{
     }
 
     @Override
-    void act(Pane root) {
-
-    }
-
-    @Override
-    void act(Pane root,ArrayList<Zombies>Zombies) {
+    public void act(Pane root,ArrayList<Zombies>Zombies) {
         double gridX = 245.0; // Left anchor of grid
         double gridY = 60.0;  // Top anchor of grid
 

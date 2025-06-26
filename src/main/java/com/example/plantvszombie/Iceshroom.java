@@ -12,7 +12,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Iceshroom extends Planet{
+public class Iceshroom extends Planet implements Act{
     static boolean canplace = true;
     static int cost = 75;
     public Iceshroom(int x,int y) {
@@ -27,12 +27,7 @@ public class Iceshroom extends Planet{
     }
 
     @Override
-    void act(Pane root) {
-
-    }
-
-    @Override
-    void act(Pane root, ArrayList<Zombies> Zombies) {
+    public void act(Pane root, ArrayList<Zombies> Zombies) {
         for (Zombies z : Zombies) {
             if(z.isAlive()){
                 if(z.walker!=null){

@@ -11,7 +11,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Jalapeno extends Planet {
+public class Jalapeno extends Planet implements Act {
     static boolean canplace = true;
     static int cost = 125;
     public Jalapeno(int x , int y) {
@@ -25,7 +25,7 @@ public class Jalapeno extends Planet {
         bullets = new ArrayList<Bullet>();
     }
     @Override
-    void act(Pane pene , ArrayList<Zombies> Zombies){
+    public void act(Pane pene , ArrayList<Zombies> Zombies){
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
         for(Zombies z : Zombies){
             if(z.y == this.row&&z.x<=8){
@@ -41,9 +41,6 @@ public class Jalapeno extends Planet {
         timeline.setCycleCount(1);
         timeline.play();
         AnimationManager.register(timeline);
-    }
-    @Override
-    void act(Pane pane){
     }
 
     @Override

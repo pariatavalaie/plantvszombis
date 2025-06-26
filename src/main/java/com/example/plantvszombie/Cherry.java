@@ -3,15 +3,13 @@ package com.example.plantvszombie;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 
-public class Cherry extends Planet {
+public class Cherry extends Planet implements Act {
     static boolean canplace = true;
     static int cost = 150;
 
@@ -28,7 +26,7 @@ public class Cherry extends Planet {
 
 
     @Override
-    void act(Pane root, ArrayList<Zombies> Zombies) {
+    public void act(Pane root, ArrayList<Zombies> Zombies) {
         double gridX = 245.0;
         double gridY = 60.0;
         double cellWidth = 80.0;
@@ -62,13 +60,6 @@ public class Cherry extends Planet {
          timeline.setCycleCount(1);
         timeline.play();
     }
-
-
-    @Override
-    void act(Pane root) {
-
-    }
-
 
     @Override
     String gettype() {

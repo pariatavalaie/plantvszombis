@@ -12,7 +12,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Plantern extends Planet {
+public class Plantern extends Planet implements specialAct{
     static boolean canplace = true;
     static final int cost = 25;
     private Fog fog;
@@ -32,10 +32,7 @@ public class Plantern extends Planet {
     }
 
     @Override
-    void act(Pane root, ArrayList<Zombies> Zombies) {}
-
-    @Override
-    void act(Pane root) {
+   public void act(Pane root) {
         if (!dead && lightUpdater == null) {
             lightUpdater = new Timeline(new KeyFrame(Duration.seconds(0.3), e -> updateLight()));
             lightUpdater.setCycleCount(Timeline.INDEFINITE);

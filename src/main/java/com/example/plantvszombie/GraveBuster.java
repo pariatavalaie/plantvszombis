@@ -11,7 +11,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class GraveBuster extends Planet{
+public class GraveBuster extends Planet implements specialAct{
     static boolean canplace = true;
     static final int cost=75;
     public GraveBuster(int x,int y) {
@@ -24,14 +24,8 @@ public class GraveBuster extends Planet{
         this.eatimage=new ImageView( new Image(getClass().getResource("/Transparent_grave_digger.gif").toExternalForm()));
         bullets = new ArrayList<>();
     }
-
     @Override
-    void act(Pane root, ArrayList<Zombies> Zombies) {
-
-    }
-
-    @Override
-    void act(Pane root) {
+    public void act(Pane root) {
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(event -> {
             remove(root);

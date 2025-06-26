@@ -24,13 +24,6 @@ public class Bean extends Planet{
     }
 
     @Override
-    void act(Pane root, ArrayList<Zombies> Zombies) {}
-
-    @Override
-    void act(Pane root) {}
-
-
-    @Override
     String gettype() {
         return"bean";
     }
