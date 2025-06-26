@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Sun {
     static int collectedpoint=200;
-    private ImageView sunImage;
+    ImageView sunImage;
     private boolean collected ;
     static ArrayList<Sun> suns = new ArrayList<Sun>();
     public Sun() {
