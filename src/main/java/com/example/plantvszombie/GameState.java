@@ -1,4 +1,6 @@
 package com.example.plantvszombie;
+import javafx.scene.layout.Pane;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,8 @@ public class GameState implements Serializable {
     FogState fogState;
     ArrayList<SunState> suns;
     ArrayList<PlanetState>planets;
-     GameState(ArrayList<ZombieState> zombies, List<String> selected, boolean day, int gametime, int sunpoint,Fog fog,ArrayList<SunState>suns,ArrayList<PlanetState>planets) {
+    ArrayList<stoneGraveState> StoneGraves;
+     GameState(ArrayList<ZombieState> zombies, List<String> selected, boolean day, int gametime, int sunpoint,Fog fog,ArrayList<SunState>suns,ArrayList<PlanetState>planets,ArrayList<stoneGraveState>stoneGraves) {
          this.zombies = zombies;
          this.selected = selected;
          this.day = day;
@@ -21,6 +24,7 @@ public class GameState implements Serializable {
          this.fogState= fog.buildState();
          this.suns = suns;
          this.planets = planets;
+         this.StoneGraves = stoneGraves;
      }
      public int getGametime() {
          return gameTime;
@@ -46,8 +50,9 @@ public class GameState implements Serializable {
      public List<String> getSelected() {
          return selected;
      }
-
-
+     public ArrayList<stoneGraveState> getStoneGraves() {
+         return StoneGraves;
+     }
 }
 
  class ZombieState implements Serializable {
@@ -205,6 +210,25 @@ class LanternHoleState implements Serializable {
      public double z;
      public boolean isFalling; // true: fallingSun | false: sunflower
  }
+ class stoneGraveState implements Serializable {
+     private int x;
+     private int y;
+
+     public stoneGraveState(int x, int y) {
+         this.x = x;
+         this.y = y;
+     }
+     public int getX() {
+         return x;
+     }
+     public int getY() {
+         return y;
+     }
+     public StoneGrave getStoneGrave(Pane pane) {
+         return new StoneGrave(getX(),getY(),pane);
+     }
+ }
+
 
 
 

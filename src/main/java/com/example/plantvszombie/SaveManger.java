@@ -6,16 +6,19 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class SaveManger {
-    public void saveGame(Yard yard,String filePath) {
+    public void saveGame(Yard yard, String filePath) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filePath))) {
 
             GameState gameState = buildGameState(yard);
             out.writeObject(gameState);
 
 
-        }catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    public  static GameState buildGameState(Yard yard) {
+    }
+
+    public static GameState buildGameState(Yard yard) {
         ArrayList<ZombieState> zombieStates = new ArrayList<>();
         for (Zombies z : yard.Zombies) {
             zombieStates.add(z.getState());
@@ -30,24 +33,19 @@ public class SaveManger {
         for (Planet p : yard.planets) {
             planetStates.add(p.getState());
         }
+        ArrayList<stoneGraveState> stoneGrave = new ArrayList<>();
+        for (StoneGrave G : yard.graves) {
+            stoneGrave.add(G.getState());
+        }
 
-        return new GameState(
-                zombieStates,
-                yard.selected,
-                yard.day,
-                ZombieWaveManger.gameTime,
-                Sun.collectedpoint,
-                yard.fog,
-                sunStates,
-                planetStates
-        );
+        return new GameState(zombieStates, yard.selected, yard.day, ZombieWaveManger.gameTime, Sun.collectedpoint, yard.fog, sunStates, planetStates,stoneGrave);
     }
 
 
-    public void loadGame(String filePath, Yard yard) {
+    public Yard loadGame(String filePath) {
             try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filePath))) {
                 GameState gameState = (GameState) in.readObject();
-                yard=new Yard(gameState.getSelected(),gameState.isDay());
+                 Yard yard=new Yard(gameState.getSelected(),gameState.isDay());
                 yard.updateButtons();
                 yard.fog.restoreState(gameState.getFogState());
                 for (ZombieState z : gameState.getZombies()) {
@@ -63,6 +61,9 @@ public class SaveManger {
                     planet.loadpplanet(p,yard.yardPane);
 
                 }
+                for(stoneGraveState g : gameState.getStoneGraves()){
+                    yard.graves.add(g.getStoneGrave(yard.yardPane));
+                }
 
                 ZombieWaveManger zw=new ZombieWaveManger(yard);
                 ZombieWaveManger.gameTime=gameState.getGametime();
@@ -72,14 +73,15 @@ public class SaveManger {
 
 
 
-
+                return yard;
 
 
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
 
-
+              return null;
             }
+
         }
 }
   class ZombieFactory {

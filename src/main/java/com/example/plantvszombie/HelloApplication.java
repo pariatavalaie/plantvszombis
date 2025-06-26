@@ -25,7 +25,7 @@ public class HelloApplication extends Application {
         this.stage = stage;
         stage.setTitle("Plant Vs Zombie");
         stage.setResizable(false);
-        Image image = new Image(getClass().getResource("/first page_11zon.png").toExternalForm());
+        Image image = new Image(getClass().getResource("/firstpage.png").toExternalForm());
         ImageView yard = new ImageView(image);
         yard.setFitHeight(626);
         yard.setFitWidth(1024);
@@ -46,8 +46,7 @@ public class HelloApplication extends Application {
         menu.StartGame.setOnAction(e -> menu2());
         menu.Loadgame.setOnAction(e -> {
 
-            Yard yard1 = null;
-           saveManger.loadGame("save.dat",yard1);
+            Yard yard1 = saveManger.loadGame("save.dat");
             pauseButton(yard1);
             yard1.updateButtons();
             if (yard1.day) Sun.fall(yard1.yardPane);

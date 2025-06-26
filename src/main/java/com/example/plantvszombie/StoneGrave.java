@@ -68,6 +68,9 @@ public class StoneGrave {
         AnimationManager.register(stop);
 
     }
+    public stoneGraveState getState() {
+        return new stoneGraveState(x,y);
+    }
     public void remove(ArrayList<StoneGrave>graves) {
         pane.getChildren().remove(image);
         graves.remove(this);
