@@ -118,6 +118,7 @@ public class Yard {
         if (!day) {
             PaintStone(yardPane, x, y);
         }
+        startMovingAndDetecting();
 
         AnchorPane.setTopAnchor(gridPane, 60.0);
         AnchorPane.setLeftAnchor(gridPane, 245.0);
@@ -182,6 +183,7 @@ public class Yard {
         return null;
     }
     public void startMovingAndDetecting() {
+        Timeline s=new Timeline(new KeyFrame(Duration.seconds(1),event -> {
 
         ArrayList<Zombies> zombieCopy = new ArrayList<>(Zombies);
 
@@ -190,7 +192,9 @@ public class Yard {
             zombie.remove(yardPane, Zombies);
             zombie.checkAndEatPlant(planets, yardPane);
             zombie.checkAndEatZombie(Zombies, yardPane);
-        }
+        }}));
+        s.setCycleCount(Timeline.INDEFINITE);
+        s.play();
     }
 
     private void removePlanet(Planet planet) {
@@ -532,7 +536,7 @@ public class Yard {
 
             }
             buttonManager.update(canPlaceMap,costMap,Sun.collectedpoint);
-            startMovingAndDetecting();
+
 
 
         }));

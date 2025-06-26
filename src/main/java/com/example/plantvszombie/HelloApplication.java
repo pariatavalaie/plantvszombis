@@ -159,7 +159,7 @@ public class HelloApplication extends Application {
 
         menu.Play.setOnAction(e -> {
             if (menu.countPlant == 6&&!isMultiplayer) play();
-            if(isMultiplayer) startMultiplayerGame(true);
+            if(isMultiplayer&&menu.countPlant == 6) startMultiplayerGame(true);
             else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("You have to choose 6 plants");
