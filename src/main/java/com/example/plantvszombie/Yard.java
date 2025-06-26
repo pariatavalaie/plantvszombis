@@ -22,6 +22,8 @@ public class Yard {
     ArrayList<Planet>planets=new ArrayList<>();
     ArrayList<Zombies>Zombies=new ArrayList<>();
     ArrayList<StoneGrave>graves=new ArrayList<>();
+    public boolean isServer = false;
+    public GameClient client;
     Fog fog;
     boolean day;
     private Set<String> lockedCells = new HashSet<>(); // مثل "3,5"
@@ -534,9 +536,40 @@ public class Yard {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
+    public void applyStateFromNetwork(GameState s) {
+        // پاک‌سازی عناصر قدیمی
+        for (Zombies z : Zombies) {
+            yardPane.getChildren().remove(z.image);
+        }
+        Zombies.clear();
 
+        for (Sun sun : Sun.suns) {
+            yardPane.getChildren().remove(sun.sunImage);
+        }
+        Sun.suns.clear();
+
+        // اضافه کردن زامبی‌های جدید
+        for (ZombieState zs : s.getZombies()) {
+            Zombies z = ZombieFactory.createFromState(zs, yardPane);
+            Zombies.add(z);
+        }
+
+        // اضافه کردن خورشیدهای جدید
+        for (SunState ss : s.getSuns()) {
+            Sun sun = Sun.fromState(ss, yardPane);
+            Sun.suns.add(sun);
+        }
+
+        // بروزرسانی مه
+        fog.restoreState(s.getFogState());
+
+        // بروزرسانی زمان و امتیاز
+        ZombieWaveManger.gameTime = s.getGametime();
+        Sun.collectedpoint = s.getSunpoint();
+    }
 
 }
+
 
 
 
