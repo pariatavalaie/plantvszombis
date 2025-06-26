@@ -28,16 +28,33 @@ public class GameServer {
             }
         }).start();
     }
+    public static void notifyZombieSpawn(ZombieState zs) {
+        broadcast(new NetworkMessage("SPAWN_ZOMBIE", zs));
+    }
 
-    public static void broadcast(GameState state) {
+    public static void notifySunSpawn(SunState ss) {
+        broadcast(new NetworkMessage("SPAWN_SUN", ss));
+    }
+
+
+    public static void broadcast(NetworkMessage msg) {
         for (ObjectOutputStream out : clients) {
             try {
                 out.reset(); // جلوگیری از کش serialization
-                out.writeObject(state);
+                out.writeObject(msg);
                 out.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+}
+ class NetworkMessage implements Serializable {
+    public String type;  // مثل "SPAWN_ZOMBIE", "REMOVE_ZOMBIE" و ...
+    public Object data;
+
+    public NetworkMessage(String type, Object data) {
+        this.type = type;
+        this.data = data;
     }
 }

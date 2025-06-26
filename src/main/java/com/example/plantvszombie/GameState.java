@@ -208,7 +208,18 @@ class LanternHoleState implements Serializable {
      public double x;
      public double y;
      public double z;
-     public boolean isFalling; // true: fallingSun | false: sunflower
+     public boolean isFalling;
+     // true: fallingSun | false: sunflower
+
+     public double getX() {
+         return x;
+     }
+     public double getY() {
+         return y;
+     }
+     public double getZ() {
+         return z;
+     }
  }
  class stoneGraveState implements Serializable {
      private int x;

@@ -107,16 +107,24 @@ public class ZombieWaveManger {
             int row = new Random().nextInt(5); // پنج ردیف
             switch (type) {
                 case "Normal":
-                    yard.Zombies.add(new NormalZombie(9, row, yard.yardPane));
+                    Zombies z=new NormalZombie(9, row, yard.yardPane);
+                    yard.Zombies.add(z);
+                    GameServer.notifyZombieSpawn(z.getState());
                     break;
                 case "Conehead":
-                    yard.Zombies.add(new ConeheadZombie(9, row, yard.yardPane));
+                    Zombies q=new ConeheadZombie(9, row, yard.yardPane);
+                    yard.Zombies.add(q);
+                    GameServer.notifyZombieSpawn(q.getState());
                     break;
                 case "Screendor":
-                    yard.Zombies.add(new ScreendoorZombie(9, row, yard.yardPane));
+                    Zombies c=new ScreendoorZombie(9, row, yard.yardPane);
+                    yard.Zombies.add(c);
+                    GameServer.notifyZombieSpawn(c.getState());
                     break;
                 case "Imp":
+                    Zombies d=new ImpZombie(9, row, yard.yardPane);
                     yard.Zombies.add(new ImpZombie(9, row, yard.yardPane));
+                    GameServer.notifyZombieSpawn(d.getState());
                     break;
 
             }

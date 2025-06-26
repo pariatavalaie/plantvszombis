@@ -66,7 +66,8 @@ public class Sun {
             double randomX = 245 + Math.random() * (9 * 80); // روی زمین
             Sun sun = new Sun();
             suns.add(sun);
-           sun.fallingSun (root, randomX, 0); // y = 400 یعنی تا پایین زمین
+           sun.fallingSun (root, randomX, 0);
+           GameServer.notifySunSpawn(sun.getState());// y = 400 یعنی تا پایین زمین
         }));
         timeline.setCycleCount(Timeline.INDEFINITE); // بی‌نهایت اجرا بشه
         timeline.play();

@@ -97,20 +97,26 @@ public class HelloApplication extends Application {
     }
 
     private void startMultiplayerGame(boolean isServer, String host) {
-        Yard yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
-        pauseButton(yard);
-        if (menu.day) Sun.fall(yard.yardPane);
-        yard.updateButtons();
-
+        Yard yard;
         if (isServer) {
+            yard = new Yard(menu.getSelectedPlantsNames(), true);
+            pauseButton(yard);
+           // if (menu.day)
+            Sun.fall(yard.yardPane);
+            yard.updateButtons();
+
             GameServer.start(yard); // راه‌اندازی سرور
-            ZombieWaveManger zw = new ZombieWaveManger(yard); // فقط سرور مدیریت زامبی داره
+            ZombieWaveManger zw = new ZombieWaveManger(yard);
             zw.start();
+
         } else {
+            yard = new Yard(menu.getSelectedPlantsNames(), true);
+            pauseButton(yard);
+            yard.updateButtons();
+
             try {
-                GameClient client = new GameClient(host, 54321,
-                        state -> Platform.runLater(() -> yard.applyStateFromNetwork(state)));
-                yard.client = client; // برای ارسال در صورت نیاز
+                GameClient client = new GameClient(host, 54321, yard);
+                yard.client = client;
             } catch (IOException e) {
                 showError("Cannot connect to server.");
                 return;
@@ -121,6 +127,7 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
 
     private void play() {
         Yard yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
