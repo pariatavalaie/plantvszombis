@@ -376,8 +376,12 @@ public class Yard {
             plantView=b.image;
             b.cooldown(buttonManager.getButton("bean"),()->Bean.canplace=true,Bean.cost);
             Planet x=findPlanet(col,row);
-            x.act(yardPane);
-            x.act(yardPane,Zombies);
+            if (x instanceof Act) {
+                ((Act)x).act(yardPane, Zombies); // فراخوانی act با زامبی‌ها
+            }
+            if (x instanceof specialAct) {
+                ((specialAct)x).act(yardPane); // فراخوانی act بدون زامبی‌ها
+            }
             if(x instanceof Doomshroom){
                 Planet cherry = findPlanet(x.col,x.row);
                 lockedCells.add(x.row + "," + x.col);
