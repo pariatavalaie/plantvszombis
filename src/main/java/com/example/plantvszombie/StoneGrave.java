@@ -20,7 +20,7 @@ public class StoneGrave {
         this.x = x;
         this.y = y;
         zombieSpawned = false;
-        image =new ImageView( new Image(getClass().getResource("/Lost_City_Gravestone_HD.png").toExternalForm()));
+        image =new ImageView( new Image(getClass().getResource("/Grave8-removebg-preview.png").toExternalForm()));
         image.setFitHeight(70);
         image.setFitWidth(90);
         double startX = 245 + x * 80 + 5;

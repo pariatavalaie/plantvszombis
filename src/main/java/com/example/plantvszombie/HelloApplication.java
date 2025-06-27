@@ -186,7 +186,7 @@ public class HelloApplication extends Application {
     }
 
     private void menu2() {
-        Image yar = new Image(getClass().getResource("/Lawn.jpg").toExternalForm());
+        Image yar = new Image(getClass().getResource("/choose level.jpg").toExternalForm());
         ImageView yard = new ImageView(yar);
         yard.setFitHeight(626);
         yard.setFitWidth(1024);
