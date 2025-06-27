@@ -9,7 +9,7 @@ public class GameServer {
     public static Yard yard; // فقط در سرور
     public static List<ObjectOutputStream> clients = new ArrayList<>();
 
-    public static void start(Yard hostYard) {
+    public static void start(Yard hostYard, Runnable onClientConnected) {
         yard = hostYard;
 
         new Thread(() -> {
@@ -26,6 +26,7 @@ public class GameServer {
                     out.flush();
                     clients.add(out);
                     sendInitialState(out);
+                    javafx.application.Platform.runLater(onClientConnected);
 
                 }
             } catch (IOException e) {

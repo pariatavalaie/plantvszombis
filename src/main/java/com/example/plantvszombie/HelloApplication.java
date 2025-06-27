@@ -101,35 +101,48 @@ public class HelloApplication extends Application {
     }
 
     private void startMultiplayerGame(boolean isServer, String host) {
-        Yard yard;
         if (isServer) {
-            yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
+            // 1. ساخت یارد (ولی نمایش نده هنوز)
+            Yard yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
             pauseButton(yard);
-           // if (menu.day)
-            Sun.fall(yard.yardPane);
             yard.updateButtons();
+            GameServer.yard = yard;
 
-            GameServer.start(yard); // راه‌اندازی سرور
-            ZombieWaveManger zw = new ZombieWaveManger(yard);
-            zw.start();
+            // 2. صفحه‌ی لودینگ
+            Label waitingLabel = new Label("Waiting for client to join...");
+            waitingLabel.setStyle("-fx-font-size: 24px; -fx-text-fill: white;");
+            StackPane loadingPane = new StackPane(waitingLabel);
+            loadingPane.setStyle("-fx-background-color: black;");
+            Scene loadingScene = new Scene(loadingPane, 1024, 626);
+            stage.setScene(loadingScene);
+
+            // 3. راه‌اندازی سرور با callback اتصال کلاینت
+            GameServer.start(yard, () -> {
+                // ✅ وقتی کلاینت وصل شد، برو داخل بازی
+                if (yard.day) Sun.fall(yard.yardPane);
+                ZombieWaveManger zw = new ZombieWaveManger(yard);
+                zw.start();
+
+                Scene scene = new Scene(yard.yardPane, 1024, 626);
+                stage.setScene(scene);
+            });
 
         } else {
             try {
                 GameClient client = new GameClient(host, 54321);
-                yard =client.clientYard;
+                Yard yard = client.clientYard;
                 yard.updateButtons();
+
+                Scene scene = new Scene(yard.yardPane, 1024, 626);
+                stage.setScene(scene);
             } catch (IOException e) {
                 showError("Cannot connect to server.");
-                return;
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
-
-        Scene scene = new Scene(yard.yardPane, 1024, 626);
-        stage.setScene(scene);
-        stage.show();
     }
+
 
 
     private void play() {
