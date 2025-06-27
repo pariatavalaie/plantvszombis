@@ -268,7 +268,8 @@ public class Yard {
                 Timeline timeline = new Timeline(
                         new KeyFrame(Duration.seconds(2), e -> removePlanet(C))
                 );
-                timeline.play();
+            AnimationManager.register(timeline);
+            timeline.play();
             Sun.collectedpoint-=Cherry.cost;
         }else if(planet.equals("jalapeno") && Jalapeno.canplace) {
             Jalapeno J = new Jalapeno(col, row);

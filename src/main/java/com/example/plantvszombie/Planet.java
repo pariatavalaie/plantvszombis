@@ -40,9 +40,7 @@ public abstract class Planet {
     public PlanetState getState() {
         double remaining = 0;
         if (cooldown != null) {
-            Duration remainingTime = cooldown.getCurrentTime();
-            Duration totalTime = cooldown.getDuration();
-            remaining = totalTime.subtract(remainingTime).toSeconds();
+            remaining = cooldown.getCurrentTime().toSeconds();
         }
         ArrayList<BulletState> bulletStates = new ArrayList<>();
         for (Bullet b : bullets) {
@@ -59,7 +57,12 @@ public abstract class Planet {
             bullets.add(bullet1);
         }
         if (planetState.remainingCooldown != 0) {
-            cooldown.playFrom(Duration.seconds(watingtime - planetState.remainingCooldown));
+            if (cooldown == null) {
+                cooldown = new PauseTransition(Duration.seconds(watingtime));
+            }
+            cooldown.setDuration(Duration.seconds(watingtime));
+            cooldown.jumpTo(Duration.seconds(planetState.remainingCooldown));
+            cooldown.play();
         }
     }
 
