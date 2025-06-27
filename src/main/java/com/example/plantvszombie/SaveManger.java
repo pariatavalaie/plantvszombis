@@ -47,13 +47,11 @@ public class SaveManger {
                 GameState gameState = (GameState) in.readObject();
                  Yard yard=new Yard(gameState.getSelected(),gameState.isDay());
                 yard.updateButtons();
-                yard.fog.restoreState(gameState.getFogState());
+
                 for (ZombieState z : gameState.getZombies()) {
                     yard.Zombies.add(ZombieFactory.createFromState(z,yard.yardPane));
                 }
-                for (SunState s : gameState.getSuns()){
-                 Sun.suns.add(Sun.fromState(s,yard.yardPane));
-                }
+                
                 for (PlanetState p : gameState.getPlanets()) {
                     Planet.on();
                     yard.placeplanet(p.type, p.col, p.row);
@@ -61,9 +59,13 @@ public class SaveManger {
                     planet.loadpplanet(p,yard.yardPane);
 
                 }
+                for (SunState s : gameState.getSuns()){
+                    Sun.suns.add(Sun.fromState(s,yard.yardPane));
+                }
                 for(stoneGraveState g : gameState.getStoneGraves()){
                     yard.graves.add(g.getStoneGrave(yard.yardPane));
                 }
+                yard.fog.restoreState(gameState.getFogState());
 
                 ZombieWaveManger zw=new ZombieWaveManger(yard);
                 ZombieWaveManger.gameTime=gameState.getGametime();
