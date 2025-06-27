@@ -26,7 +26,7 @@ public class GameServer {
                     out.flush();
                     clients.add(out);
                     sendInitialState(out);
-                    new Thread((Runnable) new RequestHandler (out)).start();
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();
