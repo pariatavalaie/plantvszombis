@@ -16,6 +16,7 @@ public class Sun {
     ImageView sunImage;
     private boolean collected ;
     static ArrayList<Sun> suns = new ArrayList<Sun>();
+     boolean isFalling = false;
     public Sun() {
         collected = false;
         Image sun = new Image(getClass().getResource("/sun.png").toExternalForm());
@@ -27,6 +28,7 @@ public class Sun {
     public void fallingSun(Pane root, double startX, double startY) {
         sunImage.setLayoutX(startX);
         sunImage.setLayoutY(0);
+        this.isFalling = true;
         root.getChildren().add(sunImage);
         TranslateTransition fall = new TranslateTransition(Duration.seconds(5), sunImage);
         fall.setFromY(startY);
@@ -65,8 +67,10 @@ public class Sun {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
             double randomX = 245 + Math.random() * (9 * 80); // روی زمین
             Sun sun = new Sun();
+            sun.isFalling = true;
             suns.add(sun);
-           sun.fallingSun (root, randomX, 0); // y = 400 یعنی تا پایین زمین
+           sun.fallingSun (root, randomX, 0);
+           GameServer.notifySunSpawn(sun.getState());// y = 400 یعنی تا پایین زمین
         }));
         timeline.setCycleCount(Timeline.INDEFINITE); // بی‌نهایت اجرا بشه
         timeline.play();
@@ -99,7 +103,7 @@ public class Sun {
         state.x = sunImage.getLayoutX();
         state.y = sunImage.getLayoutY();
         state.z=sunImage.getTranslateY();
-        state.isFalling = (sunImage.getTranslateY() > 0); // یا با فلگ جدا دقیق‌تر
+        state.isFalling = isFalling;
         return state;
     }
     public static Sun fromState(SunState state, Pane root) {

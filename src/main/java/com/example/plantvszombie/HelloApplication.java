@@ -19,6 +19,7 @@ public class HelloApplication extends Application {
     public Stage stage;
     public Menu menu = new Menu();
     SaveManger saveManger = new SaveManger();
+    boolean isMultiplayer = false;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -72,11 +73,14 @@ public class HelloApplication extends Application {
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
 
         serverBtn.setOnAction(e -> {
+            isMultiplayer = true;
+            menu2();
             dialog.close();
-            startMultiplayerGame(true);
+
         });
 
         clientBtn.setOnAction(e -> {
+            isMultiplayer = true;
             TextInputDialog ipDialog = new TextInputDialog("localhost");
             ipDialog.setTitle("Enter Server IP");
             ipDialog.setHeaderText("Join as Client");
@@ -97,23 +101,28 @@ public class HelloApplication extends Application {
     }
 
     private void startMultiplayerGame(boolean isServer, String host) {
-        Yard yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
-        pauseButton(yard);
-        if (menu.day) Sun.fall(yard.yardPane);
-        yard.updateButtons();
-
+        Yard yard;
         if (isServer) {
+            yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
+            pauseButton(yard);
+           // if (menu.day)
+            Sun.fall(yard.yardPane);
+            yard.updateButtons();
+
             GameServer.start(yard); // راه‌اندازی سرور
-            ZombieWaveManger zw = new ZombieWaveManger(yard); // فقط سرور مدیریت زامبی داره
+            ZombieWaveManger zw = new ZombieWaveManger(yard);
             zw.start();
+
         } else {
             try {
-                GameClient client = new GameClient(host, 54321,
-                        state -> Platform.runLater(() -> yard.applyStateFromNetwork(state)));
-                yard.client = client; // برای ارسال در صورت نیاز
+                GameClient client = new GameClient(host, 54321);
+                yard =client.clientYard;
+                yard.updateButtons();
             } catch (IOException e) {
                 showError("Cannot connect to server.");
                 return;
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -121,6 +130,7 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
 
     private void play() {
         Yard yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
@@ -148,7 +158,8 @@ public class HelloApplication extends Application {
         stage.setScene(menuScene);
 
         menu.Play.setOnAction(e -> {
-            if (menu.countPlant == 6) play();
+            if (menu.countPlant == 6&&!isMultiplayer) play();
+            if(isMultiplayer&&menu.countPlant == 6) startMultiplayerGame(true);
             else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText("You have to choose 6 plants");
