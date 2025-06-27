@@ -102,13 +102,12 @@ public class HelloApplication extends Application {
 
     private void startMultiplayerGame(boolean isServer, String host) {
         if (isServer) {
-            // 1. ساخت یارد (ولی نمایش نده هنوز)
+
             Yard yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
             pauseButton(yard);
             yard.updateButtons();
             GameServer.yard = yard;
 
-            // 2. صفحه‌ی لودینگ
             Label waitingLabel = new Label("Waiting for client to join...");
             waitingLabel.setStyle("-fx-font-size: 24px; -fx-text-fill: white;");
             StackPane loadingPane = new StackPane(waitingLabel);
@@ -116,9 +115,9 @@ public class HelloApplication extends Application {
             Scene loadingScene = new Scene(loadingPane, 1024, 626);
             stage.setScene(loadingScene);
 
-            // 3. راه‌اندازی سرور با callback اتصال کلاینت
+
             GameServer.start(yard, () -> {
-                // ✅ وقتی کلاینت وصل شد، برو داخل بازی
+
                 if (yard.day) Sun.fall(yard.yardPane);
                 ZombieWaveManger zw = new ZombieWaveManger(yard);
                 zw.start();
