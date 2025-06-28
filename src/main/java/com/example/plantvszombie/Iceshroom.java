@@ -36,6 +36,7 @@ public class Iceshroom extends Planet implements Act{
                 if (z.eating!=null) {
                     z.eating.pause();
                 }
+
                 ColorAdjust blueTint = new ColorAdjust();
                 blueTint.setHue(0.6);
                 blueTint.setSaturation(1.0);

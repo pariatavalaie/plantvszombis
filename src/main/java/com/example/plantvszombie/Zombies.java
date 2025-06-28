@@ -1,9 +1,6 @@
 package com.example.plantvszombie;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.scene.PointLight;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
@@ -47,7 +44,7 @@ public abstract class Zombies {
             }
 
 
-            move(root);
+            walker.playFromStart();
         });
 
         walker.play();
@@ -62,7 +59,7 @@ public abstract class Zombies {
         image.setScaleX(image.getScaleX() * -1); // برعکس شدن تصویر
 
         if (walker != null) {
-            walker.stop();
+            walker.pause();
         }
 
         move((Pane) image.getParent());
@@ -83,9 +80,18 @@ public abstract class Zombies {
                 Bullet b = it.next();
                 if (isAlive() && this.collidesWith(b,root)) {
                     hp--;
+                    ColorAdjust blueTint = new ColorAdjust();
+                    blueTint.setHue(-0.7);
+                    blueTint.setSaturation(1.0);
+                    blueTint.setBrightness(0.5);
+                    image.setEffect(blueTint);
+                    PauseTransition pa=new PauseTransition(Duration.seconds(0.1));
+                    pa.setOnFinished(e -> {image.setEffect(null);});
+                    pa.play();
                     System.out.println("Zombie HP: " + hp);
                     it.remove();
                 }
+
 
             }
         }}
@@ -114,7 +120,7 @@ public abstract class Zombies {
         for (Planet p : planets) {
             if (p.row==this.y && p.col==this.x) {
 
-                if (walker != null) walker.stop();
+                if (walker != null) walker.pause();
 
                 Image temp=image.getImage();
                 Timeline[] eatingRef = new Timeline[1];
@@ -162,8 +168,8 @@ public abstract class Zombies {
                 this.fighting = true;
                 other.fighting = true;
 
-                if (this.walker != null) this.walker.stop();
-                if (other.walker != null) other.walker.stop();
+                if (this.walker != null) this.walker.pause();
+                if (other.walker != null) other.walker.pause();
                 Timeline[] fightRef = new Timeline[1];
                 Timeline fight = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
                     if (!this.isAlive() || !other.isAlive()) {
