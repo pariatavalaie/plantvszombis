@@ -1,9 +1,14 @@
 package com.example.plantvszombie;
 
 import javafx.geometry.Insets;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
@@ -49,7 +54,10 @@ public class ButtonManager {
             Button btn = new Button();
             btn.setGraphic(createImageView(imagePath));
             btn.setStyle("-fx-background-color: #fff");
-            btn.setOnAction(e -> selected = name);
+            btn.setOnDragDetected(event -> {
+                dragAction(btn,name);
+                event.consume();
+            });
             buttons.put(name, btn);
             panel.getChildren().add(btn);
         }
@@ -60,7 +68,30 @@ public class ButtonManager {
         ImageView shovelView = createImageView("/Shovel.jpg");
         shovelButton.setGraphic(shovelView);
         shovelButton.setStyle("-fx-background-color: #fff");
-        shovelButton.setOnAction(e -> selected = "shovel");
+        shovelButton.setOnDragDetected(event -> {
+            dragAction(shovelButton,"shovel");
+            event.consume();
+        });
+    }
+    private void dragAction(Button btn,String name) {
+        Dragboard db = btn.startDragAndDrop(TransferMode.COPY);
+        ClipboardContent content = new ClipboardContent();
+        content.putString(name); // نام گیاه برای Drop
+        db.setContent(content);
+
+        String dragImagePath =getImagePathDrag(name);
+        Image dragImage = new Image(getClass().getResource(dragImagePath).toExternalForm());// مسیر عکس برای درگ
+        ImageView preview = new ImageView(dragImage);
+        preview.setFitWidth(60);  // عرض دلخواه
+        preview.setFitHeight(40); // ارتفاع دلخواه
+        preview.setPreserveRatio(true);
+        // حفظ نسبت تصویر
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+
+        WritableImage smallImage = preview.snapshot(params, null);
+
+        db.setDragView(smallImage, dragImage.getWidth() / 2, dragImage.getHeight() / 2);
     }
 
     public void addTo(Pane root) {
@@ -131,6 +162,30 @@ public class ButtonManager {
             default: return "/bean.png";
         }
     }
+    private String getImagePathDrag(String name) {
+        switch (name) {
+            case "Snow Pea": return "/SnowPea.gif";
+            case "Peashooter": return "/peashooter.gif";
+            case "Repeater": return "/repeater.gif";
+            case "Tall-nut": return "/TallNut1.gif";
+            case "Wall-nut": return "/walnut_full_life.gif";
+            case "Cherry Bomb": return "/newCherryBomb.gif";
+            case "jalapeno": return "/jalapeno.gif";
+            case "Sunflower": return "/sunflower.gif";
+            case "Hypno": return "/HypnoShroomSleep.gif";
+            case "Puff": return "/PuffShroom1 (10).gif";
+            case "Scaredy": return "/Scaredy-shroom.png";
+            case "Doom": return "/DoomShroom3.gif";
+            case "Ice": return "/IceShroom2.gif";
+            case "bean": return "/CoffeeBean2.gif";
+            case "plantern": return"/Animated_Plantern.gif";
+            case "blover": return "/75f44f529822720e5a77af436ccb0a46f31fabd6.gif";
+            case "Grave": return "/Transparent_grave_digger.gif";
+            case "shovel": return "/Shovel.jpg";
+            default: return "/bean.png";
+        }
+    }
+
 
 }
 

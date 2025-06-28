@@ -5,6 +5,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -49,7 +51,7 @@ public class Yard {
 
     public void PaintGrid(int x, int y) {
         gridPane = new GridPane();
-        final String[] selected = {""};
+
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 Rectangle rectangle = new Rectangle(GRID_X, GRID_Y);
@@ -59,56 +61,62 @@ public class Yard {
                 int row = i, col = j;
                 gridPane.add(rectangle, j, i);
 
-                rectangle.setOnMouseClicked(event -> {
-                    boolean empty = true;
-                    boolean bean = false;
-                    Planet planet1 = null;
 
-                    for (Planet planet : planets) {
-                        if (planet.row == row && planet.col == col) {
-                            if (!planet.dayplanet) bean = true;
-                            planet1 = planet;
-                            empty = false;
+                rectangle.setOnDragOver(event -> {
+                    if (event.getGestureSource() != rectangle && event.getDragboard().hasString()) {
+                        event.acceptTransferModes(TransferMode.COPY);
+                    }
+                    event.consume();
+                });
+
+                rectangle.setOnDragDropped(event -> {
+                    Dragboard db = event.getDragboard();
+                    boolean success = false;
+
+                    if (db.hasString()) {
+                        String sel = db.getString();
+
+                        boolean empty = true;
+                        boolean bean = false;
+                        Planet planet1 = null;
+
+                        for (Planet planet : planets) {
+                            if (planet.row == row && planet.col == col) {
+                                if (!planet.dayplanet) bean = true;
+                                planet1 = planet;
+                                empty = false;
+                            }
+                        }
+
+                        for (StoneGrave grave : graves) {
+                            if (grave.x == row && grave.y == col) {
+                                empty = false;
+                            }
+                        }
+
+                        String cellKey = row + "," + col;
+                        if (lockedCells.contains(cellKey)) return;
+
+                        if ("shovel".equals(sel)) {
+                            if (planet1 != null) {
+                                planet1.remove(yardPane);
+                                planets.remove(planet1);
+                            }
+                            success = true;
+                        } else if ("bean".equals(sel) && bean) {
+                            placeplanet("bean", col, row);
+                            success = true;
+                        } else if ("Grave".equals(sel) && findStoneGrave(col, row) != null) {
+                            placeplanet("Grave", col, row);
+                            success = true;
+                        } else if (empty && isPlaceable(sel)) {
+                            placeplanet(sel, col, row);
+                            success = true;
                         }
                     }
 
-                    for (StoneGrave grave : graves) {
-                        if (grave.x == row && grave.y == col) {
-                            empty = false;
-                        }
-                    }
-
-                    String cellKey = row + "," + col;
-                    if (lockedCells.contains(cellKey)) return;
-
-                    String sel =buttonManager.getSelected();
-                    buttonManager.clearSelected();
-
-                    if ("shovel".equals(sel)) {
-                        if (planet1 != null) {
-                            planet1.remove(yardPane);
-                            planets.remove(planet1);
-                        }
-                        selected[0] = null;
-                        return;
-                    }
-
-                    if ("bean".equals(sel) && bean) {
-                        placeplanet("bean", col, row);
-                        selected[0] = null;
-                        return;
-                    }
-
-                    if ("Grave".equals(sel) && findStoneGrave(col, row) != null) {
-                        placeplanet("Grave", col, row);
-                        selected[0] = null;
-                        return;
-                    }
-
-                    if (empty && isPlaceable(sel)) {
-                        placeplanet(sel, col, row);
-                        selected[0] = null;
-                    }
+                    event.setDropCompleted(success);
+                    event.consume();
                 });
             }
         }
@@ -118,6 +126,7 @@ public class Yard {
         if (!day) {
             PaintStone(yardPane, x, y);
         }
+
         startMovingAndDetecting();
 
         AnchorPane.setTopAnchor(gridPane, 60.0);
