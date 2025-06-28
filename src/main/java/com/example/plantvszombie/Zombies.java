@@ -29,13 +29,12 @@ public abstract class Zombies {
     boolean fighting=false;
     public int direction = -1;
     abstract void act(Pane root);
-    void move(Pane root){    double distance = 80; // فاصله‌ی یک سلول
-        double durationInSeconds = speed; // مدت زمان طی کردن یک خونه
+    void move(Pane root){    double distance = 80;
+        double durationInSeconds = speed;
 
-        // تنظیم تایم‌لاین حرکت بی‌وقفه (نه یکباره)
+
         walker = new TranslateTransition(Duration.seconds(durationInSeconds), image);
-        walker.setByX(direction * distance); // کم‌کم حرکت کنه
-
+        walker.setByX(direction * distance);
         walker.setOnFinished(e -> {
             x += direction;
 
