@@ -1,5 +1,4 @@
 package com.example.plantvszombie;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -33,7 +32,7 @@ public class HelloApplication extends Application {
         Pane pane = new Pane();
         pane.getChildren().addAll(yard, menu.Loadgame, menu.Exit, menu.StartGame);
 
-        // 🔹 دکمه جدید: Multiplayer
+        
         Button multiplayer = new Button("🌐 Multiplayer");
         multiplayer.setLayoutX(450);
         multiplayer.setLayoutY(450);

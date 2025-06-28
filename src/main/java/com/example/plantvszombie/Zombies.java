@@ -22,38 +22,40 @@ public abstract class Zombies {
     int speed;
     ImageView image;
     ImageView deadZombie;
-    Timeline walker=null;
+    TranslateTransition walker=null;
     Timeline eating=null;
     boolean inHouse=false;
     boolean isHypnotized=false;
     boolean fighting=false;
     public int direction = -1;
     abstract void act(Pane root);
-    void move(Pane root){
-        walker = new Timeline(new KeyFrame(Duration.seconds(speed), e -> {
-            if (x <= 0 && direction == -1 || x >= 8 && direction == 1 || hp <= 0) {
-                walker.stop();
+    void move(Pane root){    double distance = 80; // فاصله‌ی یک سلول
+        double durationInSeconds = speed; // مدت زمان طی کردن یک خونه
+
+        // تنظیم تایم‌لاین حرکت بی‌وقفه (نه یکباره)
+        walker = new TranslateTransition(Duration.seconds(durationInSeconds), image);
+        walker.setByX(direction * distance); // کم‌کم حرکت کنه
+
+        walker.setOnFinished(e -> {
+            x += direction;
+
+
+            if ((x < 0 && direction == -1) || (x >8 && direction == 1) || hp <= 0) {
                 root.getChildren().remove(image);
-                hp=0;
+                hp = 0;
                 System.out.println("Zombie reached the end!");
                 return;
             }
 
-            x += direction;
 
-            double newX = 245 + x * 80 + 5;
+            move(root);
+        });
 
-            TranslateTransition step = new TranslateTransition(Duration.seconds(0.5), image);
-            step.setToX(newX - image.getLayoutX());
-            step.play();
-
-            System.out.println("Zombie moving to col: " + x);
-        }));
-
-        walker.setCycleCount(Timeline.INDEFINITE);
         walker.play();
         AnimationManager.register(walker);
     }
+
+
     public void reverseDirection() {
         if(isHypnotized){
         direction *= -1;
