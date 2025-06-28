@@ -3,7 +3,6 @@ package com.example.plantvszombie;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -41,6 +40,12 @@ public class Jalapeno extends Planet implements Act {
         timeline.setCycleCount(1);
         timeline.play();
         AnimationManager.register(timeline);
+        Timeline timelineDelete = new Timeline(
+                new KeyFrame(Duration.seconds(2), e -> this.dead = true)
+        );
+        timelineDelete.setCycleCount(1);
+        timelineDelete.play();
+        AnimationManager.register(timelineDelete);
     }
 
     @Override

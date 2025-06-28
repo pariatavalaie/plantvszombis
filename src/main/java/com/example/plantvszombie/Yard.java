@@ -192,6 +192,13 @@ public class Yard {
             zombie.remove(yardPane, Zombies);
             zombie.checkAndEatPlant(planets, yardPane);
             zombie.checkAndEatZombie(Zombies, yardPane);
+
+            for (Planet planet : planets) {
+                if(planet.dead){
+                    planet.remove(yardPane);
+                }
+            }
+
         }}));
         s.setCycleCount(Timeline.INDEFINITE);
         s.play();
@@ -211,119 +218,89 @@ public class Yard {
         return null;
     }
 
-
     public void placeplanet(String planet,int col,int row){
         ImageView plantView = null;
         if (planet.equals("Sunflower")&&Sunflower.canplace){
-            Sunflower S=new Sunflower(col,row,yardPane);
+            Planet S=new Sunflower(col,row,yardPane);
             Sunflower.canplace=false;
-            buttonManager.getButton("Sunflower").setDisable(true); // غیرفعال کردن دکمه
-            buttonManager.getButton("Sunflower").setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
-            S.cooldown( buttonManager.getButton("Sunflower"),()->Sunflower.canplace=true,Sunflower.cost);
+            S.cooldown(buttonManager.getButton("Sunflower"),()->Sunflower.canplace=true,Sunflower.cost);
             planets.add(S);
             plantView=S.image;
-            S.act(yardPane);
+            ((specialAct)S).act(yardPane);
             Sun.collectedpoint-=Sunflower.cost;
         } else if(planet.equals("Peashooter")&&Peashooter.canplace){
-            Peashooter P=new Peashooter(col,row);
+            Planet P=new Peashooter(col,row);
             Peashooter.canplace=false;
-            buttonManager.getButton("Peashooter").setDisable(true); // غیرفعال کردن دکمه
-            buttonManager.getButton("Peashooter").setStyle("-fx-opacity: 0.4; -fx-background-color: gray;"); //
             planets.add(P);
-            P.cooldown( buttonManager.getButton("Peashooter"),()->Peashooter.canplace=true,Peashooter.cost);
+            P.cooldown(buttonManager.getButton("Peashooter"),()->Peashooter.canplace=true,Peashooter.cost);
             plantView=P.image;
-            P.act(yardPane,Zombies);
+            ((Act)P).act(yardPane,Zombies);
             Sun.collectedpoint-=Peashooter.cost;
         }else if(planet.equals("Repeater")&&Repeater.canplace){
             System.out.println("repeater");
-            Repeater R=new Repeater(col,row);
+            Planet R=new Repeater(col,row);
             Repeater.canplace=false;
-            buttonManager.getButton( "Repeater").setDisable(true);
-            buttonManager.getButton( "Repeater").setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             planets.add(R);
             R.cooldown(buttonManager.getButton( "Repeater"),()->Repeater.canplace=true,Repeater.cost);
             plantView=R.image;
-            R.act(yardPane,Zombies);
+            ((Act)R).act(yardPane,Zombies);
             Sun.collectedpoint-=Repeater.cost;
         }
         else if(planet.equals("Snow Pea")&&SnowPea.canplace){
-            SnowPea S=new SnowPea(col,row);
+            Planet S=new SnowPea(col,row);
             SnowPea.canplace=false;
-            buttonManager.getButton("Snow Pea").setDisable(true);
-            buttonManager.getButton("Snow Pea").setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             planets.add(S);
             plantView=S.image;
             S.cooldown(buttonManager.getButton("Snow Pea"),()->SnowPea.canplace=true,SnowPea.cost);
-            S.act(yardPane,Zombies);
+            ((Act)S).act(yardPane,Zombies);
             Sun.collectedpoint-=50;
         }else if(planet.equals("Cherry Bomb") && Cherry.canplace){
-            Cherry C=new Cherry(col,row);
+            Planet C =new Cherry(col,row);
             Cherry.canplace=false;
-            buttonManager.getButton("Cherry Bomb").setDisable(true);
-            buttonManager.getButton("Cherry Bomb").setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             planets.add(C);
             plantView=C.image;
             C.cooldown(buttonManager.getButton("Cherry Bomb"),()->Cherry.canplace=true,Cherry.cost);
-            C.act(yardPane,Zombies);
-                Timeline timeline = new Timeline(
-                        new KeyFrame(Duration.seconds(2), e -> removePlanet(C))
-                );
-            AnimationManager.register(timeline);
-            timeline.play();
-            Sun.collectedpoint-=Cherry.cost;
+            ((Act)C).act(yardPane, Zombies);
+           Sun.collectedpoint-=Cherry.cost;
         }else if(planet.equals("jalapeno") && Jalapeno.canplace) {
-            Jalapeno J = new Jalapeno(col, row);
+            Planet J = new Jalapeno(col, row);
             Jalapeno.canplace = false;
-            buttonManager.getButton("jalapeno").setDisable(true);
-            buttonManager.getButton("jalapeno").setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             planets.add(J);
             plantView = J.image;
             J.cooldown(buttonManager.getButton("jalapeno"),()->Jalapeno.canplace=true,Jalapeno.cost);
-            J.act(yardPane, Zombies);
-                Timeline timeline = new Timeline(
-                        new KeyFrame(Duration.seconds(2), e -> removePlanet(J))
-                );
-                timeline.play();
+            ((Act)J).act(yardPane, Zombies);
             Sun.collectedpoint -= Jalapeno.cost;
         }else if (planet.equals("Wall-nut")&&WallNut.canplace){
-                WallNut w=new WallNut(col,row);
+                Planet w=new WallNut(col,row);
                 WallNut.canplace=false;
-            buttonManager.getButton("Wall-nut").setDisable(true);
-            buttonManager.getButton("Wall-nut").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
                 planets.add(w);
                 plantView=w.image;
                 w.cooldown(buttonManager.getButton("Wall-nut"),()->WallNut.canplace=true,WallNut.cost);
                 Sun.collectedpoint-=WallNut.cost;
             }else if(planet.equals("Tall-nut")&&TallNut.canplace){
-                TallNut t=new TallNut(col,row);
+                Planet t=new TallNut(col,row);
                 TallNut.canplace=false;
-            buttonManager.getButton("Tall-nut").setDisable(true);
-            buttonManager.getButton("Tall-nut").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
                 planets.add(t);
                 plantView=t.image;
                 t.cooldown(buttonManager.getButton("Tall-nut"),()->TallNut.canplace=true,TallNut.cost);
                 Sun.collectedpoint-=TallNut.cost;
             }else if(planet.equals("Puff")&&Puff.canplace){
-            Puff P=new Puff(col,row);
+            Planet P=new Puff(col,row);
             Puff.canplace=false;
-            buttonManager.getButton("Puff").setDisable(true);
-            buttonManager.getButton("Puff").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(P);
             plantView=P.image;
             P.cooldown(buttonManager.getButton("Puff"),()->Puff.canplace=true,Puff.cost);
             if(!day){
-            P.act(yardPane, Zombies);}
+            ((Act)P).act(yardPane, Zombies);}
           }else if(planet.equals("Doom")&&Doomshroom.canplace){
-            Doomshroom C=new Doomshroom(col,row);
+            Planet C=new Doomshroom(col,row);
             Doomshroom.canplace=false;
-            buttonManager.getButton("Doom").setDisable(true);
-            buttonManager.getButton("Doom").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(C);
             plantView=C.eatimage;
-            C.cooldown( buttonManager.getButton("Doom"),()->Doomshroom.canplace=true,Doomshroom.cost);
+            C.cooldown(buttonManager.getButton("Doom"),()->Doomshroom.canplace=true,Doomshroom.cost);
             if(!day){
             plantView=C.image;
-            C.act(yardPane,Zombies);
+            ((Act)C).act(yardPane,Zombies);
             lockedCells.add(row + "," + col);
                 Timeline timeline = new Timeline(
                         new KeyFrame(Duration.seconds(2), e -> {
@@ -338,61 +315,53 @@ public class Yard {
             }
             Sun.collectedpoint-=Doomshroom.cost;
         }else if(planet.equals("Scaredy")&&Scaredy.canplace){
-            Scaredy C=new Scaredy(col,row);
+            Planet C=new Scaredy(col,row);
             Scaredy.canplace=false;
-            buttonManager.getButton("Scaredy").setDisable(true);
-            buttonManager.getButton("Scaredy").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(C);
             plantView=C.image;
             C.cooldown(buttonManager.getButton("Scaredy"),()->Scaredy.canplace=true,Scaredy.cost);
             if(!day){
-                C.act(yardPane,Zombies);}
+                ((Act)C).act(yardPane,Zombies);}
             Sun.collectedpoint-=Scaredy.cost;
         }else if(planet.equals("plantern")&&Plantern.canplace){
-            Plantern p=new Plantern(col,row,fog);
+            Planet p=new Plantern(col,row,fog);
             Plantern.canplace=false;
-            buttonManager.getButton("plantern").setDisable(true);
-            buttonManager.getButton("plantern").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(p);
             plantView=p.image;
             p.cooldown(buttonManager.getButton("plantern"),()->Plantern.canplace=true,Plantern.cost);
             if(!day){
-                p.act(yardPane);}
+            ((specialAct)p).act(yardPane);}
             Sun.collectedpoint-=Plantern.cost;
         } else if (planet.equals("blover")&&Blover.canplace) {
-            Blover b=new Blover(col,row,fog);
+            Planet b=new Blover(col,row,fog);
             Blover.canplace=false;
-            buttonManager.getButton("blover").setDisable(true);
-            buttonManager.getButton("blover").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(b);
             plantView=b.image;
             b.cooldown(buttonManager.getButton("blover"),()->Blover.canplace=true,Blover.cost);
             if(!day){
-            b.act(yardPane);}
+                ((specialAct)b).act(yardPane);}
             Sun.collectedpoint-=Blover.cost;
         } else if(planet.equals("bean")&&Bean.canplace) {
-            Bean b=new Bean(col,row);
+            Planet b=new Bean(col,row);
             Bean.canplace=false;
-            buttonManager.getButton("bean").setDisable(true);
-            buttonManager.getButton("bean").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(b);
             plantView=b.image;
             b.cooldown(buttonManager.getButton("bean"),()->Bean.canplace=true,Bean.cost);
             Planet x=findPlanet(col,row);
             if (x instanceof Act) {
-                ((Act)x).act(yardPane, Zombies); // فراخوانی act با زامبی‌ها
+                ((Act)x).act(yardPane, Zombies);
             }
             if (x instanceof specialAct) {
-                ((specialAct)x).act(yardPane); // فراخوانی act بدون زامبی‌ها
+                ((specialAct)x).act(yardPane);
             }
             if(x instanceof Doomshroom){
-                Planet cherry = findPlanet(x.col,x.row);
+                Planet Doom = findPlanet(x.col,x.row);
                 lockedCells.add(x.row + "," + x.col);
                 x.eatimage.setImage(x.image.getImage());
-                if (cherry != null) {
+                if (Doom != null) {
                     Timeline timeline = new Timeline(
                             new KeyFrame(Duration.seconds(1), e -> {
-                                removePlanet(cherry);
+                                removePlanet(Doom);
                                 Rectangle burned = new Rectangle(GRID_X, GRID_Y);
                                 burned.setFill(Color.DARKGRAY);
                                 burned.setOpacity(0.6);
@@ -400,7 +369,6 @@ public class Yard {
                             }));
 
                     timeline.play();}
-
             }
             if(x instanceof Iceshroom){if(x.dead==true){planets.remove(x);};x.eatimage.setImage(x.image.getImage());
             }
@@ -408,58 +376,46 @@ public class Yard {
                 ( (Hypnoshroom) x ).active=true;
                 x.eatimage.setImage(x.image.getImage());
             }
-
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
                 removePlanet(b);
             }));
             timeline.play();
             Sun.collectedpoint-=Bean.cost;
-
         }else if(planet.equals("Ice")&&Iceshroom.canplace) {
-            Iceshroom i=new Iceshroom(col,row);
+            Planet i=new Iceshroom(col,row);
             Iceshroom.canplace=false;
-            buttonManager.getButton("Ice").setDisable(true);
-            buttonManager.getButton("Ice").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(i);
             plantView=i.eatimage;
             System.out.println(Iceshroom.canplace);
             i.cooldown(buttonManager.getButton("Ice"),()->Iceshroom.canplace=true,Iceshroom.cost);
             if(!day){
-                i.act(yardPane,Zombies);
+                ((Act)i).act(yardPane,Zombies);
                 plantView=i.image;
                 if(i.dead==true){
                     planets.remove(i);
                 }
-
-
             }
             Sun.collectedpoint-=Iceshroom.cost;
-
-
         } else if (planet.equals("Hypno")&&Hypnoshroom.canplace) {
-            Hypnoshroom h=new Hypnoshroom(col,row);
+            Planet h=new Hypnoshroom(col,row);
             Hypnoshroom.canplace=false;
-            buttonManager.getButton("Hypno").setDisable(true);
-            buttonManager.getButton("Hypno").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             planets.add(h);
             h.cooldown(buttonManager.getButton("Hypno"),()->Hypnoshroom.canplace=true,Hypnoshroom.cost);
             plantView=h.eatimage;
             if(!day){
-                h.active=true;
+                ((Hypnoshroom)h).active=true;
                 plantView=h.image;
-                h.act(yardPane,Zombies);
+                ((Act)h).act(yardPane,Zombies);
             }
             Sun.collectedpoint-=Hypnoshroom.cost;
 
         }else if(planet.equals("Grave")&&GraveBuster.canplace) {
-            GraveBuster g=new GraveBuster(col,row);
+            Planet g=new GraveBuster(col,row);
             GraveBuster.canplace=false;
-            buttonManager.getButton("Grave").setDisable(true);
-            buttonManager.getButton("Grave").setStyle(("-fx-opacity: 0.4; -fx-background-color: gray;"));
             g.cooldown(buttonManager.getButton("Grave"),()->GraveBuster.canplace=true,GraveBuster.cost);
             StoneGrave s=findStoneGrave(col,row);
             s.remove(graves);
-            g.act(yardPane);
+            ((specialAct)g).act(yardPane);
             plantView=g.image;
             Sun.collectedpoint-=GraveBuster.cost;
         }
@@ -537,16 +493,11 @@ public class Yard {
 
             }
             buttonManager.update(canPlaceMap,costMap,Sun.collectedpoint);
-
-
-
         }));
 
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
-
-
 }
 
 

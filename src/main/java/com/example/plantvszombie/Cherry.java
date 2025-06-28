@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Cherry extends Planet implements Act {
     static boolean canplace = true;
     static int cost = 150;
+    ButtonManager buttonManager;
 
     public Cherry(int x, int y) {
         this.row = y;
@@ -27,6 +28,7 @@ public class Cherry extends Planet implements Act {
 
     @Override
     public void act(Pane root, ArrayList<Zombies> Zombies) {
+
         double gridX = 245.0;
         double gridY = 60.0;
         double cellWidth = 80.0;
@@ -56,9 +58,15 @@ public class Cherry extends Planet implements Act {
                 }
             } }));
         AnimationManager.register(timeline);
-
-         timeline.setCycleCount(1);
+        timeline.setCycleCount(1);
         timeline.play();
+
+        Timeline timelineDelete = new Timeline(
+                new KeyFrame(Duration.seconds(2), e -> this.dead = true)
+        );
+        AnimationManager.register(timelineDelete);
+        timelineDelete.setCycleCount(1);
+        timelineDelete.play();
     }
 
     @Override
