@@ -221,7 +221,7 @@ public class Yard {
     public void placeplanet(String planet,int col,int row){
         ImageView plantView = null;
         if (planet.equals("Sunflower")&&Sunflower.canplace){
-            Planet S=new Sunflower(col,row,yardPane);
+            Planet S= createPlanet("Sunflower",col,row);
             Sunflower.canplace=false;
             S.cooldown(buttonManager.getButton("Sunflower"),()->Sunflower.canplace=true,Sunflower.cost);
             planets.add(S);
@@ -435,6 +435,54 @@ public class Yard {
         plantView.setLayoutY(y);
 
         yardPane.getChildren().add(plantView);
+    }
+
+
+    public Planet createPlanet(String planetName, int col, int row) {
+        Planet newPlanet = null;
+        switch (planetName) {
+            case "Sunflower":
+                newPlanet = new Sunflower(col, row);
+                Sunflower.canplace=false;
+                return newPlanet;
+            case "Peashooter":
+                newPlanet = new Peashooter(col, row);
+                Peashooter.canplace=false;
+                return newPlanet;
+            case "Repeater":
+                return new Repeater(col, row);
+            case "Snow Pea":
+                return new SnowPea(col, row);
+            case "Cherry Bomb":
+                return new Cherry(col, row);
+            case "jalapeno":
+                return new Jalapeno(col, row);
+            case "Wall-nut":
+                return new WallNut(col, row);
+            case "Tall-nut":
+                return new TallNut(col, row);
+            case "Puff":
+                return new Puff(col, row);
+            case "Doom":
+                return new Doomshroom(col, row);
+            case "Scaredy":
+                return new Scaredy(col, row);
+            case "plantern":
+                return new Plantern(col, row, null);
+            case "blover":
+                return new Blover(col, row, null);
+            case "bean":
+                return new Bean(col, row);
+            case "Ice":
+                return new Iceshroom(col, row);
+            case "Hypno":
+                return new Hypnoshroom(col, row);
+            case "Grave":
+                return new GraveBuster(col, row);
+            default:
+                System.out.println("Unknown planet: " + planetName);
+                return null;
+        }
     }
 
     public void updateButtons() {
