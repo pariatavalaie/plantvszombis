@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class Cherry extends Planet implements Act {
     static boolean canplace = true;
     static int cost = 150;
-    ButtonManager buttonManager;
 
     public Cherry(int x, int y) {
         this.row = y;
