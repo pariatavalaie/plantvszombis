@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Sunflower extends Planet implements specialAct{
     static boolean canplace = true;
     static final int cost=50;
-    public Sunflower(int x, int y,Pane root) {
+    public Sunflower(int x, int y) {
         watingtime=5;
         row=y;
         health=4;

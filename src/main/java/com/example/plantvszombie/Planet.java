@@ -87,7 +87,6 @@ public abstract class Planet {
 
 
     public void cooldown(Button b, Runnable setCanPlaceTrue, int cost) {
-
         cooldown = new PauseTransition(Duration.seconds(this.watingtime));
         cooldown.setOnFinished(ev -> {
             if (cost <= Sun.collectedpoint) {
@@ -101,6 +100,8 @@ public abstract class Planet {
             setCanPlaceTrue.run();
         });
         cooldown.play();
+        b.setDisable(true);
+        b.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
     }
 }
  interface Act {
