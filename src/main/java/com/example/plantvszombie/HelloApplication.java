@@ -185,12 +185,15 @@ public class HelloApplication extends Application {
     }
 
     private void menu2() {
-        Image yar = new Image(getClass().getResource("/choose level.jpg").toExternalForm());
+        Image yar = new Image(getClass().getResource("/WhatsApp Image 2025-06-29 at 03.49.35.jpeg").toExternalForm());
         ImageView yard = new ImageView(yar);
         yard.setFitHeight(626);
         yard.setFitWidth(1024);
         Pane pane = new Pane(yard);
-        pane.getChildren().addAll(menu.Day, menu.Night, menu.Back);
+        HBox menuPane = new HBox(menu.Day,menu.Night);
+        menuPane.setLayoutX(300);
+        menuPane.setLayoutY(201);
+        pane.getChildren().addAll(menuPane ,menu.Back);
         Scene menuScene = new Scene(pane, 1024, 626);
         stage.setScene(menuScene);
 
