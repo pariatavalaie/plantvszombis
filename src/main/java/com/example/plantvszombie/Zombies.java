@@ -86,7 +86,7 @@ public abstract class Zombies {
                     blueTint.setBrightness(0.5);
                     image.setEffect(blueTint);
                     PauseTransition pa=new PauseTransition(Duration.seconds(0.1));
-                    pa.setOnFinished(e -> {image.setEffect(null);});
+                    pa.setOnFinished(e -> {if(!isHypnotized)image.setEffect(null);});
                     pa.play();
                     System.out.println("Zombie HP: " + hp);
                     it.remove();
