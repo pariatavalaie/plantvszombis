@@ -161,7 +161,7 @@ public abstract class Zombies {
             if (this.x==other.x && this.y==other.y) {
 
 
-                if (!(this.isHypnotized ^ other.isHypnotized)) return;
+                if (this.isHypnotized == other.isHypnotized) return;
 
                 if (this.fighting || other.fighting) return;
 

@@ -193,9 +193,7 @@ public class Yard {
     }
     public void startMovingAndDetecting() {
         Timeline s=new Timeline(new KeyFrame(Duration.seconds(1),event -> {
-
         ArrayList<Zombies> zombieCopy = new ArrayList<>(Zombies);
-
         for (Zombies zombie : zombieCopy) {
             zombie.damage(planets, yardPane);
             zombie.remove(yardPane, Zombies);
@@ -246,7 +244,6 @@ public class Yard {
             ((Act)P).act(yardPane,Zombies);
             Sun.collectedpoint-=Peashooter.cost;
         }else if(planet.equals("Repeater")&&Repeater.canplace){
-            System.out.println("repeater");
             Planet R=new Repeater(col,row);
             Repeater.canplace=false;
             planets.add(R);
@@ -379,7 +376,7 @@ public class Yard {
 
                     timeline.play();}
             }
-            if(x instanceof Iceshroom){if(x.dead==true){planets.remove(x);};x.eatimage.setImage(x.image.getImage());
+            if(x instanceof Iceshroom){if(x.dead){planets.remove(x);};x.eatimage.setImage(x.image.getImage());
             }
             if(x instanceof Hypnoshroom){
                 ( (Hypnoshroom) x ).active=true;
@@ -436,10 +433,8 @@ public class Yard {
 
         double gridX = 245.0; // Left anchor of grid
         double gridY = 60.0;  // Top anchor of grid
-
         double x = gridX + col * GRID_X + (GRID_X - 70) / 2;
         double y = gridY + row * GRID_Y + (GRID_Y - 90) / 2;
-
         plantView.setLayoutX(x);
         plantView.setLayoutY(y);
 

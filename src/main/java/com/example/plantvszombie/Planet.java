@@ -23,17 +23,12 @@ public abstract class Planet {
     PauseTransition cooldown;
     Boolean dayplanet;
 
-    //abstract void act(Pane root, ArrayList<Zombies> Zombies);
-
-    //abstract void act(Pane root);
 
     public void remove(Pane root) {
         root.getChildren().remove(image);
         root.getChildren().remove(eatimage);
         dead = true;
     }
-
-    ;
 
     abstract String gettype();
 
@@ -67,22 +62,7 @@ public abstract class Planet {
     }
 
     static void on() {
-        Peashooter.canplace = true;
-        Repeater.canplace = true;
-        Scaredy.canplace = true;
-        Sunflower.canplace = true;
-        SnowPea.canplace = true;
-        GraveBuster.canplace = true;
-        Puff.canplace = true;
-        Plantern.canplace = true;
-        Blover.canplace = true;
-        TallNut.canplace = true;
-        WallNut.canplace = true;
-        Jalapeno.canplace = true;
-        Cherry.canplace = true;
-        Iceshroom.canplace = true;
-        Doomshroom.canplace = true;
-        Bean.canplace = true;
+        Peashooter.canplace = true;Repeater.canplace = true;Scaredy.canplace = true;Sunflower.canplace = true;SnowPea.canplace = true;GraveBuster.canplace = true;Puff.canplace = true;Plantern.canplace = true;Blover.canplace = true;TallNut.canplace = true;WallNut.canplace = true;Jalapeno.canplace = true;Cherry.canplace = true;Iceshroom.canplace = true;Doomshroom.canplace = true;Bean.canplace = true;
     }
 
 
