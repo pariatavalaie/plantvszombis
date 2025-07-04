@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class SnowPea extends Planet implements Act{
     static boolean canplace = true;
-    static final int cost=175;
+    static final int cost=50;
     public SnowPea(int x , int y) {
         this.row = y;
         this.col = x;

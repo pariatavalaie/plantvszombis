@@ -227,80 +227,70 @@ public class Yard {
 
     public void placeplanet(String planet,int col,int row){
         ImageView plantView = null;
-        if (planet.equals("Sunflower")&&Sunflower.canplace){
+        if (planet.equals("Sunflower") && Sunflower.canplace){
             Planet S= createPlanet("Sunflower",col,row);
-            Sunflower.canplace=false;
             S.cooldown(buttonManager.getButton("Sunflower"),()->Sunflower.canplace=true,Sunflower.cost);
             planets.add(S);
-            plantView=S.image;
+            plantView = S.image;
             ((specialAct)S).act(yardPane);
             Sun.collectedpoint-=Sunflower.cost;
-        } else if(planet.equals("Peashooter")&&Peashooter.canplace){
-            Planet P=new Peashooter(col,row);
-            Peashooter.canplace=false;
+        } else if(planet.equals("Peashooter") && Peashooter.canplace){
+            Planet P = createPlanet("Peashooter",col,row);
             planets.add(P);
             P.cooldown(buttonManager.getButton("Peashooter"),()->Peashooter.canplace=true,Peashooter.cost);
-            plantView=P.image;
+            plantView = P.image;
             ((Act)P).act(yardPane,Zombies);
             Sun.collectedpoint-=Peashooter.cost;
-        }else if(planet.equals("Repeater")&&Repeater.canplace){
-            Planet R=new Repeater(col,row);
-            Repeater.canplace=false;
+        }else if(planet.equals("Repeater") && Repeater.canplace){
+            Planet R = createPlanet("Repeater",col,row);
             planets.add(R);
             R.cooldown(buttonManager.getButton( "Repeater"),()->Repeater.canplace=true,Repeater.cost);
             plantView=R.image;
             ((Act)R).act(yardPane,Zombies);
             Sun.collectedpoint-=Repeater.cost;
         }
-        else if(planet.equals("Snow Pea")&&SnowPea.canplace){
-            Planet S=new SnowPea(col,row);
-            SnowPea.canplace=false;
+        else if(planet.equals("Snow Pea") && SnowPea.canplace){
+            Planet S = createPlanet("Snow Pea",col,row);
             planets.add(S);
             plantView=S.image;
             S.cooldown(buttonManager.getButton("Snow Pea"),()->SnowPea.canplace=true,SnowPea.cost);
             ((Act)S).act(yardPane,Zombies);
             Sun.collectedpoint-=50;
         }else if(planet.equals("Cherry Bomb") && Cherry.canplace){
-            Planet C =new Cherry(col,row);
-            Cherry.canplace=false;
+            Planet C = createPlanet("Cherry Bomb",col,row);
             planets.add(C);
             plantView=C.image;
             C.cooldown(buttonManager.getButton("Cherry Bomb"),()->Cherry.canplace=true,Cherry.cost);
             ((Act)C).act(yardPane, Zombies);
            Sun.collectedpoint-=Cherry.cost;
         }else if(planet.equals("jalapeno") && Jalapeno.canplace) {
-            Planet J = new Jalapeno(col, row);
-            Jalapeno.canplace = false;
+            Planet J = createPlanet("jalapeno",col,row);
             planets.add(J);
             plantView = J.image;
             J.cooldown(buttonManager.getButton("jalapeno"),()->Jalapeno.canplace=true,Jalapeno.cost);
             ((Act)J).act(yardPane, Zombies);
             Sun.collectedpoint -= Jalapeno.cost;
-        }else if (planet.equals("Wall-nut")&&WallNut.canplace){
-                Planet w=new WallNut(col,row);
-                WallNut.canplace=false;
+        }else if (planet.equals("Wall-nut") && WallNut.canplace){
+                Planet w = createPlanet("Wall-nut",col,row);
                 planets.add(w);
                 plantView=w.image;
                 w.cooldown(buttonManager.getButton("Wall-nut"),()->WallNut.canplace=true,WallNut.cost);
                 Sun.collectedpoint-=WallNut.cost;
-            }else if(planet.equals("Tall-nut")&&TallNut.canplace){
-                Planet t=new TallNut(col,row);
-                TallNut.canplace=false;
+            }else if(planet.equals("Tall-nut") && TallNut.canplace){
+                Planet t = createPlanet("Tall-nut",col,row);
                 planets.add(t);
                 plantView=t.image;
                 t.cooldown(buttonManager.getButton("Tall-nut"),()->TallNut.canplace=true,TallNut.cost);
                 Sun.collectedpoint-=TallNut.cost;
-            }else if(planet.equals("Puff")&&Puff.canplace){
-            Planet P=new Puff(col,row);
-            Puff.canplace=false;
+            }else if(planet.equals("Puff") && Puff.canplace){
+            Planet P = createPlanet("Puff",col,row);
             planets.add(P);
             plantView=P.image;
             P.cooldown(buttonManager.getButton("Puff"),()->Puff.canplace=true,Puff.cost);
             if(!day){
             ((Act)P).act(yardPane, Zombies);}
-          }else if(planet.equals("Doom")&&Doomshroom.canplace){
-            Planet C=new Doomshroom(col,row);
-            Doomshroom.canplace=false;
+          }else if(planet.equals("Doom") && Doomshroom.canplace){
+            Planet C = createPlanet("Doomshroom",col,row);
             planets.add(C);
             plantView=C.eatimage;
             C.cooldown(buttonManager.getButton("Doom"),()->Doomshroom.canplace=true,Doomshroom.cost);
@@ -320,36 +310,32 @@ public class Yard {
                 timeline.play();
             }
             Sun.collectedpoint-=Doomshroom.cost;
-        }else if(planet.equals("Scaredy")&&Scaredy.canplace){
-            Planet C=new Scaredy(col,row);
-            Scaredy.canplace=false;
+        }else if(planet.equals("Scaredy") && Scaredy.canplace){
+            Planet C = createPlanet("Scaredy",col,row);
             planets.add(C);
             plantView=C.image;
             C.cooldown(buttonManager.getButton("Scaredy"),()->Scaredy.canplace=true,Scaredy.cost);
             if(!day){
                 ((Act)C).act(yardPane,Zombies);}
             Sun.collectedpoint-=Scaredy.cost;
-        }else if(planet.equals("plantern")&&Plantern.canplace){
-            Planet p=new Plantern(col,row,fog);
-            Plantern.canplace=false;
+        }else if(planet.equals("plantern") && Plantern.canplace){
+            Planet p = createPlanet("plantern",col,row);
             planets.add(p);
             plantView=p.image;
             p.cooldown(buttonManager.getButton("plantern"),()->Plantern.canplace=true,Plantern.cost);
             if(!day){
             ((specialAct)p).act(yardPane);}
             Sun.collectedpoint-=Plantern.cost;
-        } else if (planet.equals("blover")&&Blover.canplace) {
-            Planet b=new Blover(col,row,fog);
-            Blover.canplace=false;
+        } else if (planet.equals("blover") && Blover.canplace) {
+            Planet b = createPlanet("blover",col,row);
             planets.add(b);
             plantView=b.image;
             b.cooldown(buttonManager.getButton("blover"),()->Blover.canplace=true,Blover.cost);
             if(!day){
                 ((specialAct)b).act(yardPane);}
             Sun.collectedpoint-=Blover.cost;
-        } else if(planet.equals("bean")&&Bean.canplace) {
-            Planet b=new Bean(col,row);
-            Bean.canplace=false;
+        } else if(planet.equals("bean") && Bean.canplace) {
+            Planet b = createPlanet("bean",col,row);
             planets.add(b);
             plantView=b.image;
             b.cooldown(buttonManager.getButton("bean"),()->Bean.canplace=true,Bean.cost);
@@ -387,9 +373,8 @@ public class Yard {
             }));
             timeline.play();
             Sun.collectedpoint-=Bean.cost;
-        }else if(planet.equals("Ice")&&Iceshroom.canplace) {
-            Planet i=new Iceshroom(col,row);
-            Iceshroom.canplace=false;
+        }else if(planet.equals("Ice") && Iceshroom.canplace) {
+            Planet i = createPlanet("Ice",col,row);
             planets.add(i);
             plantView=i.eatimage;
             System.out.println(Iceshroom.canplace);
@@ -402,9 +387,8 @@ public class Yard {
                 }
             }
             Sun.collectedpoint-=Iceshroom.cost;
-        } else if (planet.equals("Hypno")&&Hypnoshroom.canplace) {
-            Planet h=new Hypnoshroom(col,row);
-            Hypnoshroom.canplace=false;
+        } else if (planet.equals("Hypno") && Hypnoshroom.canplace) {
+            Planet h = createPlanet("Hypno",col,row);
             planets.add(h);
             h.cooldown(buttonManager.getButton("Hypno"),()->Hypnoshroom.canplace=true,Hypnoshroom.cost);
             plantView=h.eatimage;
@@ -415,8 +399,8 @@ public class Yard {
             }
             Sun.collectedpoint-=Hypnoshroom.cost;
 
-        }else if(planet.equals("Grave")&&GraveBuster.canplace) {
-            Planet g=new GraveBuster(col,row);
+        }else if(planet.equals("Grave") && GraveBuster.canplace) {
+            Planet g = createPlanet("Grave",col,row);
             GraveBuster.canplace=false;
             g.cooldown(buttonManager.getButton("Grave"),()->GraveBuster.canplace=true,GraveBuster.cost);
             StoneGrave s=findStoneGrave(col,row);
@@ -454,35 +438,65 @@ public class Yard {
                 Peashooter.canplace=false;
                 return newPlanet;
             case "Repeater":
-                return new Repeater(col, row);
+                newPlanet = new Repeater(col, row);
+                Repeater.canplace=false;
+                return newPlanet;
             case "Snow Pea":
-                return new SnowPea(col, row);
+                newPlanet = new SnowPea(col, row);
+                SnowPea.canplace=false;
+                return newPlanet;
             case "Cherry Bomb":
-                return new Cherry(col, row);
+                newPlanet = new Cherry(col, row);
+                Cherry.canplace=false;
+                return newPlanet;
             case "jalapeno":
-                return new Jalapeno(col, row);
+                newPlanet = new Jalapeno(col, row);
+                Jalapeno.canplace=false;
+                return newPlanet;
             case "Wall-nut":
-                return new WallNut(col, row);
+                newPlanet = new WallNut(col, row);
+                WallNut.canplace=false;
+                return newPlanet;
             case "Tall-nut":
-                return new TallNut(col, row);
+                newPlanet = new TallNut(col, row);
+                TallNut.canplace=false;
+                return newPlanet;
             case "Puff":
-                return new Puff(col, row);
+                newPlanet = new Puff(col, row);
+                Puff.canplace=false;
+                return newPlanet;
             case "Doom":
-                return new Doomshroom(col, row);
+                newPlanet = new Doomshroom(col, row);
+                Doomshroom.canplace=false;
+                return newPlanet;
             case "Scaredy":
-                return new Scaredy(col, row);
+                newPlanet = new Scaredy(col, row);
+                Scaredy.canplace=false;
+                return newPlanet;
             case "plantern":
-                return new Plantern(col, row, null);
+                newPlanet = new Plantern(col, row,fog);
+                Plantern.canplace=false;
+                return newPlanet;
             case "blover":
-                return new Blover(col, row, null);
+                newPlanet = new Blover(col, row,null);
+                Blover.canplace=false;
+                return newPlanet;
             case "bean":
-                return new Bean(col, row);
+                newPlanet = new Bean(col, row);
+                Bean.canplace=false;
+                return newPlanet;
             case "Ice":
-                return new Iceshroom(col, row);
+                newPlanet = new Iceshroom(col, row);
+                Iceshroom.canplace=false;
+                return newPlanet;
             case "Hypno":
-                return new Hypnoshroom(col, row);
+                newPlanet = new Hypnoshroom(col, row);
+                Hypnoshroom.canplace=false;
+                return newPlanet;
             case "Grave":
-                return new GraveBuster(col, row);
+                newPlanet = new GraveBuster(col, row);
+                GraveBuster.canplace=false;
+                return newPlanet;
             default:
                 System.out.println("Unknown planet: " + planetName);
                 return null;
