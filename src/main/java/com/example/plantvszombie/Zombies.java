@@ -75,7 +75,8 @@ public abstract class Zombies {
 
     public void damage  (ArrayList<Planet> planets,Pane root) {
         for (Planet p : planets) {
-            Iterator<Bullet> it = p.getBullets().iterator();
+            if(p instanceof Shooter){
+            Iterator<Bullet> it =((Shooter)p).bullets.iterator();
             while (it.hasNext()) {
                 Bullet b = it.next();
                 if (isAlive() && this.collidesWith(b,root)) {
@@ -94,7 +95,7 @@ public abstract class Zombies {
 
 
             }
-        }}
+        }}}
     public void remove(Pane root,ArrayList<Zombies>zombies) {
         if(!isAlive()) {
             root.getChildren().remove(image);

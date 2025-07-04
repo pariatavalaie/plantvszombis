@@ -58,7 +58,6 @@ public class Hypnoshroom extends Planet implements Act{
                 baseState.type,
                 baseState.health,
                 baseState.dead,
-                baseState.bulletStates,
                 baseState.remainingCooldown,
                 scaredValue
         );

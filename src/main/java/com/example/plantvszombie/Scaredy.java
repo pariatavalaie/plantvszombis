@@ -75,13 +75,13 @@ public class Scaredy extends Shooter implements Act{
         PlanetState baseState = super.getState();
         boolean scaredValue = this.scared;
 
-        return new OtherPlanetState(
+        return new scardyState(
                 baseState.col,
                 baseState.row,
                 baseState.type,
                 baseState.health,
                 baseState.dead,
-                baseState.bulletStates,
+                ((ShooterState)baseState).bulletStates,
                 baseState.remainingCooldown,
                 scaredValue
         );
@@ -90,6 +90,6 @@ public class Scaredy extends Shooter implements Act{
     @Override
     public void loadpplanet(PlanetState planetState, Pane root) {
         super.loadpplanet(planetState, root);
-        this.scared=((OtherPlanetState)planetState).isOther();
+        this.scared=((scardyState)planetState).scardy;
     }
 }

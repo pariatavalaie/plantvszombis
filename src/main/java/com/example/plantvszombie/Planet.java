@@ -33,20 +33,11 @@ public abstract class Planet {
         if (cooldown != null) {
             remaining = cooldown.getCurrentTime().toSeconds();
         }
-        ArrayList<BulletState> bulletStates = new ArrayList<>();
-        for (Bullet b : getBullets()) {
-            bulletStates.add(new BulletState(b.x, b.y, b.speed, b.type, b.imageBullet.getTranslateX() + b.imageBullet.getLayoutX(), b.imageBullet.getTranslateY() + b.imageBullet.getLayoutY(), b.xzombie, b.hit));
-        }
-        return new PlanetState(col, row, gettype(), health, dead, bulletStates, remaining);
+        return new PlanetState(col, row, gettype(), health, dead, remaining);
     }
 
     public void loadpplanet(PlanetState planetState, Pane root) {
         this.dead = planetState.dead;
-        for (BulletState bullet : planetState.bulletStates) {
-            Bullet bullet1 = new Bullet(bullet.x, bullet.y, bullet.getSpeed(), bullet.getType());
-            bullet1.shoot(root, bullet.getTranslateX(), bullet.getXzombie(), bullet.getTranslateY());
-            ((Shooter)this).bullets.add(bullet1);
-        }
         if (planetState.remainingCooldown != 0) {
             if (cooldown == null) {
                 cooldown = new PauseTransition(Duration.seconds(watingtime));
@@ -80,9 +71,6 @@ public abstract class Planet {
         b.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
     }
 
-    public ArrayList<Bullet> getBullets() {
-        return ((Shooter)this).bullets; // cast to shooter
-    }
 }
  interface Act {
     void act(Pane root, ArrayList<Zombies> Zombies);
