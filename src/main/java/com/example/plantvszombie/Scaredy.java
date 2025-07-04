@@ -12,7 +12,7 @@ import javafx.util.Duration;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class Scaredy extends Planet implements Act{
+public class Scaredy extends Shooter implements Act{
     static boolean canplace=true;
     static final int cost=25;
     public boolean scared;

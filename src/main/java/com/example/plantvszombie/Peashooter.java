@@ -12,7 +12,7 @@ import javafx.util.Duration;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class Peashooter extends Planet implements Act{
+public class Peashooter extends Shooter implements Act{
     static boolean canplace = true;
     static final int cost=100;
     public Peashooter(int x, int y) {
@@ -21,7 +21,7 @@ public class Peashooter extends Planet implements Act{
         this.watingtime = 6;
         this.health=4;
         this.dayplanet=true;
-        bullets = new ArrayList<Bullet>();
+        bullets = new ArrayList<>();
         this.image = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
         this.eatimage = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
     }

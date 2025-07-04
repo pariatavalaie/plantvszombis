@@ -20,7 +20,6 @@ public class Bean extends Planet{
         this.dayplanet=true;
         this.image = new ImageView(new Image(getClass().getResource("/CoffeeBean2.gif").toExternalForm()));
         this.eatimage=new ImageView(new Image(getClass().getResource("/CoffeeBean2.gif").toExternalForm()));
-        bullets = new ArrayList<Bullet>();
     }
 
     @Override

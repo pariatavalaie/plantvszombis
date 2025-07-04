@@ -21,7 +21,6 @@ public class Cherry extends Planet implements Act {
         this.dayplanet=true;
         this.image = new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm()));
         this.eatimage=new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm()));
-        bullets = new ArrayList<Bullet>();
     }
 
 

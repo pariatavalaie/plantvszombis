@@ -21,7 +21,6 @@ public class Iceshroom extends Planet implements Act{
         this.health = 4;
         this.watingtime =5;
         this.dayplanet=false;
-        bullets = new ArrayList<Bullet>();
         image=new ImageView(new Image(getClass().getResource("/IceShroom1.gif").toExternalForm()));
         eatimage=new ImageView(new Image(getClass().getResource("/IceShroom2.gif").toExternalForm()));
     }

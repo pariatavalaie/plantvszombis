@@ -11,7 +11,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Puff extends Planet implements Act{
+public class Puff extends Shooter implements Act{
     static boolean canplace = true;
     static final int cost=0;
     public Puff(int x , int y) {

@@ -24,7 +24,6 @@ public class Hypnoshroom extends Planet implements Act{
         this.health=3;
         this.image = new ImageView( new Image(getClass().getResource("/Animated_HypnoShroom.gif").toExternalForm()));
         this.eatimage=new ImageView( new Image(getClass().getResource("/HypnoShroomSleep.gif").toExternalForm()));
-        bullets = new ArrayList<>();
     }
 
     @Override

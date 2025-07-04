@@ -21,7 +21,6 @@ public class Jalapeno extends Planet implements Act {
         this.dayplanet=true;
         this.image = new ImageView( new Image(getClass().getResource("/jalapeno.gif").toExternalForm()));
         this.eatimage=new ImageView( new Image(getClass().getResource("/jalapeno.gif").toExternalForm()));
-        bullets = new ArrayList<Bullet>();
     }
     @Override
     public void act(Pane pene , ArrayList<Zombies> Zombies){

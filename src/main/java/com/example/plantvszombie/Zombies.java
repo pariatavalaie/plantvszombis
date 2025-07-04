@@ -75,7 +75,7 @@ public abstract class Zombies {
 
     public void damage  (ArrayList<Planet> planets,Pane root) {
         for (Planet p : planets) {
-            Iterator<Bullet> it = p.bullets.iterator();
+            Iterator<Bullet> it = p.getBullets().iterator();
             while (it.hasNext()) {
                 Bullet b = it.next();
                 if (isAlive() && this.collidesWith(b,root)) {

@@ -22,7 +22,6 @@ public class GraveBuster extends Planet implements specialAct{
         this.health=4;
         this.image = new ImageView( new Image(getClass().getResource("/Transparent_grave_digger.gif").toExternalForm()));
         this.eatimage=new ImageView( new Image(getClass().getResource("/Transparent_grave_digger.gif").toExternalForm()));
-        bullets = new ArrayList<>();
     }
     @Override
     public void act(Pane root) {

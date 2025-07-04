@@ -8,7 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import java.util.ArrayList;
 
-public class Repeater extends Planet implements Act{
+public class Repeater extends Shooter implements Act{
     static boolean canplace = true;
     static final int cost=200;
     public Repeater(int x, int y) {

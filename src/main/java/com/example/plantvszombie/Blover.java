@@ -22,7 +22,6 @@ public class Blover extends Planet implements specialAct{
         this.watingtime = 3;
         this.dayplanet=false;
         this.health = 4;
-        bullets = new ArrayList<>();
         this.image = new ImageView(new Image(getClass().getResource("/75f44f529822720e5a77af436ccb0a46f31fabd6.gif").toExternalForm()));
         this.eatimage = new ImageView(new Image(getClass().getResource("/75f44f529822720e5a77af436ccb0a46f31fabd6.gif").toExternalForm()));
     }
