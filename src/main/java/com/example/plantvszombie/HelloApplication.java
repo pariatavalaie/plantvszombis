@@ -19,10 +19,13 @@ public class HelloApplication extends Application {
     public Menu menu = new Menu();
     SaveManger saveManger = new SaveManger();
     boolean isMultiplayer = false;
+    private static Stage primaryStage;
+
 
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
+        this.primaryStage = stage; // تنظیم Stage اصلی
         stage.setTitle("Plant Vs Zombie");
         stage.setResizable(false);
         Image image = new Image(getClass().getResource("/firstpage.png").toExternalForm());
@@ -55,6 +58,27 @@ public class HelloApplication extends Application {
         });
 
         multiplayer.setOnAction(e -> showMultiplayerMenu());
+    }
+    public static void showGameResult(boolean isWin) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Game Over");
+            alert.setHeaderText(null);
+
+            if (isWin) {
+                alert.setContentText("🎉 You Win!");
+                AnimationManager.pauseAll();
+            } else {
+                alert.setContentText("☠️ You Lose!");
+                AnimationManager.pauseAll();
+            }
+            alert.showAndWait();
+            getPrimaryStage().close();
+        });
+    }
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     private void showMultiplayerMenu() {

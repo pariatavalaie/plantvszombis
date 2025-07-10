@@ -3,6 +3,7 @@ package com.example.plantvszombie;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.util.Duration;
 
 import java.util.Random;
@@ -25,11 +26,11 @@ public class ZombieWaveManger {
             if(!win){
             lose = true;}
         });
-        maintimeline.setCycleCount(480);
+        maintimeline.setCycleCount(10);
     }
 
     public void start() {
-       yard.fog.enterSlowly();
+       //yard.fog.enterSlowly();
         maintimeline.play();
         AnimationManager.register(maintimeline);
     }
@@ -39,7 +40,7 @@ public class ZombieWaveManger {
 
 
         // اجرای امواج مختلف
-        if (gameTime <= 120) waveStage1();
+        if (gameTime <= 5) waveStage1();
         //else if (gameTime <= 240) waveStage2();
         // else if (gameTime <= 65) waveStage3();
         // else if (gameTime <= 100) waveStage4();
@@ -48,7 +49,21 @@ public class ZombieWaveManger {
         //if (gameTime >= 26 && gameTime <= 33) halfAttack(); // حمله نیمه بازی
         //if (gameTime >= 47 && gameTime <= 60) finalAttack(); // حمله پایانی
        yard.fog.bringFogToFront(yard.yardPane);
-
+        for (Zombies z : yard.Zombies) {
+            if (z.inHouse) {
+                lose = true;
+                maintimeline.stop();
+                System.out.println("Zombie entered the house! You lose.");
+                Platform.runLater(() -> yard.triggerGameEnd(false));
+                break;
+            }
+        }
+        if (gameTime >= 10 && !lose) {
+            win = true;
+            maintimeline.stop();
+            System.out.println("Time's up! You win.");
+            Platform.runLater(() -> yard.triggerGameEnd(true));
+        }
     }
 
     private void waveStage1() {
@@ -128,14 +143,4 @@ public class ZombieWaveManger {
             }
         }
     }
-    private void endgame(){
-        for (Zombies zombie: yard.Zombies) {
-            if(zombie.inHouse&&!win){
-            lose = true;}
-        }
-
-    }
-
-
-
 }

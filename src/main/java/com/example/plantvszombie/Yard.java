@@ -564,6 +564,13 @@ public class Yard {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
+    public void triggerGameEnd(boolean isWin) {
+        if (isWin) {
+            HelloApplication.showGameResult(true);
+        } else {
+            HelloApplication.showGameResult(false);
+        }
+    }
 }
 
 
