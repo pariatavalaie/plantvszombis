@@ -28,6 +28,7 @@ public class Yard {
     boolean day;
     private Set<String> lockedCells = new HashSet<>(); // مثل "3,5"
     ButtonManager buttonManager;
+    boolean isServer;
     Yard(List<String> selected,boolean day) {
         Image yar;
         if(day){
@@ -46,6 +47,7 @@ public class Yard {
         System.out.println(selected);
         buttonManager.addTo(yardPane);
         PaintGrid(9, 5);
+        isServer=false;
 
     }
 
@@ -132,8 +134,6 @@ public class Yard {
         AnchorPane.setTopAnchor(gridPane, 60.0);
         AnchorPane.setLeftAnchor(gridPane, 245.0);
     }
-
-
 
     private boolean isPlaceable(String sel) {
         return Arrays.asList(
@@ -413,7 +413,6 @@ public class Yard {
 
         plantView.setFitWidth(70);
         plantView.setFitHeight(70);
-
 
         double gridX = 245.0; // Left anchor of grid
         double gridY = 60.0;  // Top anchor of grid

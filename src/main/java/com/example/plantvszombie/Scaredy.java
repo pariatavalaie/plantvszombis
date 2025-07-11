@@ -31,7 +31,6 @@ public class Scaredy extends Shooter implements Act{
     public void act(Pane root , ArrayList<Zombies> zombies) {
         double gridX = 245.0; // Left anchor of grid
         double gridY = 60.0;  // Top anchor of grid
-
         double cellWidth = 80.0;
         double cellHeight = 100.0;
         double x = gridX + col * 80 + (80 - 70) / 2;

@@ -6,7 +6,7 @@ import java.util.*;
 
 public class GameServer {
     public static final int PORT = 54321;
-    public static Yard yard; // فقط در سرور
+    public static Yard yard;
     public static List<ObjectOutputStream> clients = new ArrayList<>();
 
     public static void start(Yard hostYard, Runnable onClientConnected) {

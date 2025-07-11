@@ -8,12 +8,11 @@ import javafx.application.Platform;
 
 public class GameClient {
     private ObjectOutputStream out;
-     Yard clientYard; // یارد اختصاصی کلاینت
+     Yard clientYard;
 
     public GameClient(String host, int port) throws IOException, ClassNotFoundException {
         Socket socket = new Socket(host, port);
 
-        // ترتیب درست ساخت استریم‌ها:
         out = new ObjectOutputStream(socket.getOutputStream());
         out.flush();
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -36,9 +35,6 @@ public class GameClient {
 
         // 🔹 ساخت یارد بعد از دریافت اطلاعات
         this.clientYard = new Yard(selectedPlants, day);
-         // اتصال دوطرفه
-
-        // 🔹 حالا شروع به دریافت بقیه پیام‌ها از سرور
         new Thread(() -> {
             try {
                 while (true) {
@@ -87,9 +83,6 @@ public class GameClient {
                     }
 
                 }
-
-
-                // می‌تونی پیام‌های دیگه مثل حذف زامبی یا خورشید رو هم اضافه کنی
             }
         });
     }

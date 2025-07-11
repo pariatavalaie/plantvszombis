@@ -48,7 +48,6 @@ public class HelloApplication extends Application {
         menu.Exit.setOnAction(event -> stage.close());
         menu.StartGame.setOnAction(e -> menu2());
         menu.Loadgame.setOnAction(e -> {
-
             Yard yard1 = saveManger.loadGame("save.dat");
             pauseButton(yard1);
             yard1.updateButtons();
@@ -64,7 +63,6 @@ public class HelloApplication extends Application {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Game Over");
             alert.setHeaderText(null);
-
             if (isWin) {
                 alert.setContentText("🎉 You Win!");
                 AnimationManager.pauseAll();
@@ -125,12 +123,11 @@ public class HelloApplication extends Application {
 
     private void startMultiplayerGame(boolean isServer, String host) {
         if (isServer) {
-
             Yard yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
+            yard.isServer = true;
             pauseButton(yard);
             yard.updateButtons();
             GameServer.yard = yard;
-
             Label waitingLabel = new Label("Waiting for client to join...");
             waitingLabel.setStyle("-fx-font-size: 24px; -fx-text-fill: white;");
             StackPane loadingPane = new StackPane(waitingLabel);

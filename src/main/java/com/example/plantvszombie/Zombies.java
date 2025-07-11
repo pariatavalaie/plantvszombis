@@ -35,8 +35,11 @@ public abstract class Zombies {
         walker.setOnFinished(e -> {
             x += direction;
 
-
-            if ((x < 0 && direction == -1) || (x >8 && direction == 1) || hp <= 0) {
+            if((x < 0 && direction == -1)){
+                inHouse=true;
+                return;
+            }
+            if ((x >8 && direction == 1) || hp <= 0) {
                 root.getChildren().remove(image);
                 hp = 0;
                 System.out.println("Zombie reached the end!");

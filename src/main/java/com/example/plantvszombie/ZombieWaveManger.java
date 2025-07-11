@@ -26,7 +26,7 @@ public class ZombieWaveManger {
             if(!win){
             lose = true;}
         });
-        maintimeline.setCycleCount(10);
+        maintimeline.setCycleCount(480);
     }
 
     public void start() {
@@ -40,7 +40,7 @@ public class ZombieWaveManger {
 
 
         // اجرای امواج مختلف
-        if (gameTime <= 5) waveStage1();
+        if (gameTime <= 100) waveStage1();
         //else if (gameTime <= 240) waveStage2();
         // else if (gameTime <= 65) waveStage3();
         // else if (gameTime <= 100) waveStage4();
@@ -58,7 +58,7 @@ public class ZombieWaveManger {
                 break;
             }
         }
-        if (gameTime >= 10 && !lose) {
+        if (gameTime >= 200 && !lose) {
             win = true;
             maintimeline.stop();
             System.out.println("Time's up! You win.");
