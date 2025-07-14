@@ -130,7 +130,6 @@ public class Yard {
         }
 
         startMovingAndDetecting();
-
         AnchorPane.setTopAnchor(gridPane, 60.0);
         AnchorPane.setLeftAnchor(gridPane, 245.0);
     }

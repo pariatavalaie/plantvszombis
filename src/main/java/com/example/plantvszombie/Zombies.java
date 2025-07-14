@@ -26,10 +26,9 @@ public abstract class Zombies {
     boolean fighting=false;
     public int direction = -1;
     abstract void act(Pane root);
-    void move(Pane root){    double distance = 80;
+    void move(Pane root){
+        double distance = 80;
         double durationInSeconds = speed;
-
-
         walker = new TranslateTransition(Duration.seconds(durationInSeconds), image);
         walker.setByX(direction * distance);
         walker.setOnFinished(e -> {
@@ -45,11 +44,8 @@ public abstract class Zombies {
                 System.out.println("Zombie reached the end!");
                 return;
             }
-
-
             walker.playFromStart();
         });
-
         walker.play();
         AnimationManager.register(walker);
     }
@@ -76,7 +72,7 @@ public abstract class Zombies {
 
 
 
-    public void damage  (ArrayList<Planet> planets,Pane root) {
+    public void damage (ArrayList<Planet> planets,Pane root) {
         for (Planet p : planets) {
             if(p instanceof Shooter){
             Iterator<Bullet> it =((Shooter)p).bullets.iterator();
@@ -84,6 +80,12 @@ public abstract class Zombies {
                 Bullet b = it.next();
                 if (isAlive() && this.collidesWith(b,root)) {
                     hp--;
+                    if((b.type).equals("ICY")){
+                        this.speed = this.speed / 2;
+                        if (walker != null) {
+                            walker.setRate(this.speed);
+                        }
+                    }
                     ColorAdjust blueTint = new ColorAdjust();
                     blueTint.setHue(-0.7);
                     blueTint.setSaturation(1.0);

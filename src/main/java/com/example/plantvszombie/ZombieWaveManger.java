@@ -26,7 +26,7 @@ public class ZombieWaveManger {
             if(!win){
             lose = true;}
         });
-        maintimeline.setCycleCount(480);
+        maintimeline.setCycleCount(240);
     }
 
     public void start() {
@@ -38,15 +38,13 @@ public class ZombieWaveManger {
     private void tick() {
         gameTime++;
 
-
-        // اجرای امواج مختلف
-        if (gameTime <= 100) waveStage1();
-        //else if (gameTime <= 240) waveStage2();
-        // else if (gameTime <= 65) waveStage3();
-        // else if (gameTime <= 100) waveStage4();
+        if (gameTime>=5 && gameTime <= 40) waveStage1();
+        else if ( gameTime>=42 && gameTime <= 120 ) waveStage2();
+        else if (gameTime >= 120 && gameTime<= 180) waveStage3();
+        // else if (gameTime <= 240) waveStage4();
 
         // حملات ویژه
-        //if (gameTime >= 26 && gameTime <= 33) halfAttack(); // حمله نیمه بازی
+        if (gameTime >= 50 && gameTime <= 70) halfAttack();
         //if (gameTime >= 47 && gameTime <= 60) finalAttack(); // حمله پایانی
        yard.fog.bringFogToFront(yard.yardPane);
         for (Zombies z : yard.Zombies) {
@@ -58,7 +56,7 @@ public class ZombieWaveManger {
                 break;
             }
         }
-        if (gameTime >= 200 && !lose) {
+        if (gameTime >= 240 && !lose) {
             win = true;
             maintimeline.stop();
             System.out.println("Time's up! You win.");
@@ -67,20 +65,20 @@ public class ZombieWaveManger {
     }
 
     private void waveStage1() {
-        if (gameTime % 6 == 0) { //20 zombie
+        if (gameTime % 7 == 0) { //5 zombie
             spawnZombie("Normal", 1);
         }
     }
 
     private void waveStage2() {
-        if (gameTime % 4 == 0) { //30 zombie
+        if (gameTime % 26 == 0) { //6 zombie
             spawnZombie("Normal", 1);
             spawnZombie("Conehead", 1);
         }
     }
 
     private void waveStage3() {
-        if (gameTime % 12 == 0) { //10 zombie
+        if (gameTime % 10 == 0) { //18 zombie
             spawnZombie("Normal", 1);
             spawnZombie("Conehead", 1);
             spawnZombie("Screendor", 1);
@@ -88,17 +86,17 @@ public class ZombieWaveManger {
     }
 
     private void waveStage4() {
-        if (gameTime % 12 == 0) { //10 zombie
+        if (gameTime % 12 == 0) {
             spawnZombie("Normal", 2);
             spawnZombie("Conehead", 2);
             spawnZombie("Screendor", 2);
-            spawnZombie("Imp", 2); // بچه زامبی
+            spawnZombie("Imp", 2);
         }
     }
 
     private void halfAttack() {
-        if (gameTime % 1 == 0) {
-            for (int i = 0; i < 10; i++) {
+        if (gameTime % 10 == 0) {
+            for (int i = 0; i < 2; i++) {
                 spawnZombie("Normal", 1);
                 spawnZombie("Conehead", 1);
             }
@@ -139,7 +137,6 @@ public class ZombieWaveManger {
                     yard.Zombies.add(new ImpZombie(9, row, yard.yardPane));
                     GameServer.notifyZombieSpawn(d.getState());
                     break;
-
             }
         }
     }
