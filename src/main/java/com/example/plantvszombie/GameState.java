@@ -4,10 +4,11 @@ import javafx.scene.layout.Pane;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class GameState implements Serializable {
     ArrayList<ZombieState> zombies;
-    List <String> selected;
+    public Set<String> lockedCells;
     boolean day;
     int gameTime;
     int sunPoint;
@@ -15,9 +16,10 @@ public class GameState implements Serializable {
     ArrayList<SunState> suns;
     ArrayList<PlanetState>planets;
     ArrayList<stoneGraveState> StoneGraves;
-     GameState(ArrayList<ZombieState> zombies, List<String> selected, boolean day, int gametime, int sunpoint,Fog fog,ArrayList<SunState>suns,ArrayList<PlanetState>planets,ArrayList<stoneGraveState>stoneGraves) {
+    List<String> selected;
+     GameState(ArrayList<ZombieState> zombies,  Set<String> lockedCells, boolean day, int gametime, int sunpoint,Fog fog,ArrayList<SunState>suns,ArrayList<PlanetState>planets,ArrayList<stoneGraveState>stoneGraves,List<String>selected) {
          this.zombies = zombies;
-         this.selected = selected;
+         this.lockedCells = lockedCells;
          this.day = day;
          this.gameTime = gametime;
          this.sunPoint = sunpoint;
@@ -25,6 +27,7 @@ public class GameState implements Serializable {
          this.suns = suns;
          this.planets = planets;
          this.StoneGraves = stoneGraves;
+         this.selected = selected;
      }
      public int getGametime() {
          return gameTime;

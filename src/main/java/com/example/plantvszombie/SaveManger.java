@@ -1,9 +1,12 @@
 package com.example.plantvszombie;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class SaveManger {
     public void saveGame(Yard yard, String filePath) {
@@ -38,7 +41,7 @@ public class SaveManger {
             stoneGrave.add(G.getState());
         }
 
-        return new GameState(zombieStates, yard.selected, yard.day, ZombieWaveManger.gameTime, Sun.collectedpoint, yard.fog, sunStates, planetStates,stoneGrave);
+        return new GameState(zombieStates, yard.lockedCells, yard.day, ZombieWaveManger.gameTime, Sun.collectedpoint, yard.fog, sunStates, planetStates,stoneGrave,yard.selected);
     }
 
 
@@ -47,6 +50,22 @@ public class SaveManger {
                 GameState gameState = (GameState) in.readObject();
                  Yard yard=new Yard(gameState.getSelected(),gameState.isDay());
                 yard.updateButtons();
+                Set<String> lockedCells = gameState.lockedCells;
+
+                if (lockedCells != null) {
+                    for (String cell : lockedCells) {
+                        String[] parts = cell.split(",");
+                        int row = Integer.parseInt(parts[0]);
+                        int col = Integer.parseInt(parts[1]);
+
+                        Rectangle burned = new Rectangle(Yard.GRID_X,Yard.GRID_Y);
+                        burned.setFill(Color.DARKGRAY);
+                        burned.setOpacity(0.6);
+
+                        yard.gridPane.add(burned, col, row);
+                    }
+                }
+
 
                 for (ZombieState z : gameState.getZombies()) {
                     yard.Zombies.add(ZombieFactory.createFromState(z,yard.yardPane));

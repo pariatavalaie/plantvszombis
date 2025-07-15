@@ -26,7 +26,7 @@ public class Yard {
     ArrayList<StoneGrave>graves=new ArrayList<>();
     Fog fog;
     boolean day;
-    private Set<String> lockedCells = new HashSet<>(); // مثل "3,5"
+   public Set<String> lockedCells = new HashSet<>(); // مثل "3,5"
     ButtonManager buttonManager;
     boolean isServer;
     int killedZombies=0;
@@ -295,7 +295,7 @@ public class Yard {
             if(!day){
             ((Act)P).act(yardPane, Zombies);}
           }else if(planet.equals("Doom") && Planet.canPlaceMap.containsKey(planet)){
-            Planet C = createPlanet("Doomshroom",col,row);
+            Planet C = createPlanet("Doom",col,row);
             planets.add(C);
             plantView=C.eatimage;
             C.cooldown(buttonManager.getButton("Doom"),Doomshroom.cost);
@@ -358,7 +358,7 @@ public class Yard {
                 if (Doom != null) {
                     Timeline timeline = new Timeline(
                             new KeyFrame(Duration.seconds(1), e -> {
-                                removePlanet(Doom);
+                                removePlanet(x);
                                 Rectangle burned = new Rectangle(GRID_X, GRID_Y);
                                 burned.setFill(Color.DARKGRAY);
                                 burned.setOpacity(0.6);
