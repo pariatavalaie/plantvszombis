@@ -57,11 +57,15 @@ public class ZombieWaveManger {
                 break;
             }
         }
-        if (gameTime >= 240 && !lose&&!yard.isServer) {
+        if (gameTime >= 240 && !lose) {
+            if(!yard.isServer){
             win = true;
             maintimeline.stop();
             System.out.println("Time's up! You win.");
-            Platform.runLater(() -> yard.triggerGameEnd(true));
+            Platform.runLater(() -> yard.triggerGameEnd(true));}
+            else {
+                GameServer.broadcast(new NetworkMessage("REQUEST_KILLS", null));
+            }
         }
     }
 

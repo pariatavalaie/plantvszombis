@@ -41,16 +41,17 @@ public class ClientHandler extends Thread {
                 System.out.println("Client kills: " + clientKills + ", Server kills: " + serverKills);
 
                 if (serverKills > clientKills) {
-                    GameServer.notifyGameOver(false); // سرور برد
+                    GameServer.notifyGameOver(false);
+                    GameServer.yard.triggerGameEnd(true);
                 } else if (clientKills > serverKills) {
-                    GameServer.notifyGameOver(true);// کلاینت برد
+                    GameServer.notifyGameOver(true);
+                    GameServer.yard.triggerGameEnd(true);
                 } else {
                     GameServer.broadcast(new NetworkMessage("GAME_OVER", false));
                     javafx.application.Platform.runLater(() -> GameServer.yard.triggerGameEnd(false));
                 }
             }
 
-            // می‌تونی پیام‌های دیگه هم اینجا اضافه کنی
         }
     }
 }
