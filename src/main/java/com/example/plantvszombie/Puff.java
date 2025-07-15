@@ -10,7 +10,6 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Puff extends Shooter implements Act{
-    static final int cost=0;
     public Puff(int x , int y) {
         this.row = y;
         this.col = x;

@@ -11,7 +11,6 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Jalapeno extends Planet implements Act {
-    static int cost = 125;
     public Jalapeno(int x , int y) {
         this.row = y;
         this.col = x;

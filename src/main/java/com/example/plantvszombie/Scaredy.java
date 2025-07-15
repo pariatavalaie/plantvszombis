@@ -10,7 +10,6 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Scaredy extends Shooter implements Act{
-    static final int cost=25;
     public boolean scared;
     public Scaredy(int x,int y) {
         this.col = x;

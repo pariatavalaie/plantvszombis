@@ -232,73 +232,73 @@ public class Yard {
 
     public void placeplanet(String planet,int col,int row){
         ImageView plantView = null;
-        if (planet.equals("Sunflower") && Planet.canPlaceMap.containsKey(planet)) {
+        if (planet.equals("Sunflower") && Planet.canPlaceMap.get(planet)) {
             Planet S= createPlanet("Sunflower",col,row);
-            S.cooldown(buttonManager.getButton("Sunflower"),Sunflower.cost);
+            S.cooldown(buttonManager.getButton("Sunflower"),Planet.costMap.get(planet));
             planets.add(S);
             plantView = S.image;
             ((specialAct)S).act(yardPane);
-            Sun.collectedpoint-=Sunflower.cost;
-        } else if(planet.equals("Peashooter") && Planet.canPlaceMap.containsKey(planet)){
+            Sun.collectedpoint-=Planet.costMap.get(planet);
+        } else if(planet.equals("Peashooter") && Planet.canPlaceMap.get(planet)) {
             Planet P = createPlanet("Peashooter",col,row);
             planets.add(P);
-            P.cooldown(buttonManager.getButton("Peashooter"),Peashooter.cost);
+            P.cooldown(buttonManager.getButton("Peashooter"),Planet.costMap.get(planet));
             plantView = P.image;
             ((Act)P).act(yardPane,Zombies);
-            Sun.collectedpoint-=Peashooter.cost;
-        }else if(planet.equals("Repeater") && Planet.canPlaceMap.containsKey(planet)){
+            Sun.collectedpoint-=Planet.costMap.get(planet);
+        }else if(planet.equals("Repeater") && Planet.canPlaceMap.get(planet)){
             Planet R = createPlanet("Repeater",col,row);
             planets.add(R);
-            R.cooldown(buttonManager.getButton( "Repeater"),Repeater.cost);
+            R.cooldown(buttonManager.getButton( "Repeater"),Planet.costMap.get(planet));
             plantView=R.image;
             ((Act)R).act(yardPane,Zombies);
-            Sun.collectedpoint-=Repeater.cost;
+            Sun.collectedpoint-=Planet.costMap.get(planet);
         }
-        else if(planet.equals("Snow Pea") &&Planet.canPlaceMap.containsKey(planet)){
+        else if(planet.equals("Snow Pea") &&Planet.canPlaceMap.get(planet)){
             Planet S = createPlanet("Snow Pea",col,row);
             planets.add(S);
             plantView=S.image;
-            S.cooldown(buttonManager.getButton("Snow Pea"),SnowPea.cost);
+            S.cooldown(buttonManager.getButton("Snow Pea"),Planet.costMap.get(planet));
             ((Act)S).act(yardPane,Zombies);
-            Sun.collectedpoint-=50;
-        }else if(planet.equals("Cherry Bomb") && Planet.canPlaceMap.containsKey(planet)){
+            Sun.collectedpoint-=Planet.costMap.get(planet);
+        }else if(planet.equals("Cherry Bomb") && Planet.canPlaceMap.get(planet)){
             Planet C = createPlanet("Cherry Bomb",col,row);
             planets.add(C);
             plantView=C.image;
-            C.cooldown(buttonManager.getButton("Cherry Bomb"),Cherry.cost);
+            C.cooldown(buttonManager.getButton("Cherry Bomb"),Planet.costMap.get(planet));
             ((Act)C).act(yardPane, Zombies);
-           Sun.collectedpoint-=Cherry.cost;
-        }else if(planet.equals("jalapeno") && Planet.canPlaceMap.containsKey(planet)) {
+           Sun.collectedpoint-=Planet.costMap.get(planet);
+        }else if(planet.equals("jalapeno") && Planet.canPlaceMap.get(planet)) {
             Planet J = createPlanet("jalapeno",col,row);
             planets.add(J);
             plantView = J.image;
-            J.cooldown(buttonManager.getButton("jalapeno"),Jalapeno.cost);
+            J.cooldown(buttonManager.getButton("jalapeno"),Planet.costMap.get(planet));
             ((Act)J).act(yardPane, Zombies);
-            Sun.collectedpoint -= Jalapeno.cost;
-        }else if (planet.equals("Wall-nut") && Planet.canPlaceMap.containsKey(planet)){
+            Sun.collectedpoint -=Planet.costMap.get(planet);
+        }else if (planet.equals("Wall-nut") && Planet.canPlaceMap.get(planet)){
                 Planet w = createPlanet("Wall-nut",col,row);
                 planets.add(w);
                 plantView=w.image;
-                w.cooldown(buttonManager.getButton("Wall-nut"),WallNut.cost);
-                Sun.collectedpoint-=WallNut.cost;
-            }else if(planet.equals("Tall-nut") && Planet.canPlaceMap.containsKey(planet)){
+                w.cooldown(buttonManager.getButton("Wall-nut"),Planet.costMap.get(planet));
+                Sun.collectedpoint-=Planet.costMap.get(planet);
+            }else if(planet.equals("Tall-nut") && Planet.canPlaceMap.get(planet)){
                 Planet t = createPlanet("Tall-nut",col,row);
                 planets.add(t);
                 plantView=t.image;
-                t.cooldown(buttonManager.getButton("Tall-nut"),TallNut.cost);
-                Sun.collectedpoint-=TallNut.cost;
-            }else if(planet.equals("Puff") && Planet.canPlaceMap.containsKey(planet)){
+                t.cooldown(buttonManager.getButton("Tall-nut"),Planet.costMap.get(planet));
+                Sun.collectedpoint-=Planet.costMap.get(planet);
+            }else if(planet.equals("Puff") && Planet.canPlaceMap.get(planet)){
             Planet P = createPlanet("Puff",col,row);
             planets.add(P);
             plantView=P.image;
-            P.cooldown(buttonManager.getButton("Puff"),Puff.cost);
+            P.cooldown(buttonManager.getButton("Puff"),Planet.costMap.get(planet));
             if(!day){
             ((Act)P).act(yardPane, Zombies);}
-          }else if(planet.equals("Doom") && Planet.canPlaceMap.containsKey(planet)){
+          }else if(planet.equals("Doom") && Planet.canPlaceMap.get(planet)){
             Planet C = createPlanet("Doom",col,row);
             planets.add(C);
             plantView=C.eatimage;
-            C.cooldown(buttonManager.getButton("Doom"),Doomshroom.cost);
+            C.cooldown(buttonManager.getButton("Doom"),Planet.costMap.get(planet));
             if(!day){
             plantView=C.image;
             ((Act)C).act(yardPane,Zombies);
@@ -314,36 +314,36 @@ public class Yard {
 
                 timeline.play();
             }
-            Sun.collectedpoint-=Doomshroom.cost;
-        }else if(planet.equals("Scaredy") && Planet.canPlaceMap.containsKey(planet)){
+            Sun.collectedpoint-=Planet.costMap.get(planet);
+        }else if(planet.equals("Scaredy") && Planet.canPlaceMap.get(planet)){
             Planet C = createPlanet("Scaredy",col,row);
             planets.add(C);
             plantView=C.image;
-            C.cooldown(buttonManager.getButton("Scaredy"),Scaredy.cost);
+            C.cooldown(buttonManager.getButton("Scaredy"),Planet.costMap.get(planet));
             if(!day){
                 ((Act)C).act(yardPane,Zombies);}
-            Sun.collectedpoint-=Scaredy.cost;
-        }else if(planet.equals("plantern") &&Planet.canPlaceMap.containsKey(planet)){
+            Sun.collectedpoint-=Planet.costMap.get(planet);;
+        }else if(planet.equals("plantern") &&Planet.canPlaceMap.get(planet)){
             Planet p = createPlanet("plantern",col,row);
             planets.add(p);
             plantView=p.image;
-            p.cooldown(buttonManager.getButton("plantern"),Plantern.cost);
+            p.cooldown(buttonManager.getButton("plantern"),Planet.costMap.get(planet));
             if(!day){
             ((specialAct)p).act(yardPane);}
-            Sun.collectedpoint-=Plantern.cost;
+            Sun.collectedpoint-=Planet.costMap.get(planet);;
         } else if (planet.equals("blover") && Planet.canPlaceMap.containsKey(planet)) {
             Planet b = createPlanet("blover",col,row);
             planets.add(b);
             plantView=b.image;
-            b.cooldown(buttonManager.getButton("blover"),Blover.cost);
+            b.cooldown(buttonManager.getButton("blover"),Planet.costMap.get(planet));
             if(!day){
                 ((specialAct)b).act(yardPane);}
-            Sun.collectedpoint-=Blover.cost;
-        } else if(planet.equals("bean") && Planet.canPlaceMap.containsKey(planet)) {
+            Sun.collectedpoint-=Planet.costMap.get(planet);
+        } else if(planet.equals("bean") && Planet.canPlaceMap.get(planet)) {
             Planet b = createPlanet("bean",col,row);
             planets.add(b);
             plantView=b.image;
-            b.cooldown(buttonManager.getButton("bean"),Bean.cost);
+            b.cooldown(buttonManager.getButton("bean"),Planet.costMap.get(planet));
             Planet x=findPlanet(col,row);
             if (x instanceof Act) {
                 ((Act)x).act(yardPane, Zombies);
@@ -377,12 +377,12 @@ public class Yard {
                 removePlanet(b);
             }));
             timeline.play();
-            Sun.collectedpoint-=Bean.cost;
-        }else if(planet.equals("Ice") &&Planet.canPlaceMap.containsKey(planet)) {
+            Sun.collectedpoint-=Planet.costMap.get(planet);
+        }else if(planet.equals("Ice") &&Planet.canPlaceMap.get(planet)) {
             Planet i = createPlanet("Ice",col,row);
             planets.add(i);
             plantView=i.eatimage;
-            i.cooldown(buttonManager.getButton("Ice"),Iceshroom.cost);
+            i.cooldown(buttonManager.getButton("Ice"),Planet.costMap.get(planet));
             if(!day){
                 ((Act)i).act(yardPane,Zombies);
                 plantView=i.image;
@@ -390,27 +390,27 @@ public class Yard {
                     planets.remove(i);
                 }
             }
-            Sun.collectedpoint-=Iceshroom.cost;
-        } else if (planet.equals("Hypno") && Planet.canPlaceMap.containsKey(planet)) {
+            Sun.collectedpoint-=Planet.costMap.get(planet);
+        } else if (planet.equals("Hypno") && Planet.canPlaceMap.get(planet)) {
             Planet h = createPlanet("Hypno",col,row);
             planets.add(h);
-            h.cooldown(buttonManager.getButton("Hypno"),Hypnoshroom.cost);
+            h.cooldown(buttonManager.getButton("Hypno"),Planet.costMap.get(planet));
             plantView=h.eatimage;
             if(!day){
                 ((Hypnoshroom)h).active=true;
                 plantView=h.image;
                 ((Act)h).act(yardPane,Zombies);
             }
-            Sun.collectedpoint-=Hypnoshroom.cost;
+            Sun.collectedpoint-=Planet.costMap.get(planet);;
 
-        }else if(planet.equals("Grave") && Planet.canPlaceMap.containsKey(planet)) {
+        }else if(planet.equals("Grave") && Planet.canPlaceMap.get(planet)) {
             Planet g = createPlanet("Grave",col,row);
-            g.cooldown(buttonManager.getButton("Grave"),GraveBuster.cost);
+            g.cooldown(buttonManager.getButton("Grave"),Planet.costMap.get(planet));
             StoneGrave s=findStoneGrave(col,row);
             s.remove(graves);
             ((specialAct)g).act(yardPane);
             plantView=g.image;
-            Sun.collectedpoint-=GraveBuster.cost;
+            Sun.collectedpoint-=Planet.costMap.get(planet);;
         }
 
 
@@ -489,36 +489,15 @@ public class Yard {
     }
 
     public void updateButtons() {
-        int[] costs = {
-                Peashooter.cost,
-                Repeater.cost,
-                Sunflower.cost,
-                WallNut.cost,
-                TallNut.cost,
-                SnowPea.cost,
-                Cherry.cost,
-                Jalapeno.cost,
-                Doomshroom.cost,
-                Plantern.cost,
-                Blover.cost,
-                Bean.cost,
-                Iceshroom.cost,
-                Hypnoshroom.cost,
-                GraveBuster.cost,
-                Puff.cost,
-                Scaredy.cost,
 
-        };
        String[] names={"Peashooter","Repeater","Sunflower", "Wall-nut","Tall-nut","Snow Pea","Cherry Bomb","jalapeno",
                "Doom", "plantern","blover", "bean", "Ice", "Hypno","Grave","Puff","Scaredy" };
 
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {
-            Map<String, Integer> costMap = new HashMap<>();
-            for (int i = 0; i < costs.length; i++) {
-                costMap.put(names[i], costs[i]);
-            }
-            buttonManager.update(Planet.canPlaceMap,costMap,Sun.collectedpoint);
+
+
+            buttonManager.update(Planet.canPlaceMap,Planet.costMap,Sun.collectedpoint);
         }));
 
         timeline.setCycleCount(Timeline.INDEFINITE);

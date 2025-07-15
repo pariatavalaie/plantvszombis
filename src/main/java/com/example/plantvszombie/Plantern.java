@@ -9,7 +9,6 @@ import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 public class Plantern extends Planet implements specialAct{
-    static final int cost = 25;
     private Fog fog;
     private Timeline lightUpdater;
     private Circle currentHole;

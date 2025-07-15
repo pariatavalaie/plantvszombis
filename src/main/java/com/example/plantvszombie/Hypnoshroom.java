@@ -11,8 +11,6 @@ import java.util.ArrayList;
 
 public class Hypnoshroom extends Planet implements Act{
     boolean active=false;
-
-    static final int cost=75;
     public Hypnoshroom(int x,int y) {
         this.col = x;
         this.row = y;

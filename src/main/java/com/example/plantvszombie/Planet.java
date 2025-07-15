@@ -21,13 +21,15 @@ public abstract class Planet {
     PauseTransition cooldown;
     Boolean dayPlanet;
     public static Map<String, Boolean> canPlaceMap = new HashMap<>();
-
+     static  Map<String, Integer> costMap = new HashMap<>();
     static {
+        int[] costs = {100, 200, 50, 50,125, 175, 150,125, 125,25,100, 75, 75, 75, 75, 0, 25,};
         String[] names={"Peashooter","Repeater","Sunflower", "Wall-nut","Tall-nut","Snow Pea","Cherry Bomb","jalapeno",
                 "Doom", "plantern","blover", "bean", "Ice", "Hypno","Grave","Puff","Scaredy" };
 
-        for (String name : names) {
-            canPlaceMap.put(name, true);
+        for (int i = 0; i < costs.length; i++) {
+            canPlaceMap.put(names[i], true);
+            costMap.put(names[i], costs[i]);
         }
     }
 

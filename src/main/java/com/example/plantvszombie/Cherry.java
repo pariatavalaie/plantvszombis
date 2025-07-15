@@ -10,7 +10,6 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Cherry extends Planet implements Act {
-    static int cost = 150;
 
     public Cherry(int x, int y) {
         this.row = y;

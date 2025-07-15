@@ -8,7 +8,6 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public class Blover extends Planet implements specialAct{
-    static final int cost = 100;
     private Fog fog;
     public Blover(int x, int y, Fog fog) {
         this.row = y;

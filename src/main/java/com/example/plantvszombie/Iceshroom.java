@@ -11,7 +11,7 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Iceshroom extends Planet implements Act{
-    static int cost = 75;
+    static boolean active = false;
     public Iceshroom(int x,int y) {
         this.row = y;
         this.col = x;
@@ -37,10 +37,10 @@ public class Iceshroom extends Planet implements Act{
                 blueTint.setHue(0.6);
                 blueTint.setSaturation(1.0);
                 blueTint.setBrightness(0.5);
-
                 z.image.setEffect(blueTint);
             }
         }
+        ZombieWaveManger.maintimeline.pause();
         Timeline unfreeze = new Timeline(new KeyFrame(Duration.seconds(4), e -> {
             for (Zombies z : Zombies) {
                 if (z.isAlive()) {
@@ -49,12 +49,14 @@ public class Iceshroom extends Planet implements Act{
                     z.image.setEffect(null);
                 }
             }
+
         }));
         unfreeze.play();
         unfreeze.setOnFinished(event -> {
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
                 remove(root);
                 dead=true;
+                ZombieWaveManger.maintimeline.play();
             }));
             timeline.play();
         });

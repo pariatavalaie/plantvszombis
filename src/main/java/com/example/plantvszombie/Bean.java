@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Bean extends Planet{
-    static int cost = 75;
     public Bean(int x, int y) {
         this.row = y;
         this.col = x;

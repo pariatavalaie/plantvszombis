@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class TallNut extends Planet {
-    static final int cost=125;
+
     public TallNut(int x,int y) {
         this.row = y;
         this.col = x;

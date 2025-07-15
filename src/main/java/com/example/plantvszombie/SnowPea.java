@@ -10,7 +10,6 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class SnowPea extends Shooter implements Act{
-    static final int cost=50;
     public SnowPea(int x , int y) {
         this.row = y;
         this.col = x;

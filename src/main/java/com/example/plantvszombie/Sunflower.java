@@ -8,7 +8,6 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public class Sunflower extends Planet implements specialAct{
-    static final int cost=50;
     public Sunflower(int x, int y) {
         watingtime=5;
         row=y;

@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public class GraveBuster extends Planet implements specialAct{
-    static final int cost=75;
+
     public GraveBuster(int x,int y) {
         this.col = x;
         this.row = y;

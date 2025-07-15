@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class WallNut extends Planet{
-    static final int cost=50;
     public WallNut(int x,int y){
         this.row=y;
         this.col=x;

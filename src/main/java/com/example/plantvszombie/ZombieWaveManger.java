@@ -6,10 +6,12 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.util.Duration;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class ZombieWaveManger {
-    Timeline maintimeline;
+     static Timeline maintimeline;
     Yard yard;
     static int gameTime;
     boolean win = false;
@@ -76,9 +78,16 @@ public class ZombieWaveManger {
     }
 
     private void waveStage2() {
-        if (gameTime % 26 == 0) { //6 zombie
-            spawnZombie("Normal", 1);
-            spawnZombie("Conehead", 1);
+        if (gameTime % 20 == 0) { //6 zombie
+            int x = new Random().nextInt(2);
+            switch (x) {
+                case 0:
+                spawnZombie("Normal", 1);
+                break;
+                case 1:
+                spawnZombie("Conehead", 1);
+                break;
+            }
         }
     }
 
@@ -119,30 +128,43 @@ public class ZombieWaveManger {
     }
 
     private void spawnZombie(String type, int count) {
+        Random rand = new Random();
+        Set<Integer> usedRows = new HashSet<>();
+
         for (int i = 0; i < count; i++) {
-            int row = new Random().nextInt(5); // پنج ردیف
+            int row;
+            int attempts = 0;
+            do {
+                row = rand.nextInt(5); // ردیف 0 تا 4
+                attempts++;
+            } while (usedRows.contains(row) && attempts < 10);
+
+            if (usedRows.contains(row)) break;
+
+            usedRows.add(row);
+
+            Zombies z = null;
+
             switch (type) {
                 case "Normal":
-                    Zombies z=new NormalZombie(9, row, yard.yardPane);
-                    yard.Zombies.add(z);
-                    GameServer.notifyZombieSpawn(z.getState());
+                    z = new NormalZombie(9, row, yard.yardPane);
                     break;
                 case "Conehead":
-                    Zombies q=new ConeheadZombie(9, row, yard.yardPane);
-                    yard.Zombies.add(q);
-                    GameServer.notifyZombieSpawn(q.getState());
+                    z = new ConeheadZombie(9, row, yard.yardPane);
                     break;
                 case "Screendor":
-                    Zombies c=new ScreendoorZombie(9, row, yard.yardPane);
-                    yard.Zombies.add(c);
-                    GameServer.notifyZombieSpawn(c.getState());
+                    z = new ScreendoorZombie(9, row, yard.yardPane);
                     break;
                 case "Imp":
-                    Zombies d=new ImpZombie(9, row, yard.yardPane);
-                    yard.Zombies.add(new ImpZombie(9, row, yard.yardPane));
-                    GameServer.notifyZombieSpawn(d.getState());
+                    z = new ImpZombie(9, row, yard.yardPane);
                     break;
+            }
+
+            if (z != null) {
+                yard.Zombies.add(z);
+                GameServer.notifyZombieSpawn(z.getState());
             }
         }
     }
+
 }
