@@ -39,7 +39,6 @@ public abstract class Zombies {
                 return;
             }
             if ((x >8 && direction == 1) || hp <= 0) {
-                root.getChildren().remove(image);
                 hp = 0;
                 System.out.println("Zombie reached the end!");
                 return;
@@ -83,7 +82,7 @@ public abstract class Zombies {
                     if((b.type).equals("ICY")){
                         this.speed = this.speed / 2;
                         if (walker != null) {
-                            walker.setRate(this.speed);
+                            walker.setRate(0.5);
                         }
                     }
                     ColorAdjust blueTint = new ColorAdjust();
@@ -101,16 +100,9 @@ public abstract class Zombies {
 
             }
         }}}
-    public void remove(Pane root,ArrayList<Zombies>zombies) {
-        if(!isAlive()) {
-            root.getChildren().remove(image);
-            zombies.remove(this);
 
-        }
-    }
     public boolean collidesWith(Bullet b,Pane root) {
       if(Math.abs(image.getLayoutX()+image.getTranslateX() - (b.imageBullet.getLayoutX()+b.imageBullet.getTranslateX())) <= 80&&Math.abs(image.getLayoutY()+image.getTranslateY() - (b.imageBullet.getLayoutY()+b.imageBullet.getTranslateY())) <= 100&&y==b.y) {
-          System.out.println("Q");
           root.getChildren().remove(b.imageBullet);
           b.hit=true;
           return true;

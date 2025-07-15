@@ -17,7 +17,6 @@ public class GameClient {
         out.flush();
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
-        // 🔹 دریافت initial و initialday قبل از ساخت یارد
         List<String> selectedPlants = null;
         boolean day = true;
 
@@ -33,8 +32,8 @@ public class GameClient {
             }
         }
 
-        // 🔹 ساخت یارد بعد از دریافت اطلاعات
         this.clientYard = new Yard(selectedPlants, day);
+        startClientLoseChecker();
         new Thread(() -> {
             try {
                 while (true) {
@@ -82,10 +81,37 @@ public class GameClient {
                         s.fallingSun(clientYard.yardPane, sun.getX(),sun.getZ());
                     }
 
+                } case("GAME_OVER") ->{
+                    boolean gameOver = (Boolean) msg.data;
+                    clientYard.triggerGameEnd(gameOver);
+                }
+                case "REQUEST_KILLS" -> {
+                    int clientKills = clientYard.killedZombies;
+                    sendMessage(new NetworkMessage("MY_KILLS", clientKills));
                 }
             }
         });
     }
+    private void startClientLoseChecker() {
+        new Thread(() -> {
+            try {
+                while (true) {
+                    Thread.sleep(500);
+                    for (Zombies z : clientYard.Zombies) {
+                        if (z.inHouse) {
+                            System.out.println("Client lost!");
+                            sendMessage(new NetworkMessage("GAME_OVER",true));
+                            Platform.runLater(() -> clientYard.triggerGameEnd(false));
+                            return;
+                        }
+                    }
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
 
     public void sendMessage(NetworkMessage msg) {
         try {

@@ -50,13 +50,14 @@ public class ZombieWaveManger {
         for (Zombies z : yard.Zombies) {
             if (z.inHouse) {
                 lose = true;
+                GameServer.notifyGameOver(true);
                 maintimeline.stop();
                 System.out.println("Zombie entered the house! You lose.");
                 Platform.runLater(() -> yard.triggerGameEnd(false));
                 break;
             }
         }
-        if (gameTime >= 240 && !lose) {
+        if (gameTime >= 240 && !lose&&!yard.isServer) {
             win = true;
             maintimeline.stop();
             System.out.println("Time's up! You win.");

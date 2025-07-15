@@ -25,6 +25,7 @@ public class GameServer {
                     out.writeObject(new NetworkMessage("initialday", yard.day));
                     out.flush();
                     clients.add(out);
+                    new ClientHandler(socket, in).start();
                     sendInitialState(out);
                     javafx.application.Platform.runLater(onClientConnected);
 
@@ -43,7 +44,6 @@ public class GameServer {
     }
     public static void sendInitialState(ObjectOutputStream out) {
         try {
-            // ساخت یک پیام با همه زامبی‌های فعلی
             List<ZombieState> currentZombies = new ArrayList<>();
             for (Zombies z : yard.Zombies) {
                 currentZombies.add(z.getState());
@@ -64,12 +64,16 @@ public class GameServer {
             e.printStackTrace();
         }
     }
+    public static void notifyGameOver(boolean gameOver) {
+        broadcast(new NetworkMessage("GAME_OVER", gameOver));
+    }
+
 
 
     public static void broadcast(NetworkMessage msg) {
         for (ObjectOutputStream out : clients) {
             try {
-                out.reset(); // جلوگیری از کش serialization
+                out.reset();
                 out.writeObject(msg);
                 out.flush();
             } catch (IOException e) {
@@ -77,9 +81,10 @@ public class GameServer {
             }
         }
     }
+
 }
  class NetworkMessage implements Serializable {
-    public String type;  // مثل "SPAWN_ZOMBIE", "REMOVE_ZOMBIE" و ...
+    public String type;
     public Object data;
 
     public NetworkMessage(String type, Object data) {

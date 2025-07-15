@@ -29,6 +29,7 @@ public class Yard {
     private Set<String> lockedCells = new HashSet<>(); // مثل "3,5"
     ButtonManager buttonManager;
     boolean isServer;
+    int killedZombies=0;
     Yard(List<String> selected,boolean day) {
         Image yar;
         if(day){
@@ -150,8 +151,8 @@ public class Yard {
             boolean positionOccupied;
 
             do {
-                col = random.nextInt(x); // انتخاب تصادفی ستون
-                row = random.nextInt(y); // انتخاب تصادفی سطر
+                col = random.nextInt(x);
+                row = random.nextInt(y);
                 positionOccupied = false;
 
                 // بررسی اینکه گیاهی در این مکان نباشه
@@ -195,9 +196,14 @@ public class Yard {
         ArrayList<Zombies> zombieCopy = new ArrayList<>(Zombies);
         for (Zombies zombie : zombieCopy) {
             zombie.damage(planets, yardPane);
-            zombie.remove(yardPane, Zombies);
             zombie.checkAndEatPlant(planets, yardPane);
             zombie.checkAndEatZombie(Zombies, yardPane);
+            if(!zombie.isAlive()){
+                Zombies.remove(zombie);
+                yardPane.getChildren().remove(zombie.image);
+                killedZombies++;
+            }
+        }
 
             for (Planet planet : planets) {
                 if(planet.dead){
@@ -205,7 +211,7 @@ public class Yard {
                 }
             }
 
-        }}));
+        }));
         s.setCycleCount(Timeline.INDEFINITE);
         s.play();
     }
