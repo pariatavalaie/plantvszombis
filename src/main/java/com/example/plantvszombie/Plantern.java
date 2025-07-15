@@ -1,19 +1,14 @@
 package com.example.plantvszombie;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-
 public class Plantern extends Planet implements specialAct{
-    static boolean canplace = true;
     static final int cost = 25;
     private Fog fog;
     private Timeline lightUpdater;
@@ -25,7 +20,7 @@ public class Plantern extends Planet implements specialAct{
         this.fog = fog;
         this.watingtime = 3;
         this.health = 4;
-        this.dayplanet=false;
+        this.dayPlanet =false;
         this.image = new ImageView(new Image(getClass().getResource("/Animated_Plantern.gif").toExternalForm()));
         this.eatimage = new ImageView(new Image(getClass().getResource("/Animated_Plantern.gif").toExternalForm()));
     }

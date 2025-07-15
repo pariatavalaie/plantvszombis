@@ -9,12 +9,11 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Repeater extends Shooter implements Act{
-    static boolean canplace = true;
     static final int cost=200;
     public Repeater(int x, int y) {
         this.row = y;
         this.col = x;
-        this.dayplanet=true;
+        this.dayPlanet =true;
         this.watingtime = 7;
         this.health=4;
         bullets=new ArrayList<>();

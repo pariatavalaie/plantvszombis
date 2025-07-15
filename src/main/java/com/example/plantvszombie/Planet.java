@@ -6,6 +6,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public abstract class Planet {
@@ -17,7 +19,17 @@ public abstract class Planet {
     ImageView eatimage;
     boolean dead = false;
     PauseTransition cooldown;
-    Boolean dayplanet;
+    Boolean dayPlanet;
+    public static Map<String, Boolean> canPlaceMap = new HashMap<>();
+
+    static {
+        String[] names={"Peashooter","Repeater","Sunflower", "Wall-nut","Tall-nut","Snow Pea","Cherry Bomb","jalapeno",
+                "Doom", "plantern","blover", "bean", "Ice", "Hypno","Grave","Puff","Scaredy" };
+
+        for (String name : names) {
+            canPlaceMap.put(name, true);
+        }
+    }
 
 
     public void remove(Pane root) {
@@ -49,11 +61,14 @@ public abstract class Planet {
     }
 
     static void on() {
-        Peashooter.canplace = true;Repeater.canplace = true;Scaredy.canplace = true;Sunflower.canplace = true;SnowPea.canplace = true;GraveBuster.canplace = true;Puff.canplace = true;Plantern.canplace = true;Blover.canplace = true;TallNut.canplace = true;WallNut.canplace = true;Jalapeno.canplace = true;Cherry.canplace = true;Iceshroom.canplace = true;Doomshroom.canplace = true;Bean.canplace = true;
+       for (String name : canPlaceMap.keySet()) {
+           canPlaceMap.put(name, false);
+       }
     }
 
 
-    public void cooldown(Button b, Runnable setCanPlaceTrue, int cost) {
+    public void cooldown(Button b, int cost) {
+        canPlaceMap.put(this.gettype(), false);
         cooldown = new PauseTransition(Duration.seconds(this.watingtime));
         cooldown.setOnFinished(ev -> {
             if (cost <= Sun.collectedpoint) {
@@ -64,7 +79,7 @@ public abstract class Planet {
                 });
             }
 
-            setCanPlaceTrue.run();
+            canPlaceMap.put(this.gettype(), true);
         });
         cooldown.play();
         b.setDisable(true);

@@ -1,9 +1,7 @@
 package com.example.plantvszombie;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.scene.control.Button;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,14 +11,13 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Iceshroom extends Planet implements Act{
-    static boolean canplace = true;
     static int cost = 75;
     public Iceshroom(int x,int y) {
         this.row = y;
         this.col = x;
         this.health = 4;
         this.watingtime =5;
-        this.dayplanet=false;
+        this.dayPlanet =false;
         image=new ImageView(new Image(getClass().getResource("/IceShroom1.gif").toExternalForm()));
         eatimage=new ImageView(new Image(getClass().getResource("/IceShroom2.gif").toExternalForm()));
     }

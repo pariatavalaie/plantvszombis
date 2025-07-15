@@ -10,7 +10,6 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Cherry extends Planet implements Act {
-    static boolean canplace = true;
     static int cost = 150;
 
     public Cherry(int x, int y) {
@@ -18,7 +17,7 @@ public class Cherry extends Planet implements Act {
         this.col = x;
         this.watingtime = 2;
         this.health = 4;
-        this.dayplanet=true;
+        this.dayPlanet =true;
         this.image = new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm()));
         this.eatimage=new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm()));
     }

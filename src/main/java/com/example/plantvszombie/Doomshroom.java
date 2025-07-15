@@ -3,7 +3,6 @@ package com.example.plantvszombie;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -12,7 +11,6 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Doomshroom extends Planet implements Act{
-    static boolean canplace = true;
     static int cost = 125;
 
     public Doomshroom(int x,int y) {
@@ -20,7 +18,7 @@ public class Doomshroom extends Planet implements Act{
         this.col = x;
         this.health = 4;
         this.watingtime =5;
-        this.dayplanet=false;
+        this.dayPlanet =false;
         image=new ImageView(new Image(getClass().getResource("/DoomShroom1.gif").toExternalForm()));
         eatimage=new ImageView(new Image(getClass().getResource("/DoomShroom3.gif").toExternalForm()));
     }

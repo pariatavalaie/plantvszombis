@@ -1,26 +1,22 @@
 package com.example.plantvszombie;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Peashooter extends Shooter implements Act{
-    static boolean canplace = true;
     static final int cost=100;
     public Peashooter(int x, int y) {
         this.row = y;
         this.col = x;
         this.watingtime = 6;
         this.health=4;
-        this.dayplanet=true;
+        this.dayPlanet =true;
         bullets = new ArrayList<>();
         this.image = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));
         this.eatimage = new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm()));

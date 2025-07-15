@@ -11,14 +11,13 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Jalapeno extends Planet implements Act {
-    static boolean canplace = true;
     static int cost = 125;
     public Jalapeno(int x , int y) {
         this.row = y;
         this.col = x;
         this.watingtime = 6;
         this.health = 4;
-        this.dayplanet=true;
+        this.dayPlanet =true;
         this.image = new ImageView( new Image(getClass().getResource("/jalapeno.gif").toExternalForm()));
         this.eatimage=new ImageView( new Image(getClass().getResource("/jalapeno.gif").toExternalForm()));
     }
