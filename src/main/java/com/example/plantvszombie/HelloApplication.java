@@ -1,6 +1,5 @@
 package com.example.plantvszombie;
 import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -49,7 +48,7 @@ public class HelloApplication extends Application {
         stage.show();
 
         menu.Exit.setOnAction(event -> stage.close());
-        menu.StartGame.setOnAction(e -> menu2());
+        menu.StartGame.setOnAction(e -> chooseDayMenu());
         menu.Loadgame.setOnAction(e -> {
             Yard yard1 = saveManger.loadGame("save.dat");
             pauseButton(yard1);
@@ -67,7 +66,7 @@ public class HelloApplication extends Application {
             if (isWin) {
                 AnimationManager.pauseAll();
                 ImageView winImage=new ImageView(new Image("/LevelWin.png"));
-                winImage.setX(300);
+                winImage.setX(300);;
                 root.getChildren().add(winImage);
 
             } else {
@@ -110,7 +109,7 @@ public class HelloApplication extends Application {
 
         serverBtn.setOnAction(e -> {
             isMultiplayer = true;
-            menu2();
+            chooseDayMenu();
             dialog.close();
 
         });
@@ -190,7 +189,7 @@ public class HelloApplication extends Application {
         stage.setScene(scene1);
     }
 
-    private void play2() {
+    private void choosePlantMenu() {
         Image yar = new Image(getClass().getResource("/choose level.png").toExternalForm());
         ImageView yard = new ImageView(yar);
         yard.setFitHeight(626);
@@ -215,12 +214,12 @@ public class HelloApplication extends Application {
         });
 
         menu.Back.setOnAction(e -> {
-            menu2();
+            chooseDayMenu();
             menu = new Menu();
         });
     }
 
-    private void menu2() {
+    private void chooseDayMenu() {
         Image yar = new Image(getClass().getResource("/WhatsApp Image 2025-06-29 at 03.49.35.jpeg").toExternalForm());
         ImageView yard = new ImageView(yar);
         yard.setFitHeight(626);
@@ -235,12 +234,12 @@ public class HelloApplication extends Application {
 
         menu.Day.setOnAction(e -> {
             menu.day = true;
-            play2();
+            choosePlantMenu();
         });
 
         menu.Night.setOnAction(e -> {
             menu.day = false;
-            play2();
+            choosePlantMenu();
         });
 
         menu.Back.setOnAction(e -> {
