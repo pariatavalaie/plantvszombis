@@ -1,4 +1,6 @@
 package com.example.plantvszombie;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -11,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -58,20 +61,32 @@ public class HelloApplication extends Application {
 
         multiplayer.setOnAction(e -> showMultiplayerMenu());
     }
-    public static void showGameResult(boolean isWin) {
+    public static void showGameResult(boolean isWin,Pane root) {
         Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Game Over");
-            alert.setHeaderText(null);
+
             if (isWin) {
-                alert.setContentText("🎉 You Win!");
                 AnimationManager.pauseAll();
+                ImageView winImage=new ImageView(new Image("/LevelWin.png"));
+                winImage.setX(300);
+                root.getChildren().add(winImage);
+
             } else {
-                alert.setContentText("☠️ You Lose!");
                 AnimationManager.pauseAll();
+                ImageView winImage=new ImageView(new Image("/ZombiesAteYourBrains.png"));
+                winImage.setX(300);
+                root.getChildren().add(winImage);
             }
-            alert.showAndWait();
-            getPrimaryStage().close();
+            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
+            pauseTransition.setOnFinished(event -> {
+            HelloApplication helloApplication = new HelloApplication();
+            try {
+                helloApplication.start(primaryStage);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }});
+            pauseTransition.play();
+
+
         });
     }
 

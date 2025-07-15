@@ -570,9 +570,9 @@ public class Yard {
     }
     public void triggerGameEnd(boolean isWin) {
         if (isWin) {
-            HelloApplication.showGameResult(true);
+            HelloApplication.showGameResult(true,yardPane);
         } else {
-            HelloApplication.showGameResult(false);
+            HelloApplication.showGameResult(false,yardPane);
         }
     }
 }

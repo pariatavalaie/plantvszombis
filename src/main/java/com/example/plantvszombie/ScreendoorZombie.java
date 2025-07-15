@@ -27,8 +27,4 @@ public class ScreendoorZombie extends Zombies{
 
  }
 
-    @Override
-    void act(Pane root) {
-
-    }
 }

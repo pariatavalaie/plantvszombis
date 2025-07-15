@@ -12,7 +12,7 @@ public class NormalZombie extends Zombies {
         this.x = x;
         this.y = y;
         this.hp = 5;
-        this.speed=4;
+        this.speed = 4;
         this.image = new ImageView(new Image(getClass().getResource("/normalzombie.gif").toExternalForm()));
         image.setFitHeight(80);
         image.setFitWidth(100);
@@ -29,10 +29,6 @@ public class NormalZombie extends Zombies {
 
         move(root);
     }
-
-    @Override
-    void act(Pane root) {
-
-    }
 }
+
 

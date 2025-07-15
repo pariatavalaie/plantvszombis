@@ -26,8 +26,5 @@ public class ImpZombie extends Zombies{
         move(root);
 
     }
-    @Override
-    void act(Pane root) {
 
-    }
 }

@@ -26,8 +26,4 @@ public class ConeheadZombie extends Zombies{
         move(root);
     }
 
-    @Override
-    void act(Pane root) {
-
-    }
 }

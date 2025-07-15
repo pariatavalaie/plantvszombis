@@ -1,12 +1,12 @@
 package com.example.plantvszombie;
 
 import javafx.animation.*;
-import javafx.scene.PointLight;
+
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
+
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -25,7 +25,6 @@ public abstract class Zombies {
     boolean isHypnotized=false;
     boolean fighting=false;
     public int direction = -1;
-    abstract void act(Pane root);
     void move(Pane root){
         double distance = 80;
         double durationInSeconds = speed;
@@ -198,7 +197,7 @@ public abstract class Zombies {
              inHouse=true;
          }
     }
-    public ZombieState getState() {
+    protected ZombieState getState() {
 
         return new ZombieState(
                 this.getClass().getSimpleName(),
