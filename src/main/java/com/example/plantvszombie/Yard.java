@@ -26,7 +26,7 @@ public class Yard {
     ArrayList<StoneGrave>graves=new ArrayList<>();
     Fog fog;
     boolean day;
-   public Set<String> lockedCells = new HashSet<>(); // مثل "3,5"
+   public Set<String> lockedCells = new HashSet<>();
     ButtonManager buttonManager;
     boolean isServer;
     int killedZombies=0;
@@ -63,8 +63,6 @@ public class Yard {
                 rectangle.setStrokeWidth(0.5);
                 int row = i, col = j;
                 gridPane.add(rectangle, j, i);
-
-
                 rectangle.setOnDragOver(event -> {
                     if (event.getGestureSource() != rectangle && event.getDragboard().hasString()) {
                         event.acceptTransferModes(TransferMode.COPY);
@@ -206,10 +204,9 @@ public class Yard {
                 killedZombies++;
             }
         }
-
             for (Planet planet : planets) {
                 if(planet.dead){
-                    planet.remove(yardPane);
+                    this.removePlanet(planet);
                 }
             }
 
@@ -221,7 +218,6 @@ public class Yard {
     public void removePlanet(Planet planet) {
         planet.remove(yardPane);
         planets.remove(planet);
-
     }
     private StoneGrave findStoneGrave(int col, int row) {
         for (StoneGrave grave : graves) {
