@@ -221,8 +221,8 @@ public abstract class Zombies {
     public void freezeZombie() {
         if(!Iceshroom.activate){
             if (this.isAlive()) {
-                if (this.walker != null) this.walker.play();
-                if (this.eating != null) this.eating.play();
+                if (this.walker != null&&!AnimationManager.isPaused) this.walker.play();
+                if (this.eating != null&&!AnimationManager.isPaused) this.eating.play();
                 this.image.setEffect(null);
             }
         }else{
