@@ -61,16 +61,14 @@ public class HelloApplication extends Application {
         multiplayer.setOnAction(e -> showMultiplayerMenu());
     }
     public static void showGameResult(boolean isWin,Pane root) {
-        Platform.runLater(() -> {
 
+            AnimationManager.pauseAll();
             if (isWin) {
-                AnimationManager.pauseAll();
                 ImageView winImage=new ImageView(new Image("/LevelWin.png"));
                 winImage.setX(300);;
                 root.getChildren().add(winImage);
 
             } else {
-                AnimationManager.pauseAll();
                 ImageView winImage=new ImageView(new Image("/ZombiesAteYourBrains.png"));
                 winImage.setX(300);
                 root.getChildren().add(winImage);
@@ -86,7 +84,7 @@ public class HelloApplication extends Application {
             pauseTransition.play();
 
 
-        });
+
     }
 
     public static Stage getPrimaryStage() {
@@ -120,7 +118,7 @@ public class HelloApplication extends Application {
             ipDialog.setTitle("Enter Server IP");
             ipDialog.setHeaderText("Join as Client");
             ipDialog.setContentText("Server IP:");
-            ipDialog.getEditor().requestFocus(); // گرفتن فوکوس
+            ipDialog.getEditor().requestFocus();
 
             ipDialog.showAndWait().ifPresent(ip -> {
                 System.out.println("Entered IP: " + ip); // فقط تست

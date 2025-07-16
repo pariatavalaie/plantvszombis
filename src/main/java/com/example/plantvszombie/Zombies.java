@@ -31,21 +31,28 @@ public abstract class Zombies {
         walker = new TranslateTransition(Duration.seconds(durationInSeconds), image);
         walker.setByX(direction * distance);
         walker.setOnFinished(e -> {
+             x+=direction;
             System.out.println(x);
 
             if((x < 0 && direction == -1)){
                 inHouse=true;
+                walker.stop();
                 return;
             }
             if ((x >8 && direction == 1) || hp <= 0) {
                 hp = 0;
                 System.out.println("Zombie reached the end!");
+                walker.stop();
                 return;
             }
             walker.playFromStart();
+
+
         });
         walker.play();
         AnimationManager.register(walker);
+
+
     }
 
 
