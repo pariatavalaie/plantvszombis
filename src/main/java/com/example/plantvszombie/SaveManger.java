@@ -76,7 +76,7 @@ public class SaveManger {
                 
                 for (PlanetState p : gameState.getPlanets()) {
                     Planet.on();
-                    yard.placeplanet(p.type, p.col, p.row);
+                    yard.placePlanet(p.type, p.col, p.row);
                     Planet planet=yard.findPlanet(p.col,p.row);
                     planet.loadpplanet(p,yard.yardPane);
                     if(p.active&&!planet.dayPlanet&& yard.day){

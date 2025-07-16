@@ -108,13 +108,13 @@ public class Yard {
                             }
                             success = true;
                         } else if ("bean".equals(sel) && bean) {
-                            placeplanet("bean", col, row);
+                            placePlanet("bean", col, row);
                             success = true;
                         } else if ("Grave".equals(sel) && findStoneGrave(col, row) != null) {
-                            placeplanet("Grave", col, row);
+                            placePlanet("Grave", col, row);
                             success = true;
                         } else if (empty && isPlaceable(sel)) {
-                            placeplanet(sel, col, row);
+                            placePlanet(sel, col, row);
                             success = true;
                         }
                     }
@@ -232,7 +232,7 @@ public class Yard {
         return null;
     }
 
-    public void placeplanet(String planet,int col,int row){
+    public void placePlanet(String planet, int col, int row){
         ImageView plantView = null;
         Planet planet1;
         if(Planet.canPlaceMap.get(planet)) {
@@ -252,7 +252,6 @@ public class Yard {
         } else {
             planet1 = null;
         }
-
 
         if(planet.equals("Doom")) {
             plantView = planet1.eatimage;
@@ -304,15 +303,7 @@ public class Yard {
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> removePlanet(planet1)));
             timeline.play();
 
-        }else if(planet.equals("Ice")) {
-            plantView=planet1.eatimage;
-            if(!day){
-                if(planet1.dead){
-                    planets.remove(planet1);
-                }
-            }
-
-        } else if (planet.equals("Hypno")) {
+        } else if (planet.equals("Hypno")||planet.equals("Ice")) {
             plantView=planet1.eatimage;
             if(!day){
                 plantView=planet1.image;
@@ -323,7 +314,6 @@ public class Yard {
             s.remove(graves);
 
         }
-
 
         plantView.setFitWidth(70);
         plantView.setFitHeight(70);
@@ -401,8 +391,6 @@ public class Yard {
 
     public void updateButtons() {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {
-
-
             buttonManager.update(Planet.canPlaceMap,Planet.costMap,Sun.collectedpoint);
         }));
 
