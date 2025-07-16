@@ -50,4 +50,5 @@ public class Jalapeno extends Planet implements Act {
     String gettype() {
         return "jalapeno";
     }
+
 }

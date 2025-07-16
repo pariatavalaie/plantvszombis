@@ -22,7 +22,7 @@ public abstract class Planet {
     boolean dayPlanet;
     boolean active=false;
     public static Map<String, Boolean> canPlaceMap = new HashMap<>();
-     static  Map<String, Integer> costMap = new HashMap<>();
+    public static  Map<String, Integer> costMap = new HashMap<>();
     static {
         int[] costs = {100, 200, 50, 50,125, 175, 150,125, 125,25,100, 75, 75, 75, 75, 0, 25,};
         String[] names={"Peashooter","Repeater","Sunflower", "Wall-nut","Tall-nut","Snow Pea","Cherry Bomb","jalapeno",
@@ -88,6 +88,7 @@ public abstract class Planet {
         b.setDisable(true);
         b.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
     }
+
 
 
 }
