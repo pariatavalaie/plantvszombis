@@ -258,9 +258,10 @@ public class HelloApplication extends Application {
 
         Button resumeButton = new Button("▶ resume");
         Button saveButton = new Button("💾 save");
+        Button menuButton=new Button("☰ menu");
         Button exitButton = new Button("❌ exit");
 
-        pauseMenu.getChildren().addAll(resumeButton, saveButton, exitButton);
+        pauseMenu.getChildren().addAll(resumeButton, saveButton,menuButton ,exitButton);
         StackPane pauseGroup = new StackPane(overlay, pauseMenu);
         yard.yardPane.getChildren().add(pauseGroup);
 
@@ -273,6 +274,14 @@ public class HelloApplication extends Application {
             saveManger.saveGame(yard, "save.dat");
             yard.yardPane.getChildren().remove(pauseGroup);
             AnimationManager.resumeAll();
+        });
+        menuButton.setOnAction(e -> {
+            HelloApplication helloApp = new HelloApplication();
+            try {
+                helloApp.start(stage);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         exitButton.setOnAction(e -> Platform.exit());
