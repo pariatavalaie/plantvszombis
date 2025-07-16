@@ -24,6 +24,7 @@ public class Scaredy extends Shooter implements Act{
     }
     @Override
     public void act(Pane root , ArrayList<Zombies> zombies) {
+        active=true;
         double gridX = 245.0; // Left anchor of grid
         double gridY = 60.0;  // Top anchor of grid
         double cellWidth = 80.0;
@@ -77,7 +78,8 @@ public class Scaredy extends Shooter implements Act{
                 baseState.dead,
                 ((ShooterState)baseState).bulletStates,
                 baseState.remainingCooldown,
-                scaredValue
+                scaredValue,
+                active
         );
     }
 

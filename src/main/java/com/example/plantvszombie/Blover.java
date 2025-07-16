@@ -22,6 +22,7 @@ public class Blover extends Planet implements specialAct{
 
     @Override
    public void act(Pane root) {
+        active=true;
         fog.hideTemporarily();
 
         Timeline restoreTimeline = new Timeline(new KeyFrame(Duration.seconds(5), e -> fog.restore()));

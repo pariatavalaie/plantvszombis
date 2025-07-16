@@ -19,6 +19,7 @@ public class GraveBuster extends Planet implements specialAct{
     }
     @Override
     public void act(Pane root) {
+        active=true;
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(event -> {
             remove(root);

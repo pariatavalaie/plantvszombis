@@ -14,7 +14,7 @@ abstract class Shooter extends Planet {
         for (Bullet b : bullets) {
             bulletStates.add(new BulletState(b.x, b.y, b.speed, b.type, b.imageBullet.getTranslateX() + b.imageBullet.getLayoutX(), b.imageBullet.getTranslateY() + b.imageBullet.getLayoutY(), b.xzombie, b.hit));
         }
-        return new ShooterState(s.col,s.row,s.type,s.health,s.dead,bulletStates,s.remainingCooldown);
+        return new ShooterState(s.col,s.row,s.type,s.health,s.dead,bulletStates,s.remainingCooldown,active);
 
     }
 

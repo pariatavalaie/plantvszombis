@@ -195,6 +195,7 @@ public class Yard {
         Timeline s=new Timeline(new KeyFrame(Duration.seconds(1),event -> {
         ArrayList<Zombies> zombieCopy = new ArrayList<>(Zombies);
         for (Zombies zombie : zombieCopy) {
+            zombie.freezeZombie();
             zombie.damage(planets, yardPane);
             zombie.checkAndEatPlant(planets, yardPane);
             zombie.checkAndEatZombie(Zombies, yardPane);
@@ -216,7 +217,7 @@ public class Yard {
         s.play();
     }
 
-    private void removePlanet(Planet planet) {
+    public void removePlanet(Planet planet) {
         planet.remove(yardPane);
         planets.remove(planet);
 
@@ -370,12 +371,9 @@ public class Yard {
             if(x instanceof Iceshroom){if(x.dead){planets.remove(x);};x.eatimage.setImage(x.image.getImage());
             }
             if(x instanceof Hypnoshroom){
-                ( (Hypnoshroom) x ).active=true;
                 x.eatimage.setImage(x.image.getImage());
             }
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-                removePlanet(b);
-            }));
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> removePlanet(b)));
             timeline.play();
             Sun.collectedpoint-=Planet.costMap.get(planet);
         }else if(planet.equals("Ice") &&Planet.canPlaceMap.get(planet)) {
@@ -397,7 +395,7 @@ public class Yard {
             h.cooldown(buttonManager.getButton("Hypno"),Planet.costMap.get(planet));
             plantView=h.eatimage;
             if(!day){
-                ((Hypnoshroom)h).active=true;
+                h.active=true;
                 plantView=h.image;
                 ((Act)h).act(yardPane,Zombies);
             }

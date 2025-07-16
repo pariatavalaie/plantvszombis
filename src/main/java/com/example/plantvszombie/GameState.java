@@ -109,20 +109,22 @@ public class GameState implements Serializable {
     public int health;
     public boolean dead;
     public double remainingCooldown;
-    public PlanetState(int col, int row, String type, int health, boolean dead, double remainingCooldown) {
+    public boolean active;
+    public PlanetState(int col, int row, String type, int health, boolean dead, double remainingCooldown,boolean active) {
         this.col = col;
         this.row = row;
         this.type = type;
         this.health = health;
         this.dead = dead;
         this.remainingCooldown = remainingCooldown;
+        this.active = active;
     }
 }
 class OtherPlanetState extends PlanetState implements Serializable {
     boolean other;
 
-    public OtherPlanetState(int col, int row, String type, int health, boolean dead, double remainingCooldown, boolean other) {
-        super(col, row, type, health, dead, remainingCooldown);
+    public OtherPlanetState(int col, int row, String type, int health, boolean dead, double remainingCooldown, boolean other,boolean active) {
+        super(col, row, type, health, dead, remainingCooldown, active);
         this.other = other;
     }
     public boolean isOther() {
@@ -132,16 +134,16 @@ class OtherPlanetState extends PlanetState implements Serializable {
 }
 class ShooterState extends PlanetState implements Serializable {
     ArrayList<BulletState>bulletStates;
-    ShooterState(int col, int row, String type, int health, boolean dead, ArrayList<BulletState> bulletStates, double remainingCooldown) {
-        super(col, row, type, health, dead, remainingCooldown);
+    ShooterState(int col, int row, String type, int health, boolean dead, ArrayList<BulletState> bulletStates, double remainingCooldown,boolean active) {
+        super(col, row, type, health, dead, remainingCooldown,active);
         this.bulletStates = bulletStates;
     }
 
 }
 class scardyState extends ShooterState implements Serializable {
     boolean scardy;
-    public scardyState(int col, int row, String type, int health, boolean dead, ArrayList<BulletState> bulletStates, double remainingCooldown,boolean scardy) {
-        super(col, row, type, health, dead,bulletStates,remainingCooldown);
+    public scardyState(int col, int row, String type, int health, boolean dead, ArrayList<BulletState> bulletStates, double remainingCooldown,boolean scardy,boolean active) {
+        super(col, row, type, health, dead,bulletStates,remainingCooldown,active);
         this.scardy = scardy;
 
     }

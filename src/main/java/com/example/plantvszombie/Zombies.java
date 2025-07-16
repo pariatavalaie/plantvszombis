@@ -26,12 +26,12 @@ public abstract class Zombies {
     boolean fighting=false;
     public int direction = -1;
     void move(Pane root){
-        double distance = 80;
+        double distance = 75;
         double durationInSeconds = speed;
         walker = new TranslateTransition(Duration.seconds(durationInSeconds), image);
         walker.setByX(direction * distance);
         walker.setOnFinished(e -> {
-            x += direction;
+            System.out.println(x);
 
             if((x < 0 && direction == -1)){
                 inHouse=true;
@@ -210,6 +210,30 @@ public abstract class Zombies {
                 this.fighting
 
         );
+    }
+    public void freezeZombie() {
+        if(!Iceshroom.activate){
+            if (this.isAlive()) {
+                if (this.walker != null) this.walker.play();
+                if (this.eating != null) this.eating.play();
+                this.image.setEffect(null);
+            }
+        }else{
+            if(this.isAlive()) {
+                if (this.walker != null) {
+                    this.walker.pause();
+                }
+                if (this.eating != null) {
+                    this.eating.pause();
+                }
+
+                ColorAdjust blueTint = new ColorAdjust();
+                blueTint.setHue(0.6);
+                blueTint.setSaturation(1.0);
+                blueTint.setBrightness(0.5);
+                this.image.setEffect(blueTint);
+            }
+        }
     }
 
 

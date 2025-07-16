@@ -23,6 +23,7 @@ public class Doomshroom extends Planet implements Act{
 
     @Override
     public void act(Pane root, ArrayList<Zombies> Zombies) {
+        active=true;
         double gridX = 245.0;
         double gridY = 60.0;
         double cellWidth = 80.0;

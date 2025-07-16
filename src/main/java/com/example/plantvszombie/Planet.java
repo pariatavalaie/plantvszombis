@@ -19,7 +19,8 @@ public abstract class Planet {
     ImageView eatimage;
     boolean dead = false;
     PauseTransition cooldown;
-    Boolean dayPlanet;
+    boolean dayPlanet;
+    boolean active=false;
     public static Map<String, Boolean> canPlaceMap = new HashMap<>();
      static  Map<String, Integer> costMap = new HashMap<>();
     static {
@@ -47,7 +48,7 @@ public abstract class Planet {
         if (cooldown != null) {
             remaining = cooldown.getCurrentTime().toSeconds();
         }
-        return new PlanetState(col, row, gettype(), health, dead, remaining);
+        return new PlanetState(col, row, gettype(), health, dead, remaining,active);
     }
 
     public void loadpplanet(PlanetState planetState, Pane root) {
@@ -64,7 +65,7 @@ public abstract class Planet {
 
     static void on() {
        for (String name : canPlaceMap.keySet()) {
-           canPlaceMap.put(name, false);
+           canPlaceMap.put(name, true);
        }
     }
 
@@ -87,6 +88,7 @@ public abstract class Planet {
         b.setDisable(true);
         b.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
     }
+
 
 }
  interface Act {

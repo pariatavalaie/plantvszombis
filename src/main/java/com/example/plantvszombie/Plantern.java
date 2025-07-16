@@ -26,6 +26,7 @@ public class Plantern extends Planet implements specialAct{
 
     @Override
    public void act(Pane root) {
+        active=true;
         if (!dead && lightUpdater == null) {
             lightUpdater = new Timeline(new KeyFrame(Duration.seconds(0.3), e -> updateLight()));
             lightUpdater.setCycleCount(Timeline.INDEFINITE);

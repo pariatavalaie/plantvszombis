@@ -22,6 +22,7 @@ public class Jalapeno extends Planet implements Act {
     }
     @Override
     public void act(Pane pene , ArrayList<Zombies> Zombies){
+        active=true;
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
         for(Zombies z : Zombies){
             if(z.y == this.row&&z.x<=8){

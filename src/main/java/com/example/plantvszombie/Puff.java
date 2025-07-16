@@ -22,6 +22,7 @@ public class Puff extends Shooter implements Act{
     }
     @Override
     public void act(Pane root,ArrayList<Zombies>zombies){
+        active=true;
         double gridX = 245.0; // Left anchor of grid
         double gridY = 60.0;  // Top anchor of grid
 

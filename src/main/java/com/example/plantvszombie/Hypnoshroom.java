@@ -10,7 +10,6 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Hypnoshroom extends Planet implements Act{
-    boolean active=false;
     public Hypnoshroom(int x,int y) {
         this.col = x;
         this.row = y;
@@ -23,6 +22,7 @@ public class Hypnoshroom extends Planet implements Act{
 
     @Override
     public void act(Pane root, ArrayList<Zombies> Zombies) {
+        active=true;
         boolean[] firsttime={true};
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100),event -> {
         for (Zombies z : Zombies) {
@@ -54,7 +54,8 @@ public class Hypnoshroom extends Planet implements Act{
                 baseState.health,
                 baseState.dead,
                 baseState.remainingCooldown,
-                scaredValue
+                scaredValue,
+                active
         );
     }
 

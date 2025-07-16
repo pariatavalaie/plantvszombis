@@ -1,8 +1,11 @@
 package com.example.plantvszombie;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -76,6 +79,9 @@ public class SaveManger {
                     yard.placeplanet(p.type, p.col, p.row);
                     Planet planet=yard.findPlanet(p.col,p.row);
                     planet.loadpplanet(p,yard.yardPane);
+                    if(p.active&&!planet.dayPlanet&& yard.day){
+                        nightPlanetOn(yard,planet);
+                    }
 
                 }
                 for (SunState s : gameState.getSuns()){
@@ -103,6 +109,35 @@ public class SaveManger {
               return null;
             }
 
+        }
+        private void nightPlanetOn(Yard yard,Planet x) {
+            if (x instanceof Act) {
+                ((Act)x).act(yard.yardPane, yard.Zombies);
+            }
+            if (x instanceof specialAct) {
+                ((specialAct)x).act(yard.yardPane);
+            }
+            if(x instanceof Doomshroom){
+                Planet Doom = yard.findPlanet(x.col,x.row);
+                yard.lockedCells.add(x.row + "," + x.col);
+                x.eatimage.setImage(x.image.getImage());
+                if (Doom != null) {
+                    Timeline timeline = new Timeline(
+                            new KeyFrame(Duration.seconds(1), e -> {
+                                yard.removePlanet(x);
+                                Rectangle burned = new Rectangle(Yard.GRID_X, Yard.GRID_Y);
+                                burned.setFill(Color.DARKGRAY);
+                                burned.setOpacity(0.6);
+                                yard.gridPane.add(burned,x. col, x.row);
+                            }));
+
+                    timeline.play();}
+            }
+            if(x instanceof Iceshroom){if(x.dead){yard.planets.remove(x);};x.eatimage.setImage(x.image.getImage());
+            }
+            if(x instanceof Hypnoshroom){
+                x.eatimage.setImage(x.image.getImage());
+            }
         }
 }
   class ZombieFactory {
