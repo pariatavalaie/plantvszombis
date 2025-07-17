@@ -25,7 +25,7 @@ public class ButtonManager {
     private final List<String> selectedList;
     private final Button shovelButton;
     private Text number;
-    TextFlow sunpointFlow;
+    private TextFlow sunpointFlow;
 
     public ButtonManager(List<String> selectedList) {
         this.selectedList = selectedList;
@@ -79,12 +79,11 @@ public class ButtonManager {
         db.setContent(content);
 
         String dragImagePath =getImagePathDrag(name);
-        Image dragImage = new Image(getClass().getResource(dragImagePath).toExternalForm());// مسیر عکس برای درگ
+        Image dragImage = new Image(getClass().getResource(dragImagePath).toExternalForm());
         ImageView preview = new ImageView(dragImage);
-        preview.setFitWidth(60);  // عرض دلخواه
-        preview.setFitHeight(40); // ارتفاع دلخواه
+        preview.setFitWidth(60);
+        preview.setFitHeight(40);
         preview.setPreserveRatio(true);
-        // حفظ نسبت تصویر
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
 

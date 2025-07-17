@@ -4,7 +4,10 @@ import java.io.*;
 import java.net.*;
 import java.util.List;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.util.Duration;
 
 public class GameClient {
     private ObjectOutputStream out;
@@ -88,6 +91,14 @@ public class GameClient {
                 case "REQUEST_KILLS" -> {
                     int clientKills = getClientYard().getKilledZombies();
                     sendMessage(new NetworkMessage("MY_KILLS", clientKills));
+                }case "FOG"->{
+                    getClientYard().getFog().enterSlowly();
+                    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {
+                        getClientYard().getFog().bringFogToFront(getClientYard().getYardPane());
+                    }));
+                    timeline.setCycleCount(Timeline.INDEFINITE);
+                    timeline.play();
+                    AnimationManager.register(timeline);
                 }
             }
         });

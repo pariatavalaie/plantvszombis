@@ -47,7 +47,8 @@ public class ZombieWaveManger {
     }
 
     public void start() {
-       //yard.fog.enterSlowly();
+        getYard().getFog().enterSlowly();
+        GameServer.notifyFog();
         getMaintimeline().play();
         AnimationManager.register(getMaintimeline());
     }

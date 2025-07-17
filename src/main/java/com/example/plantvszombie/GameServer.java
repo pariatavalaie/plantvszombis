@@ -67,6 +67,9 @@ public class GameServer {
     public static void notifyGameOver(boolean gameOver) {
         broadcast(new NetworkMessage("GAME_OVER", gameOver));
     }
+    public static void notifyFog(){
+        broadcast(new NetworkMessage("FOG",null));
+    }
 
 
 
