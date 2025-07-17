@@ -205,7 +205,8 @@ public class Yard {
                 killedZombies++;
             }
         }
-            for (Planet planet : planets) {
+        ArrayList<Planet>planetsCopy = new ArrayList<>(planets);
+            for (Planet planet : planetsCopy) {
                 if(planet.dead){
                     this.removePlanet(planet);
                 }

@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+
 
 import java.io.IOException;
 
@@ -21,13 +21,11 @@ public class HelloApplication extends Application {
     public Menu menu = new Menu();
     SaveManger saveManger = new SaveManger();
     boolean isMultiplayer = false;
-    private static Stage primaryStage;
 
 
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
-        this.primaryStage = stage; // تنظیم Stage اصلی
         stage.setTitle("Plant Vs Zombie");
         stage.setResizable(false);
         Image image = new Image(getClass().getResource("/firstpage.png").toExternalForm());
@@ -37,7 +35,6 @@ public class HelloApplication extends Application {
         Pane pane = new Pane();
         pane.getChildren().addAll(yard, menu.Loadgame, menu.Exit, menu.StartGame);
 
-        
         Button multiplayer = new Button("🌐 Multiplayer");
         multiplayer.setLayoutX(450);
         multiplayer.setLayoutY(450);
@@ -73,23 +70,15 @@ public class HelloApplication extends Application {
                 winImage.setX(300);
                 root.getChildren().add(winImage);
             }
-            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(5));
-            pauseTransition.setOnFinished(event -> {
-            HelloApplication helloApplication = new HelloApplication();
-            try {
-                helloApplication.start(primaryStage);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }});
-            pauseTransition.play();
+        Rectangle blocker = new Rectangle(1024, 626, Color.TRANSPARENT);
+        blocker.setMouseTransparent(false);
+        root.getChildren().add(blocker);
 
 
 
     }
 
-    public static Stage getPrimaryStage() {
-        return primaryStage;
-    }
+
 
     private void showMultiplayerMenu() {
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -205,9 +194,7 @@ public class HelloApplication extends Application {
             if (menu.countPlant == 6&&!isMultiplayer) play();
             else if(isMultiplayer&&menu.countPlant == 6) startMultiplayerGame(true);
             else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("You have to choose 6 plants");
-                alert.showAndWait();
+               showError("You have to choose 6 plants");
             }
         });
 
