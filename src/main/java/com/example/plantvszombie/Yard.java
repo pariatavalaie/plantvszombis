@@ -280,7 +280,6 @@ public class Yard {
             if(x instanceof Doomshroom){
                 lockedCells.add(row + "," + col);
                 x.eatimage.setImage(x.image.getImage());
-                if (x!= null) {
                     Timeline timeline = new Timeline(
                             new KeyFrame(Duration.seconds(1), e -> {
                                 removePlanet(x);
@@ -290,7 +289,7 @@ public class Yard {
                                 gridPane.add(burned, col, row);
                             }));
 
-                    timeline.play();}
+                    timeline.play();
             }
             if(x instanceof Iceshroom){if(x.dead){planets.remove(x);}
                 x.eatimage.setImage(x.image.getImage());
@@ -330,38 +329,27 @@ public class Yard {
         Planet newPlanet = null;
         switch (planetName) {
             case "Sunflower":
-                newPlanet = new Sunflower(col, row);
-                return newPlanet;
+                return new Sunflower(col, row);
             case "Peashooter":
-                newPlanet = new Peashooter(col, row);
-                return newPlanet;
+                return new Peashooter(col, row);
             case "Repeater":
-                newPlanet = new Repeater(col, row);
-                return newPlanet;
+                return new Repeater(col, row);
             case "Snow Pea":
-                newPlanet = new SnowPea(col, row);
-                return newPlanet;
+                 return new SnowPea(col, row);
             case "Cherry Bomb":
-                newPlanet = new Cherry(col, row);
-                return newPlanet;
+                return new Cherry(col, row);
             case "jalapeno":
-                newPlanet = new Jalapeno(col, row);
-                return newPlanet;
+                return new Jalapeno(col, row);
             case "Wall-nut":
-                newPlanet = new WallNut(col, row);
-                return newPlanet;
+                return new WallNut(col, row);
             case "Tall-nut":
-                newPlanet = new TallNut(col, row);
-                return newPlanet;
+                return new TallNut(col, row);
             case "Puff":
-                newPlanet = new Puff(col, row);
-                return newPlanet;
+               return new Puff(col, row);
             case "Doom":
-                newPlanet = new Doomshroom(col, row);
-                return newPlanet;
+                return new Doomshroom(col, row);
             case "Scaredy":
-                newPlanet = new Scaredy(col, row);
-                return newPlanet;
+                return new Scaredy(col, row);
             case "plantern":
                 newPlanet = new Plantern(col, row,fog);
                 return newPlanet;
