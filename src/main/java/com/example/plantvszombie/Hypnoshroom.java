@@ -47,12 +47,12 @@ public class Hypnoshroom extends Planet implements Act{
         boolean scaredValue = this.isActive();
 
         return new OtherPlanetState(
-                baseState.col,
-                baseState.row,
-                baseState.type,
-                baseState.health,
-                baseState.dead,
-                baseState.remainingCooldown,
+                baseState.getCol(),
+                baseState.getRow(),
+                baseState.getType(),
+                baseState.getHealth(),
+                baseState.isDead(),
+                baseState.getRemainingCooldown(),
                 scaredValue,
                 isActive()
         );

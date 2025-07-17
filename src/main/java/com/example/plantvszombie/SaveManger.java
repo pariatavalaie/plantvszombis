@@ -50,7 +50,7 @@ public class SaveManger {
                 GameState gameState = (GameState) in.readObject();
                  Yard yard=new Yard(gameState.getSelected(),gameState.isDay());
                 yard.updateButtons();
-                Set<String> lockedCells = gameState.lockedCells;
+                Set<String> lockedCells = gameState.getLockedCells();
 
                 if (lockedCells != null) {
                     for (String cell : lockedCells) {
@@ -73,10 +73,10 @@ public class SaveManger {
                 
                 for (PlanetState p : gameState.getPlanets()) {
                     Planet.on();
-                    yard.placePlanet(p.type, p.col, p.row);
-                    Planet planet=yard.findPlanet(p.col,p.row);
+                    yard.placePlanet(p.getType(), p.getCol(), p.getRow());
+                    Planet planet=yard.findPlanet(p.getCol(), p.getRow());
                     planet.loadpplanet(p,yard.yardPane);
-                    if(p.active&&!planet.isDayPlanet() && yard.day){
+                    if(p.isActive() &&!planet.isDayPlanet() && yard.day){
                       yard.activatePlanet(planet);
                     }
 

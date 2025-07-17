@@ -67,13 +67,13 @@ public class Scaredy extends Shooter{
         boolean scaredValue = this.scared;
 
         return new scardyState(
-                baseState.col,
-                baseState.row,
-                baseState.type,
-                baseState.health,
-                baseState.dead,
-                ((ShooterState)baseState).bulletStates,
-                baseState.remainingCooldown,
+                baseState.getCol(),
+                baseState.getRow(),
+                baseState.getType(),
+                baseState.getHealth(),
+                baseState.isDead(),
+                ( (ShooterState) baseState ).getBulletStates(),
+                baseState.getRemainingCooldown(),
                 scaredValue,
                 isActive()
         );
@@ -81,6 +81,6 @@ public class Scaredy extends Shooter{
     @Override
     public void loadpplanet(PlanetState planetState, Pane root) {
         super.loadpplanet(planetState, root);
-        this.scared=((scardyState)planetState).scardy;
+        this.scared= ( (scardyState) planetState ).isScardy();
     }
 }

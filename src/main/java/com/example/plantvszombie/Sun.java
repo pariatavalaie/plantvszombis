@@ -100,18 +100,18 @@ public class Sun {
     }
     public SunState getState() {
         SunState state = new SunState();
-        state.x = sunImage.getLayoutX();
-        state.y = sunImage.getLayoutY();
-        state.z=sunImage.getTranslateY();
-        state.isFalling = isFalling;
+        state.setX(sunImage.getLayoutX());
+        state.setY(sunImage.getLayoutY());
+        state.setZ(sunImage.getTranslateY());
+        state.setFalling(isFalling);
         return state;
     }
     public static Sun fromState(SunState state, Pane root) {
         Sun sun = new Sun();
-        if (state.isFalling) {
-            sun.fallingSun(root, state.x, state.z);
+        if (state.isFalling()) {
+            sun.fallingSun(root, state.getX(), state.getZ());
         } else {
-            sun.sunflower(root, state.x, state.y);
+            sun.sunflower(root, state.getX(), state.getY());
         }
         return sun;
     }

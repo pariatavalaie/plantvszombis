@@ -91,8 +91,8 @@ public class Fog {
     }
     public FogState buildState() {
         FogState state = new FogState();
-        state.currentTranslateX = fogRect.getTranslateX();
-        state.isVisible = fogRect.isVisible();
+        state.setCurrentTranslateX(fogRect.getTranslateX());
+        state.setVisible(fogRect.isVisible());
         for (Circle c : holes) {
             state.holes.add(new LanternHoleState(c.getCenterX(), c.getCenterY(), c.getRadius()));
         }
@@ -100,9 +100,9 @@ public class Fog {
     }
 
     public void restoreState(FogState state) {
-        this.currentTranslateX = state.currentTranslateX;
-        fogRect.setTranslateX(state.currentTranslateX);
-        fogRect.setVisible(state.isVisible);
+        this.currentTranslateX = state.getCurrentTranslateX();
+        fogRect.setTranslateX(state.getCurrentTranslateX());
+        fogRect.setVisible(state.isVisible());
 
         System.out.println("S");
         holes.clear();

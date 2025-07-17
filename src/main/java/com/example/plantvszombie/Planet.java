@@ -60,13 +60,13 @@ public abstract class Planet {
     }
 
     public void loadpplanet(PlanetState planetState, Pane root) {
-        this.setDead(planetState.dead);
-        if (planetState.remainingCooldown != 0) {
+        this.setDead(planetState.isDead());
+        if (planetState.getRemainingCooldown() != 0) {
             if (getCooldown() == null) {
                 setCooldown(new PauseTransition(Duration.seconds(getWatingtime())));
             }
             getCooldown().setDuration(Duration.seconds(getWatingtime()));
-            getCooldown().jumpTo(Duration.seconds(planetState.remainingCooldown));
+            getCooldown().jumpTo(Duration.seconds(planetState.getRemainingCooldown()));
             getCooldown().play();
         }
     }

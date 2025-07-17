@@ -46,15 +46,15 @@ abstract class Shooter extends Planet implements Act {
         for (Bullet b : bullets) {
             bulletStates.add(new BulletState(b.x, b.y, b.speed, b.type, b.imageBullet.getTranslateX() + b.imageBullet.getLayoutX(), b.imageBullet.getTranslateY() + b.imageBullet.getLayoutY(), b.xzombie, b.hit));
         }
-        return new ShooterState(s.col,s.row,s.type,s.health,s.dead,bulletStates,s.remainingCooldown, isActive());
+        return new ShooterState(s.getCol(), s.getRow(), s.getType(), s.getHealth(), s.isDead(),bulletStates, s.getRemainingCooldown(), isActive());
 
     }
 
     @Override
     public void loadpplanet(PlanetState planetState, Pane root) {
         super.loadpplanet(planetState, root);
-        for (BulletState bullet :((ShooterState)planetState).bulletStates) {
-            Bullet bullet1 = new Bullet(bullet.x, bullet.y, bullet.getSpeed(), bullet.getType());
+        for (BulletState bullet : ( (ShooterState) planetState ).getBulletStates()) {
+            Bullet bullet1 = new Bullet(bullet.getX(), bullet.getY(), bullet.getSpeed(), bullet.getType());
             bullet1.shoot(root, bullet.getTranslateX(), bullet.getXzombie(), bullet.getTranslateY());
             this.bullets.add(bullet1);
         }
