@@ -1,5 +1,4 @@
 package com.example.plantvszombie;
-import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -50,8 +49,8 @@ public class HelloApplication extends Application {
             Yard yard1 = saveManger.loadGame("save.dat");
             pauseButton(yard1);
             yard1.updateButtons();
-            if (yard1.day) Sun.fall(yard1.yardPane);
-            Scene scene1 = new Scene(yard1.yardPane, 1024, 626);
+            if (yard1.isDay()) Sun.fall(yard1.getYardPane());
+            Scene scene1 = new Scene(yard1.getYardPane(), 1024, 626);
             stage.setScene(scene1);
         });
 
@@ -125,7 +124,7 @@ public class HelloApplication extends Application {
     private void startMultiplayerGame(boolean isServer, String host) {
         if (isServer) {
             Yard yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
-            yard.isServer = true;
+            yard.setServer(true);
             pauseButton(yard);
             yard.updateButtons();
             GameServer.yard = yard;
@@ -139,21 +138,21 @@ public class HelloApplication extends Application {
 
             GameServer.start(yard, () -> {
 
-                if (yard.day) Sun.fall(yard.yardPane);
+                if (yard.isDay()) Sun.fall(yard.getYardPane());
                 ZombieWaveManger zw = new ZombieWaveManger(yard);
                 zw.start();
 
-                Scene scene = new Scene(yard.yardPane, 1024, 626);
+                Scene scene = new Scene(yard.getYardPane(), 1024, 626);
                 stage.setScene(scene);
             });
 
         } else {
             try {
                 GameClient client = new GameClient(host, 54321);
-                Yard yard = client.clientYard;
+                Yard yard = client.getClientYard();
                 yard.updateButtons();
 
-                Scene scene = new Scene(yard.yardPane, 1024, 626);
+                Scene scene = new Scene(yard.getYardPane(), 1024, 626);
                 stage.setScene(scene);
             } catch (IOException e) {
                 showError("Cannot connect to server.");
@@ -168,11 +167,11 @@ public class HelloApplication extends Application {
     private void play() {
         Yard yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
         pauseButton(yard);
-        if (menu.day) Sun.fall(yard.yardPane);
+        if (menu.day) Sun.fall(yard.getYardPane());
         ZombieWaveManger zw = new ZombieWaveManger(yard);
         zw.start();
         yard.updateButtons();
-        Scene scene1 = new Scene(yard.yardPane, 1024, 626);
+        Scene scene1 = new Scene(yard.getYardPane(), 1024, 626);
         stage.setScene(scene1);
     }
 
@@ -250,16 +249,16 @@ public class HelloApplication extends Application {
 
         pauseMenu.getChildren().addAll(resumeButton, saveButton,menuButton ,exitButton);
         StackPane pauseGroup = new StackPane(overlay, pauseMenu);
-        yard.yardPane.getChildren().add(pauseGroup);
+        yard.getYardPane().getChildren().add(pauseGroup);
 
         resumeButton.setOnAction(e -> {
-            yard.yardPane.getChildren().remove(pauseGroup);
+            yard.getYardPane().getChildren().remove(pauseGroup);
             AnimationManager.resumeAll();
         });
 
         saveButton.setOnAction(e -> {
             saveManger.saveGame(yard, "save.dat");
-            yard.yardPane.getChildren().remove(pauseGroup);
+            yard.getYardPane().getChildren().remove(pauseGroup);
             AnimationManager.resumeAll();
         });
         menuButton.setOnAction(e -> {
@@ -287,7 +286,7 @@ public class HelloApplication extends Application {
             showPauseMenu(yard);
             AnimationManager.pauseAll();
         });
-        yard.yardPane.getChildren().add(pauseButton);
+        yard.getYardPane().getChildren().add(pauseButton);
     }
 
     private void showError(String message) {

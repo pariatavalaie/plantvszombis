@@ -10,60 +10,76 @@ import java.util.Random;
 import java.util.Set;
 
 public class ZombieWaveManger {
-     static Timeline maintimeline;
-    Yard yard;
-    static int gameTime;
-    boolean win = false;
-    boolean lose = false;
+     private static Timeline maintimeline;
+    private Yard yard;
+    private static int gameTime;
+    private boolean win = false;
+    private boolean lose = false;
     ZombieWaveManger(Yard yard) {
-        this.yard = yard;
-        gameTime = 0;
+        this.setYard(yard);
+        setGameTime(0);
         setupTimeline();
     }
 
+    public static Timeline getMaintimeline() {
+        return maintimeline;
+    }
+
+    public static void setMaintimeline(Timeline maintimeline) {
+        ZombieWaveManger.maintimeline = maintimeline;
+    }
+
+    public static int getGameTime() {
+        return gameTime;
+    }
+
+    public static void setGameTime(int gameTime) {
+        ZombieWaveManger.gameTime = gameTime;
+    }
+
     private void setupTimeline() {
-        maintimeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> tick()));
-        maintimeline.setOnFinished(event -> {
-            if(!win){
-            lose = true;}
+        setMaintimeline(new Timeline(new KeyFrame(Duration.seconds(1), e -> tick())));
+        getMaintimeline().setOnFinished(event -> {
+            if(!isWin()){
+            setLose(true);}
         });
-        maintimeline.setCycleCount(240);
+        getMaintimeline().setCycleCount(240);
     }
 
     public void start() {
        //yard.fog.enterSlowly();
-        maintimeline.play();
-        AnimationManager.register(maintimeline);
+        getMaintimeline().play();
+        AnimationManager.register(getMaintimeline());
     }
 
     private void tick() {
-        gameTime++;
+        setGameTime(getGameTime() + 1);
 
-        if (gameTime>=5 && gameTime <= 40) waveStage1();
-        else if ( gameTime>=42 && gameTime <= 120 ) waveStage2();
-        else if (gameTime >= 120 && gameTime<= 180) waveStage3();
+        if (getGameTime() >=5 && getGameTime() <= 40) waveStage1();
+        else if ( getGameTime() >=42 && getGameTime() <= 120 ) waveStage2();
+        else if (getGameTime() >= 120 && getGameTime() <= 180) waveStage3();
         // else if (gameTime <= 240) waveStage4();
 
         // حملات ویژه
-        if (gameTime >= 50 && gameTime <= 70) halfAttack();
+        if (getGameTime() >= 50 && getGameTime() <= 70) halfAttack();
         //if (gameTime >= 47 && gameTime <= 60) finalAttack(); // حمله پایانی
-       yard.fog.bringFogToFront(yard.yardPane);
-        for (Zombies z : yard.Zombies) {
+       getYard().getFog().bringFogToFront(getYard().getYardPane());
+        for (Zombies z : getYard().getZombies()) {
             if (z.isInHouse()) {
-                lose = true;
+                setLose(true);
                 GameServer.notifyGameOver(true);
-                maintimeline.stop();
+                getMaintimeline().stop();
                 System.out.println("Zombie entered the house! You lose.");
-                Platform.runLater(() -> yard.triggerGameEnd(false));
+                Platform.runLater(() -> getYard().triggerGameEnd(false));
                 break;
             }
         }
-        if (gameTime >= 240 && !lose) {
-            if(!yard.isServer){
-            win = true;
-            maintimeline.stop();
+        if (getGameTime() >= 240 && !isLose()) {
+            if(!getYard().isServer()){
+            setWin(true);
+            getMaintimeline().stop();
             System.out.println("Time's up! You win.");
-            Platform.runLater(() -> yard.triggerGameEnd(true));}
+            Platform.runLater(() -> getYard().triggerGameEnd(true));}
             else {
                 GameServer.broadcast(new NetworkMessage("REQUEST_KILLS", null));
             }
@@ -71,13 +87,13 @@ public class ZombieWaveManger {
     }
 
     private void waveStage1() {
-        if (gameTime % 7 == 0) { //5 zombie
+        if (getGameTime() % 7 == 0) { //5 zombie
             spawnZombie("Normal", 1);
         }
     }
 
     private void waveStage2() {
-        if (gameTime % 20 == 0) { //6 zombie
+        if (getGameTime() % 20 == 0) { //6 zombie
             int x = new Random().nextInt(2);
             switch (x) {
                 case 0:
@@ -91,7 +107,7 @@ public class ZombieWaveManger {
     }
 
     private void waveStage3() {
-        if (gameTime % 10 == 0) { //18 zombie
+        if (getGameTime() % 10 == 0) { //18 zombie
             spawnZombie("Normal", 1);
             spawnZombie("Conehead", 1);
             spawnZombie("Screendor", 1);
@@ -99,7 +115,7 @@ public class ZombieWaveManger {
     }
 
     private void waveStage4() {
-        if (gameTime % 12 == 0) {
+        if (getGameTime() % 12 == 0) {
             spawnZombie("Normal", 2);
             spawnZombie("Conehead", 2);
             spawnZombie("Screendor", 2);
@@ -108,7 +124,7 @@ public class ZombieWaveManger {
     }
 
     private void halfAttack() {
-        if (gameTime % 10 == 0) {
+        if (getGameTime() % 10 == 0) {
             for (int i = 0; i < 2; i++) {
                 spawnZombie("Normal", 1);
                 spawnZombie("Conehead", 1);
@@ -117,7 +133,7 @@ public class ZombieWaveManger {
     }
 
     private void finalAttack() {
-        if (gameTime % 1 == 0) {
+        if (getGameTime() % 1 == 0) {
             for (int i = 0; i < 15; i++) {
                 spawnZombie("Normal", 1);
                 spawnZombie("Conehead", 1);
@@ -146,24 +162,47 @@ public class ZombieWaveManger {
 
             switch (type) {
                 case "Normal":
-                    z = new NormalZombie(9, row, yard.yardPane);
+                    z = new NormalZombie(9, row, getYard().getYardPane());
                     break;
                 case "Conehead":
-                    z = new ConeheadZombie(9, row, yard.yardPane);
+                    z = new ConeheadZombie(9, row, getYard().getYardPane());
                     break;
                 case "Screendor":
-                    z = new ScreendoorZombie(9, row, yard.yardPane);
+                    z = new ScreendoorZombie(9, row, getYard().getYardPane());
                     break;
                 case "Imp":
-                    z = new ImpZombie(9, row, yard.yardPane);
+                    z = new ImpZombie(9, row, getYard().getYardPane());
                     break;
             }
 
             if (z != null) {
-                yard.Zombies.add(z);
+                getYard().getZombies().add(z);
                 GameServer.notifyZombieSpawn(z.getState());
             }
         }
     }
 
+    public Yard getYard() {
+        return yard;
+    }
+
+    public void setYard(Yard yard) {
+        this.yard = yard;
+    }
+
+    public boolean isWin() {
+        return win;
+    }
+
+    public void setWin(boolean win) {
+        this.win = win;
+    }
+
+    public boolean isLose() {
+        return lose;
+    }
+
+    public void setLose(boolean lose) {
+        this.lose = lose;
+    }
 }

@@ -24,7 +24,7 @@ public class Sunflower extends Planet implements specialAct{
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10),event ->{
             if (!isDead()){
             Sun sun=new Sun();
-            Sun.suns.add(sun);
+            Sun.getSuns().add(sun);
             sun.sunflower(root,x,y);}
 
         }));

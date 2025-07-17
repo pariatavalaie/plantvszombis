@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class AnimationManager {
     private static final ArrayList<Animation> animations = new ArrayList<>();
-
     static boolean isPaused = false;
 
     public static void register(Animation a) {

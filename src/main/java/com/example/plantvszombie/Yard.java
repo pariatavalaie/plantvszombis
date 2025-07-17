@@ -14,23 +14,23 @@ import javafx.util.Duration;
 import java.util.*;
 
 public class Yard {
-    AnchorPane yardPane;
-    GridPane gridPane;
+    private AnchorPane yardPane;
+    private GridPane gridPane;
     static final double CELL_WIDTH =80;
     static final double Cell_HEIGHT =100;
      static final double GRID_X = 245.0;
     static  final double GRID_Y = 60.0;
-    List <String> selected;
-    ImageView yard;
-    ArrayList<Planet>planets=new ArrayList<>();
-    ArrayList<Zombies>Zombies=new ArrayList<>();
-    ArrayList<StoneGrave>graves=new ArrayList<>();
-    Fog fog;
-    boolean day;
-   public Set<String> lockedCells = new HashSet<>();
-    ButtonManager buttonManager;
-    boolean isServer;
-    int killedZombies=0;
+    private List <String> selected;
+    private ImageView yard;
+    private ArrayList<Planet>planets=new ArrayList<>();
+    private ArrayList<Zombies>Zombies=new ArrayList<>();
+    private ArrayList<StoneGrave>graves=new ArrayList<>();
+    private Fog fog;
+    private boolean day;
+   private Set<String> lockedCells = new HashSet<>();
+    private ButtonManager buttonManager;
+    private boolean isServer;
+    private int killedZombies=0;
     Yard(List<String> selected,boolean day) {
         Image yar;
         if(day){
@@ -38,23 +38,23 @@ public class Yard {
         else{
             yar =new Image(getClass().getResource("/Night_11zon.png").toExternalForm());
         }
-         yard = new ImageView(yar);
-        yard.setFitWidth(1024);
-        yard.setFitHeight(626);
-        this.selected = selected;
-        yardPane = new AnchorPane(yard);
-        fog = new Fog(yardPane);
-        this.day = day;
-        buttonManager=new ButtonManager(selected);
+         setYard(new ImageView(yar));
+        getYard().setFitWidth(1024);
+        getYard().setFitHeight(626);
+        this.setSelected(selected);
+        setYardPane(new AnchorPane(getYard()));
+        setFog(new Fog(getYardPane()));
+        this.setDay(day);
+        setButtonManager(new ButtonManager(selected));
         System.out.println(selected);
-        buttonManager.addTo(yardPane);
+        getButtonManager().addTo(getYardPane());
         PaintGrid(9, 5);
-        isServer=false;
+        setServer(false);
 
     }
 
     public void PaintGrid(int x, int y) {
-        gridPane = new GridPane();
+        setGridPane(new GridPane());
 
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
@@ -63,7 +63,7 @@ public class Yard {
                 rectangle.setStroke(Color.BLACK);
                 rectangle.setStrokeWidth(0.5);
                 int row = i, col = j;
-                gridPane.add(rectangle, j, i);
+                getGridPane().add(rectangle, j, i);
                 rectangle.setOnDragOver(event -> {
                     if (event.getGestureSource() != rectangle && event.getDragboard().hasString()) {
                         event.acceptTransferModes(TransferMode.COPY);
@@ -82,7 +82,7 @@ public class Yard {
                         boolean bean = false;
                         Planet planet1 = null;
 
-                        for (Planet planet : planets) {
+                        for (Planet planet : getPlanets()) {
                             if (planet.getRow()== row && planet.getCol()== col) {
                                 if (!planet.isDayPlanet()) bean = true;
                                 planet1 = planet;
@@ -90,7 +90,7 @@ public class Yard {
                             }
                         }
 
-                        for (StoneGrave grave : graves) {
+                        for (StoneGrave grave : getGraves()) {
                             if (grave.x == row && grave.y == col) {
                                 empty = false;
                                 break;
@@ -98,12 +98,12 @@ public class Yard {
                         }
 
                         String cellKey = row + "," + col;
-                        if (lockedCells.contains(cellKey)) return;
+                        if (getLockedCells().contains(cellKey)) return;
 
                         if ("shovel".equals(sel)) {
                             if (planet1 != null) {
-                                planet1.remove(yardPane);
-                                planets.remove(planet1);
+                                planet1.remove(getYardPane());
+                                getPlanets().remove(planet1);
                             }
                             success = true;
                         } else if ("bean".equals(sel) && bean) {
@@ -124,15 +124,15 @@ public class Yard {
             }
         }
 
-        yardPane.getChildren().add(gridPane);
+        getYardPane().getChildren().add(getGridPane());
 
-        if (!day) {
-            PaintStone(yardPane, x, y);
+        if (!isDay()) {
+            PaintStone(getYardPane(), x, y);
         }
 
         startMovingAndDetecting();
-        AnchorPane.setTopAnchor(gridPane, Yard.GRID_Y);
-        AnchorPane.setLeftAnchor(gridPane, Yard.GRID_X);
+        AnchorPane.setTopAnchor(getGridPane(), Yard.GRID_Y);
+        AnchorPane.setLeftAnchor(getGridPane(), Yard.GRID_X);
     }
 
     private boolean isPlaceable(String sel) {
@@ -156,7 +156,7 @@ public class Yard {
                 positionOccupied = false;
 
                 // بررسی اینکه گیاهی در این مکان نباشه
-                for (Planet planet : planets) {
+                for (Planet planet : getPlanets()) {
                     if (planet.getCol() == col && planet.getRow() == row) {
                         positionOccupied = true;
                         break;
@@ -164,7 +164,7 @@ public class Yard {
                 }
 
 
-                for (StoneGrave grave : graves) {
+                for (StoneGrave grave : getGraves()) {
                     int dx = Math.abs(grave.x - col);
                     int dy = Math.abs(grave.y - row);
                     if ((dx == 0 && dy == 0) || (dx + dy == 1)) {
@@ -177,14 +177,14 @@ public class Yard {
             } while (positionOccupied);
 
             StoneGrave grave = new StoneGrave(col, row, pane);
-            graves.add(grave);
+            getGraves().add(grave);
 
-            grave.spawnZombie(Zombies, graves);
+            grave.spawnZombie(getZombies(), getGraves());
         }
     }
 
     public Planet findPlanet(int col, int row) {
-        for (Planet planet : planets) {
+        for (Planet planet : getPlanets()) {
             if (planet.getRow()== row && planet.getCol()== col) {
                 return planet;
             }
@@ -193,19 +193,19 @@ public class Yard {
     }
     public void startMovingAndDetecting() {
         Timeline s=new Timeline(new KeyFrame(Duration.seconds(1),event -> {
-        ArrayList<Zombies> zombieCopy = new ArrayList<>(Zombies);
+        ArrayList<Zombies> zombieCopy = new ArrayList<>(getZombies());
         for (Zombies zombie : zombieCopy) {
             zombie.freezeZombie();
-            zombie.damage(planets, yardPane);
-            zombie.checkAndEatPlant(planets, yardPane);
-            zombie.checkAndEatZombie(Zombies, yardPane);
+            zombie.damage(getPlanets(), getYardPane());
+            zombie.checkAndEatPlant(getPlanets(), getYardPane());
+            zombie.checkAndEatZombie(getZombies(), getYardPane());
             if(!zombie.isAlive()){
-                Zombies.remove(zombie);
-                yardPane.getChildren().remove(zombie.getImage());
-                killedZombies++;
+                getZombies().remove(zombie);
+                getYardPane().getChildren().remove(zombie.getImage());
+                setKilledZombies(getKilledZombies() + 1);
             }
         }
-        ArrayList<Planet>planetsCopy = new ArrayList<>(planets);
+        ArrayList<Planet>planetsCopy = new ArrayList<>(getPlanets());
             for (Planet planet : planetsCopy) {
                 if(planet.isDead()){
                     this.removePlanet(planet);
@@ -218,11 +218,11 @@ public class Yard {
     }
 
     public void removePlanet(Planet planet) {
-        planet.remove(yardPane);
-        planets.remove(planet);
+        planet.remove(getYardPane());
+        getPlanets().remove(planet);
     }
     private StoneGrave findStoneGrave(int col, int row) {
-        for (StoneGrave grave : graves) {
+        for (StoneGrave grave : getGraves()) {
             if(grave.x == col && grave.y == row) {
                 return grave;
             }
@@ -235,16 +235,16 @@ public class Yard {
         Planet planet1;
         if(Planet.canPlaceMap.get(planet)) {
             planet1 = createPlanet(planet, col, row);
-            planet1.cooldown(buttonManager.getButton(planet), Planet.costMap.get(planet));
-            planets.add(planet1);
+            planet1.cooldown(getButtonManager().getButton(planet), Planet.costMap.get(planet));
+            getPlanets().add(planet1);
             plantView = planet1.getImage();
-            Sun.collectedpoint -= Planet.costMap.get(planet);
-            if (planet1.isDayPlanet() ||(!planet1.isDayPlanet() &&!day)) {
+            Sun.setCollectedpoint(Sun.getCollectedpoint() - Planet.costMap.get(planet));
+            if (planet1.isDayPlanet() ||(!planet1.isDayPlanet() &&!isDay() )) {
                 if (planet1 instanceof specialAct) {
-                    ( (specialAct) planet1 ).act(yardPane);
+                    ( (specialAct) planet1 ).act(getYardPane());
                 }
                 if (planet1 instanceof Act) {
-                    ( (Act) planet1 ).act(yardPane, Zombies);
+                    ( (Act) planet1 ).act(getYardPane(), getZombies());
                 }
             }
         } else {
@@ -252,7 +252,7 @@ public class Yard {
         }
         if(planet.equals("Doom")||planet.equals("Hypno")||planet.equals("Ice")) {
             plantView = planet1.getEatimage();
-            if (!day) {
+            if (!isDay()) {
                 plantView = planet1.getImage();
                 setLockedCells(col,row,planet1);
             }
@@ -266,7 +266,7 @@ public class Yard {
         }else if(planet.equals("Grave") ) {
             StoneGrave s=findStoneGrave(col,row);
             if (s != null) {
-                s.remove(graves);
+                s.remove(getGraves());
             }
 
         }
@@ -277,33 +277,34 @@ public class Yard {
          double y = GRID_Y + row * Cell_HEIGHT + ( Cell_HEIGHT - 90) / 2;
          plantView.setLayoutX(x);
          plantView.setLayoutY(y);
-         yardPane.getChildren().add(plantView);}
+         getYardPane().getChildren().add(plantView);}
     }
 
     private void setLockedCells(int col, int row,Planet planet) {
         if(planet instanceof Doomshroom){
-        lockedCells.add(row + "," + col);
+        getLockedCells().add(row + "," + col);
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> {
                     removePlanet(planet);
                     Rectangle burned = new Rectangle(CELL_WIDTH, Cell_HEIGHT);
                     burned.setFill(Color.DARKGRAY);
                     burned.setOpacity(0.6);
-                    gridPane.add(burned, col, row);
+                    getGridPane().add(burned, col, row);
                 }));
 
         timeline.play();}
     }
     protected void activatePlanet(Planet x) {
-        if (x instanceof Act) {((Act)x).act(yardPane, Zombies);}
+        if (x instanceof Act) {((Act)x).act(getYardPane(), getZombies());}
 
-        if (x instanceof specialAct) {((specialAct)x).act(yardPane);}
+        if (x instanceof specialAct) {((specialAct)x).act(getYardPane());}
 
         if(x instanceof Doomshroom){
             setLockedCells(x.getCol(),x.getRow(),x);
             x.getEatimage().setImage(x.getImage().getImage());}
 
-        if(x instanceof Iceshroom){if(x.isDead()){planets.remove(x);}
+        if(x instanceof Iceshroom){if(x.isDead()){
+            getPlanets().remove(x);}
             x.getEatimage().setImage(x.getImage().getImage());}
 
         if(x instanceof Hypnoshroom){
@@ -336,7 +337,7 @@ public class Yard {
             case "Scaredy":
                 return new Scaredy(col, row);
             case "plantern":
-                return new Plantern(col, row,fog);
+                return new Plantern(col, row, getFog());
             case "blover":
                 return new Blover(col, row,null);
             case "bean":
@@ -355,7 +356,7 @@ public class Yard {
 
     public void updateButtons() {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {
-            buttonManager.update(Planet.canPlaceMap,Planet.costMap,Sun.collectedpoint);
+            getButtonManager().update(Planet.canPlaceMap,Planet.costMap, Sun.getCollectedpoint());
         }));
 
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -363,7 +364,111 @@ public class Yard {
         AnimationManager.register(timeline);
     }
     public void triggerGameEnd(boolean isWin) {
-        HelloApplication.showGameResult(isWin,yardPane);
+        HelloApplication.showGameResult(isWin, getYardPane());
+    }
+
+    public AnchorPane getYardPane() {
+        return yardPane;
+    }
+
+    public void setYardPane(AnchorPane yardPane) {
+        this.yardPane = yardPane;
+    }
+
+    public GridPane getGridPane() {
+        return gridPane;
+    }
+
+    public void setGridPane(GridPane gridPane) {
+        this.gridPane = gridPane;
+    }
+
+    public List<String> getSelected() {
+        return selected;
+    }
+
+    public void setSelected(List<String> selected) {
+        this.selected = selected;
+    }
+
+    public ImageView getYard() {
+        return yard;
+    }
+
+    public void setYard(ImageView yard) {
+        this.yard = yard;
+    }
+
+    public ArrayList<Planet> getPlanets() {
+        return planets;
+    }
+
+    public void setPlanets(ArrayList<Planet> planets) {
+        this.planets = planets;
+    }
+
+    public ArrayList<Zombies> getZombies() {
+        return Zombies;
+    }
+
+    public void setZombies(ArrayList<Zombies> zombies) {
+        Zombies = zombies;
+    }
+
+    public ArrayList<StoneGrave> getGraves() {
+        return graves;
+    }
+
+    public void setGraves(ArrayList<StoneGrave> graves) {
+        this.graves = graves;
+    }
+
+    public Fog getFog() {
+        return fog;
+    }
+
+    public void setFog(Fog fog) {
+        this.fog = fog;
+    }
+
+    public boolean isDay() {
+        return day;
+    }
+
+    public void setDay(boolean day) {
+        this.day = day;
+    }
+
+    public Set<String> getLockedCells() {
+        return lockedCells;
+    }
+
+    public void setLockedCells(Set<String> lockedCells) {
+        this.lockedCells = lockedCells;
+    }
+
+    public ButtonManager getButtonManager() {
+        return buttonManager;
+    }
+
+    public void setButtonManager(ButtonManager buttonManager) {
+        this.buttonManager = buttonManager;
+    }
+
+    public boolean isServer() {
+        return isServer;
+    }
+
+    public void setServer(boolean server) {
+        isServer = server;
+    }
+
+    public int getKilledZombies() {
+        return killedZombies;
+    }
+
+    public void setKilledZombies(int killedZombies) {
+        this.killedZombies = killedZombies;
     }
 }
 

@@ -82,7 +82,7 @@ public abstract class Planet {
         canPlaceMap.put(this.gettype(), false);
         setCooldown(new PauseTransition(Duration.seconds(this.getWatingtime())));
         getCooldown().setOnFinished(ev -> {
-            if (cost <= Sun.collectedpoint) {
+            if (cost <= Sun.getCollectedpoint()) {
                 Platform.runLater(() -> {
                     b.setDisable(false);
                     b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");

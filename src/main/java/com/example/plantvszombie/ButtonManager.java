@@ -12,7 +12,6 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -34,7 +33,7 @@ public class ButtonManager {
         Text emoji = new Text("☀️");
         emoji.setFill(Color.GOLD);
         emoji.setStyle("-fx-font-size: 26px; -fx-font-family: 'Segoe UI Emoji';");
-        number = new Text(String.valueOf(Sun.collectedpoint));
+        number = new Text(String.valueOf(Sun.getCollectedpoint()));
         number.setFill(Color.BLACK);
         number.setStyle("-fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI Emoji';");
         sunpointFlow = new TextFlow(emoji, number);
@@ -112,7 +111,7 @@ public class ButtonManager {
                 btn.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
             }
         }
-        number.setText(String.valueOf(Sun.collectedpoint));
+        number.setText(String.valueOf(Sun.getCollectedpoint()));
 
     }
 

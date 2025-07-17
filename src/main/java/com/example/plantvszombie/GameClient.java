@@ -8,13 +8,13 @@ import javafx.application.Platform;
 
 public class GameClient {
     private ObjectOutputStream out;
-     Yard clientYard;
+     private Yard clientYard;
 
     public GameClient(String host, int port) throws IOException, ClassNotFoundException {
         Socket socket = new Socket(host, port);
 
-        out = new ObjectOutputStream(socket.getOutputStream());
-        out.flush();
+        setOut(new ObjectOutputStream(socket.getOutputStream()));
+        getOut().flush();
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
         List<String> selectedPlants = null;
@@ -32,7 +32,7 @@ public class GameClient {
             }
         }
 
-        this.clientYard = new Yard(selectedPlants, day);
+        this.setClientYard(new Yard(selectedPlants, day));
         startClientLoseChecker();
         new Thread(() -> {
             try {
@@ -53,22 +53,22 @@ public class GameClient {
             switch (msg.type) {
                 case "SPAWN_ZOMBIE" -> {
                     ZombieState zs = (ZombieState) msg.data;
-                    Zombies z = ZombieFactory.createFromState(zs, clientYard.yardPane);
-                    clientYard.Zombies.add(z);
+                    Zombies z = ZombieFactory.createFromState(zs, getClientYard().getYardPane());
+                    getClientYard().getZombies().add(z);
                 }
 
                 case "SPAWN_SUN" -> {
                     SunState ss = (SunState) msg.data;
                      Sun S=new Sun();
-                     Sun.suns.add(S);
+                     Sun.getSuns().add(S);
                      // متد انیمیشن خورشید
-                    S.fallingSun(clientYard.yardPane, ss.getX(),0);
+                    S.fallingSun(getClientYard().getYardPane(), ss.getX(),0);
                 }
                 case "INITIAL_ZOMBIES" -> {
                     List<ZombieState> zsList = (List<ZombieState>) msg.data;
                     for (ZombieState zs : zsList) {
-                            Zombies z = ZombieFactory.createFromState(zs, clientYard.yardPane);
-                            clientYard.Zombies.add(z);
+                            Zombies z = ZombieFactory.createFromState(zs, getClientYard().getYardPane());
+                            getClientYard().getZombies().add(z);
 
                     }
 
@@ -77,16 +77,16 @@ public class GameClient {
                     List<SunState> sunsList = (List<SunState>) msg.data;
                     for (SunState sun : sunsList) {
                         Sun s=new Sun();
-                        Sun.suns.add(s);
-                        s.fallingSun(clientYard.yardPane, sun.getX(),sun.getZ());
+                        Sun.getSuns().add(s);
+                        s.fallingSun(getClientYard().getYardPane(), sun.getX(),sun.getZ());
                     }
 
                 } case("GAME_OVER") ->{
                     boolean gameOver = (Boolean) msg.data;
-                    clientYard.triggerGameEnd(gameOver);
+                    getClientYard().triggerGameEnd(gameOver);
                 }
                 case "REQUEST_KILLS" -> {
-                    int clientKills = clientYard.killedZombies;
+                    int clientKills = getClientYard().getKilledZombies();
                     sendMessage(new NetworkMessage("MY_KILLS", clientKills));
                 }
             }
@@ -97,11 +97,11 @@ public class GameClient {
             try {
                 while (true) {
                     Thread.sleep(500);
-                    for (Zombies z : clientYard.Zombies) {
+                    for (Zombies z : getClientYard().getZombies()) {
                         if (z.isInHouse()) {
                             System.out.println("Client lost!");
                             sendMessage(new NetworkMessage("GAME_OVER",true));
-                            Platform.runLater(() -> clientYard.triggerGameEnd(false));
+                            Platform.runLater(() -> getClientYard().triggerGameEnd(false));
                             return;
                         }
                     }
@@ -115,10 +115,26 @@ public class GameClient {
 
     public void sendMessage(NetworkMessage msg) {
         try {
-            out.writeObject(msg);
-            out.flush();
+            getOut().writeObject(msg);
+            getOut().flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public ObjectOutputStream getOut() {
+        return out;
+    }
+
+    public void setOut(ObjectOutputStream out) {
+        this.out = out;
+    }
+
+    public Yard getClientYard() {
+        return clientYard;
+    }
+
+    public void setClientYard(Yard clientYard) {
+        this.clientYard = clientYard;
     }
 }

@@ -36,7 +36,7 @@ public class ClientHandler extends Thread {
 
             case "MY_KILLS" -> {
                 int clientKills = (int) msg.data;
-                int serverKills = GameServer.yard.killedZombies;
+                int serverKills = GameServer.yard.getKilledZombies();
 
                 System.out.println("Client kills: " + clientKills + ", Server kills: " + serverKills);
 

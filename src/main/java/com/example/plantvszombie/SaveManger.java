@@ -23,25 +23,25 @@ public class SaveManger {
 
     public static GameState buildGameState(Yard yard) {
         ArrayList<ZombieState> zombieStates = new ArrayList<>();
-        for (Zombies z : yard.Zombies) {
+        for (Zombies z : yard.getZombies()) {
             zombieStates.add(z.getState());
         }
 
         ArrayList<SunState> sunStates = new ArrayList<>();
-        for (Sun s : Sun.suns) {
+        for (Sun s : Sun.getSuns()) {
             sunStates.add(s.getState());
         }
 
         ArrayList<PlanetState> planetStates = new ArrayList<>();
-        for (Planet p : yard.planets) {
+        for (Planet p : yard.getPlanets()) {
             planetStates.add(p.getState());
         }
         ArrayList<stoneGraveState> stoneGrave = new ArrayList<>();
-        for (StoneGrave G : yard.graves) {
+        for (StoneGrave G : yard.getGraves()) {
             stoneGrave.add(G.getState());
         }
 
-        return new GameState(zombieStates, yard.lockedCells, yard.day, ZombieWaveManger.gameTime, Sun.collectedpoint, yard.fog, sunStates, planetStates,stoneGrave,yard.selected);
+        return new GameState(zombieStates, yard.getLockedCells(), yard.isDay(), ZombieWaveManger.getGameTime(), Sun.getCollectedpoint(), yard.getFog(), sunStates, planetStates,stoneGrave, yard.getSelected());
     }
 
 
@@ -62,38 +62,38 @@ public class SaveManger {
                         burned.setFill(Color.DARKGRAY);
                         burned.setOpacity(0.6);
 
-                        yard.gridPane.add(burned, col, row);
+                        yard.getGridPane().add(burned, col, row);
                     }
                 }
 
 
                 for (ZombieState z : gameState.getZombies()) {
-                    yard.Zombies.add(ZombieFactory.createFromState(z,yard.yardPane));
+                    yard.getZombies().add(ZombieFactory.createFromState(z, yard.getYardPane()));
                 }
                 
                 for (PlanetState p : gameState.getPlanets()) {
                     Planet.on();
                     yard.placePlanet(p.getType(), p.getCol(), p.getRow());
                     Planet planet=yard.findPlanet(p.getCol(), p.getRow());
-                    planet.loadpplanet(p,yard.yardPane);
-                    if(p.isActive() &&!planet.isDayPlanet() && yard.day){
+                    planet.loadpplanet(p, yard.getYardPane());
+                    if(p.isActive() &&!planet.isDayPlanet() && yard.isDay()){
                       yard.activatePlanet(planet);
                     }
 
                 }
                 for (SunState s : gameState.getSuns()){
-                    Sun.suns.add(Sun.fromState(s,yard.yardPane));
+                    Sun.getSuns().add(Sun.fromState(s, yard.getYardPane()));
                 }
                 for(stoneGraveState g : gameState.getStoneGraves()){
-                    yard.graves.add(g.getStoneGrave(yard.yardPane));
+                    yard.getGraves().add(g.getStoneGrave(yard.getYardPane()));
                 }
-                yard.fog.restoreState(gameState.getFogState());
+                yard.getFog().restoreState(gameState.getFogState());
 
                 ZombieWaveManger zw=new ZombieWaveManger(yard);
-                ZombieWaveManger.gameTime=gameState.getGametime();
+                ZombieWaveManger.setGameTime(gameState.getGametime());
                 zw.start();
 
-                Sun.collectedpoint=gameState.getSunpoint();
+                Sun.setCollectedpoint(gameState.getSunpoint());
 
 
 

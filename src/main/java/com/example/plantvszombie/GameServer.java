@@ -20,9 +20,9 @@ public class GameServer {
                     System.out.println("Client connected: " + socket.getInetAddress());
                     ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                     ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-                    out.writeObject(new NetworkMessage("initial", yard.selected));
+                    out.writeObject(new NetworkMessage("initial", yard.getSelected()));
                     out.flush();
-                    out.writeObject(new NetworkMessage("initialday", yard.day));
+                    out.writeObject(new NetworkMessage("initialday", yard.isDay()));
                     out.flush();
                     clients.add(out);
                     new ClientHandler(socket, in).start();
@@ -45,12 +45,12 @@ public class GameServer {
     public static void sendInitialState(ObjectOutputStream out) {
         try {
             List<ZombieState> currentZombies = new ArrayList<>();
-            for (Zombies z : yard.Zombies) {
+            for (Zombies z : yard.getZombies()) {
                 currentZombies.add(z.getState());
             }
             List<SunState> currentSuns = new ArrayList<>();
-            for (Sun s:Sun.suns) {
-                if(s.isFalling){
+            for (Sun s: Sun.getSuns()) {
+                if(s.isFalling()){
                     currentSuns.add(s.getState());
                 }
             }

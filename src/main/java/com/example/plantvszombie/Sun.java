@@ -12,25 +12,41 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Sun {
-    static int collectedpoint=200;
-    ImageView sunImage;
+    private static int collectedpoint=200;
+    private ImageView sunImage;
     private boolean collected ;
-    static ArrayList<Sun> suns = new ArrayList<Sun>();
-     boolean isFalling = false;
+    private static ArrayList<Sun> suns = new ArrayList<Sun>();
+     private boolean isFalling = false;
     public Sun() {
-        collected = false;
+        setCollected(false);
         Image sun = new Image(getClass().getResource("/sun.png").toExternalForm());
-        sunImage = new ImageView(sun);
-        sunImage.setFitWidth(60);
-        sunImage.setFitHeight(60);
+        setSunImage(new ImageView(sun));
+        getSunImage().setFitWidth(60);
+        getSunImage().setFitHeight(60);
+    }
+
+    public static int getCollectedpoint() {
+        return collectedpoint;
+    }
+
+    public static void setCollectedpoint(int collectedpoint) {
+        Sun.collectedpoint = collectedpoint;
+    }
+
+    public static ArrayList<Sun> getSuns() {
+        return suns;
+    }
+
+    public static void setSuns(ArrayList<Sun> suns) {
+        Sun.suns = suns;
     }
 
     public void fallingSun(Pane root, double startX, double startY) {
-        sunImage.setLayoutX(startX);
-        sunImage.setLayoutY(0);
-        this.isFalling = true;
-        root.getChildren().add(sunImage);
-        TranslateTransition fall = new TranslateTransition(Duration.seconds(5), sunImage);
+        getSunImage().setLayoutX(startX);
+        getSunImage().setLayoutY(0);
+        this.setFalling(true);
+        root.getChildren().add(getSunImage());
+        TranslateTransition fall = new TranslateTransition(Duration.seconds(5), getSunImage());
         fall.setFromY(startY);
         fall.setToY(400);
         fall.setOnFinished(e -> {
@@ -40,14 +56,14 @@ public class Sun {
         AnimationManager.register(fall);
 
 
-        sunImage.setOnMouseClicked(e -> {
-            if (!collected) {
-                collected = true;
-                suns.remove(this);
-                root.getChildren().remove(sunImage);
+        getSunImage().setOnMouseClicked(e -> {
+            if (!isCollected()) {
+                setCollected(true);
+                getSuns().remove(this);
+                root.getChildren().remove(getSunImage());
                 System.out.println("Sun collected!");
-                collectedpoint=collectedpoint+25;
-                System.out.println("collectedpoint: "+collectedpoint);
+                setCollectedpoint(getCollectedpoint() +25);
+                System.out.println("collectedpoint: "+ getCollectedpoint());
 
             }
         });
@@ -55,9 +71,9 @@ public class Sun {
     private void startLifespanTimer(Pane root) {
         PauseTransition delay = new PauseTransition(Duration.seconds(5));
         delay.setOnFinished(e -> {
-            if (!collected) {
-                suns.remove(this);
-                root.getChildren().remove(sunImage);
+            if (!isCollected()) {
+                getSuns().remove(this);
+                root.getChildren().remove(getSunImage());
             }
         });
         delay.play();
@@ -67,8 +83,8 @@ public class Sun {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
             double randomX = 245 + Math.random() * (9 * 80); // روی زمین
             Sun sun = new Sun();
-            sun.isFalling = true;
-            suns.add(sun);
+            sun.setFalling(true);
+            getSuns().add(sun);
            sun.fallingSun (root, randomX, 0);
            GameServer.notifySunSpawn(sun.getState());// y = 400 یعنی تا پایین زمین
         }));
@@ -78,17 +94,17 @@ public class Sun {
     }
 
     public void sunflower(Pane root,double x,double y){
-        sunImage.setLayoutX(x);
-        sunImage.setLayoutY(y);
-        root.getChildren().add(sunImage);
-        sunImage.setOnMouseClicked(e -> {
-            if (!collected) {
-                collected = true;
-                suns.remove(this);
-                root.getChildren().remove(sunImage);
+        getSunImage().setLayoutX(x);
+        getSunImage().setLayoutY(y);
+        root.getChildren().add(getSunImage());
+        getSunImage().setOnMouseClicked(e -> {
+            if (!isCollected()) {
+                setCollected(true);
+                getSuns().remove(this);
+                root.getChildren().remove(getSunImage());
                 System.out.println("Sun collected!");
-                collectedpoint=collectedpoint+25;
-                System.out.println("collectedpoint: "+collectedpoint);
+                setCollectedpoint(getCollectedpoint() +25);
+                System.out.println("collectedpoint: "+ getCollectedpoint());
 
             }
         });
@@ -100,10 +116,10 @@ public class Sun {
     }
     public SunState getState() {
         SunState state = new SunState();
-        state.setX(sunImage.getLayoutX());
-        state.setY(sunImage.getLayoutY());
-        state.setZ(sunImage.getTranslateY());
-        state.setFalling(isFalling);
+        state.setX(getSunImage().getLayoutX());
+        state.setY(getSunImage().getLayoutY());
+        state.setZ(getSunImage().getTranslateY());
+        state.setFalling(isFalling());
         return state;
     }
     public static Sun fromState(SunState state, Pane root) {
@@ -117,5 +133,28 @@ public class Sun {
     }
 
 
+    public ImageView getSunImage() {
+        return sunImage;
+    }
+
+    public void setSunImage(ImageView sunImage) {
+        this.sunImage = sunImage;
+    }
+
+    public boolean isCollected() {
+        return collected;
+    }
+
+    public void setCollected(boolean collected) {
+        this.collected = collected;
+    }
+
+    public boolean isFalling() {
+        return isFalling;
+    }
+
+    public void setFalling(boolean falling) {
+        isFalling = falling;
+    }
 }
 
