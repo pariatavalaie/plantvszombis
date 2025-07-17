@@ -136,11 +136,11 @@ public abstract class Zombies {
                     }
 
 
-                    p.health--;
-                    p.image.setImage(p.eatimage.getImage());
+                    p.setHealth(p.getHealth() - 1);
+                    p.getImage().setImage(p.getEatimage().getImage());
 
 
-                    if ( p.health< 0) {
+                    if ( p.getHealth() < 0) {
                         walker.play();
                         image.setImage(temp);
                         p.remove(root);
@@ -148,7 +148,7 @@ public abstract class Zombies {
 
                     }
                 }));
-                eating.setCycleCount(p.health);
+                eating.setCycleCount(p.getHealth());
                 eatingRef[0] = eating;
                 eating.play();
                 AnimationManager.register(eatingRef[0]);

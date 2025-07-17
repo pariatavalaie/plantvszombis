@@ -13,15 +13,15 @@ import java.util.ArrayList;
 public class Jalapeno extends Planet implements Act {
     public Jalapeno(int x , int y) {
         super(x, y);
-        this.watingtime = 6;
-        this.health = 4;
-        this.dayPlanet =true;
-        this.image = new ImageView( new Image(getClass().getResource("/jalapeno.gif").toExternalForm()));
-        this.eatimage=new ImageView( new Image(getClass().getResource("/jalapeno.gif").toExternalForm()));
+        this.setWatingtime(6);
+        this.setHealth(4);
+        this.setDayPlanet(true);
+        this.setImage(new ImageView( new Image(getClass().getResource("/jalapeno.gif").toExternalForm())));
+        this.setEatimage(new ImageView( new Image(getClass().getResource("/jalapeno.gif").toExternalForm())));
     }
     @Override
     public void act(Pane pene , ArrayList<Zombies> Zombies){
-        active=true;
+        setActive(true);
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
         for(Zombies z : Zombies){
             if(z.y == getRow()&& z.x <= 8){
@@ -38,7 +38,7 @@ public class Jalapeno extends Planet implements Act {
         timeline.play();
         AnimationManager.register(timeline);
         Timeline timelineDelete = new Timeline(
-                new KeyFrame(Duration.seconds(2), e -> this.dead = true)
+                new KeyFrame(Duration.seconds(2), e -> this.setDead(true))
         );
         timelineDelete.setCycleCount(1);
         timelineDelete.play();

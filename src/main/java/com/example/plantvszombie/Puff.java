@@ -12,15 +12,15 @@ import java.util.ArrayList;
 public class Puff extends Shooter{
     public Puff(int x , int y) {
         super(x,y);
-        this.health = 4;
-        this.watingtime = 1;
-        this.dayPlanet = false;
-        image=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
-        eatimage=new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm()));
+        this.setHealth(4);
+        this.setWatingtime(1);
+        this.setDayPlanet(false);
+        setImage(new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm())));
+        setEatimage(new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm())));
     }
     @Override
     public void act(Pane root,ArrayList<Zombies>zombies){
-        active=true;
+        setActive(true);
         final double[]XZ={0};
         double x = Yard.GRID_X + getCol() * Yard.CELL_WIDTH + (Yard.CELL_WIDTH - 70) / 2;
         double y = Yard.GRID_Y+ getRow() * Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT- 90) / 2;
@@ -36,7 +36,7 @@ public class Puff extends Shooter{
                 }
             }
 
-            if (shouldShoot&&!dead) {
+            if (shouldShoot&&!isDead()) {
                 shoot(root,x,XZ[0], y);
             }
         }));

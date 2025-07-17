@@ -79,7 +79,7 @@ public class SaveManger {
                     yard.placePlanet(p.type, p.col, p.row);
                     Planet planet=yard.findPlanet(p.col,p.row);
                     planet.loadpplanet(p,yard.yardPane);
-                    if(p.active&&!planet.dayPlanet&& yard.day){
+                    if(p.active&&!planet.isDayPlanet() && yard.day){
                         nightPlanetOn(yard,planet);
                     }
 
@@ -120,7 +120,7 @@ public class SaveManger {
             if(x instanceof Doomshroom){
                 Planet Doom = yard.findPlanet(x.getCol(),x.getRow());
                 yard.lockedCells.add(x.getRow() + "," + x.getCol());
-                x.eatimage.setImage(x.image.getImage());
+                x.getEatimage().setImage(x.getImage().getImage());
                 if (Doom != null) {
                     Timeline timeline = new Timeline(
                             new KeyFrame(Duration.seconds(1), e -> {
@@ -133,10 +133,11 @@ public class SaveManger {
 
                     timeline.play();}
             }
-            if(x instanceof Iceshroom){if(x.dead){yard.planets.remove(x);};x.eatimage.setImage(x.image.getImage());
+            if(x instanceof Iceshroom){if(x.isDead()){yard.planets.remove(x);};
+                x.getEatimage().setImage(x.getImage().getImage());
             }
             if(x instanceof Hypnoshroom){
-                x.eatimage.setImage(x.image.getImage());
+                x.getEatimage().setImage(x.getImage().getImage());
             }
         }
 }

@@ -13,16 +13,16 @@ import java.util.ArrayList;
 public class Doomshroom extends Planet implements Act{
     public Doomshroom(int x,int y) {
         super(x,y);
-        this.health = 4;
-        this.watingtime =5;
-        this.dayPlanet =false;
-        image=new ImageView(new Image(getClass().getResource("/DoomShroom1.gif").toExternalForm()));
-        eatimage=new ImageView(new Image(getClass().getResource("/DoomShroom3.gif").toExternalForm()));
+        this.setHealth(4);
+        this.setWatingtime(5);
+        this.setDayPlanet(false);
+        setImage(new ImageView(new Image(getClass().getResource("/DoomShroom1.gif").toExternalForm())));
+        setEatimage(new ImageView(new Image(getClass().getResource("/DoomShroom3.gif").toExternalForm())));
     }
 
     @Override
     public void act(Pane root, ArrayList<Zombies> Zombies) {
-        active=true;
+        setActive(true);
 
         double cherryX = Yard.GRID_X + getCol()* Yard.CELL_WIDTH + (Yard.CELL_WIDTH- 70) / 2;
         double cherryY = Yard.GRID_Y + getRow()* Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT - 90) / 2;

@@ -10,11 +10,11 @@ import javafx.util.Duration;
 public class Sunflower extends Planet implements specialAct{
     public Sunflower(int x, int y) {
         super(x, y);
-        watingtime=5;
-        health=4;
-        this.dayPlanet =true;
-        image=new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm()));
-        eatimage=new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm()));
+        setWatingtime(5);
+        setHealth(4);
+        this.setDayPlanet(true);
+        setImage(new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm())));
+        setEatimage(new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm())));
 
     }
     @Override
@@ -22,7 +22,7 @@ public class Sunflower extends Planet implements specialAct{
         double x = Yard.GRID_X+ getCol() * Yard.CELL_WIDTH+ (Yard.CELL_WIDTH - 70) / 2;
         double y = Yard.GRID_Y + getRow()*Yard.Cell_HEIGHT+ (Yard.Cell_HEIGHT - 90) / 2;
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10),event ->{
-            if (!dead){
+            if (!isDead()){
             Sun sun=new Sun();
             Sun.suns.add(sun);
             sun.sunflower(root,x,y);}

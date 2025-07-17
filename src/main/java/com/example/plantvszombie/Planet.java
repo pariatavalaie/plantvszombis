@@ -11,16 +11,16 @@ import java.util.Map;
 
 
 public abstract class Planet {
-    int watingtime;
+    private int watingtime;
     private final int row;
     private final int col;
-    int health;
-    ImageView image;
-    ImageView eatimage;
-    boolean dead = false;
-    PauseTransition cooldown;
-    boolean dayPlanet;
-    boolean active=false;
+    private int health;
+    private ImageView image;
+    private ImageView eatimage;
+    private boolean dead = false;
+    private PauseTransition cooldown;
+    private boolean dayPlanet;
+    private boolean active=false;
     public Planet(int x, int y) {
         this.row = y;
         this.col = x;
@@ -44,30 +44,30 @@ public abstract class Planet {
 
 
     public void remove(Pane root) {
-        root.getChildren().remove(image);
-        root.getChildren().remove(eatimage);
-        dead = true;
+        root.getChildren().remove(getImage());
+        root.getChildren().remove(getEatimage());
+        setDead(true);
     }
 
     abstract String gettype();
 
     public PlanetState getState() {
         double remaining = 0;
-        if (cooldown != null) {
-            remaining = cooldown.getCurrentTime().toSeconds();
+        if (getCooldown() != null) {
+            remaining = getCooldown().getCurrentTime().toSeconds();
         }
-        return new PlanetState(col, row, gettype(), health, dead, remaining,active);
+        return new PlanetState(col, row, gettype(), getHealth(), isDead(), remaining, isActive());
     }
 
     public void loadpplanet(PlanetState planetState, Pane root) {
-        this.dead = planetState.dead;
+        this.setDead(planetState.dead);
         if (planetState.remainingCooldown != 0) {
-            if (cooldown == null) {
-                cooldown = new PauseTransition(Duration.seconds(watingtime));
+            if (getCooldown() == null) {
+                setCooldown(new PauseTransition(Duration.seconds(getWatingtime())));
             }
-            cooldown.setDuration(Duration.seconds(watingtime));
-            cooldown.jumpTo(Duration.seconds(planetState.remainingCooldown));
-            cooldown.play();
+            getCooldown().setDuration(Duration.seconds(getWatingtime()));
+            getCooldown().jumpTo(Duration.seconds(planetState.remainingCooldown));
+            getCooldown().play();
         }
     }
 
@@ -80,8 +80,8 @@ public abstract class Planet {
 
     public void cooldown(Button b, int cost) {
         canPlaceMap.put(this.gettype(), false);
-        cooldown = new PauseTransition(Duration.seconds(this.watingtime));
-        cooldown.setOnFinished(ev -> {
+        setCooldown(new PauseTransition(Duration.seconds(this.getWatingtime())));
+        getCooldown().setOnFinished(ev -> {
             if (cost <= Sun.collectedpoint) {
                 Platform.runLater(() -> {
                     b.setDisable(false);
@@ -92,13 +92,75 @@ public abstract class Planet {
 
             canPlaceMap.put(this.gettype(), true);
         });
-        cooldown.play();
+        getCooldown().play();
         b.setDisable(true);
         b.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
     }
 
 
+    public int getWatingtime() {
+        return watingtime;
+    }
 
+    public void setWatingtime(int watingtime) {
+        this.watingtime = watingtime;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public ImageView getImage() {
+        return image;
+    }
+
+    public void setImage(ImageView image) {
+        this.image = image;
+    }
+
+    public ImageView getEatimage() {
+        return eatimage;
+    }
+
+    public void setEatimage(ImageView eatimage) {
+        this.eatimage = eatimage;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public PauseTransition getCooldown() {
+        return cooldown;
+    }
+
+    public void setCooldown(PauseTransition cooldown) {
+        this.cooldown = cooldown;
+    }
+
+    public boolean isDayPlanet() {
+        return dayPlanet;
+    }
+
+    public void setDayPlanet(boolean dayPlanet) {
+        this.dayPlanet = dayPlanet;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }
  interface Act {
     void act(Pane root, ArrayList<Zombies> Zombies);

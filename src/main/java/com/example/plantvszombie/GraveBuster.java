@@ -10,15 +10,15 @@ public class GraveBuster extends Planet implements specialAct{
 
     public GraveBuster(int x,int y) {
         super(x,y);
-        this.watingtime = 3;
-        this.dayPlanet =false;
-        this.health=4;
-        this.image = new ImageView( new Image(getClass().getResource("/Transparent_grave_digger.gif").toExternalForm()));
-        this.eatimage=new ImageView( new Image(getClass().getResource("/Transparent_grave_digger.gif").toExternalForm()));
+        this.setWatingtime(3);
+        this.setDayPlanet(false);
+        this.setHealth(4);
+        this.setImage(new ImageView( new Image(getClass().getResource("/Transparent_grave_digger.gif").toExternalForm())));
+        this.setEatimage(new ImageView( new Image(getClass().getResource("/Transparent_grave_digger.gif").toExternalForm())));
     }
     @Override
     public void act(Pane root) {
-        active=true;
+        setActive(true);
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(event -> {
             remove(root);

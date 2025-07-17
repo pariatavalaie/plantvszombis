@@ -1,22 +1,17 @@
 package com.example.plantvszombie;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
-
-import java.util.ArrayList;
 
 public class SnowPea extends Shooter{
     public SnowPea(int x , int y) {
        super(x,y);
-        this.health=4;
-        this.watingtime = 8;
-        this.dayPlanet =true;
-        this.image =new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm()));
-        this.eatimage =new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm()));
+        this.setHealth(4);
+        this.setWatingtime(8);
+        this.setDayPlanet(true);
+        this.setImage(new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm())));
+        this.setEatimage(new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm())));
     }
 
     @Override

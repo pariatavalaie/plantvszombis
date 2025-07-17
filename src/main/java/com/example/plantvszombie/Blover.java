@@ -12,16 +12,16 @@ public class Blover extends Planet implements specialAct{
     public Blover(int x, int y, Fog fog) {
         super(x,y);
         this.fog = fog;
-        this.watingtime = 3;
-        this.dayPlanet =false;
-        this.health = 4;
-        this.image = new ImageView(new Image(getClass().getResource("/75f44f529822720e5a77af436ccb0a46f31fabd6.gif").toExternalForm()));
-        this.eatimage = new ImageView(new Image(getClass().getResource("/75f44f529822720e5a77af436ccb0a46f31fabd6.gif").toExternalForm()));
+        this.setWatingtime(3);
+        this.setDayPlanet(false);
+        this.setHealth(4);
+        this.setImage(new ImageView(new Image(getClass().getResource("/75f44f529822720e5a77af436ccb0a46f31fabd6.gif").toExternalForm())));
+        this.setEatimage(new ImageView(new Image(getClass().getResource("/75f44f529822720e5a77af436ccb0a46f31fabd6.gif").toExternalForm())));
     }
 
     @Override
    public void act(Pane root) {
-        active=true;
+        setActive(true);
         fog.hideTemporarily();
 
         Timeline restoreTimeline = new Timeline(new KeyFrame(Duration.seconds(5), e -> fog.restore()));

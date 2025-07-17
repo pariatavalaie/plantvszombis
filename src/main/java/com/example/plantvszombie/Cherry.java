@@ -13,17 +13,17 @@ public class Cherry extends Planet implements Act {
 
     public Cherry(int x, int y) {
         super(x,y);
-        this.watingtime = 2;
-        this.health = 4;
-        this.dayPlanet =true;
-        this.image = new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm()));
-        this.eatimage=new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm()));
+        this.setWatingtime(2);
+        this.setHealth(4);
+        this.setDayPlanet(true);
+        this.setImage(new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm())));
+        this.setEatimage(new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm())));
     }
 
 
     @Override
     public void act(Pane root, ArrayList<Zombies> Zombies) {
-         active=true;
+         setActive(true);
 
         double cherryX = Yard.GRID_X + getCol()* Yard.CELL_WIDTH + (Yard.CELL_WIDTH- 70) / 2;
         double cherryY = Yard.GRID_Y + getRow()* Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT - 90) / 2;
@@ -49,7 +49,7 @@ public class Cherry extends Planet implements Act {
         timeline.play();
 
         Timeline timelineDelete = new Timeline(
-                new KeyFrame(Duration.seconds(2), e -> this.dead = true)
+                new KeyFrame(Duration.seconds(2), e -> this.setDead(true))
         );
         AnimationManager.register(timelineDelete);
         timelineDelete.setCycleCount(1);

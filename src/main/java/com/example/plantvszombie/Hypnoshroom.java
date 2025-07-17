@@ -12,20 +12,20 @@ import java.util.ArrayList;
 public class Hypnoshroom extends Planet implements Act{
     public Hypnoshroom(int x,int y) {
         super(x,y);
-        this.watingtime = 2;
-        this.dayPlanet =false;
-        this.health=3;
-        this.image = new ImageView( new Image(getClass().getResource("/Animated_HypnoShroom.gif").toExternalForm()));
-        this.eatimage=new ImageView( new Image(getClass().getResource("/HypnoShroomSleep.gif").toExternalForm()));
+        this.setWatingtime(2);
+        this.setDayPlanet(false);
+        this.setHealth(3);
+        this.setImage(new ImageView( new Image(getClass().getResource("/Animated_HypnoShroom.gif").toExternalForm())));
+        this.setEatimage(new ImageView( new Image(getClass().getResource("/HypnoShroomSleep.gif").toExternalForm())));
     }
 
     @Override
     public void act(Pane root, ArrayList<Zombies> Zombies) {
-        active=true;
+        setActive(true);
         boolean[] firsttime={true};
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100),event -> {
         for (Zombies z : Zombies) {
-            if(z.x==getCol()&&z.y==getRow()&&this.dead==true&&this.active==true&&firsttime[0]){
+            if(z.x==getCol()&&z.y==getRow()&& this.isDead() ==true&& this.isActive() ==true&&firsttime[0]){
                 z.isHypnotized=true;
                 z.reverseDirection();
                 firsttime[0]=false;
@@ -44,7 +44,7 @@ public class Hypnoshroom extends Planet implements Act{
     @Override
     public PlanetState getState() {
         PlanetState baseState = super.getState();
-        boolean scaredValue = this.active;
+        boolean scaredValue = this.isActive();
 
         return new OtherPlanetState(
                 baseState.col,
@@ -54,13 +54,13 @@ public class Hypnoshroom extends Planet implements Act{
                 baseState.dead,
                 baseState.remainingCooldown,
                 scaredValue,
-                active
+                isActive()
         );
     }
 
     @Override
     public void loadpplanet(PlanetState planetState, Pane root) {
         super.loadpplanet(planetState, root);
-        this.active=((OtherPlanetState)planetState).isOther();
+        this.setActive(((OtherPlanetState)planetState).isOther());
     }
 }

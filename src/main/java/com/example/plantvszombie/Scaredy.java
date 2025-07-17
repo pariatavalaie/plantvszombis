@@ -13,16 +13,16 @@ public class Scaredy extends Shooter{
     public boolean scared;
     public Scaredy(int x,int y) {
        super(x,y);
-        this.watingtime = 2;
-        this.dayPlanet =false;
-        this.health=3;
-        this.image = new ImageView( new Image(getClass().getResource("/Scaredy-shroom.png").toExternalForm()));
-        this.eatimage=new ImageView( new Image(getClass().getResource("/Scaredy-Shroom_Hiding.png").toExternalForm()));
+        this.setWatingtime(2);
+        this.setDayPlanet(false);
+        this.setHealth(3);
+        this.setImage(new ImageView( new Image(getClass().getResource("/Scaredy-shroom.png").toExternalForm())));
+        this.setEatimage(new ImageView( new Image(getClass().getResource("/Scaredy-Shroom_Hiding.png").toExternalForm())));
         scared=false;
     }
     @Override
     public void act(Pane root , ArrayList<Zombies> zombies) {
-        active=true;
+        setActive(true);
         double x = Yard.GRID_X + getCol() * Yard.CELL_WIDTH+ (Yard.CELL_WIDTH - 70) / 2;
         double y = Yard.GRID_Y + getRow()* Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT - 90) / 2;
         final double[] XZ = {0};
@@ -32,7 +32,7 @@ public class Scaredy extends Shooter{
                 double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
                 if (z.y == getRow() && z.x - getCol() <= 2 && z.x <= 8 && zombieX > x) {
                     scared = true;
-                    this.image.setImage(this.eatimage.getImage());
+                    this.getImage().setImage(this.getEatimage().getImage());
                 } else if (!scared && z.y == getRow() && z.x > getCol() && z.x <= 8) {
                     shouldShoot = true;
                     XZ[0] = zombieX;
@@ -40,7 +40,7 @@ public class Scaredy extends Shooter{
                 }
             }
 
-            if (shouldShoot && !dead) {
+            if (shouldShoot && !isDead()) {
                 shoot(root,x,XZ[0],y);
             }
         }));
@@ -75,7 +75,7 @@ public class Scaredy extends Shooter{
                 ((ShooterState)baseState).bulletStates,
                 baseState.remainingCooldown,
                 scaredValue,
-                active
+                isActive()
         );
     }
     @Override

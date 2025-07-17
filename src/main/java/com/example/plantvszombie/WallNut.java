@@ -6,11 +6,11 @@ import javafx.scene.image.ImageView;
 public class WallNut extends Planet{
     public WallNut(int x,int y){
         super(x,y);
-        watingtime=5;
-        this.health=10;
-        this.dayPlanet =true;
-        this.eatimage=new ImageView(new Image(getClass().getResource("/walnut_half_life.gif").toExternalForm()));
-        this.image=new ImageView(new Image(getClass().getResource("/walnut_full_life.gif").toExternalForm()));
+        setWatingtime(5);
+        this.setHealth(10);
+        this.setDayPlanet(true);
+        this.setEatimage(new ImageView(new Image(getClass().getResource("/walnut_half_life.gif").toExternalForm())));
+        this.setImage(new ImageView(new Image(getClass().getResource("/walnut_full_life.gif").toExternalForm())));
     }
 
     @Override

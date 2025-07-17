@@ -84,7 +84,7 @@ public class Yard {
 
                         for (Planet planet : planets) {
                             if (planet.getRow()== row && planet.getCol()== col) {
-                                if (!planet.dayPlanet) bean = true;
+                                if (!planet.isDayPlanet()) bean = true;
                                 planet1 = planet;
                                 empty = false;
                             }
@@ -207,7 +207,7 @@ public class Yard {
         }
         ArrayList<Planet>planetsCopy = new ArrayList<>(planets);
             for (Planet planet : planetsCopy) {
-                if(planet.dead){
+                if(planet.isDead()){
                     this.removePlanet(planet);
                 }
             }
@@ -237,9 +237,9 @@ public class Yard {
             planet1 = createPlanet(planet, col, row);
             planet1.cooldown(buttonManager.getButton(planet), Planet.costMap.get(planet));
             planets.add(planet1);
-            plantView = planet1.image;
+            plantView = planet1.getImage();
             Sun.collectedpoint -= Planet.costMap.get(planet);
-            if (planet1.dayPlanet||(!planet1.dayPlanet&&!day)) {
+            if (planet1.isDayPlanet() ||(!planet1.isDayPlanet() &&!day)) {
                 if (planet1 instanceof specialAct) {
                     ( (specialAct) planet1 ).act(yardPane);
                 }
@@ -250,61 +250,18 @@ public class Yard {
         } else {
             planet1 = null;
         }
-
-        if(planet.equals("Doom")) {
-            plantView = planet1.eatimage;
+        if(planet.equals("Doom")||planet.equals("Hypno")||planet.equals("Ice")) {
+            plantView = planet1.getEatimage();
             if (!day) {
-                plantView = planet1.image;
-                lockedCells.add(row + "," + col);
-                Timeline timeline = new Timeline(
-                        new KeyFrame(Duration.seconds(2), e -> {
-                            removePlanet(planet1);
-                            Rectangle burned = new Rectangle(CELL_WIDTH, Cell_HEIGHT);
-                            burned.setFill(Color.DARKGRAY);
-                            burned.setOpacity(0.6);
-                            gridPane.add(burned, col, row);
-                        }));
-
-                timeline.play();
+                plantView = planet1.getImage();
+                setLockedCells(col,row,planet1);
             }
 
         } else if(planet.equals("bean")) {
             Planet x=findPlanet(col,row);
-            if (x instanceof Act) {
-                ((Act)x).act(yardPane, Zombies);
-            }
-
-            if (x instanceof specialAct) {
-                ((specialAct)x).act(yardPane);
-            }
-            if(x instanceof Doomshroom){
-                lockedCells.add(row + "," + col);
-                x.eatimage.setImage(x.image.getImage());
-                    Timeline timeline = new Timeline(
-                            new KeyFrame(Duration.seconds(1), e -> {
-                                removePlanet(x);
-                                Rectangle burned = new Rectangle(CELL_WIDTH, Cell_HEIGHT);
-                                burned.setFill(Color.DARKGRAY);
-                                burned.setOpacity(0.6);
-                                gridPane.add(burned, col, row);
-                            }));
-
-                    timeline.play();
-            }
-            if(x instanceof Iceshroom){if(x.dead){planets.remove(x);}
-                x.eatimage.setImage(x.image.getImage());
-            }
-            if(x instanceof Hypnoshroom){
-                x.eatimage.setImage(x.image.getImage());
-            }
+            activatePlanet(x);
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> removePlanet(planet1)));
             timeline.play();
-
-        } else if (planet.equals("Hypno")||planet.equals("Ice")) {
-            plantView=planet1.eatimage;
-            if(!day){
-                plantView=planet1.image;
-            }
 
         }else if(planet.equals("Grave") ) {
             StoneGrave s=findStoneGrave(col,row);
@@ -313,9 +270,8 @@ public class Yard {
             }
 
         }
-
         if (plantView != null) {
-            plantView.setFitWidth(70);
+         plantView.setFitWidth(70);
          plantView.setFitHeight(70);
          double x = GRID_X + col * CELL_WIDTH + ( CELL_WIDTH - 70) / 2;
          double y = GRID_Y + row * Cell_HEIGHT + ( Cell_HEIGHT - 90) / 2;
@@ -324,9 +280,38 @@ public class Yard {
          yardPane.getChildren().add(plantView);}
     }
 
+    private void setLockedCells(int col, int row,Planet planet) {
+        if(planet instanceof Doomshroom){
+        lockedCells.add(row + "," + col);
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), e -> {
+                    removePlanet(planet);
+                    Rectangle burned = new Rectangle(CELL_WIDTH, Cell_HEIGHT);
+                    burned.setFill(Color.DARKGRAY);
+                    burned.setOpacity(0.6);
+                    gridPane.add(burned, col, row);
+                }));
+
+        timeline.play();}
+    }
+    protected void activatePlanet(Planet x) {
+        if (x instanceof Act) {((Act)x).act(yardPane, Zombies);}
+
+        if (x instanceof specialAct) {((specialAct)x).act(yardPane);}
+
+        if(x instanceof Doomshroom){
+            setLockedCells(x.getCol(),x.getRow(),x);
+            x.getEatimage().setImage(x.getImage().getImage());}
+
+        if(x instanceof Iceshroom){if(x.isDead()){planets.remove(x);}
+            x.getEatimage().setImage(x.getImage().getImage());}
+
+        if(x instanceof Hypnoshroom){
+            x.getEatimage().setImage(x.getImage().getImage());}
+    }
+
 
     public Planet createPlanet(String planetName, int col, int row) {
-        Planet newPlanet = null;
         switch (planetName) {
             case "Sunflower":
                 return new Sunflower(col, row);
@@ -351,23 +336,17 @@ public class Yard {
             case "Scaredy":
                 return new Scaredy(col, row);
             case "plantern":
-                newPlanet = new Plantern(col, row,fog);
-                return newPlanet;
+                return new Plantern(col, row,fog);
             case "blover":
-                newPlanet = new Blover(col, row,null);
-                return newPlanet;
+                return new Blover(col, row,null);
             case "bean":
-                newPlanet = new Bean(col, row);
-                return newPlanet;
+                return new Bean(col, row);
             case "Ice":
-                newPlanet = new Iceshroom(col, row);
-                return newPlanet;
+                return new Iceshroom(col, row);
             case "Hypno":
-                newPlanet = new Hypnoshroom(col, row);
-                return newPlanet;
+                return new Hypnoshroom(col, row);
             case "Grave":
-                newPlanet = new GraveBuster(col, row);
-                return newPlanet;
+                return new GraveBuster(col, row);
             default:
                 System.out.println("Unknown planet: " + planetName);
                 return null;

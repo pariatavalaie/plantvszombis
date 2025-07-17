@@ -15,7 +15,7 @@ abstract class Shooter extends Planet implements Act {
     }
     @Override
     public void act(Pane root, ArrayList<Zombies> Zombies) {
-        active=true;
+        setActive(true);
         final double[]XZ={0};
         double x = Yard.GRID_X + getCol() * Yard.CELL_WIDTH+ (Yard.CELL_WIDTH - 70) / 2;
         double y = Yard.GRID_Y+ getRow() * Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT - 90) / 2;
@@ -29,7 +29,7 @@ abstract class Shooter extends Planet implements Act {
                     break;
                 }
             }
-            if (shouldShoot&&!dead) {
+            if (shouldShoot&&!isDead()) {
                 shoot(root,x,XZ[0],y) ;
             }
         }));
@@ -46,7 +46,7 @@ abstract class Shooter extends Planet implements Act {
         for (Bullet b : bullets) {
             bulletStates.add(new BulletState(b.x, b.y, b.speed, b.type, b.imageBullet.getTranslateX() + b.imageBullet.getLayoutX(), b.imageBullet.getTranslateY() + b.imageBullet.getLayoutY(), b.xzombie, b.hit));
         }
-        return new ShooterState(s.col,s.row,s.type,s.health,s.dead,bulletStates,s.remainingCooldown,active);
+        return new ShooterState(s.col,s.row,s.type,s.health,s.dead,bulletStates,s.remainingCooldown, isActive());
 
     }
 

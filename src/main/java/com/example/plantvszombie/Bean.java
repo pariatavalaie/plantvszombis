@@ -6,11 +6,11 @@ import javafx.scene.image.ImageView;
 public class Bean extends Planet{
     public Bean(int x, int y) {
         super(x,y);
-        this.watingtime = 2;
-        this.health = 4;
-        this.dayPlanet =true;
-        this.image = new ImageView(new Image(getClass().getResource("/CoffeeBean2.gif").toExternalForm()));
-        this.eatimage=new ImageView(new Image(getClass().getResource("/CoffeeBean2.gif").toExternalForm()));
+        this.setWatingtime(2);
+        this.setHealth(4);
+        this.setDayPlanet(true);
+        this.setImage(new ImageView(new Image(getClass().getResource("/CoffeeBean2.gif").toExternalForm())));
+        this.setEatimage(new ImageView(new Image(getClass().getResource("/CoffeeBean2.gif").toExternalForm())));
     }
 
     @Override
