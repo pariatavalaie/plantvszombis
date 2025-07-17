@@ -1,11 +1,8 @@
 package com.example.plantvszombie;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -131,13 +128,13 @@ public class SaveManger {
             default:
                 throw new IllegalArgumentException("Unknown zombie type: " + state.getType());
         }
-        z.hp=(state.getHp());
-        z.direction=(state.getDirection());
-        z.isHypnotized=(state.isHypnotized());
-        z.inHouse=(state.isInHouse());
-        z.fighting=(state.isFighting());
-        if(z.isHypnotized){
-            z.direction*=-1;
+        z.setHp((state.getHp()));
+        z.setDirection((state.getDirection()));
+        z.setHypnotized((state.isHypnotized()));
+        z.setInHouse((state.isInHouse()));
+        z.setFighting((state.isFighting()));
+        if(z.isHypnotized()){
+            z.setDirection(z.getDirection() * -1);
             z.reverseDirection();
         }
         return z;

@@ -98,7 +98,7 @@ public class GameClient {
                 while (true) {
                     Thread.sleep(500);
                     for (Zombies z : clientYard.Zombies) {
-                        if (z.inHouse) {
+                        if (z.isInHouse()) {
                             System.out.println("Client lost!");
                             sendMessage(new NetworkMessage("GAME_OVER",true));
                             Platform.runLater(() -> clientYard.triggerGameEnd(false));

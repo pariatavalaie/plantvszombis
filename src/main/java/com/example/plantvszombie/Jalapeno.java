@@ -24,13 +24,13 @@ public class Jalapeno extends Planet implements Act {
         setActive(true);
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
         for(Zombies z : Zombies){
-            if(z.y == getRow()&& z.x <= 8){
+            if(z.getY() == getRow()&& z.getX() <= 8){
                 PauseTransition pause = new PauseTransition(Duration.seconds(1));
                 pause.setOnFinished(ev-> {
-                    z.hp = 0;
+                    z.setHp(0);
                 });
                 pause.play();
-                z.image.setImage(z.deadZombie.getImage());
+                z.getImage().setImage(z.getDeadZombie().getImage());
             }
         }
         }));

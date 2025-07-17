@@ -1,7 +1,6 @@
 package com.example.plantvszombie;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.util.Duration;
@@ -50,7 +49,7 @@ public class ZombieWaveManger {
         //if (gameTime >= 47 && gameTime <= 60) finalAttack(); // حمله پایانی
        yard.fog.bringFogToFront(yard.yardPane);
         for (Zombies z : yard.Zombies) {
-            if (z.inHouse) {
+            if (z.isInHouse()) {
                 lose = true;
                 GameServer.notifyGameOver(true);
                 maintimeline.stop();

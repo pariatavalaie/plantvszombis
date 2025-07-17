@@ -201,7 +201,7 @@ public class Yard {
             zombie.checkAndEatZombie(Zombies, yardPane);
             if(!zombie.isAlive()){
                 Zombies.remove(zombie);
-                yardPane.getChildren().remove(zombie.image);
+                yardPane.getChildren().remove(zombie.getImage());
                 killedZombies++;
             }
         }

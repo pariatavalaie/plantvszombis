@@ -29,8 +29,8 @@ public class Doomshroom extends Planet implements Act{
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             for (Zombies z : Zombies) {
-                double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
-                double zombieY = z.image.getLayoutY() + z.image.getTranslateY();
+                double zombieX = z.getImage().getLayoutX() + z.getImage().getTranslateX();
+                double zombieY = z.getImage().getLayoutY() + z.getImage().getTranslateY();
                 double distanceX = Math.abs(zombieX - cherryX);
                 double distanceY = Math.abs(zombieY - cherryY);
 
@@ -38,10 +38,10 @@ public class Doomshroom extends Planet implements Act{
                 if (distanceX <= Yard.CELL_WIDTH/ 2 * 4 && distanceY <= Yard.Cell_HEIGHT / 2 * 4) {
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(ev-> {
-                        z.hp = 0;
+                        z.setHp(0);
                     });
                     pause.play();
-                    z.image.setImage(z.deadZombie.getImage());
+                    z.getImage().setImage(z.getDeadZombie().getImage());
                 }
             } }));
         AnimationManager.register(timeline);

@@ -25,8 +25,8 @@ public class Hypnoshroom extends Planet implements Act{
         boolean[] firsttime={true};
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100),event -> {
         for (Zombies z : Zombies) {
-            if(z.x==getCol()&&z.y==getRow()&& this.isDead() ==true&& this.isActive() ==true&&firsttime[0]){
-                z.isHypnotized=true;
+            if(z.getX() ==getCol()&& z.getY() ==getRow()&& this.isDead() ==true&& this.isActive() ==true&&firsttime[0]){
+                z.setHypnotized(true);
                 z.reverseDirection();
                 firsttime[0]=false;
             }

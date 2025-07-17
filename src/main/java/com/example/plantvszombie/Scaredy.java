@@ -29,11 +29,11 @@ public class Scaredy extends Shooter{
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             boolean shouldShoot = false;
             for (Zombies z : zombies) {
-                double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
-                if (z.y == getRow() && z.x - getCol() <= 2 && z.x <= 8 && zombieX > x) {
+                double zombieX = z.getImage().getLayoutX() + z.getImage().getTranslateX();
+                if (z.getY() == getRow() && z.getX() - getCol() <= 2 && z.getX() <= 8 && zombieX > x) {
                     scared = true;
                     this.getImage().setImage(this.getEatimage().getImage());
-                } else if (!scared && z.y == getRow() && z.x > getCol() && z.x <= 8) {
+                } else if (!scared && z.getY() == getRow() && z.getX() > getCol() && z.getX() <= 8) {
                     shouldShoot = true;
                     XZ[0] = zombieX;
                     break;

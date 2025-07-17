@@ -22,8 +22,8 @@ abstract class Shooter extends Planet implements Act {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             boolean shouldShoot = false;
             for (Zombies z :Zombies ) {
-                double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
-                if (z.y == getRow() && z.x>=getCol()&&z.x<=8) {
+                double zombieX = z.getImage().getLayoutX() + z.getImage().getTranslateX();
+                if (z.getY() == getRow() && z.getX() >=getCol()&& z.getX() <=8) {
                     shouldShoot = true;
                     XZ[0] = zombieX; // نزدیک‌ترین زامبی
                     break;
