@@ -5,8 +5,7 @@ import javafx.scene.image.ImageView;
 
 public class WallNut extends Planet{
     public WallNut(int x,int y){
-        this.row=y;
-        this.col=x;
+        super(x,y);
         watingtime=5;
         this.health=10;
         this.dayPlanet =true;

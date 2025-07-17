@@ -12,8 +12,7 @@ import java.util.ArrayList;
 
 public class Doomshroom extends Planet implements Act{
     public Doomshroom(int x,int y) {
-        this.row = y;
-        this.col = x;
+        super(x,y);
         this.health = 4;
         this.watingtime =5;
         this.dayPlanet =false;
@@ -24,25 +23,19 @@ public class Doomshroom extends Planet implements Act{
     @Override
     public void act(Pane root, ArrayList<Zombies> Zombies) {
         active=true;
-        double gridX = 245.0;
-        double gridY = 60.0;
-        double cellWidth = 80.0;
-        double cellHeight = 100.0;
 
-        double cherryX = gridX + col * cellWidth + (cellWidth - 70) / 2;
-        double cherryY = gridY + row * cellHeight + (cellHeight - 90) / 2;
+        double cherryX = Yard.GRID_X + getCol()* Yard.CELL_WIDTH + (Yard.CELL_WIDTH- 70) / 2;
+        double cherryY = Yard.GRID_Y + getRow()* Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT - 90) / 2;
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             for (Zombies z : Zombies) {
                 double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
                 double zombieY = z.image.getLayoutY() + z.image.getTranslateY();
-
-
                 double distanceX = Math.abs(zombieX - cherryX);
                 double distanceY = Math.abs(zombieY - cherryY);
 
 
-                if (distanceX <= cellWidth / 2 * 4 && distanceY <= cellHeight / 2 * 4) {
+                if (distanceX <= Yard.CELL_WIDTH/ 2 * 4 && distanceY <= Yard.Cell_HEIGHT / 2 * 4) {
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(ev-> {
                         z.hp = 0;

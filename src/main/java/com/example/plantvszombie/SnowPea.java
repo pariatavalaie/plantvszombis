@@ -9,52 +9,21 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class SnowPea extends Shooter implements Act{
+public class SnowPea extends Shooter{
     public SnowPea(int x , int y) {
-        this.row = y;
-        this.col = x;
+       super(x,y);
         this.health=4;
         this.watingtime = 8;
         this.dayPlanet =true;
-        bullets = new ArrayList<Bullet>();
         this.image =new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm()));
         this.eatimage =new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm()));
     }
 
     @Override
-    public void act(Pane root,ArrayList<Zombies>Zombies) {
-        active=true;
-        double gridX = 245.0; // Left anchor of grid
-        double gridY = 60.0;  // Top anchor of grid
-
-        double cellWidth = 80.0;
-        double cellHeight = 100.0;
-        final double[]XZ={0};
-
-        double x = gridX + col * 80 + (80 - 70) / 2;
-        double y = gridY + row * 100 + (100 - 90) / 2;
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            boolean shouldShoot = false;
-            for (Zombies z :Zombies ) {
-                double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
-                if (z.y == row && z.x>=col&&z.x<=8) {
-                    shouldShoot = true;
-                    XZ[0] = zombieX; // نزدیک‌ترین زامبی
-                    break;
-                }
-            }
-
-            if (shouldShoot&&!dead) {
-                Bullet repeater1 = new Bullet(col, row, 3, "ICY");
-                repeater1.shoot(root, x + 60,XZ[0], y);
-                bullets.add(repeater1);
-            }
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-        AnimationManager.register(timeline);
-
-
+    void shoot(Pane root, double x, double xzombie, double y) {
+        Bullet repeater1 = new Bullet(getCol(),getRow(), 3, "ICY");
+        repeater1.shoot(root, x + 60,xzombie, y);
+        bullets.add(repeater1);
     }
 
     @Override

@@ -12,8 +12,7 @@ import java.util.ArrayList;
 public class Iceshroom extends Planet implements Act{
     static boolean activate = false;
     public Iceshroom(int x,int y) {
-        this.row = y;
-        this.col = x;
+        super(x,y);
         this.health = 4;
         this.watingtime =5;
         this.dayPlanet =false;

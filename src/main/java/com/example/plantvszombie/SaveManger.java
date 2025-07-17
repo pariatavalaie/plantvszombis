@@ -61,7 +61,7 @@ public class SaveManger {
                         int row = Integer.parseInt(parts[0]);
                         int col = Integer.parseInt(parts[1]);
 
-                        Rectangle burned = new Rectangle(Yard.GRID_X,Yard.GRID_Y);
+                        Rectangle burned = new Rectangle(Yard.CELL_WIDTH,Yard.Cell_HEIGHT);
                         burned.setFill(Color.DARKGRAY);
                         burned.setOpacity(0.6);
 
@@ -118,17 +118,17 @@ public class SaveManger {
                 ((specialAct)x).act(yard.yardPane);
             }
             if(x instanceof Doomshroom){
-                Planet Doom = yard.findPlanet(x.col,x.row);
-                yard.lockedCells.add(x.row + "," + x.col);
+                Planet Doom = yard.findPlanet(x.getCol(),x.getRow());
+                yard.lockedCells.add(x.getRow() + "," + x.getCol());
                 x.eatimage.setImage(x.image.getImage());
                 if (Doom != null) {
                     Timeline timeline = new Timeline(
                             new KeyFrame(Duration.seconds(1), e -> {
                                 yard.removePlanet(x);
-                                Rectangle burned = new Rectangle(Yard.GRID_X, Yard.GRID_Y);
+                                Rectangle burned = new Rectangle(Yard.CELL_WIDTH, Yard.Cell_HEIGHT);
                                 burned.setFill(Color.DARKGRAY);
                                 burned.setOpacity(0.6);
-                                yard.gridPane.add(burned,x. col, x.row);
+                                yard.gridPane.add(burned,x.getCol(), x.getRow());
                             }));
 
                     timeline.play();}

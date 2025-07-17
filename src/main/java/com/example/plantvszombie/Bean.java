@@ -5,8 +5,7 @@ import javafx.scene.image.ImageView;
 
 public class Bean extends Planet{
     public Bean(int x, int y) {
-        this.row = y;
-        this.col = x;
+        super(x,y);
         this.watingtime = 2;
         this.health = 4;
         this.dayPlanet =true;

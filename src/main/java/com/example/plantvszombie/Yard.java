@@ -11,14 +11,15 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-
 import java.util.*;
 
 public class Yard {
     AnchorPane yardPane;
     GridPane gridPane;
-    static final double GRID_X=80;
-    static final double GRID_Y=100;
+    static final double CELL_WIDTH =80;
+    static final double Cell_HEIGHT =100;
+     static final double GRID_X = 245.0;
+    static  final double GRID_Y = 60.0;
     List <String> selected;
     ImageView yard;
     ArrayList<Planet>planets=new ArrayList<>();
@@ -57,7 +58,7 @@ public class Yard {
 
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
-                Rectangle rectangle = new Rectangle(GRID_X, GRID_Y);
+                Rectangle rectangle = new Rectangle(CELL_WIDTH, Cell_HEIGHT);
                 rectangle.setFill(Color.TRANSPARENT);
                 rectangle.setStroke(Color.BLACK);
                 rectangle.setStrokeWidth(0.5);
@@ -82,7 +83,7 @@ public class Yard {
                         Planet planet1 = null;
 
                         for (Planet planet : planets) {
-                            if (planet.row == row && planet.col == col) {
+                            if (planet.getRow()== row && planet.getCol()== col) {
                                 if (!planet.dayPlanet) bean = true;
                                 planet1 = planet;
                                 empty = false;
@@ -130,8 +131,8 @@ public class Yard {
         }
 
         startMovingAndDetecting();
-        AnchorPane.setTopAnchor(gridPane, 60.0);
-        AnchorPane.setLeftAnchor(gridPane, 245.0);
+        AnchorPane.setTopAnchor(gridPane, Yard.GRID_Y);
+        AnchorPane.setLeftAnchor(gridPane, Yard.GRID_X);
     }
 
     private boolean isPlaceable(String sel) {
@@ -156,7 +157,7 @@ public class Yard {
 
                 // بررسی اینکه گیاهی در این مکان نباشه
                 for (Planet planet : planets) {
-                    if (planet.col == col && planet.row == row) {
+                    if (planet.getCol() == col && planet.getRow() == row) {
                         positionOccupied = true;
                         break;
                     }
@@ -184,7 +185,7 @@ public class Yard {
 
     public Planet findPlanet(int col, int row) {
         for (Planet planet : planets) {
-            if (planet.row == row && planet.col == col) {
+            if (planet.getRow()== row && planet.getCol()== col) {
                 return planet;
             }
         }
@@ -257,7 +258,7 @@ public class Yard {
                 Timeline timeline = new Timeline(
                         new KeyFrame(Duration.seconds(2), e -> {
                             removePlanet(planet1);
-                            Rectangle burned = new Rectangle(GRID_X, GRID_Y);
+                            Rectangle burned = new Rectangle(CELL_WIDTH, Cell_HEIGHT);
                             burned.setFill(Color.DARKGRAY);
                             burned.setOpacity(0.6);
                             gridPane.add(burned, col, row);
@@ -271,18 +272,18 @@ public class Yard {
             if (x instanceof Act) {
                 ((Act)x).act(yardPane, Zombies);
             }
+
             if (x instanceof specialAct) {
                 ((specialAct)x).act(yardPane);
             }
             if(x instanceof Doomshroom){
-                Planet Doom = findPlanet(x.col,x.row);
-                lockedCells.add(x.row + "," + x.col);
+                lockedCells.add(row + "," + col);
                 x.eatimage.setImage(x.image.getImage());
-                if (Doom != null) {
+                if (x!= null) {
                     Timeline timeline = new Timeline(
                             new KeyFrame(Duration.seconds(1), e -> {
                                 removePlanet(x);
-                                Rectangle burned = new Rectangle(GRID_X, GRID_Y);
+                                Rectangle burned = new Rectangle(CELL_WIDTH, Cell_HEIGHT);
                                 burned.setFill(Color.DARKGRAY);
                                 burned.setOpacity(0.6);
                                 gridPane.add(burned, col, row);
@@ -307,21 +308,20 @@ public class Yard {
 
         }else if(planet.equals("Grave") ) {
             StoneGrave s=findStoneGrave(col,row);
-            s.remove(graves);
+            if (s != null) {
+                s.remove(graves);
+            }
 
         }
 
-        plantView.setFitWidth(70);
-        plantView.setFitHeight(70);
-
-        double gridX = 245.0; // Left anchor of grid
-        double gridY = 60.0;  // Top anchor of grid
-        double x = gridX + col * GRID_X + (GRID_X - 70) / 2;
-        double y = gridY + row * GRID_Y + (GRID_Y - 90) / 2;
-        plantView.setLayoutX(x);
-        plantView.setLayoutY(y);
-
-        yardPane.getChildren().add(plantView);
+        if (plantView != null) {
+            plantView.setFitWidth(70);
+         plantView.setFitHeight(70);
+         double x = GRID_X + col * CELL_WIDTH + ( CELL_WIDTH - 70) / 2;
+         double y = GRID_Y + row * Cell_HEIGHT + ( Cell_HEIGHT - 90) / 2;
+         plantView.setLayoutX(x);
+         plantView.setLayoutY(y);
+         yardPane.getChildren().add(plantView);}
     }
 
 

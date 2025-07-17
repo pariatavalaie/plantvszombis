@@ -9,8 +9,7 @@ import javafx.util.Duration;
 public class GraveBuster extends Planet implements specialAct{
 
     public GraveBuster(int x,int y) {
-        this.col = x;
-        this.row = y;
+        super(x,y);
         this.watingtime = 3;
         this.dayPlanet =false;
         this.health=4;

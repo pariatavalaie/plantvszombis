@@ -12,8 +12,8 @@ import java.util.Map;
 
 public abstract class Planet {
     int watingtime;
-    int row;
-    int col;
+    private final int row;
+    private final int col;
     int health;
     ImageView image;
     ImageView eatimage;
@@ -21,6 +21,11 @@ public abstract class Planet {
     PauseTransition cooldown;
     boolean dayPlanet;
     boolean active=false;
+    public Planet(int x, int y) {
+        this.row = y;
+        this.col = x;
+
+    }
     public static Map<String, Boolean> canPlaceMap = new HashMap<>();
     public static  Map<String, Integer> costMap = new HashMap<>();
     static {
@@ -33,6 +38,9 @@ public abstract class Planet {
             costMap.put(names[i], costs[i]);
         }
     }
+    public int getCol() {return col;}
+    public int getRow() {return row;}
+
 
 
     public void remove(Pane root) {

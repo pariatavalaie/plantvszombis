@@ -6,8 +6,7 @@ import javafx.scene.image.ImageView;
 public class TallNut extends Planet {
 
     public TallNut(int x,int y) {
-        this.row = y;
-        this.col = x;
+        super(x,y);
         this.health = 16;
         this.dayPlanet = true;
         watingtime = 7;

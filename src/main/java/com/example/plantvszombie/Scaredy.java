@@ -9,57 +9,53 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Scaredy extends Shooter implements Act{
+public class Scaredy extends Shooter{
     public boolean scared;
     public Scaredy(int x,int y) {
-        this.col = x;
-        this.row = y;
+       super(x,y);
         this.watingtime = 2;
         this.dayPlanet =false;
         this.health=3;
         this.image = new ImageView( new Image(getClass().getResource("/Scaredy-shroom.png").toExternalForm()));
         this.eatimage=new ImageView( new Image(getClass().getResource("/Scaredy-Shroom_Hiding.png").toExternalForm()));
-        bullets = new ArrayList<>();
         scared=false;
     }
     @Override
     public void act(Pane root , ArrayList<Zombies> zombies) {
         active=true;
-        double gridX = 245.0; // Left anchor of grid
-        double gridY = 60.0;  // Top anchor of grid
-        double cellWidth = 80.0;
-        double cellHeight = 100.0;
-        double x = gridX + col * 80 + (80 - 70) / 2;
-        double y = gridY + row * 100 + (100 - 90) / 2;
+        double x = Yard.GRID_X + getCol() * Yard.CELL_WIDTH+ (Yard.CELL_WIDTH - 70) / 2;
+        double y = Yard.GRID_Y + getRow()* Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT - 90) / 2;
         final double[] XZ = {0};
-
-
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             boolean shouldShoot = false;
             for (Zombies z : zombies) {
                 double zombieX = z.image.getLayoutX() + z.image.getTranslateX();
-                if (z.y == row && z.x - col <= 2 && z.x <= 8 && zombieX > x) {
+                if (z.y == getRow() && z.x - getCol() <= 2 && z.x <= 8 && zombieX > x) {
                     scared = true;
                     this.image.setImage(this.eatimage.getImage());
-                } else if (!scared && z.y == row && z.x > col && z.x <= 8) {
+                } else if (!scared && z.y == getRow() && z.x > getCol() && z.x <= 8) {
                     shouldShoot = true;
-                    XZ[0] = zombieX; // نزدیک‌ترین زامبی
+                    XZ[0] = zombieX;
                     break;
                 }
             }
 
             if (shouldShoot && !dead) {
-                Bullet scary = new Bullet(col, row, 3, "MUSHROOM");
-                scary.shoot(root, x + 60, XZ[0], y + 20);
-                bullets.add(scary);
+                shoot(root,x,XZ[0],y);
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
         AnimationManager.register(timeline);
-
-
     }
+
+    @Override
+    void shoot(Pane root, double x, double xzombie, double y) {
+        Bullet scary = new Bullet(getCol(), getRow(), 3, "MUSHROOM");
+        scary.shoot(root, x + 60,xzombie, y + 20);
+        bullets.add(scary);
+    }
+
     @Override
     String gettype() {
         return  "Scaredy";
@@ -82,7 +78,6 @@ public class Scaredy extends Shooter implements Act{
                 active
         );
     }
-
     @Override
     public void loadpplanet(PlanetState planetState, Pane root) {
         super.loadpplanet(planetState, root);

@@ -11,8 +11,7 @@ import java.util.ArrayList;
 
 public class Hypnoshroom extends Planet implements Act{
     public Hypnoshroom(int x,int y) {
-        this.col = x;
-        this.row = y;
+        super(x,y);
         this.watingtime = 2;
         this.dayPlanet =false;
         this.health=3;
@@ -26,7 +25,7 @@ public class Hypnoshroom extends Planet implements Act{
         boolean[] firsttime={true};
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100),event -> {
         for (Zombies z : Zombies) {
-            if(z.x==col&&z.y==row&&this.dead==true&&this.active==true&&firsttime[0]){
+            if(z.x==getCol()&&z.y==getRow()&&this.dead==true&&this.active==true&&firsttime[0]){
                 z.isHypnotized=true;
                 z.reverseDirection();
                 firsttime[0]=false;

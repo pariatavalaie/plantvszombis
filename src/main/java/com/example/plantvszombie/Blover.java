@@ -10,8 +10,7 @@ import javafx.util.Duration;
 public class Blover extends Planet implements specialAct{
     private Fog fog;
     public Blover(int x, int y, Fog fog) {
-        this.row = y;
-        this.col = x;
+        super(x,y);
         this.fog = fog;
         this.watingtime = 3;
         this.dayPlanet =false;

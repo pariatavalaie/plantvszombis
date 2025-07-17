@@ -122,7 +122,7 @@ public abstract class Zombies {
     }
     public void checkAndEatPlant(ArrayList<Planet> planets, Pane root) {
         for (Planet p : planets) {
-            if (p.row==this.y && p.col==this.x) {
+            if (p.getRow()==this.y && p.getCol()==this.x) {
 
                 if (walker != null) walker.pause();
 

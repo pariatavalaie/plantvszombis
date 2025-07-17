@@ -14,8 +14,7 @@ public class Plantern extends Planet implements specialAct{
     private Circle currentHole;
 
     public Plantern(int x, int y, Fog fog) {
-        this.row = y;
-        this.col = x;
+        super(x,y);
         this.fog = fog;
         this.watingtime = 3;
         this.health = 4;
@@ -37,12 +36,10 @@ public class Plantern extends Planet implements specialAct{
     }
 
     private void updateLight() {
-        // ابتدا سوراخ قبلی رو حذف کن
         if (currentHole != null) {
             fog.removeLanternHole(currentHole);
         }
 
-        // مکان دقیق سوراخ
         double sceneX = image.localToScene(0, 0).getX();
         double sceneY = image.localToScene(0, 0).getY();
         double fogX = fog.getFogRect().localToScene(0, 0).getX();
