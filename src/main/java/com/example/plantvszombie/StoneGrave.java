@@ -10,72 +10,119 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class StoneGrave {
-    int x;
-    int y;
-    ImageView image;
-    boolean zombieSpawned;
-    Pane pane;
-    PauseTransition stop;
+    private int x;
+    private int y;
+    private ImageView image;
+    private boolean zombieSpawned;
+    private Pane pane;
+    private PauseTransition stop;
     public StoneGrave(int x, int y, Pane root) {
-        this.x = x;
-        this.y = y;
-        zombieSpawned = false;
-        image =new ImageView( new Image(getClass().getResource("/Grave8-removebg-preview.png").toExternalForm()));
-        image.setFitHeight(70);
-        image.setFitWidth(90);
+        this.setX(x);
+        this.setY(y);
+        setZombieSpawned(false);
+        setImage(new ImageView( new Image(getClass().getResource("/Grave8-removebg-preview.png").toExternalForm())));
+        getImage().setFitHeight(70);
+        getImage().setFitWidth(90);
         double startX = 245 + x * 80 + 5;
         double startY = 60 + y * 100 + 10;
 
-        image.setLayoutX(startX);
-        image.setLayoutY(startY);
-        this.pane = root;
-        root.getChildren().add(image);
+        getImage().setLayoutX(startX);
+        getImage().setLayoutY(startY);
+        this.setPane(root);
+        root.getChildren().add(getImage());
 
 
     }
     public void spawnZombie(ArrayList<Zombies>z,ArrayList<StoneGrave>graves) {
         Random random = new Random();
 
-      if (zombieSpawned) return;
-      stop = new PauseTransition(Duration.seconds(random.nextInt(5)+5));
+      if (isZombieSpawned()) return;
+      setStop(new PauseTransition(Duration.seconds(random.nextInt(5)+5)));
 
-        stop.setOnFinished(event -> {
+        getStop().setOnFinished(event -> {
 
-        zombieSpawned = true;
+        setZombieSpawned(true);
 
         Zombies zombie;
 
         double chance = random.nextFloat();
             if (chance < 0.6) {
-                zombie = new ImpZombie(x, y, pane);
+                zombie = new ImpZombie(getX(), getY(), getPane());
                 z.add(zombie);
                 remove(graves);
             } else if (chance < 0.7) {
-                zombie = new ConeheadZombie(x, y, pane);
+                zombie = new ConeheadZombie(getX(), getY(), getPane());
                 z.add(zombie);
                 remove(graves);
             } else if (chance < 0.8) {
-                zombie = new ScreendoorZombie(x, y, pane);
+                zombie = new ScreendoorZombie(getX(), getY(), getPane());
                 z.add(zombie);
                 remove(graves);
             } else if (chance < 0.9) {
-                zombie = new NormalZombie(x, y, pane);
+                zombie = new NormalZombie(getX(), getY(), getPane());
                 z.add(zombie);
                 remove(graves);
             }
         });
-        stop.play();
-        AnimationManager.register(stop);
+        getStop().play();
+        AnimationManager.register(getStop());
 
     }
     public stoneGraveState getState() {
-        return new stoneGraveState(x,y);
+        return new stoneGraveState(getX(), getY());
     }
     public void remove(ArrayList<StoneGrave>graves) {
-        pane.getChildren().remove(image);
+        getPane().getChildren().remove(getImage());
         graves.remove(this);
-        stop.stop();
+        getStop().stop();
     }
 
 
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public ImageView getImage() {
+        return image;
+    }
+
+    public void setImage(ImageView image) {
+        this.image = image;
+    }
+
+    public boolean isZombieSpawned() {
+        return zombieSpawned;
+    }
+
+    public void setZombieSpawned(boolean zombieSpawned) {
+        this.zombieSpawned = zombieSpawned;
+    }
+
+    public Pane getPane() {
+        return pane;
+    }
+
+    public void setPane(Pane pane) {
+        this.pane = pane;
+    }
+
+    public PauseTransition getStop() {
+        return stop;
+    }
+
+    public void setStop(PauseTransition stop) {
+        this.stop = stop;
+    }
 }

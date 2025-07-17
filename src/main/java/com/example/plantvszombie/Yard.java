@@ -91,7 +91,7 @@ public class Yard {
                         }
 
                         for (StoneGrave grave : getGraves()) {
-                            if (grave.x == row && grave.y == col) {
+                            if (grave.getX() == row && grave.getY() == col) {
                                 empty = false;
                                 break;
                             }
@@ -165,8 +165,8 @@ public class Yard {
 
 
                 for (StoneGrave grave : getGraves()) {
-                    int dx = Math.abs(grave.x - col);
-                    int dy = Math.abs(grave.y - row);
+                    int dx = Math.abs(grave.getX() - col);
+                    int dy = Math.abs(grave.getY() - row);
                     if ((dx == 0 && dy == 0) || (dx + dy == 1)) {
 
                         positionOccupied = true;
@@ -223,7 +223,7 @@ public class Yard {
     }
     private StoneGrave findStoneGrave(int col, int row) {
         for (StoneGrave grave : getGraves()) {
-            if(grave.x == col && grave.y == row) {
+            if(grave.getX() == col && grave.getY() == row) {
                 return grave;
             }
         }
