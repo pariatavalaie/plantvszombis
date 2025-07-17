@@ -80,7 +80,7 @@ public class SaveManger {
                     Planet planet=yard.findPlanet(p.col,p.row);
                     planet.loadpplanet(p,yard.yardPane);
                     if(p.active&&!planet.isDayPlanet() && yard.day){
-                        nightPlanetOn(yard,planet);
+                      yard.activatePlanet(planet);
                     }
 
                 }
@@ -110,36 +110,7 @@ public class SaveManger {
             }
 
         }
-        private void nightPlanetOn(Yard yard,Planet x) {
-            if (x instanceof Act) {
-                ((Act)x).act(yard.yardPane, yard.Zombies);
-            }
-            if (x instanceof specialAct) {
-                ((specialAct)x).act(yard.yardPane);
-            }
-            if(x instanceof Doomshroom){
-                Planet Doom = yard.findPlanet(x.getCol(),x.getRow());
-                yard.lockedCells.add(x.getRow() + "," + x.getCol());
-                x.getEatimage().setImage(x.getImage().getImage());
-                if (Doom != null) {
-                    Timeline timeline = new Timeline(
-                            new KeyFrame(Duration.seconds(1), e -> {
-                                yard.removePlanet(x);
-                                Rectangle burned = new Rectangle(Yard.CELL_WIDTH, Yard.Cell_HEIGHT);
-                                burned.setFill(Color.DARKGRAY);
-                                burned.setOpacity(0.6);
-                                yard.gridPane.add(burned,x.getCol(), x.getRow());
-                            }));
 
-                    timeline.play();}
-            }
-            if(x instanceof Iceshroom){if(x.isDead()){yard.planets.remove(x);};
-                x.getEatimage().setImage(x.getImage().getImage());
-            }
-            if(x instanceof Hypnoshroom){
-                x.getEatimage().setImage(x.getImage().getImage());
-            }
-        }
 }
   class ZombieFactory {
     public static Zombies createFromState(ZombieState state, Pane pane) {
