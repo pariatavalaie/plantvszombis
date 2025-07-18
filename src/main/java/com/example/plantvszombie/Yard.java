@@ -126,9 +126,6 @@ public class Yard {
 
         getYardPane().getChildren().add(getGridPane());
 
-        if (!isDay()) {
-            PaintStone(getYardPane(), x, y);
-        }
 
         startMovingAndDetecting();
         AnchorPane.setTopAnchor(getGridPane(), Yard.GRID_Y);
@@ -142,46 +139,7 @@ public class Yard {
         ).contains(sel);
     }
 
-    private void PaintStone(Pane pane, int x, int y) {
-        Random random = new Random();
-        int numberOfGraves = 5; // تعداد سنگ‌قبرهایی که اول بازی ظاهر می‌شن
 
-        for (int i = 0; i < numberOfGraves; i++) {
-            int col, row;
-            boolean positionOccupied;
-
-            do {
-                col = random.nextInt(x);
-                row = random.nextInt(y);
-                positionOccupied = false;
-
-                // بررسی اینکه گیاهی در این مکان نباشه
-                for (Planet planet : getPlanets()) {
-                    if (planet.getCol() == col && planet.getRow() == row) {
-                        positionOccupied = true;
-                        break;
-                    }
-                }
-
-
-                for (StoneGrave grave : getGraves()) {
-                    int dx = Math.abs(grave.getX() - col);
-                    int dy = Math.abs(grave.getY() - row);
-                    if ((dx == 0 && dy == 0) || (dx + dy == 1)) {
-
-                        positionOccupied = true;
-                        break;
-                    }
-                }
-
-            } while (positionOccupied);
-
-            StoneGrave grave = new StoneGrave(col, row, pane);
-            getGraves().add(grave);
-
-            grave.spawnZombie(getZombies(), getGraves());
-        }
-    }
 
     public Planet findPlanet(int col, int row) {
         for (Planet planet : getPlanets()) {
@@ -221,7 +179,7 @@ public class Yard {
         planet.remove(getYardPane());
         getPlanets().remove(planet);
     }
-    private StoneGrave findStoneGrave(int col, int row) {
+    protected StoneGrave findStoneGrave(int col, int row) {
         for (StoneGrave grave : getGraves()) {
             if(grave.getX() == col && grave.getY() == row) {
                 return grave;

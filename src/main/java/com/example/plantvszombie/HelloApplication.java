@@ -141,6 +141,8 @@ public class HelloApplication extends Application {
                 if (yard.isDay()) Sun.fall(yard.getYardPane());
                 ZombieWaveManger zw = new ZombieWaveManger(yard);
                 zw.start();
+                if(!yard.isDay()){
+                    zw.PaintStone(yard.getYardPane(),9,5);}
 
                 Scene scene = new Scene(yard.getYardPane(), 1024, 626);
                 stage.setScene(scene);
@@ -170,6 +172,8 @@ public class HelloApplication extends Application {
         if (menu.day) Sun.fall(yard.getYardPane());
         ZombieWaveManger zw = new ZombieWaveManger(yard);
         zw.start();
+        if(!yard.isDay()){
+           zw.PaintStone(yard.getYardPane(),9,5);}
         yard.updateButtons();
         Scene scene1 = new Scene(yard.getYardPane(), 1024, 626);
         stage.setScene(scene1);

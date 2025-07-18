@@ -99,6 +99,15 @@ public class GameClient {
                     timeline.setCycleCount(Timeline.INDEFINITE);
                     timeline.play();
                     AnimationManager.register(timeline);
+                }case "ZOMBIE OUT"->{
+                    stoneGraveState sa = (stoneGraveState) msg.data;
+                    StoneGrave s=clientYard.findStoneGrave(sa.getX(),sa.getY());
+                    s.setZombieSpawned(true);
+                    s.remove(getClientYard().getGraves());
+
+                }case "GRAVE"->{
+                    stoneGraveState g=(stoneGraveState) msg.data;
+                    getClientYard().getGraves().add(g.getStoneGrave(getClientYard().getYardPane()));
                 }
             }
         });
