@@ -86,7 +86,6 @@ public class Menu {
         Back.setGraphic(back);
         Back.setLayoutX(900);
         Back.setLayoutY(10);
-
     }
 
     public VBox getMenuPane() {
@@ -114,7 +113,6 @@ public class Menu {
         ImageView imageView1 = new ImageView(image1);
         imageView1.setPreserveRatio(true);
         Play.setGraphic(imageView1);
-
 
         int count = 0;
         for (int i = 0; i < plantNames.length; i++) {
@@ -217,18 +215,12 @@ public class Menu {
             Button button = new Button(name);
             button.setGraphic(view);
             button.setStyle("-fx-background-color: #fff");
-
             button.setPrefSize(100, 50);
             DropShadow shadow = new DropShadow();
             shadow.setRadius(10.0);
             shadow.setOffsetX(10.0);
             shadow.setOffsetY(10.0);
-
             plantButtons.add(button);
-
-
-
-
             final int index = i;
 
             button.setOnAction(e -> {
@@ -244,14 +236,12 @@ public class Menu {
                         countPlant++;
                         button.setEffect(shadow);
                     } else {
-
                         Alert eror = new Alert(Alert.AlertType.WARNING);
                         eror.setHeaderText("\"You can only select up to 6 plants!\"");
                         eror.showAndWait();
                     }
                 }
             });
-
             if (count < 4) {
                 menu1.getChildren().add(button);
                 if (name.equals("Grave") && day) {
@@ -291,15 +281,11 @@ public class Menu {
             }
             count++;
         }
-
-
         menuContainer.getChildren().addAll(menu1, menu2, menu3, menu4, Play);
         return menuContainer;
     }
 
-
     public List getSelectedPlantsNames() {
         return selectedPlantsNames;
     }
-
 }

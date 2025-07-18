@@ -8,15 +8,16 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public class Sunflower extends Planet implements specialAct{
+
     public Sunflower(int x, int y) {
         super(x, y);
-        setWatingtime(5);
+        setWaitingTime(5);
         setHealth(4);
         this.setDayPlanet(true);
         setImage(new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm())));
         setEatimage(new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm())));
-
     }
+
     @Override
     public void act(Pane root) {
         double x = Yard.GRID_X+ getCol() * Yard.CELL_WIDTH+ (Yard.CELL_WIDTH - 70) / 2;
@@ -26,7 +27,6 @@ public class Sunflower extends Planet implements specialAct{
             Sun sun=new Sun();
             Sun.getSuns().add(sun);
             sun.sunflower(root,x,y);}
-
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();

@@ -4,9 +4,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class WallNut extends Planet{
+
     public WallNut(int x,int y){
         super(x,y);
-        setWatingtime(5);
+        setWaitingTime(5);
         this.setHealth(10);
         this.setDayPlanet(true);
         this.setEatimage(new ImageView(new Image(getClass().getResource("/walnut_half_life.gif").toExternalForm())));

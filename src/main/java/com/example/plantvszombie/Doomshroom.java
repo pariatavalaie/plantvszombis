@@ -11,10 +11,11 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Doomshroom extends Planet implements Act{
+
     public Doomshroom(int x,int y) {
         super(x,y);
         this.setHealth(4);
-        this.setWatingtime(5);
+        this.setWaitingTime(5);
         this.setDayPlanet(false);
         setImage(new ImageView(new Image(getClass().getResource("/DoomShroom1.gif").toExternalForm())));
         setEatimage(new ImageView(new Image(getClass().getResource("/DoomShroom3.gif").toExternalForm())));

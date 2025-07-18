@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class ScreendoorZombie extends Zombies{
+
  public ScreendoorZombie(int x,int y,Pane root) {
      this.setX(x);
      this.setY(y);
@@ -20,11 +21,7 @@ public class ScreendoorZombie extends Zombies{
      double startY = 60 + y * 100 + 10;
      getImage().setLayoutX(startX);
      getImage().setLayoutY(startY);
-
      root.getChildren().add(getImage());
      move(root);
-
-
  }
-
 }

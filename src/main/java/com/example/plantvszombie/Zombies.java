@@ -46,21 +46,15 @@ public abstract class Zombies {
                 return;
             }
             getWalker().playFromStart();
-
-
         });
         getWalker().play();
         AnimationManager.register(getWalker());
-
-
     }
-
 
     public void reverseDirection() {
         if(isHypnotized()){
         setDirection(getDirection() * -1);
-
-        getImage().setScaleX(getImage().getScaleX() * -1); // برعکس شدن تصویر
+        getImage().setScaleX(getImage().getScaleX() * -1);
 
         if (getWalker() != null) {
             getWalker().pause();
@@ -71,11 +65,8 @@ public abstract class Zombies {
             blueTint.setHue(-0.6);
             blueTint.setSaturation(1.0);
             blueTint.setBrightness(0.5);
-
             getImage().setEffect(blueTint);}
     }
-
-
 
     public void damage (ArrayList<Planet> planets,Pane root) {
         for (Planet p : planets) {
@@ -102,8 +93,6 @@ public abstract class Zombies {
                     System.out.println("Zombie HP: " + getHp());
                     it.remove();
                 }
-
-
             }
         }}}
 
@@ -112,7 +101,6 @@ public abstract class Zombies {
           root.getChildren().remove(b.imageBullet);
           b.hit=true;
           return true;
-
       }
       return false;
     }
@@ -120,6 +108,7 @@ public abstract class Zombies {
     public boolean isAlive() {
         return getHp() >0;
     }
+
     public void checkAndEatPlant(ArrayList<Planet> planets, Pane root) {
         for (Planet p : planets) {
             if (p.getRow()== this.getY() && p.getCol()== this.getX()) {
@@ -134,18 +123,13 @@ public abstract class Zombies {
                         eatingRef[0].stop();
                         return;
                     }
-
-
                     p.setHealth(p.getHealth() - 1);
                     p.getImage().setImage(p.getEatimage().getImage());
-
-
                     if ( p.getHealth() < 0) {
                         getWalker().play();
                         getImage().setImage(temp);
                         p.remove(root);
                         planets.remove(p);
-
                     }
                 })));
                 getEating().setCycleCount(p.getHealth());
@@ -156,14 +140,13 @@ public abstract class Zombies {
             }
         }
     }
+
     public void checkAndEatZombie(ArrayList<Zombies> Zombie, Pane root) {
         if (!isAlive()) return;
-
         for (Zombies other : Zombie) {
             if (other == this || !other.isAlive()) continue;
 
             if (this.getX() == other.getX() && this.getY() == other.getY()) {
-
 
                 if (this.isHypnotized() == other.isHypnotized()) return;
 
@@ -185,27 +168,19 @@ public abstract class Zombies {
                         fightRef[0].stop();
                         return;
                     }
-
                     this.setHp(this.getHp() - 1);
                     other.setHp(other.getHp() - 1);
                 }));
-
                 fight.setCycleCount(Animation.INDEFINITE);
                 fightRef[0] = fight;
                 fight.play();
                 AnimationManager.register(fightRef[0]);
-
                 break;
             }
         }
     }
-    public void init(){
-         if(getX() <0){
-             setInHouse(true);
-         }
-    }
-    protected ZombieState getState() {
 
+    protected ZombieState getState() {
         return new ZombieState(
                 this.getClass().getSimpleName(),
                 this.getX(),
@@ -218,6 +193,7 @@ public abstract class Zombies {
 
         );
     }
+
     public void freezeZombie() {
         if(!Iceshroom.activate){
             if (this.isAlive()) {
@@ -242,7 +218,6 @@ public abstract class Zombies {
             }
         }
     }
-
 
     public int getX() {
         return x;

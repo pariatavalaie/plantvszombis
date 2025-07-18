@@ -16,8 +16,8 @@ import java.util.*;
 public class Yard {
     private AnchorPane yardPane;
     private GridPane gridPane;
-    static final double CELL_WIDTH =80;
-    static final double Cell_HEIGHT =100;
+    static final double CELL_WIDTH = 80;
+    static final double Cell_HEIGHT = 100;
      static final double GRID_X = 245.0;
     static  final double GRID_Y = 60.0;
     private List <String> selected;
@@ -31,6 +31,7 @@ public class Yard {
     private ButtonManager buttonManager;
     private boolean isServer;
     private int killedZombies=0;
+
     Yard(List<String> selected,boolean day) {
         Image yar;
         if(day){
@@ -50,7 +51,6 @@ public class Yard {
         getButtonManager().addTo(getYardPane());
         PaintGrid(9, 5);
         setServer(false);
-
     }
 
     public void PaintGrid(int x, int y) {
@@ -77,11 +77,9 @@ public class Yard {
 
                     if (db.hasString()) {
                         String sel = db.getString();
-
                         boolean empty = true;
                         boolean bean = false;
                         Planet planet1 = null;
-
                         for (Planet planet : getPlanets()) {
                             if (planet.getRow()== row && planet.getCol()== col) {
                                 if (!planet.isDayPlanet()) bean = true;
@@ -89,17 +87,14 @@ public class Yard {
                                 empty = false;
                             }
                         }
-
                         for (StoneGrave grave : getGraves()) {
                             if (grave.getX() == row && grave.getY() == col) {
                                 empty = false;
                                 break;
                             }
                         }
-
                         String cellKey = row + "," + col;
                         if (getLockedCells().contains(cellKey)) return;
-
                         if ("shovel".equals(sel)) {
                             if (planet1 != null) {
                                 planet1.remove(getYardPane());
@@ -117,19 +112,15 @@ public class Yard {
                             success = true;
                         }
                     }
-
                     event.setDropCompleted(success);
                     event.consume();
                 });
             }
         }
-
         getYardPane().getChildren().add(getGridPane());
-
         if (!isDay()) {
             PaintStone(getYardPane(), x, y);
         }
-
         startMovingAndDetecting();
         AnchorPane.setTopAnchor(getGridPane(), Yard.GRID_Y);
         AnchorPane.setLeftAnchor(getGridPane(), Yard.GRID_X);
@@ -144,41 +135,32 @@ public class Yard {
 
     private void PaintStone(Pane pane, int x, int y) {
         Random random = new Random();
-        int numberOfGraves = 5; // تعداد سنگ‌قبرهایی که اول بازی ظاهر می‌شن
+        int numberOfGraves = 5;
 
         for (int i = 0; i < numberOfGraves; i++) {
             int col, row;
             boolean positionOccupied;
-
             do {
                 col = random.nextInt(x);
                 row = random.nextInt(y);
                 positionOccupied = false;
-
-                // بررسی اینکه گیاهی در این مکان نباشه
                 for (Planet planet : getPlanets()) {
                     if (planet.getCol() == col && planet.getRow() == row) {
                         positionOccupied = true;
                         break;
                     }
                 }
-
-
                 for (StoneGrave grave : getGraves()) {
                     int dx = Math.abs(grave.getX() - col);
                     int dy = Math.abs(grave.getY() - row);
                     if ((dx == 0 && dy == 0) || (dx + dy == 1)) {
-
                         positionOccupied = true;
                         break;
                     }
                 }
-
             } while (positionOccupied);
-
             StoneGrave grave = new StoneGrave(col, row, pane);
             getGraves().add(grave);
-
             grave.spawnZombie(getZombies(), getGraves());
         }
     }
@@ -191,6 +173,7 @@ public class Yard {
         }
         return null;
     }
+
     public void startMovingAndDetecting() {
         Timeline s=new Timeline(new KeyFrame(Duration.seconds(1),event -> {
         ArrayList<Zombies> zombieCopy = new ArrayList<>(getZombies());
@@ -211,7 +194,6 @@ public class Yard {
                     this.removePlanet(planet);
                 }
             }
-
         }));
         s.setCycleCount(Timeline.INDEFINITE);
         s.play();
@@ -221,6 +203,7 @@ public class Yard {
         planet.remove(getYardPane());
         getPlanets().remove(planet);
     }
+
     private StoneGrave findStoneGrave(int col, int row) {
         for (StoneGrave grave : getGraves()) {
             if(grave.getX() == col && grave.getY() == row) {
@@ -256,19 +239,16 @@ public class Yard {
                 plantView = planet1.getImage();
                 setLockedCells(col,row,planet1);
             }
-
         } else if(planet.equals("bean")) {
             Planet x=findPlanet(col,row);
             activatePlanet(x);
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> removePlanet(planet1)));
             timeline.play();
-
         }else if(planet.equals("Grave") ) {
             StoneGrave s=findStoneGrave(col,row);
             if (s != null) {
                 s.remove(getGraves());
             }
-
         }
         if (plantView != null) {
          plantView.setFitWidth(70);
@@ -291,9 +271,9 @@ public class Yard {
                     burned.setOpacity(0.6);
                     getGridPane().add(burned, col, row);
                 }));
-
         timeline.play();}
     }
+
     protected void activatePlanet(Planet x) {
         if (x instanceof Act) {((Act)x).act(getYardPane(), getZombies());}
 
@@ -310,7 +290,6 @@ public class Yard {
         if(x instanceof Hypnoshroom){
             x.getEatimage().setImage(x.getImage().getImage());}
     }
-
 
     public Planet createPlanet(String planetName, int col, int row) {
         switch (planetName) {
@@ -358,7 +337,6 @@ public class Yard {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {
             getButtonManager().update(Planet.canPlaceMap,Planet.costMap, Sun.getCollectedpoint());
         }));
-
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
         AnimationManager.register(timeline);

@@ -11,10 +11,11 @@ import java.util.ArrayList;
 
 public class Iceshroom extends Planet implements Act{
     static boolean activate = false;
+
     public Iceshroom(int x,int y) {
         super(x,y);
         this.setHealth(4);
-        this.setWatingtime(5);
+        this.setWaitingTime(5);
         this.setDayPlanet(false);
         setImage(new ImageView(new Image(getClass().getResource("/IceShroom1.gif").toExternalForm())));
         setEatimage(new ImageView(new Image(getClass().getResource("/IceShroom2.gif").toExternalForm())));
@@ -34,8 +35,6 @@ public class Iceshroom extends Planet implements Act{
                 setDead(true);
         });
         AnimationManager.register(unfreeze);
-
-
     }
 
     @Override

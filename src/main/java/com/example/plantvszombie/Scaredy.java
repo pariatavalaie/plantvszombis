@@ -6,20 +6,21 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 
 public class Scaredy extends Shooter{
     public boolean scared;
+
     public Scaredy(int x,int y) {
        super(x,y);
-        this.setWatingtime(2);
+        this.setWaitingTime(2);
         this.setDayPlanet(false);
         this.setHealth(3);
         this.setImage(new ImageView( new Image(getClass().getResource("/Scaredy-shroom.png").toExternalForm())));
         this.setEatimage(new ImageView( new Image(getClass().getResource("/Scaredy-Shroom_Hiding.png").toExternalForm())));
         scared=false;
     }
+
     @Override
     public void act(Pane root , ArrayList<Zombies> zombies) {
         setActive(true);
@@ -39,7 +40,6 @@ public class Scaredy extends Shooter{
                     break;
                 }
             }
-
             if (shouldShoot && !isDead()) {
                 shoot(root,x,XZ[0],y);
             }
@@ -78,6 +78,7 @@ public class Scaredy extends Shooter{
                 isActive()
         );
     }
+
     @Override
     public void loadpplanet(PlanetState planetState, Pane root) {
         super.loadpplanet(planetState, root);

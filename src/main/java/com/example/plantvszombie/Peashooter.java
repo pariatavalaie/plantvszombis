@@ -5,9 +5,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class Peashooter extends Shooter{
+
     public Peashooter(int x, int y) {
         super(x,y);
-        this.setWatingtime(6);
+        this.setWaitingTime(6);
         this.setHealth(4);
         this.setDayPlanet(true);
         this.setImage(new ImageView(new Image(getClass().getResource("/peashooter.gif").toExternalForm())));

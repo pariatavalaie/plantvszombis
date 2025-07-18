@@ -9,13 +9,11 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class SaveManger {
+
     public void saveGame(Yard yard, String filePath) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filePath))) {
-
             GameState gameState = buildGameState(yard);
             out.writeObject(gameState);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -26,12 +24,10 @@ public class SaveManger {
         for (Zombies z : yard.getZombies()) {
             zombieStates.add(z.getState());
         }
-
         ArrayList<SunState> sunStates = new ArrayList<>();
         for (Sun s : Sun.getSuns()) {
             sunStates.add(s.getState());
         }
-
         ArrayList<PlanetState> planetStates = new ArrayList<>();
         for (Planet p : yard.getPlanets()) {
             planetStates.add(p.getState());
@@ -40,10 +36,8 @@ public class SaveManger {
         for (StoneGrave G : yard.getGraves()) {
             stoneGrave.add(G.getState());
         }
-
         return new GameState(zombieStates, yard.getLockedCells(), yard.isDay(), ZombieWaveManger.getGameTime(), Sun.getCollectedpoint(), yard.getFog(), sunStates, planetStates,stoneGrave, yard.getSelected());
     }
-
 
     public Yard loadGame(String filePath) {
             try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filePath))) {
@@ -65,12 +59,9 @@ public class SaveManger {
                         yard.getGridPane().add(burned, col, row);
                     }
                 }
-
-
                 for (ZombieState z : gameState.getZombies()) {
                     yard.getZombies().add(ZombieFactory.createFromState(z, yard.getYardPane()));
                 }
-                
                 for (PlanetState p : gameState.getPlanets()) {
                     Planet.on();
                     yard.placePlanet(p.getType(), p.getCol(), p.getRow());
@@ -79,7 +70,6 @@ public class SaveManger {
                     if(p.isActive() &&!planet.isDayPlanet() && yard.isDay()){
                       yard.activatePlanet(planet);
                     }
-
                 }
                 for (SunState s : gameState.getSuns()){
                     Sun.getSuns().add(Sun.fromState(s, yard.getYardPane()));
@@ -92,22 +82,13 @@ public class SaveManger {
                 ZombieWaveManger zw=new ZombieWaveManger(yard);
                 ZombieWaveManger.setGameTime(gameState.getGametime());
                 zw.start();
-
                 Sun.setCollectedpoint(gameState.getSunpoint());
-
-
-
                 return yard;
-
-
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
-
               return null;
             }
-
         }
-
 }
   class ZombieFactory {
     public static Zombies createFromState(ZombieState state, Pane pane) {

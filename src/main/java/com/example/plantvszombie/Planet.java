@@ -11,23 +11,26 @@ import java.util.Map;
 
 
 public abstract class Planet {
-    private int watingtime;
+    private int waitingTime;
     private final int row;
     private final int col;
     private int health;
     private ImageView image;
-    private ImageView eatimage;
+    private ImageView eatImage;
     private boolean dead = false;
     private PauseTransition cooldown;
     private boolean dayPlanet;
     private boolean active=false;
+
     public Planet(int x, int y) {
         this.row = y;
         this.col = x;
-
     }
+
     public static Map<String, Boolean> canPlaceMap = new HashMap<>();
+
     public static  Map<String, Integer> costMap = new HashMap<>();
+
     static {
         int[] costs = {100, 200, 50, 50,125, 175, 150,125, 125,25,100, 75, 75, 75, 75, 0, 25,};
         String[] names={"Peashooter","Repeater","Sunflower", "Wall-nut","Tall-nut","Snow Pea","Cherry Bomb","jalapeno",
@@ -38,10 +41,10 @@ public abstract class Planet {
             costMap.put(names[i], costs[i]);
         }
     }
+
     public int getCol() {return col;}
+
     public int getRow() {return row;}
-
-
 
     public void remove(Pane root) {
         root.getChildren().remove(getImage());
@@ -63,9 +66,9 @@ public abstract class Planet {
         this.setDead(planetState.isDead());
         if (planetState.getRemainingCooldown() != 0) {
             if (getCooldown() == null) {
-                setCooldown(new PauseTransition(Duration.seconds(getWatingtime())));
+                setCooldown(new PauseTransition(Duration.seconds(getWaitingTime())));
             }
-            getCooldown().setDuration(Duration.seconds(getWatingtime()));
+            getCooldown().setDuration(Duration.seconds(getWaitingTime()));
             getCooldown().jumpTo(Duration.seconds(planetState.getRemainingCooldown()));
             getCooldown().play();
         }
@@ -77,10 +80,9 @@ public abstract class Planet {
        }
     }
 
-
     public void cooldown(Button b, int cost) {
         canPlaceMap.put(this.gettype(), false);
-        setCooldown(new PauseTransition(Duration.seconds(this.getWatingtime())));
+        setCooldown(new PauseTransition(Duration.seconds(this.getWaitingTime())));
         getCooldown().setOnFinished(ev -> {
             if (cost <= Sun.getCollectedpoint()) {
                 Platform.runLater(() -> {
@@ -97,13 +99,12 @@ public abstract class Planet {
         b.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
     }
 
-
-    public int getWatingtime() {
-        return watingtime;
+    public int getWaitingTime() {
+        return waitingTime;
     }
 
-    public void setWatingtime(int watingtime) {
-        this.watingtime = watingtime;
+    public void setWaitingTime(int waitingTime) {
+        this.waitingTime = waitingTime;
     }
 
     public int getHealth() {
@@ -123,11 +124,11 @@ public abstract class Planet {
     }
 
     public ImageView getEatimage() {
-        return eatimage;
+        return eatImage;
     }
 
     public void setEatimage(ImageView eatimage) {
-        this.eatimage = eatimage;
+        this.eatImage = eatimage;
     }
 
     public boolean isDead() {

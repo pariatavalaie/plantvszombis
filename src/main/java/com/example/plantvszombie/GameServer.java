@@ -35,6 +35,7 @@ public class GameServer {
             }
         }).start();
     }
+
     public static void notifyZombieSpawn(ZombieState zs) {
         broadcast(new NetworkMessage("SPAWN_ZOMBIE", zs));
     }
@@ -42,6 +43,7 @@ public class GameServer {
     public static void notifySunSpawn(SunState ss) {
         broadcast(new NetworkMessage("SPAWN_SUN", ss));
     }
+
     public static void sendInitialState(ObjectOutputStream out) {
         try {
             List<ZombieState> currentZombies = new ArrayList<>();
@@ -64,14 +66,14 @@ public class GameServer {
             e.printStackTrace();
         }
     }
+
     public static void notifyGameOver(boolean gameOver) {
         broadcast(new NetworkMessage("GAME_OVER", gameOver));
     }
+
     public static void notifyFog(){
         broadcast(new NetworkMessage("FOG",null));
     }
-
-
 
     public static void broadcast(NetworkMessage msg) {
         for (ObjectOutputStream out : clients) {
@@ -84,8 +86,8 @@ public class GameServer {
             }
         }
     }
-
 }
+
  class NetworkMessage implements Serializable {
     public String type;
     public Object data;

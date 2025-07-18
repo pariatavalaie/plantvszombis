@@ -34,7 +34,6 @@ public class GameClient {
                     break;
             }
         }
-
         this.setClientYard(new Yard(selectedPlants, day));
         startClientLoseChecker();
         new Thread(() -> {
@@ -59,12 +58,10 @@ public class GameClient {
                     Zombies z = ZombieFactory.createFromState(zs, getClientYard().getYardPane());
                     getClientYard().getZombies().add(z);
                 }
-
                 case "SPAWN_SUN" -> {
                     SunState ss = (SunState) msg.data;
                      Sun S=new Sun();
                      Sun.getSuns().add(S);
-                     // متد انیمیشن خورشید
                     S.fallingSun(getClientYard().getYardPane(), ss.getX(),0);
                 }
                 case "INITIAL_ZOMBIES" -> {
@@ -72,9 +69,7 @@ public class GameClient {
                     for (ZombieState zs : zsList) {
                             Zombies z = ZombieFactory.createFromState(zs, getClientYard().getYardPane());
                             getClientYard().getZombies().add(z);
-
                     }
-
                 }
                 case ("INITIAL_SUNS") ->{
                     List<SunState> sunsList = (List<SunState>) msg.data;
@@ -83,7 +78,6 @@ public class GameClient {
                         Sun.getSuns().add(s);
                         s.fallingSun(getClientYard().getYardPane(), sun.getX(),sun.getZ());
                     }
-
                 } case("GAME_OVER") ->{
                     boolean gameOver = (Boolean) msg.data;
                     getClientYard().triggerGameEnd(gameOver);
@@ -103,6 +97,7 @@ public class GameClient {
             }
         });
     }
+
     private void startClientLoseChecker() {
         new Thread(() -> {
             try {
@@ -122,7 +117,6 @@ public class GameClient {
             }
         }).start();
     }
-
 
     public void sendMessage(NetworkMessage msg) {
         try {

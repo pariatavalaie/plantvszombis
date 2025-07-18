@@ -17,6 +17,7 @@ public class GameState implements Serializable {
     private ArrayList<PlanetState>planets;
     private ArrayList<stoneGraveState> StoneGraves;
     private List<String> selected;
+
      GameState(ArrayList<ZombieState> zombies,  Set<String> lockedCells, boolean day, int gametime, int sunpoint,Fog fog,ArrayList<SunState>suns,ArrayList<PlanetState>planets,ArrayList<stoneGraveState>stoneGraves,List<String>selected) {
          this.setZombies(zombies);
          this.setLockedCells(lockedCells);
@@ -29,30 +30,39 @@ public class GameState implements Serializable {
          this.setStoneGraves(stoneGraves);
          this.setSelected(selected);
      }
+
      public int getGametime() {
          return getGameTime();
      }
+
      public int getSunpoint() {
          return getSunPoint();
      }
+
      public boolean isDay() {
          return day;
      }
+
      public FogState getFogState() {
          return fogState;
      }
+
      public ArrayList<SunState> getSuns() {
          return suns;
      }
+
      public ArrayList<PlanetState> getPlanets() {
          return planets;
      }
+
      public ArrayList<ZombieState> getZombies() {
          return zombies;
      }
+
      public List<String> getSelected() {
          return selected;
      }
+
      public ArrayList<stoneGraveState> getStoneGraves() {
          return StoneGraves;
      }
@@ -133,24 +143,31 @@ public class GameState implements Serializable {
     public String getType() {
         return type;
     }
+
     public int getX() {
         return x;
     }
+
     public int getY() {
         return y;
     }
+
     public int getHp() {
         return hp;
     }
+
     public int getDirection() {
         return direction;
     }
+
     public boolean isHypnotized() {
         return isHypnotized;
     }
+
     public boolean isInHouse() {
         return inHouse;
     }
+
     public boolean isFighting() {
         return fighting;
     }
@@ -163,6 +180,7 @@ public class GameState implements Serializable {
     private boolean dead;
     private double remainingCooldown;
     private boolean active;
+
     public PlanetState(int col, int row, String type, int health, boolean dead, double remainingCooldown,boolean active) {
         this.setCol(col);
         this.setRow(row);
@@ -236,6 +254,7 @@ class OtherPlanetState extends PlanetState implements Serializable {
         super(col, row, type, health, dead, remainingCooldown, active);
         this.setOther(other);
     }
+
     public boolean isOther() {
         return other;
     }
@@ -246,6 +265,7 @@ class OtherPlanetState extends PlanetState implements Serializable {
 }
 class ShooterState extends PlanetState implements Serializable {
     private ArrayList<BulletState>bulletStates;
+
     ShooterState(int col, int row, String type, int health, boolean dead, ArrayList<BulletState> bulletStates, double remainingCooldown,boolean active) {
         super(col, row, type, health, dead, remainingCooldown,active);
         this.setBulletStates(bulletStates);
@@ -261,6 +281,7 @@ class ShooterState extends PlanetState implements Serializable {
 }
 class scardyState extends ShooterState implements Serializable {
     private boolean scardy;
+
     public scardyState(int col, int row, String type, int health, boolean dead, ArrayList<BulletState> bulletStates, double remainingCooldown,boolean scardy,boolean active) {
         super(col, row, type, health, dead,bulletStates,remainingCooldown,active);
         this.setScardy(scardy);
@@ -275,8 +296,6 @@ class scardyState extends ShooterState implements Serializable {
         this.scardy = scardy;
     }
 }
-
-
 class BulletState implements Serializable {
     private int x;
     private int y;
@@ -300,27 +319,28 @@ class BulletState implements Serializable {
     public int getX() {
         return x;
     }
+
     public int getY() {
         return y;
     }
+
     public double getSpeed() {
         return speed;
     }
+
     public String getType() {
         return type;
     }
+
     public double getTranslateX() {
         return translateX;
     }
+
     public double getTranslateY() {
-        return translateY;
-    }
+        return translateY;}
+
     public double getXzombie() {
-        return xzombie;
-    }
-    public boolean isHit() {
-        return hit;
-    }
+        return xzombie;}
 
     public void setX(int x) {
         this.x = x;
@@ -389,9 +409,11 @@ class LanternHoleState implements Serializable {
     public double getCenterX() {
         return centerX;
     }
+
     public double getCenterY() {
         return centerY;
     }
+
     public double getRadius() {
         return radius;
     }
@@ -419,9 +441,11 @@ class LanternHoleState implements Serializable {
      public double getX() {
          return x;
      }
+
      public double getY() {
          return y;
      }
+
      public double getZ() {
          return z;
      }
@@ -454,12 +478,15 @@ class LanternHoleState implements Serializable {
          this.x = x;
          this.y = y;
      }
+
      public int getX() {
          return x;
      }
+
      public int getY() {
          return y;
      }
+
      public StoneGrave getStoneGrave(Pane pane) {
          return new StoneGrave(getX(),getY(),pane);
      }

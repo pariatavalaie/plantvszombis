@@ -5,10 +5,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class SnowPea extends Shooter{
+
     public SnowPea(int x , int y) {
        super(x,y);
         this.setHealth(4);
-        this.setWatingtime(8);
+        this.setWaitingTime(8);
         this.setDayPlanet(true);
         this.setImage(new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm())));
         this.setEatimage(new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm())));

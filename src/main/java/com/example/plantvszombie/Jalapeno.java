@@ -13,12 +13,13 @@ import java.util.ArrayList;
 public class Jalapeno extends Planet implements Act {
     public Jalapeno(int x , int y) {
         super(x, y);
-        this.setWatingtime(6);
+        this.setWaitingTime(6);
         this.setHealth(4);
         this.setDayPlanet(true);
         this.setImage(new ImageView( new Image(getClass().getResource("/jalapeno.gif").toExternalForm())));
         this.setEatimage(new ImageView( new Image(getClass().getResource("/jalapeno.gif").toExternalForm())));
     }
+
     @Override
     public void act(Pane pene , ArrayList<Zombies> Zombies){
         setActive(true);

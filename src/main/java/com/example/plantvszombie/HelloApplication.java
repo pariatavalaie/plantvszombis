@@ -11,8 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
-
 import java.io.IOException;
 
 public class HelloApplication extends Application {
@@ -57,13 +55,11 @@ public class HelloApplication extends Application {
         multiplayer.setOnAction(e -> showMultiplayerMenu());
     }
     public static void showGameResult(boolean isWin,Pane root) {
-
             AnimationManager.pauseAll();
             if (isWin) {
                 ImageView winImage=new ImageView(new Image("/LevelWin.png"));
-                winImage.setX(300);;
+                winImage.setX(300);
                 root.getChildren().add(winImage);
-
             } else {
                 ImageView winImage=new ImageView(new Image("/ZombiesAteYourBrains.png"));
                 winImage.setX(300);
@@ -72,12 +68,7 @@ public class HelloApplication extends Application {
         Rectangle blocker = new Rectangle(1024, 626, Color.TRANSPARENT);
         blocker.setMouseTransparent(false);
         root.getChildren().add(blocker);
-
-
-
     }
-
-
 
     private void showMultiplayerMenu() {
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -99,7 +90,6 @@ public class HelloApplication extends Application {
             dialog.close();
 
         });
-
         clientBtn.setOnAction(e -> {
             isMultiplayer = true;
             TextInputDialog ipDialog = new TextInputDialog("localhost");
@@ -113,7 +103,6 @@ public class HelloApplication extends Application {
                 startMultiplayerGame(false, ip);
             });
         });
-
         dialog.showAndWait();
     }
 
@@ -135,23 +124,18 @@ public class HelloApplication extends Application {
             Scene loadingScene = new Scene(loadingPane, 1024, 626);
             stage.setScene(loadingScene);
 
-
             GameServer.start(yard, () -> {
-
                 if (yard.isDay()) Sun.fall(yard.getYardPane());
                 ZombieWaveManger zw = new ZombieWaveManger(yard);
                 zw.start();
-
                 Scene scene = new Scene(yard.getYardPane(), 1024, 626);
                 stage.setScene(scene);
             });
-
         } else {
             try {
                 GameClient client = new GameClient(host, 54321);
                 Yard yard = client.getClientYard();
                 yard.updateButtons();
-
                 Scene scene = new Scene(yard.getYardPane(), 1024, 626);
                 stage.setScene(scene);
             } catch (IOException e) {
@@ -161,8 +145,6 @@ public class HelloApplication extends Application {
             }
         }
     }
-
-
 
     private void play() {
         Yard yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
@@ -269,7 +251,6 @@ public class HelloApplication extends Application {
                 throw new RuntimeException(ex);
             }
         });
-
         exitButton.setOnAction(e -> Platform.exit());
     }
 
@@ -297,6 +278,5 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
-
     }
 }

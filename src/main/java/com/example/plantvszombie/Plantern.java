@@ -16,7 +16,7 @@ public class Plantern extends Planet implements specialAct{
     public Plantern(int x, int y, Fog fog) {
         super(x,y);
         this.fog = fog;
-        this.setWatingtime(3);
+        this.setWaitingTime(3);
         this.setHealth(4);
         this.setDayPlanet(false);
         this.setImage(new ImageView(new Image(getClass().getResource("/Animated_Plantern.gif").toExternalForm())));
@@ -39,14 +39,12 @@ public class Plantern extends Planet implements specialAct{
         if (currentHole != null) {
             fog.removeLanternHole(currentHole);
         }
-
         double sceneX = getImage().localToScene(0, 0).getX();
         double sceneY = getImage().localToScene(0, 0).getY();
         double fogX = fog.getFogRect().localToScene(0, 0).getX();
         double fogY = fog.getFogRect().localToScene(0, 0).getY();
         double centerX = sceneX - fogX + getImage().getBoundsInLocal().getWidth() / 2;
         double centerY = sceneY - fogY + getImage().getBoundsInLocal().getHeight() / 2;
-
         currentHole = fog.addLanternHole(centerX, centerY, 100);
     }
 

@@ -9,7 +9,7 @@ public class TallNut extends Planet {
         super(x,y);
         this.setHealth(16);
         this.setDayPlanet(true);
-        setWatingtime(7);
+        setWaitingTime(7);
         this.setEatimage(new ImageView(new Image(getClass().getResource("/Tallnut3.gif").toExternalForm())));
         this.setImage(new ImageView(new Image(getClass().getResource("/TallNut1.gif").toExternalForm())));
 

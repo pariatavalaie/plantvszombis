@@ -12,11 +12,12 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Sun {
-    private static int collectedpoint=200;
+    private static int collectedpoint = 50;
     private ImageView sunImage;
     private boolean collected ;
     private static ArrayList<Sun> suns = new ArrayList<Sun>();
-     private boolean isFalling = false;
+    private boolean isFalling = false;
+
     public Sun() {
         setCollected(false);
         Image sun = new Image(getClass().getResource("/sun.png").toExternalForm());
@@ -54,8 +55,6 @@ public class Sun {
         });
         fall.play();
         AnimationManager.register(fall);
-
-
         getSunImage().setOnMouseClicked(e -> {
             if (!isCollected()) {
                 setCollected(true);
@@ -68,6 +67,7 @@ public class Sun {
             }
         });
     }
+
     private void startLifespanTimer(Pane root) {
         PauseTransition delay = new PauseTransition(Duration.seconds(5));
         delay.setOnFinished(e -> {
@@ -79,6 +79,7 @@ public class Sun {
         delay.play();
         AnimationManager.register(delay);
     }
+
      static void fall(Pane root) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
             double randomX = 245 + Math.random() * (9 * 80); // روی زمین
@@ -86,9 +87,9 @@ public class Sun {
             sun.setFalling(true);
             getSuns().add(sun);
            sun.fallingSun (root, randomX, 0);
-           GameServer.notifySunSpawn(sun.getState());// y = 400 یعنی تا پایین زمین
+           GameServer.notifySunSpawn(sun.getState());
         }));
-        timeline.setCycleCount(Timeline.INDEFINITE); // بی‌نهایت اجرا بشه
+        timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
         AnimationManager.register(timeline);
     }
@@ -105,14 +106,9 @@ public class Sun {
                 System.out.println("Sun collected!");
                 setCollectedpoint(getCollectedpoint() +25);
                 System.out.println("collectedpoint: "+ getCollectedpoint());
-
             }
         });
         startLifespanTimer(root);
-
-
-
-
     }
     public SunState getState() {
         SunState state = new SunState();
@@ -131,7 +127,6 @@ public class Sun {
         }
         return sun;
     }
-
 
     public ImageView getSunImage() {
         return sunImage;

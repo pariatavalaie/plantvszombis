@@ -26,7 +26,6 @@ public class Bullet {
     }
 
     public void shoot(Pane pane, double xPlant, double xZombie,  double yPlant) {
-
         Image bullet = null;
         if (type.equals("ICY")) {
             bullet = new Image(getClass().getResource("/snow bullet.png").toExternalForm());
@@ -58,5 +57,4 @@ public class Bullet {
         });
         AnimationManager.register(move);
     }
-
 }

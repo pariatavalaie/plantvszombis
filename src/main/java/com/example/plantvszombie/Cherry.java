@@ -13,18 +13,16 @@ public class Cherry extends Planet implements Act {
 
     public Cherry(int x, int y) {
         super(x,y);
-        this.setWatingtime(2);
+        this.setWaitingTime(2);
         this.setHealth(4);
         this.setDayPlanet(true);
         this.setImage(new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm())));
         this.setEatimage(new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm())));
     }
 
-
     @Override
     public void act(Pane root, ArrayList<Zombies> Zombies) {
          setActive(true);
-
         double cherryX = Yard.GRID_X + getCol()* Yard.CELL_WIDTH + (Yard.CELL_WIDTH- 70) / 2;
         double cherryY = Yard.GRID_Y + getRow()* Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT - 90) / 2;
 

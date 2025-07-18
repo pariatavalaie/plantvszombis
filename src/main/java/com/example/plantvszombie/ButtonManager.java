@@ -72,12 +72,12 @@ public class ButtonManager {
             event.consume();
         });
     }
+
     private void dragAction(Button btn,String name) {
         Dragboard db = btn.startDragAndDrop(TransferMode.COPY);
         ClipboardContent content = new ClipboardContent();
         content.putString(name); // نام گیاه برای Drop
         db.setContent(content);
-
         String dragImagePath =getImagePathDrag(name);
         Image dragImage = new Image(getClass().getResource(dragImagePath).toExternalForm());
         ImageView preview = new ImageView(dragImage);
@@ -86,9 +86,7 @@ public class ButtonManager {
         preview.setPreserveRatio(true);
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
-
         WritableImage smallImage = preview.snapshot(params, null);
-
         db.setDragView(smallImage, dragImage.getWidth() / 2, dragImage.getHeight() / 2);
     }
 
@@ -111,7 +109,6 @@ public class ButtonManager {
             }
         }
         number.setText(String.valueOf(Sun.getCollectedpoint()));
-
     }
 
     public String getSelected() {
@@ -160,6 +157,7 @@ public class ButtonManager {
             default: return "/bean.png";
         }
     }
+
     private String getImagePathDrag(String name) {
         switch (name) {
             case "Snow Pea": return "/SnowPea.gif";
@@ -183,7 +181,5 @@ public class ButtonManager {
             default: return "/bean.png";
         }
     }
-
-
 }
 

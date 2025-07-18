@@ -9,10 +9,11 @@ import javafx.util.Duration;
 
 public class Blover extends Planet implements specialAct{
     private Fog fog;
+
     public Blover(int x, int y, Fog fog) {
         super(x,y);
         this.fog = fog;
-        this.setWatingtime(3);
+        this.setWaitingTime(3);
         this.setDayPlanet(false);
         this.setHealth(4);
         this.setImage(new ImageView(new Image(getClass().getResource("/75f44f529822720e5a77af436ccb0a46f31fabd6.gif").toExternalForm())));
@@ -23,7 +24,6 @@ public class Blover extends Planet implements specialAct{
    public void act(Pane root) {
         setActive(true);
         fog.hideTemporarily();
-
         Timeline restoreTimeline = new Timeline(new KeyFrame(Duration.seconds(5), e -> fog.restore()));
         restoreTimeline.play();
         restoreTimeline.setOnFinished(e -> {
@@ -31,7 +31,6 @@ public class Blover extends Planet implements specialAct{
         });
         AnimationManager.register(restoreTimeline);
     }
-
 
     @Override
     String gettype() {
