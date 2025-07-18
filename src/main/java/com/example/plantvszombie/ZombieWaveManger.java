@@ -10,11 +10,12 @@ import java.util.Random;
 import java.util.Set;
 
 public class ZombieWaveManger {
-     private static Timeline maintimeline;
+    private static Timeline maintimeline;
     private Yard yard;
     private static int gameTime;
     private boolean win = false;
     private boolean lose = false;
+
     ZombieWaveManger(Yard yard) {
         this.setYard(yard);
         setGameTime(0);
@@ -43,11 +44,11 @@ public class ZombieWaveManger {
             if(!isWin()){
             setLose(true);}
         });
-        getMaintimeline().setCycleCount(240);
+        getMaintimeline().setCycleCount(260);
     }
 
     public void start() {
-        getYard().getFog().enterSlowly();
+        //getYard().getFog().enterSlowly();
         GameServer.notifyFog();
         getMaintimeline().play();
         AnimationManager.register(getMaintimeline());
@@ -57,14 +58,14 @@ public class ZombieWaveManger {
         setGameTime(getGameTime() + 1);
 
         if (getGameTime() >=5 && getGameTime() <= 40) waveStage1();
-        else if ( getGameTime() >=42 && getGameTime() <= 120 ) waveStage2();
+        else if ( getGameTime() >=40 && getGameTime() <= 110 ) waveStage2();
         else if (getGameTime() >= 120 && getGameTime() <= 180) waveStage3();
-        // else if (gameTime <= 240) waveStage4();
+        else if (getGameTime()>=180 && getGameTime() <= 240) waveStage4();
 
-        // حملات ویژه
-        if (getGameTime() >= 50 && getGameTime() <= 70) halfAttack();
-        //if (gameTime >= 47 && gameTime <= 60) finalAttack(); // حمله پایانی
+        if (getGameTime() >= 80 && getGameTime() <= 140) halfAttack();
+        if (getGameTime() >= 200 && getGameTime() <= 230) finalAttack();
        getYard().getFog().bringFogToFront(getYard().getYardPane());
+
         for (Zombies z : getYard().getZombies()) {
             if (z.isInHouse()) {
                 setLose(true);
@@ -75,7 +76,7 @@ public class ZombieWaveManger {
                 break;
             }
         }
-        if (getGameTime() >= 240 && !isLose()) {
+        if (getGameTime() >= 260 && !isLose()) {
             if(!getYard().isServer()){
             setWin(true);
             getMaintimeline().stop();
@@ -94,7 +95,7 @@ public class ZombieWaveManger {
     }
 
     private void waveStage2() {
-        if (getGameTime() % 20 == 0) { //6 zombie
+        if (getGameTime() % 14 == 0) {
             int x = new Random().nextInt(2);
             switch (x) {
                 case 0:
@@ -108,24 +109,42 @@ public class ZombieWaveManger {
     }
 
     private void waveStage3() {
-        if (getGameTime() % 10 == 0) { //18 zombie
-            spawnZombie("Normal", 1);
-            spawnZombie("Conehead", 1);
-            spawnZombie("Screendor", 1);
+        if (getGameTime() % 15 == 0) {
+            int x = new Random().nextInt(3);
+            switch (x) {
+                case 0:
+                    spawnZombie("Normal", 1);
+                    break;
+                case 1:
+                    spawnZombie("Conehead", 1);
+                    break;
+                case 2:
+                    spawnZombie("Screendor", 1);
+            }
         }
     }
 
     private void waveStage4() {
-        if (getGameTime() % 12 == 0) {
-            spawnZombie("Normal", 2);
-            spawnZombie("Conehead", 2);
-            spawnZombie("Screendor", 2);
-            spawnZombie("Imp", 2);
+        if (getGameTime() % 20 == 0) {
+            int x = new Random().nextInt(4);
+            switch (x) {
+                case 0:
+                    spawnZombie("Normal", 2);
+                    break;
+                case 1:
+                    spawnZombie("Conehead", 2);
+                    break;
+                case 2:
+                    spawnZombie("Screendor", 2);
+                    break;
+                case 3:
+                    spawnZombie("Imp", 2);
+            }
         }
     }
 
     private void halfAttack() {
-        if (getGameTime() % 10 == 0) {
+        if (getGameTime() % 12 == 0) {
             for (int i = 0; i < 2; i++) {
                 spawnZombie("Normal", 1);
                 spawnZombie("Conehead", 1);
@@ -134,10 +153,11 @@ public class ZombieWaveManger {
     }
 
     private void finalAttack() {
-        if (getGameTime() % 1 == 0) {
-            for (int i = 0; i < 15; i++) {
+        if (getGameTime() % 10 == 0) {
+            for (int i = 0; i < 2; i++) {
                 spawnZombie("Normal", 1);
                 spawnZombie("Conehead", 1);
+                spawnZombie("Screendor", 1);
                 spawnZombie("Imp", 1);
             }
         }
