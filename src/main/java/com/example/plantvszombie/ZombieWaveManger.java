@@ -3,6 +3,7 @@ package com.example.plantvszombie;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.util.HashSet;
@@ -202,6 +203,45 @@ public class ZombieWaveManger {
                 getYard().getZombies().add(z);
                 GameServer.notifyZombieSpawn(z.getState());
             }
+        }
+    }
+    public void PaintStone(Pane pane, int x, int y) {
+        Random random = new Random();
+        int numberOfGraves = 5; // تعداد سنگ‌قبرهایی که اول بازی ظاهر می‌شن
+
+        for (int i = 0; i < numberOfGraves; i++) {
+            int col, row;
+            boolean positionOccupied;
+
+            do {
+                col = random.nextInt(x);
+                row = random.nextInt(y);
+                positionOccupied = false;
+
+                // بررسی اینکه گیاهی در این مکان نباشه
+                for (Planet planet :getYard().getPlanets()) {
+                    if (planet.getCol() == col && planet.getRow() == row) {
+                        positionOccupied = true;
+                        break;
+                    }
+                }
+
+
+                for (StoneGrave grave :getYard().getGraves()) {
+                    int dx = Math.abs(grave.getX() - col);
+                    int dy = Math.abs(grave.getY() - row);
+                    if ((dx == 0 && dy == 0) || (dx + dy == 1)) {
+
+                        positionOccupied = true;
+                        break;
+                    }
+                }
+
+            } while (positionOccupied);
+            StoneGrave grave = new StoneGrave(col, row, pane);
+            GameServer.notifyGrave(grave.getState());
+            getYard().getGraves().add(grave);
+            grave.spawnZombie(getYard().getZombies(),getYard().getGraves());
         }
     }
 

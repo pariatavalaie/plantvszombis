@@ -26,7 +26,7 @@ public abstract class Zombies {
     private boolean fighting=false;
     private int direction = -1;
     void move(Pane root){
-        double distance = 75;
+        double distance = 78;
         double durationInSeconds = getSpeed();
         setWalker(new TranslateTransition(Duration.seconds(durationInSeconds), getImage()));
         getWalker().setByX(getDirection() * distance);

@@ -74,6 +74,13 @@ public class GameServer {
     public static void notifyFog(){
         broadcast(new NetworkMessage("FOG",null));
     }
+    public static void notifyGrave(stoneGraveState grave) {
+        broadcast(new NetworkMessage("GRAVE", grave));
+
+    }
+    public static void notifyZombieOut(stoneGraveState s) {
+        broadcast(new NetworkMessage("ZOMBIE OUT", s));
+    }
 
     public static void broadcast(NetworkMessage msg) {
         for (ObjectOutputStream out : clients) {

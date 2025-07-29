@@ -43,18 +43,26 @@ public class StoneGrave {
         double chance = random.nextFloat();
             if (chance < 0.6) {
                 zombie = new ImpZombie(getX(), getY(), getPane());
+                GameServer.notifyZombieSpawn(zombie.getState());
+                GameServer.notifyZombieOut(this.getState());
                 z.add(zombie);
                 remove(graves);
             } else if (chance < 0.7) {
                 zombie = new ConeheadZombie(getX(), getY(), getPane());
+                GameServer.notifyZombieSpawn(zombie.getState());
+                GameServer.notifyZombieOut(this.getState());
                 z.add(zombie);
                 remove(graves);
             } else if (chance < 0.8) {
                 zombie = new ScreendoorZombie(getX(), getY(), getPane());
+                GameServer.notifyZombieSpawn(zombie.getState());
+                GameServer.notifyZombieOut(this.getState());
                 z.add(zombie);
                 remove(graves);
             } else if (chance < 0.9) {
                 zombie = new NormalZombie(getX(), getY(), getPane());
+                GameServer.notifyZombieSpawn(zombie.getState());
+                GameServer.notifyZombieOut(this.getState());
                 z.add(zombie);
                 remove(graves);
             }
@@ -70,7 +78,8 @@ public class StoneGrave {
     public void remove(ArrayList<StoneGrave>graves) {
         getPane().getChildren().remove(getImage());
         graves.remove(this);
-        getStop().stop();
+        if(getStop()!=null){
+          getStop().stop();}
     }
 
     public int getX() {

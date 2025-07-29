@@ -75,7 +75,9 @@ public class SaveManger {
                     Sun.getSuns().add(Sun.fromState(s, yard.getYardPane()));
                 }
                 for(stoneGraveState g : gameState.getStoneGraves()){
-                    yard.getGraves().add(g.getStoneGrave(yard.getYardPane()));
+                    StoneGrave s=g.getStoneGrave(yard.getYardPane());
+                    yard.getGraves().add(s);
+                    s.spawnZombie(yard.getZombies(),yard.getGraves());
                 }
                 yard.getFog().restoreState(gameState.getFogState());
 
