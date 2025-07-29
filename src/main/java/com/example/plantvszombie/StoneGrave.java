@@ -17,7 +17,7 @@ public class StoneGrave {
     private Pane pane;
     private PauseTransition stop;
 
-    public StoneGrave(int x, int y, Pane root) {
+    public StoneGrave(int x, int y, Pane root,double StartComing) {
         this.setX(x);
         this.setY(y);
         setZombieSpawned(false);
@@ -30,14 +30,14 @@ public class StoneGrave {
         getImage().setLayoutY(startY);
         this.setPane(root);
         root.getChildren().add(getImage());
+        setStop(new PauseTransition(Duration.seconds(StartComing)));
     }
 
     public void spawnZombie(ArrayList<Zombies>z,ArrayList<StoneGrave>graves) {
         Random random = new Random();
-
       if (isZombieSpawned()) return;
-      setStop(new PauseTransition(Duration.seconds(random.nextInt(5)+5)));
-        getStop().setOnFinished(event -> {
+
+      getStop().setOnFinished(event -> {
         setZombieSpawned(true);
         Zombies zombie;
         double chance = random.nextFloat();
@@ -72,7 +72,7 @@ public class StoneGrave {
     }
 
     public stoneGraveState getState() {
-        return new stoneGraveState(getX(), getY());
+        return new stoneGraveState(getX(), getY(),getStartComing());
     }
 
     public void remove(ArrayList<StoneGrave>graves) {
@@ -80,6 +80,12 @@ public class StoneGrave {
         graves.remove(this);
         if(getStop()!=null){
           getStop().stop();}
+    }
+
+    public double getStartComing(){
+        double remaining;
+        remaining = getStop().getCurrentTime().toSeconds();
+        return remaining;
     }
 
     public int getX() {

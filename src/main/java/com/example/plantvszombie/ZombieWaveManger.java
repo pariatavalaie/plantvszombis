@@ -238,7 +238,8 @@ public class ZombieWaveManger {
                 }
 
             } while (positionOccupied);
-            StoneGrave grave = new StoneGrave(col, row, pane);
+            double Start = random.nextDouble(41) + 200;
+            StoneGrave grave = new StoneGrave(col, row, pane,Start);
             GameServer.notifyGrave(grave.getState());
             getYard().getGraves().add(grave);
             grave.spawnZombie(getYard().getZombies(),getYard().getGraves());

@@ -1,4 +1,5 @@
 package com.example.plantvszombie;
+import javafx.animation.PauseTransition;
 import javafx.scene.layout.Pane;
 
 import java.io.Serializable;
@@ -473,10 +474,12 @@ class LanternHoleState implements Serializable {
  class stoneGraveState implements Serializable {
      private int x;
      private int y;
+     private double StartComing;
 
-     public stoneGraveState(int x, int y) {
+     public stoneGraveState(int x, int y,double time) {
          this.x = x;
          this.y = y;
+         this.StartComing = time;
      }
 
      public int getX() {
@@ -487,8 +490,12 @@ class LanternHoleState implements Serializable {
          return y;
      }
 
+     public double getStartComing() {
+         return StartComing;
+     }
+
      public StoneGrave getStoneGrave(Pane pane) {
-         return new StoneGrave(getX(),getY(),pane);
+         return new StoneGrave(getX(),getY(),pane,getStartComing());
      }
  }
 
