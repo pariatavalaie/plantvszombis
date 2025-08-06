@@ -13,7 +13,6 @@ public class AnimationManager {
         animations.add(a);
     }
 
-
     public static void pauseAll() {
         isPaused = true;
         for (Animation a : animations) {
@@ -26,7 +25,5 @@ public class AnimationManager {
         for (Animation a : animations) {
             a.play();
         }
-
     }
-
 }

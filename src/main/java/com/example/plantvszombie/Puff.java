@@ -10,10 +10,11 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Puff extends Shooter{
+
     public Puff(int x , int y) {
         super(x,y);
         this.setHealth(4);
-        this.setWatingtime(1);
+        this.setWaitingTime(1);
         this.setDayPlanet(false);
         setImage(new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm())));
         setEatimage(new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm())));
@@ -56,6 +57,4 @@ public class Puff extends Shooter{
     String gettype() {
         return "Puff";
     }
-
-
 }

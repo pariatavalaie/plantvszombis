@@ -10,12 +10,13 @@ public class GraveBuster extends Planet implements specialAct{
 
     public GraveBuster(int x,int y) {
         super(x,y);
-        this.setWatingtime(3);
+        this.setWaitingTime(3);
         this.setDayPlanet(false);
         this.setHealth(4);
         this.setImage(new ImageView( new Image(getClass().getResource("/Transparent_grave_digger.gif").toExternalForm())));
         this.setEatimage(new ImageView( new Image(getClass().getResource("/Transparent_grave_digger.gif").toExternalForm())));
     }
+
     @Override
     public void act(Pane root) {
         setActive(true);

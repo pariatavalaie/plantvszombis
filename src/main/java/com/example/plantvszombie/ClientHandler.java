@@ -33,7 +33,6 @@ public class ClientHandler extends Thread {
                 boolean gameOver=(Boolean)msg.data;
                 GameServer.yard.triggerGameEnd(gameOver);
             }
-
             case "MY_KILLS" -> {
                 int clientKills = (int) msg.data;
                 int serverKills = GameServer.yard.getKilledZombies();
@@ -51,7 +50,6 @@ public class ClientHandler extends Thread {
                     javafx.application.Platform.runLater(() -> GameServer.yard.triggerGameEnd(false));
                 }
             }
-
         }
     }
 }

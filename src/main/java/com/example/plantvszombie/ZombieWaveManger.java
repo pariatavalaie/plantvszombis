@@ -48,9 +48,8 @@ public class ZombieWaveManger {
     }
 
     public void start() {
-        if(!yard.isDay()){
         getYard().getFog().enterSlowly();
-        GameServer.notifyFog();}
+        GameServer.notifyFog();
         getMaintimeline().play();
         AnimationManager.register(getMaintimeline());
     }

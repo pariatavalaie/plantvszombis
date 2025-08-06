@@ -5,10 +5,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class Repeater extends Shooter{
+
     public Repeater(int x, int y) {
         super(x,y);
         this.setDayPlanet(true);
-        this.setWatingtime(7);
+        this.setWaitingTime(7);
         this.setHealth(4);
         this.setImage(new ImageView( new Image(getClass().getResource("/repeater.gif").toExternalForm())));
         this.setEatimage(new ImageView( new Image(getClass().getResource("/repeater.gif").toExternalForm())));

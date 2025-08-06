@@ -9,10 +9,12 @@ import java.util.ArrayList;
 
 abstract class Shooter extends Planet implements Act {
     ArrayList<Bullet> bullets;
+
     public Shooter(int x,int y) {
         super(x,y);
         bullets = new ArrayList<>();
     }
+
     @Override
     public void act(Pane root, ArrayList<Zombies> Zombies) {
         setActive(true);
@@ -25,7 +27,7 @@ abstract class Shooter extends Planet implements Act {
                 double zombieX = z.getImage().getLayoutX() + z.getImage().getTranslateX();
                 if (z.getY() == getRow() && z.getX() >=getCol()&& z.getX() <=8) {
                     shouldShoot = true;
-                    XZ[0] = zombieX; // نزدیک‌ترین زامبی
+                    XZ[0] = zombieX;
                     break;
                 }
             }
@@ -37,6 +39,7 @@ abstract class Shooter extends Planet implements Act {
         timeline.play();
         AnimationManager.register(timeline);
     }
+
     abstract void shoot(Pane root,double x,double xzombie,double y);
 
     @Override
@@ -47,7 +50,6 @@ abstract class Shooter extends Planet implements Act {
             bulletStates.add(new BulletState(b.x, b.y, b.speed, b.type, b.imageBullet.getTranslateX() + b.imageBullet.getLayoutX(), b.imageBullet.getTranslateY() + b.imageBullet.getLayoutY(), b.xzombie, b.hit));
         }
         return new ShooterState(s.getCol(), s.getRow(), s.getType(), s.getHealth(), s.isDead(),bulletStates, s.getRemainingCooldown(), isActive());
-
     }
 
     @Override
