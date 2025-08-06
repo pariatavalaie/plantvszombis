@@ -153,7 +153,6 @@ public class HelloApplication extends Application {
                 GameClient client = new GameClient(host, 54321);
                 Yard yard = client.getClientYard();
                 yard.updateButtons();
-
                 Scene scene = new Scene(yard.getYardPane(), 1024, 626);
                 stage.setScene(scene);
             } catch (IOException e) {

@@ -219,13 +219,7 @@ public abstract class Zombies {
         );
     }
     public void freezeZombie() {
-        if(!Iceshroom.activate){
-            if (this.isAlive()) {
-                if (this.getWalker() != null&&!AnimationManager.isPaused) this.getWalker().play();
-                if (this.getEating() != null&&!AnimationManager.isPaused) this.getEating().play();
-                this.getImage().setEffect(null);
-            }
-        }else{
+        if(Iceshroom.activate){
             if(this.isAlive()) {
                 if (this.getWalker() != null) {
                     this.getWalker().pause();
@@ -241,6 +235,13 @@ public abstract class Zombies {
                 this.getImage().setEffect(blueTint);
             }
         }
+        if(!Iceshroom.activate&&!isHypnotized&&!AnimationManager.isPaused){
+            if (this.isAlive()) {
+                if (this.getWalker() != null&&!AnimationManager.isPaused) this.getWalker().play();
+                if (this.getEating() != null&&!AnimationManager.isPaused) this.getEating().play();
+                this.getImage().setEffect(null);}
+        }
+
     }
 
 

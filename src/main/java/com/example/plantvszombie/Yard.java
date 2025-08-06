@@ -21,7 +21,7 @@ public class Yard {
      static final double GRID_X = 245.0;
     static  final double GRID_Y = 60.0;
     private List <String> selected;
-    private ImageView yard;
+    private ImageView yardView;
     private ArrayList<Planet>planets=new ArrayList<>();
     private ArrayList<Zombies>Zombies=new ArrayList<>();
     private ArrayList<StoneGrave>graves=new ArrayList<>();
@@ -38,11 +38,11 @@ public class Yard {
         else{
             yar =new Image(getClass().getResource("/Night_11zon.png").toExternalForm());
         }
-         setYard(new ImageView(yar));
-        getYard().setFitWidth(1024);
-        getYard().setFitHeight(626);
+        setYardView(new ImageView(yar));
+        getYardView().setFitWidth(1024);
+        getYardView().setFitHeight(626);
         this.setSelected(selected);
-        setYardPane(new AnchorPane(getYard()));
+        setYardPane(new AnchorPane(getYardView()));
         setFog(new Fog(getYardPane()));
         this.setDay(day);
         setButtonManager(new ButtonManager(selected));
@@ -55,7 +55,6 @@ public class Yard {
 
     public void PaintGrid(int x, int y) {
         setGridPane(new GridPane());
-
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 Rectangle rectangle = new Rectangle(CELL_WIDTH, Cell_HEIGHT);
@@ -65,6 +64,7 @@ public class Yard {
                 int row = i, col = j;
                 getGridPane().add(rectangle, j, i);
                 rectangle.setOnDragOver(event -> {
+                     // If the drag source is not the rectangle itself and the data contains a string,
                     if (event.getGestureSource() != rectangle && event.getDragboard().hasString()) {
                         event.acceptTransferModes(TransferMode.COPY);
                     }
@@ -72,16 +72,14 @@ public class Yard {
                 });
 
                 rectangle.setOnDragDropped(event -> {
-                    Dragboard db = event.getDragboard();
+                    Dragboard db = event.getDragboard();//get planetName
                     boolean success = false;
 
                     if (db.hasString()) {
                         String sel = db.getString();
-
                         boolean empty = true;
                         boolean bean = false;
                         Planet planet1 = null;
-
                         for (Planet planet : getPlanets()) {
                             if (planet.getRow()== row && planet.getCol()== col) {
                                 if (!planet.isDayPlanet()) bean = true;
@@ -89,17 +87,14 @@ public class Yard {
                                 empty = false;
                             }
                         }
-
                         for (StoneGrave grave : getGraves()) {
                             if (grave.getX() == row && grave.getY() == col) {
                                 empty = false;
                                 break;
                             }
                         }
-
                         String cellKey = row + "," + col;
                         if (getLockedCells().contains(cellKey)) return;
-
                         if ("shovel".equals(sel)) {
                             if (planet1 != null) {
                                 planet1.remove(getYardPane());
@@ -117,7 +112,6 @@ public class Yard {
                             success = true;
                         }
                     }
-
                     event.setDropCompleted(success);
                     event.consume();
                 });
@@ -125,8 +119,6 @@ public class Yard {
         }
 
         getYardPane().getChildren().add(getGridPane());
-
-
         startMovingAndDetecting();
         AnchorPane.setTopAnchor(getGridPane(), Yard.GRID_Y);
         AnchorPane.setLeftAnchor(getGridPane(), Yard.GRID_X);
@@ -328,103 +320,69 @@ public class Yard {
     public AnchorPane getYardPane() {
         return yardPane;
     }
-
     public void setYardPane(AnchorPane yardPane) {
         this.yardPane = yardPane;
     }
-
     public GridPane getGridPane() {
         return gridPane;
     }
-
     public void setGridPane(GridPane gridPane) {
         this.gridPane = gridPane;
     }
-
     public List<String> getSelected() {
         return selected;
     }
-
     public void setSelected(List<String> selected) {
         this.selected = selected;
     }
-
-    public ImageView getYard() {
-        return yard;
+    public ImageView getYardView() {
+        return yardView;
     }
-
-    public void setYard(ImageView yard) {
-        this.yard = yard;
+    public void setYardView(ImageView yardView) {
+        this.yardView = yardView;
     }
-
     public ArrayList<Planet> getPlanets() {
         return planets;
     }
-
-    public void setPlanets(ArrayList<Planet> planets) {
-        this.planets = planets;
-    }
-
     public ArrayList<Zombies> getZombies() {
         return Zombies;
     }
-
     public void setZombies(ArrayList<Zombies> zombies) {
         Zombies = zombies;
     }
-
     public ArrayList<StoneGrave> getGraves() {
         return graves;
     }
-
-    public void setGraves(ArrayList<StoneGrave> graves) {
-        this.graves = graves;
-    }
-
     public Fog getFog() {
         return fog;
     }
-
     public void setFog(Fog fog) {
         this.fog = fog;
     }
-
     public boolean isDay() {
         return day;
     }
-
     public void setDay(boolean day) {
         this.day = day;
     }
-
     public Set<String> getLockedCells() {
         return lockedCells;
     }
-
-    public void setLockedCells(Set<String> lockedCells) {
-        this.lockedCells = lockedCells;
-    }
-
     public ButtonManager getButtonManager() {
         return buttonManager;
     }
-
     public void setButtonManager(ButtonManager buttonManager) {
         this.buttonManager = buttonManager;
     }
-
     public boolean isServer() {
         return isServer;
     }
-
     public void setServer(boolean server) {
         isServer = server;
     }
-
     public int getKilledZombies() {
         return killedZombies;
     }
-
     public void setKilledZombies(int killedZombies) {
         this.killedZombies = killedZombies;
     }

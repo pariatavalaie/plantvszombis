@@ -21,7 +21,6 @@ import java.util.*;
 public class ButtonManager {
     private final Map<String, Button> buttons = new LinkedHashMap<>();
     private final VBox panel = new VBox(10);
-    private String selected = null;
     private final List<String> selectedList;
     private final Button shovelButton;
     private Text number;
@@ -30,6 +29,7 @@ public class ButtonManager {
     public ButtonManager(List<String> selectedList) {
         this.selectedList = selectedList;
         this.shovelButton = new Button();
+        //set the sun point
         Text emoji = new Text("☀️");
         emoji.setFill(Color.GOLD);
         emoji.setStyle("-fx-font-size: 26px; -fx-font-family: 'Segoe UI Emoji';");
@@ -55,9 +55,9 @@ public class ButtonManager {
             btn.setStyle("-fx-background-color: #fff");
             btn.setOnDragDetected(event -> {
                 dragAction(btn,name);
-                event.consume();
+                event.consume();// Consume the event so it doesn't propagate to other nodes
             });
-            buttons.put(name, btn);
+            buttons.put(name, btn);//add button to map
             panel.getChildren().add(btn);
         }
         setupShovelButton();
@@ -75,9 +75,9 @@ public class ButtonManager {
     private void dragAction(Button btn,String name) {
         Dragboard db = btn.startDragAndDrop(TransferMode.COPY);
         ClipboardContent content = new ClipboardContent();
-        content.putString(name); // نام گیاه برای Drop
+        content.putString(name);//set the plant name
         db.setContent(content);
-
+        //set the dragView
         String dragImagePath =getImagePathDrag(name);
         Image dragImage = new Image(getClass().getResource(dragImagePath).toExternalForm());
         ImageView preview = new ImageView(dragImage);
@@ -86,9 +86,7 @@ public class ButtonManager {
         preview.setPreserveRatio(true);
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
-
         WritableImage smallImage = preview.snapshot(params, null);
-
         db.setDragView(smallImage, dragImage.getWidth() / 2, dragImage.getHeight() / 2);
     }
 
@@ -102,9 +100,9 @@ public class ButtonManager {
             Button btn = buttons.get(name);
             boolean canPlace = canPlaceMap.getOrDefault(name, false);
             int cost = costMap.getOrDefault(name, 9999);
-            if (canPlace && sunPoints >= cost) {
+            if (canPlace && sunPoints >= cost) {//cool down and cost button design
                 btn.setDisable(false);
-                btn.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
+                btn.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");//gray button
             } else {
                 btn.setDisable(true);
                 btn.setStyle("-fx-opacity: 0.4; -fx-background-color: gray;");
@@ -114,21 +112,11 @@ public class ButtonManager {
 
     }
 
-    public String getSelected() {
-        return selected;
-    }
-
-    public void clearSelected() {
-        selected = null;
-    }
 
     public Button getButton(String name) {
         return buttons.get(name);
     }
 
-    public VBox getPanel() {
-        return panel;
-    }
 
     private ImageView createImageView(String path) {
         Image image = new Image(getClass().getResource(path).toExternalForm());
