@@ -12,7 +12,7 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Sun {
-    private static int collectedpoint = 50;
+    private static int collectedpoint = 200;
     private ImageView sunImage;
     private boolean collected ;
     private static ArrayList<Sun> suns = new ArrayList<Sun>();
@@ -69,7 +69,7 @@ public class Sun {
     }
 
     private void startLifespanTimer(Pane root) {
-        PauseTransition delay = new PauseTransition(Duration.seconds(5));
+        PauseTransition delay = new PauseTransition(Duration.seconds(10));
         delay.setOnFinished(e -> {
             if (!isCollected()) {
                 getSuns().remove(this);

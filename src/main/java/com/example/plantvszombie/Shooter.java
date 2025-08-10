@@ -21,7 +21,7 @@ abstract class Shooter extends Planet implements Act {
         final double[]XZ={0};
         double x = Yard.GRID_X + getCol() * Yard.CELL_WIDTH+ (Yard.CELL_WIDTH - 70) / 2;
         double y = Yard.GRID_Y+ getRow() * Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT - 90) / 2;
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), event -> {
             boolean shouldShoot = false;
             for (Zombies z :Zombies ) {
                 double zombieX = z.getImage().getLayoutX() + z.getImage().getTranslateX();

@@ -43,8 +43,7 @@ public class Bullet {
         this.xpalnet = xPlant;
         this.ypalnet = yPlant;
         this.xzombie = xZombie;
-
-        TranslateTransition move = new TranslateTransition(Duration.seconds(this.speed), imageBullet);
+        TranslateTransition move = new TranslateTransition(Duration.seconds(speed), imageBullet);
         move.setFromX(xPlant);
         move.setToX(xZombie);
         move.setFromY(yPlant);

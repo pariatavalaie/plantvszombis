@@ -49,11 +49,6 @@ public class ZombieWaveManger {
     }
 
     public void start() {
-        if(!yard.isDay()){
-            getYard().getFog().enterSlowly();
-            GameServer.notifyFog();
-        }
-
         getMaintimeline().play();
         AnimationManager.register(getMaintimeline());
     }
@@ -63,11 +58,15 @@ public class ZombieWaveManger {
 
         if (getGameTime() >=5 && getGameTime() <= 40) waveStage1();
         else if ( getGameTime() >=40 && getGameTime() <= 110 ) waveStage2();
-        else if (getGameTime() >= 120 && getGameTime() <= 180) waveStage3();
+        else if (getGameTime() >= 120 && getGameTime() <= 180)waveStage3();
         else if (getGameTime()>=180 && getGameTime() <= 240) waveStage4();
 
         if (getGameTime() >= 80 && getGameTime() <= 140) halfAttack();
         if (getGameTime() >= 200 && getGameTime() <= 230) finalAttack();
+        if(!yard.isDay()&&gameTime==160){
+            getYard().getFog().enterSlowly();
+            GameServer.notifyFog();
+        }
         getYard().getFog().bringFogToFront(getYard().getYardPane());
 
         for (Zombies z : getYard().getZombies()) {

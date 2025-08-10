@@ -17,7 +17,8 @@ public class SnowPea extends Shooter{
 
     @Override
     void shoot(Pane root, double x, double xzombie, double y) {
-        Bullet repeater1 = new Bullet(getCol(),getRow(), 3, "ICY");
+        double speed=((xzombie-x)/Yard.Cell_HEIGHT)*0.5;
+        Bullet repeater1 = new Bullet(getCol(),getRow(), speed, "ICY");
         repeater1.shoot(root, x + 60,xzombie, y);
         bullets.add(repeater1);
     }

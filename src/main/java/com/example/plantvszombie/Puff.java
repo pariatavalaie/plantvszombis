@@ -48,7 +48,8 @@ public class Puff extends Shooter{
 
     @Override
     void shoot(Pane root, double x, double xzombie, double y) {
-        Bullet puff = new Bullet(getCol(), getRow(), 3,"PUFF");
+        double speed=((xzombie-x)/Yard.Cell_HEIGHT)*0.5;
+        Bullet puff = new Bullet(getCol(), getRow(), speed,"PUFF");
         puff.shoot(root, x + 60,xzombie , y+40);
         bullets.add(puff);
     }

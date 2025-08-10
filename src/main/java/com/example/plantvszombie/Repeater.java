@@ -17,8 +17,9 @@ public class Repeater extends Shooter{
 
     @Override
     void shoot(Pane root, double x, double xzombie, double y) {
-        Bullet repeater1 = new Bullet(getCol(), getRow(), 3, "NORMAL");
-        Bullet repeater2 = new Bullet(getCol(),getRow(), 4.5, "NORMAL");
+        double speed=((xzombie-x)/Yard.Cell_HEIGHT)*0.5;
+        Bullet repeater1 = new Bullet(getCol(), getRow(), speed, "NORMAL");
+        Bullet repeater2 = new Bullet(getCol(),getRow(), speed+0.5, "NORMAL");
         repeater1.shoot(root, x + 60,xzombie, y);
         repeater2.shoot(root, x + 60,xzombie,  y);
         bullets.add(repeater1);

@@ -77,9 +77,11 @@ public class SaveManger {
                 for(stoneGraveState g : gameState.getStoneGraves()){
                     StoneGrave s=g.getStoneGrave(yard.getYardPane());
                     yard.getGraves().add(s);
-                    s.spawnZombie(yard.getZombies(),yard.getGraves());
                 }
                 yard.getFog().restoreState(gameState.getFogState());
+                if(ZombieWaveManger.getGameTime()>=160){
+                    yard.getFog().enterSlowly();
+                }
 
                 ZombieWaveManger zw=new ZombieWaveManger(yard);
                 ZombieWaveManger.setGameTime(gameState.getGametime());

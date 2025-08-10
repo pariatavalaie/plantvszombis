@@ -51,7 +51,8 @@ public class Scaredy extends Shooter{
 
     @Override
     void shoot(Pane root, double x, double xzombie, double y) {
-        Bullet scary = new Bullet(getCol(), getRow(), 3, "MUSHROOM");
+        double speed=((xzombie-x)/Yard.Cell_HEIGHT)*0.5;
+        Bullet scary = new Bullet(getCol(), getRow(), speed, "MUSHROOM");
         scary.shoot(root, x + 60,xzombie, y + 20);
         bullets.add(scary);
     }
