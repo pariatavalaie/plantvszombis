@@ -28,7 +28,6 @@ public abstract class Planet {
     }
 
     public static Map<String, Boolean> canPlaceMap = new HashMap<>();
-
     public static  Map<String, Integer> costMap = new HashMap<>();
 
     static {
@@ -62,7 +61,7 @@ public abstract class Planet {
         return new PlanetState(col, row, gettype(), getHealth(), isDead(), remaining, isActive());
     }
 
-    public void loadpplanet(PlanetState planetState, Pane root) {
+    public void loadplanet(PlanetState planetState, Pane root) {
         this.setDead(planetState.isDead());
         if (planetState.getRemainingCooldown() != 0) {
             if (getCooldown() == null) {

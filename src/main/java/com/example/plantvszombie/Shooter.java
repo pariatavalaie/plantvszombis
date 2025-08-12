@@ -53,8 +53,8 @@ abstract class Shooter extends Planet implements Act {
     }
 
     @Override
-    public void loadpplanet(PlanetState planetState, Pane root) {
-        super.loadpplanet(planetState, root);
+    public void loadplanet(PlanetState planetState, Pane root) {
+        super.loadplanet(planetState, root);
         for (BulletState bullet : ( (ShooterState) planetState ).getBulletStates()) {
             Bullet bullet1 = new Bullet(bullet.getX(), bullet.getY(), bullet.getSpeed(), bullet.getType());
             bullet1.shoot(root, bullet.getTranslateX(), bullet.getXzombie(), bullet.getTranslateY());

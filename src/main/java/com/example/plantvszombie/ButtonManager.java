@@ -75,7 +75,7 @@ public class ButtonManager {
     private void dragAction(Button btn,String name) {
         Dragboard db = btn.startDragAndDrop(TransferMode.COPY);
         ClipboardContent content = new ClipboardContent();
-        content.putString(name); // نام گیاه برای Drop
+        content.putString(name);
         db.setContent(content);
 
         String dragImagePath =getImagePathDrag(name);
@@ -114,22 +114,10 @@ public class ButtonManager {
 
     }
 
-    public String getSelected() {
-        return selected;
-    }
-
-    public void clearSelected() {
-        selected = null;
-    }
 
     public Button getButton(String name) {
         return buttons.get(name);
     }
-
-    public VBox getPanel() {
-        return panel;
-    }
-
     private ImageView createImageView(String path) {
         Image image = new Image(getClass().getResource(path).toExternalForm());
         ImageView iv = new ImageView(image);

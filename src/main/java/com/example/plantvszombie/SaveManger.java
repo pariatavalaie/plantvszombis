@@ -66,7 +66,7 @@ public class SaveManger {
                     Planet.on();
                     yard.placePlanet(p.getType(), p.getCol(), p.getRow());
                     Planet planet=yard.findPlanet(p.getCol(), p.getRow());
-                    planet.loadpplanet(p, yard.getYardPane());
+                    planet.loadplanet(p, yard.getYardPane());
                     if(p.isActive() &&!planet.isDayPlanet() && yard.isDay()){
                       yard.activatePlanet(planet);
                     }

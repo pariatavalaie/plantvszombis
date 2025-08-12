@@ -1,8 +1,6 @@
 package com.example.plantvszombie;
 
 import javafx.animation.Animation;
-import javafx.animation.TranslateTransition;
-
 import java.util.ArrayList;
 
 public class AnimationManager {
