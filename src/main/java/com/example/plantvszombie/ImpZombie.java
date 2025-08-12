@@ -22,6 +22,6 @@ public class ImpZombie extends Zombies{
         getImage().setLayoutX(startX);
         getImage().setLayoutY(startY);
         root.getChildren().add(getImage());
-        move(root);
+        move();
     }
 }

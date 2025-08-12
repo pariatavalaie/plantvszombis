@@ -88,7 +88,7 @@ public class Yard {
                             }
                         }
                         for (StoneGrave grave : getGraves()) {
-                            if (grave.getX() == row && grave.getY() == col) {
+                            if (grave.getX() == col && grave.getY() == row) {
                                 empty = false;
                                 break;
                             }

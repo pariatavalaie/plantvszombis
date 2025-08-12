@@ -207,7 +207,7 @@ public class ZombieWaveManger {
     }
     public void PaintStone(Pane pane, int x, int y) {
         Random random = new Random();
-        int numberOfGraves = 5; // تعداد سنگ‌قبرهایی که اول بازی ظاهر می‌شن
+        int numberOfGraves = random.nextInt(2)+5;
 
         for (int i = 0; i < numberOfGraves; i++) {
             int col, row;
@@ -218,7 +218,6 @@ public class ZombieWaveManger {
                 row = random.nextInt(y);
                 positionOccupied = false;
 
-                // بررسی اینکه گیاهی در این مکان نباشه
                 for (Planet planet :getYard().getPlanets()) {
                     if (planet.getCol() == col && planet.getRow() == row) {
                         positionOccupied = true;
@@ -230,8 +229,7 @@ public class ZombieWaveManger {
                 for (StoneGrave grave :getYard().getGraves()) {
                     int dx = Math.abs(grave.getX() - col);
                     int dy = Math.abs(grave.getY() - row);
-                    if ((dx == 0 && dy == 0) || (dx + dy == 1)) {
-
+                    if ((dx == 0) || (dx + dy == 1)) {
                         positionOccupied = true;
                         break;
                     }

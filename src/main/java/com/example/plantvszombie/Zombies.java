@@ -1,14 +1,10 @@
 package com.example.plantvszombie;
 
 import javafx.animation.*;
-
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -25,42 +21,40 @@ public abstract class Zombies {
     private boolean isHypnotized=false;
     private boolean fighting=false;
     private int direction = -1;
-    void move(Pane root){
-        double distance = 78;
+
+    protected void move(){
+        double distance = 79;
         double durationInSeconds = getSpeed();
         setWalker(new TranslateTransition(Duration.seconds(durationInSeconds), getImage()));
         getWalker().setByX(getDirection() * distance);
         getWalker().setOnFinished(e -> {
              setX(getX() + getDirection());
-            System.out.println(getX());
 
-            if(( getX() < 0 && getDirection() == -1)){
+            if(( getX() < 0 && getDirection() == -1)){//If zombies get in the house
                 setInHouse(true);
                 getWalker().stop();
                 return;
             }
-            if (( getX() >8 && getDirection() == 1) || getHp() <= 0) {
+            if (( getX() >8 && getDirection() == 1) || getHp() <= 0) {//if Hypnotized zombie reach the end
                 setHp(0);
-                System.out.println("Zombie reached the end!");
                 getWalker().stop();
                 return;
             }
-            getWalker().playFromStart();
+            getWalker().playFromStart();//play again
         });
         getWalker().play();
         AnimationManager.register(getWalker());
     }
 
-    public void reverseDirection() {
+     protected void reverseDirection() {
         if(isHypnotized()){
-        setDirection(getDirection() * -1);
-        getImage().setScaleX(getImage().getScaleX() * -1);
-
+        setDirection(getDirection() * -1);//reverse direction
+        getImage().setScaleX(getImage().getScaleX() * -1);//reverse image
         if (getWalker() != null) {
             getWalker().pause();
         }
-
-        move((Pane) getImage().getParent());
+            move();
+        //red tint
             ColorAdjust blueTint = new ColorAdjust();
             blueTint.setHue(-0.6);
             blueTint.setSaturation(1.0);
@@ -68,7 +62,7 @@ public abstract class Zombies {
             getImage().setEffect(blueTint);}
     }
 
-    public void damage (ArrayList<Planet> planets,Pane root) {
+    protected void damage (ArrayList<Planet> planets,Pane root) {
         for (Planet p : planets) {
             if(p instanceof Shooter){
             Iterator<Bullet> it =((Shooter)p).bullets.iterator();
@@ -76,7 +70,7 @@ public abstract class Zombies {
                 Bullet b = it.next();
                 if (isAlive() && this.collidesWith(b,root)) {
                     setHp(getHp() - 1);
-                    if((b.type).equals("ICY")){
+                    if((b.type).equals("ICY")){//if snowpea shoot
                         this.setSpeed(this.getSpeed() / 2);
                         if (getWalker() != null) {
                             getWalker().setRate(0.5);
@@ -88,15 +82,14 @@ public abstract class Zombies {
                     blueTint.setBrightness(0.5);
                     getImage().setEffect(blueTint);
                     PauseTransition pa=new PauseTransition(Duration.seconds(0.1));
-                    pa.setOnFinished(e -> {if(!isHypnotized()) getImage().setEffect(null);});
+                    pa.setOnFinished(e -> {if(getImage().getEffect()!=null) getImage().setEffect(null);});
                     pa.play();
-                    System.out.println("Zombie HP: " + getHp());
                     it.remove();
                 }
             }
         }}}
 
-    public boolean collidesWith(Bullet b,Pane root) {
+    private boolean collidesWith(Bullet b,Pane root) {
       if(Math.abs(getImage().getLayoutX()+ getImage().getTranslateX() - (b.imageBullet.getLayoutX()+b.imageBullet.getTranslateX())) <= 80&&Math.abs(getImage().getLayoutY()+ getImage().getTranslateY() - (b.imageBullet.getLayoutY()+b.imageBullet.getTranslateY())) <= 100&& getY() ==b.y) {
           root.getChildren().remove(b.imageBullet);
           b.hit=true;
@@ -115,7 +108,6 @@ public abstract class Zombies {
 
                 if (getWalker() != null) getWalker().pause();
 
-                Image temp= getImage().getImage();
                 Timeline[] eatingRef = new Timeline[1];
                  setEating(new Timeline(new KeyFrame(Duration.seconds(0.5), e -> {
                     if (!isAlive()) {
@@ -127,7 +119,6 @@ public abstract class Zombies {
                     p.getImage().setImage(p.getEatimage().getImage());
                     if ( p.getHealth() < 0) {
                         getWalker().play();
-                        getImage().setImage(temp);
                         p.remove(root);
                         planets.remove(p);
                     }
@@ -213,8 +204,8 @@ public abstract class Zombies {
         }
         if(!Iceshroom.activate&&!isHypnotized&&!AnimationManager.isPaused){
             if (this.isAlive()) {
-                if (this.getWalker() != null&&!AnimationManager.isPaused) this.getWalker().play();
-                if (this.getEating() != null&&!AnimationManager.isPaused) this.getEating().play();
+                if (this.getWalker() != null&&this.getWalker().getStatus() != Animation.Status.PAUSED) this.getWalker().play();
+                if (this.getEating() != null&&this.getEating().getStatus() != Animation.Status.PAUSED) this.getEating().play();
                 this.getImage().setEffect(null);}
         }
 
