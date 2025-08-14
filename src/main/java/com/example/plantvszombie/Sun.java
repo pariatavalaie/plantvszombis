@@ -11,7 +11,7 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Sun {
-    private static int collectedpoint = 200;
+    private static int collectedpoint = 0;
     private ImageView sunImage;
     private boolean collected ;
     private static ArrayList<Sun> suns = new ArrayList<Sun>();

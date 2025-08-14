@@ -33,9 +33,12 @@ public class Yard {
     Yard(List<String> selected,boolean day) {
         Image yar;
         if(day){
-         yar = new Image(getClass().getResourceAsStream("Frontyard.png"));}
+         yar = new Image(getClass().getResourceAsStream("Frontyard.png"));
+         Sun.setCollectedpoint(0);
+        }
         else{
             yar =new Image(getClass().getResource("/Night_11zon.png").toExternalForm());
+           Sun.setCollectedpoint(50);
         }
         setYardView(new ImageView(yar));
         getYardView().setFitWidth(1024);
@@ -195,28 +198,26 @@ public class Yard {
                     ( (Act) planet1 ).act(getYardPane(), getZombies());
                 }
             }
-        } else {
-            planet1 = null;
-        }
-        if(planet.equals("Doom")||planet.equals("Hypno")||planet.equals("Ice")) {
-            plantView = planet1.getEatimage();
-            if (!isDay()) {
-                plantView = planet1.getImage();
-                setLockedCells(col,row,planet1);
+            if(planet.equals("Doom")||planet.equals("Hypno")||planet.equals("Ice")) {
+                plantView = planet1.getEatimage();
+                if (!isDay()) {
+                    plantView = planet1.getImage();
+                    setLockedCells(col,row,planet1);
+                }
+
+            } else if(planet.equals("bean")) {
+                Planet x=findPlanet(col,row);
+                activatePlanet(x);
+                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> removePlanet(planet1)));
+                timeline.play();
+
+            }else if(planet.equals("Grave") ) {
+                StoneGrave s=findStoneGrave(col,row);
+                if (s != null) {
+                    s.remove(getGraves());
+                }
+
             }
-
-        } else if(planet.equals("bean")) {
-            Planet x=findPlanet(col,row);
-            activatePlanet(x);
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> removePlanet(planet1)));
-            timeline.play();
-
-        }else if(planet.equals("Grave") ) {
-            StoneGrave s=findStoneGrave(col,row);
-            if (s != null) {
-                s.remove(getGraves());
-            }
-
         }
         if (plantView != null) {
          plantView.setFitWidth(70);
@@ -230,8 +231,8 @@ public class Yard {
 
     private void setLockedCells(int col, int row,Planet planet) {
         if(planet instanceof Doomshroom){
-        getLockedCells().add(row + "," + col);
-        Timeline timeline = new Timeline(
+         getLockedCells().add(row + "," + col);
+         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> {
                     removePlanet(planet);
                     Rectangle burned = new Rectangle(CELL_WIDTH, Cell_HEIGHT);
@@ -240,7 +241,7 @@ public class Yard {
                     getGridPane().add(burned, col, row);
                 }));
 
-        timeline.play();}
+          timeline.play();}
     }
 
     protected void activatePlanet(Planet x) {
@@ -306,6 +307,7 @@ public class Yard {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {
             getButtonManager().update(Planet.canPlaceMap,Planet.costMap, Sun.getCollectedpoint());
         }));
+
 
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
