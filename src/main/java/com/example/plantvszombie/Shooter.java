@@ -7,7 +7,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-abstract class Shooter extends Planet implements Act {
+abstract class Shooter extends Plant implements Act {
     ArrayList<Bullet> bullets;
 
     public Shooter(int x, int y) {

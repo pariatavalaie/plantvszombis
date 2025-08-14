@@ -10,7 +10,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Jalapeno extends Planet implements Act {
+public class Jalapeno extends Plant implements Act {
     public Jalapeno(int x , int y) {
         super(x, y);
         this.setWaitingTime(6);

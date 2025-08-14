@@ -10,7 +10,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Doomshroom extends Planet implements Act {
+public class Doomshroom extends Plant implements Act {
 
     public Doomshroom(int x, int y) {
         super(x, y);

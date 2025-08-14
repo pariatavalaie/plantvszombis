@@ -64,8 +64,8 @@ public abstract class Zombies {
         }
     }
 
-    protected void damage(ArrayList<Planet> planets, Pane root) {
-        for (Planet p : planets) {
+    protected void damage(ArrayList<Plant> plants, Pane root) {
+        for (Plant p : plants) {
             if (p instanceof Shooter) {
                 Iterator<Bullet> it = ( (Shooter) p ).bullets.iterator();
                 while (it.hasNext()) {
@@ -108,8 +108,8 @@ public abstract class Zombies {
         return getHp() > 0;
     }
 
-    public void checkAndEatPlant(ArrayList<Planet> planets, Pane root) {
-        for (Planet p : planets) {
+    public void checkAndEatPlant(ArrayList<Plant> plants, Pane root) {
+        for (Plant p : plants) {
             if (p.getRow() == this.getY() && p.getCol() == this.getX()) {
 
                 if (getWalker() != null) getWalker().pause();
@@ -126,7 +126,7 @@ public abstract class Zombies {
                     if (p.getHealth() < 0) {
                         getWalker().play();
                         p.remove(root);
-                        planets.remove(p);
+                        plants.remove(p);
                     }
                 })));
                 getEating().setCycleCount(p.getHealth());

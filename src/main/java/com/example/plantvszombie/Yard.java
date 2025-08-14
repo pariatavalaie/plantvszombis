@@ -23,7 +23,7 @@ public class Yard {
     static final double GRID_Y = 60.0;
     private List<String> selected;
     private ImageView yardView;
-    private ArrayList<Planet> planets = new ArrayList<>();
+    private ArrayList<Plant> plants = new ArrayList<>();
     private ArrayList<Zombies> Zombies = new ArrayList<>();
     private ArrayList<StoneGrave> graves = new ArrayList<>();
     private Fog fog;
@@ -40,7 +40,7 @@ public class Yard {
             Sun.setCollectedpoint(0);
         } else {
             yar = new Image(getClass().getResource("/Night_11zon.png").toExternalForm());
-            Sun.setCollectedpoint(5000);
+            Sun.setCollectedpoint(50);
         }
         setYardView(new ImageView(yar));
         getYardView().setFitWidth(1024);
@@ -82,11 +82,11 @@ public class Yard {
                         String sel = db.getString();
                         boolean empty = true;
                         boolean bean = false;
-                        Planet planet1 = null;
-                        for (Planet planet : getPlanets()) {
-                            if (planet.getRow() == row && planet.getCol() == col) {
-                                if (!planet.isDayPlanet()) bean = true;
-                                planet1 = planet;
+                        Plant plant1 = null;
+                        for (Plant plant : getPlanets()) {
+                            if (plant.getRow() == row && plant.getCol() == col) {
+                                if (!plant.isDayPlanet()) bean = true;
+                                plant1 = plant;
                                 empty = false;
                             }
                         }
@@ -99,9 +99,9 @@ public class Yard {
                         String cellKey = row + "," + col;
                         if (getLockedCells().contains(cellKey)) return;
                         if ("shovel".equals(sel)) {
-                            if (planet1 != null) {
-                                planet1.remove(getYardPane());
-                                getPlanets().remove(planet1);
+                            if (plant1 != null) {
+                                plant1.remove(getYardPane());
+                                getPlanets().remove(plant1);
                             }
                             success = true;
                         } else if ("bean".equals(sel) && bean) {
@@ -133,10 +133,10 @@ public class Yard {
         ).contains(sel);
     }
 
-    public Planet findPlanet(int col, int row) {
-        for (Planet planet : getPlanets()) {
-            if (planet.getRow() == row && planet.getCol() == col) {
-                return planet;
+    public Plant findPlanet(int col, int row) {
+        for (Plant plant : getPlanets()) {
+            if (plant.getRow() == row && plant.getCol() == col) {
+                return plant;
             }
         }
         return null;
@@ -156,8 +156,8 @@ public class Yard {
                     setKilledZombies(getKilledZombies() + 1);
                 }
             }
-            ArrayList<Planet> planetsCopy = new ArrayList<>(getPlanets());
-            for (Planet planet : planetsCopy) {
+            ArrayList<Plant> planetsCopy = new ArrayList<>(getPlanets());
+            for (Plant planet : planetsCopy) {
                 if (planet.isDead()) {
                     this.removePlanet(planet);
                 }
@@ -168,9 +168,9 @@ public class Yard {
         s.play();
     }
 
-    public void removePlanet(Planet planet) {
-        planet.remove(getYardPane());
-        getPlanets().remove(planet);
+    public void removePlanet(Plant plant) {
+        plant.remove(getYardPane());
+        getPlanets().remove(plant);
     }
 
     protected StoneGrave findStoneGrave(int col, int row) {
@@ -184,32 +184,32 @@ public class Yard {
 
     public void placePlanet(String planet, int col, int row) {
         ImageView plantView = null;
-        Planet planet1;
-        if (Planet.canPlaceMap.get(planet)) {
-            planet1 = createPlanet(planet, col, row);
-            planet1.cooldown(getButtonManager().getButton(planet), Planet.costMap.get(planet));
-            getPlanets().add(planet1);
-            plantView = planet1.getImage();
-            Sun.setCollectedpoint(Sun.getCollectedpoint() - Planet.costMap.get(planet));
-            if (planet1.isDayPlanet() || ( !planet1.isDayPlanet() && !isDay() )) {
-                if (planet1 instanceof specialAct) {
-                    ( (specialAct) planet1 ).act(getYardPane());
+        Plant plant1;
+        if (Plant.canPlaceMap.get(planet)) {
+            plant1 = createPlanet(planet, col, row);
+            plant1.cooldown(getButtonManager().getButton(planet), Plant.costMap.get(planet));
+            getPlanets().add(plant1);
+            plantView = plant1.getImage();
+            Sun.setCollectedpoint(Sun.getCollectedpoint() - Plant.costMap.get(planet));
+            if (plant1.isDayPlanet() || ( !plant1.isDayPlanet() && !isDay() )) {
+                if (plant1 instanceof specialAct) {
+                    ( (specialAct) plant1 ).act(getYardPane());
                 }
-                if (planet1 instanceof Act) {
-                    ( (Act) planet1 ).act(getYardPane(), getZombies());
+                if (plant1 instanceof Act) {
+                    ( (Act) plant1 ).act(getYardPane(), getZombies());
                 }
             }
             if (planet.equals("Doom") || planet.equals("Hypno") || planet.equals("Ice")) {
-                plantView = planet1.getEatimage();
+                plantView = plant1.getEatimage();
                 if (!isDay()) {
-                    plantView = planet1.getImage();
-                    setLockedCells(col, row, planet1);
+                    plantView = plant1.getImage();
+                    setLockedCells(col, row, plant1);
                 }
 
             } else if (planet.equals("bean")) {
-                Planet x = findPlanet(col, row);
+                Plant x = findPlanet(col, row);
                 activatePlanet(x);
-                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> removePlanet(planet1)));
+                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> removePlanet(plant1)));
                 timeline.play();
 
             } else if (planet.equals("Grave")) {
@@ -231,12 +231,12 @@ public class Yard {
         }
     }
 
-    private void setLockedCells(int col, int row, Planet planet) {
-        if (planet instanceof Doomshroom) {
+    private void setLockedCells(int col, int row, Plant plant) {
+        if (plant instanceof Doomshroom) {
             getLockedCells().add(row + "," + col);
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.seconds(1), e -> {
-                        removePlanet(planet);
+                        removePlanet(plant);
                         Image lockedView = new Image(getClass().getResource("/CellLock.png").toExternalForm());
                         Rectangle burned = new Rectangle(CELL_WIDTH, Cell_HEIGHT);
                         burned.setFill(new ImagePattern(lockedView));
@@ -247,7 +247,7 @@ public class Yard {
         }
     }
 
-    protected void activatePlanet(Planet x) {
+    protected void activatePlanet(Plant x) {
         if (x instanceof Act) {
             ( (Act) x ).act(getYardPane(), getZombies());
         }
@@ -273,7 +273,7 @@ public class Yard {
         }
     }
 
-    public Planet createPlanet(String planetName, int col, int row) {
+    public Plant createPlanet(String planetName, int col, int row) {
         switch (planetName) {
             case "Sunflower":
                 return new Sunflower(col, row);
@@ -316,7 +316,7 @@ public class Yard {
 
     public void updateButtons() {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {
-            getButtonManager().update(Planet.canPlaceMap, Planet.costMap, Sun.getCollectedpoint());
+            getButtonManager().update(Plant.canPlaceMap, Plant.costMap, Sun.getCollectedpoint());
         }));
 
 
@@ -361,8 +361,8 @@ public class Yard {
         this.yardView = yardView;
     }
 
-    public ArrayList<Planet> getPlanets() {
-        return planets;
+    public ArrayList<Plant> getPlanets() {
+        return plants;
     }
 
     public ArrayList<Zombies> getZombies() {

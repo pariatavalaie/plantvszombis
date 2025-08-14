@@ -9,7 +9,7 @@ import javafx.util.Duration;
 
 import java.util.Random;
 
-public class Sunflower extends Planet implements specialAct {
+public class Sunflower extends Plant implements specialAct {
 
     public Sunflower(int x, int y) {
         super(x, y);

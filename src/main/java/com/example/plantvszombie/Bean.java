@@ -3,7 +3,7 @@ package com.example.plantvszombie;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Bean extends Planet {
+public class Bean extends Plant {
 
     public Bean(int x, int y) {
         super(x, y);

@@ -8,7 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
-public class Plantern extends Planet implements specialAct {
+public class Plantern extends Plant implements specialAct {
     private Fog fog;
     private Timeline lightUpdater;
     private Circle currentHole;

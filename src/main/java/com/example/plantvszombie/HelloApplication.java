@@ -20,10 +20,14 @@ public class HelloApplication extends Application {
     public Menu menu = new Menu();
     SaveManger saveManger = new SaveManger();
     boolean isMultiplayer = false;
+    MusicPlayer musicPlayer = null;
 
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
+        if(musicPlayer == null) {
+            musicPlayer = new MusicPlayer();
+           musicPlayer.play("C:\\Users\\XMART\\IdeaProjects\\plantvszombie\\src\\main\\resources\\Whaleinator - Plants Vs. Zombies (Grasswalk Remix) (1).wav",true);}
         stage.setTitle("Plant Vs Zombie");
         stage.setResizable(false);
         Image image = new Image(getClass().getResource("/firstpage.png").toExternalForm());
@@ -53,7 +57,6 @@ public class HelloApplication extends Application {
         if (isWin) {
             ImageView winImage = new ImageView(new Image("/LevelWin.png"));
             winImage.setX(300);
-            ;
             root.getChildren().add(winImage);
         } else {
             ImageView winImage = new ImageView(new Image("/ZombiesAteYourBrains.png"));
@@ -68,7 +71,6 @@ public class HelloApplication extends Application {
     private void showMultiplayerMenu() {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Multiplayer Setup");
-
         VBox content = new VBox(10);
         content.setAlignment(Pos.CENTER_LEFT);
 

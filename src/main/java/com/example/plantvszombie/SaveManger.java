@@ -2,7 +2,6 @@ package com.example.plantvszombie;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
@@ -31,7 +30,7 @@ public class SaveManger {
             sunStates.add(s.getState());
         }
         ArrayList<PlanetState> planetStates = new ArrayList<>();
-        for (Planet p : yard.getPlanets()) {
+        for (Plant p : yard.getPlanets()) {
             planetStates.add(p.getState());
         }
         ArrayList<stoneGraveState> stoneGrave = new ArrayList<>();
@@ -63,12 +62,12 @@ public class SaveManger {
                 yard.getZombies().add(ZombieFactory.createFromState(z, yard.getYardPane()));
             }
             for (PlanetState p : gameState.getPlanets()) {
-                Planet.on();
+                Plant.on();
                 yard.placePlanet(p.getType(), p.getCol(), p.getRow());
-                Planet planet = yard.findPlanet(p.getCol(), p.getRow());
-                planet.loadplanet(p, yard.getYardPane());
-                if (p.isActive() && !planet.isDayPlanet() && yard.isDay()) {
-                    yard.activatePlanet(planet);
+                Plant plant = yard.findPlanet(p.getCol(), p.getRow());
+                plant.loadplanet(p, yard.getYardPane());
+                if (p.isActive() && !plant.isDayPlanet() && yard.isDay()) {
+                    yard.activatePlanet(plant);
                 }
             }
             for (SunState s : gameState.getSuns()) {

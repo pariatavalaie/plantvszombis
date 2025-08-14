@@ -10,7 +10,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Cherry extends Planet implements Act {
+public class Cherry extends Plant implements Act {
 
     public Cherry(int x, int y) {
         super(x, y);

@@ -9,7 +9,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Iceshroom extends Planet implements Act {
+public class Iceshroom extends Plant implements Act {
     static boolean activate = false;
 
     public Iceshroom(int x, int y) {

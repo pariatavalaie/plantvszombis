@@ -9,7 +9,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class Hypnoshroom extends Planet implements Act {
+public class Hypnoshroom extends Plant implements Act {
 
     public Hypnoshroom(int x, int y) {
         super(x, y);

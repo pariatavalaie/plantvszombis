@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-public class Blover extends Planet implements specialAct {
+public class Blover extends Plant implements specialAct {
     private Fog fog;
 
     public Blover(int x, int y, Fog fog) {

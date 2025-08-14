@@ -220,8 +220,8 @@ public class ZombieWaveManger {
                 row = random.nextInt(y);
                 positionOccupied = false;
 
-                for (Planet planet : getYard().getPlanets()) {
-                    if (planet.getCol() == col && planet.getRow() == row) {
+                for (Plant plant : getYard().getPlanets()) {
+                    if (plant.getCol() == col && plant.getRow() == row) {
                         positionOccupied = true;
                         break;
                     }

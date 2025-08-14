@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-public class GraveBuster extends Planet implements specialAct {
+public class GraveBuster extends Plant implements specialAct {
 
     public GraveBuster(int x, int y) {
         super(x, y);
