@@ -8,6 +8,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import java.util.*;
@@ -38,7 +39,7 @@ public class Yard {
         }
         else{
             yar =new Image(getClass().getResource("/Night_11zon.png").toExternalForm());
-           Sun.setCollectedpoint(50);
+           Sun.setCollectedpoint(5000);
         }
         setYardView(new ImageView(yar));
         getYardView().setFitWidth(1024);
@@ -235,9 +236,9 @@ public class Yard {
          Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> {
                     removePlanet(planet);
+                    Image lockedView =new Image(getClass().getResource("/CellLock.png").toExternalForm());
                     Rectangle burned = new Rectangle(CELL_WIDTH, Cell_HEIGHT);
-                    burned.setFill(Color.DARKGRAY);
-                    burned.setOpacity(0.6);
+                    burned.setFill(new ImagePattern(lockedView));
                     getGridPane().add(burned, col, row);
                 }));
 
@@ -298,7 +299,6 @@ public class Yard {
             case "Grave":
                 return new GraveBuster(col, row);
             default:
-                System.out.println("Unknown planet: " + planetName);
                 return null;
         }
     }

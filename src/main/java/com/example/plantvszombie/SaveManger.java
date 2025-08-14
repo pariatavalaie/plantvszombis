@@ -1,7 +1,9 @@
 package com.example.plantvszombie;
 
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import java.io.*;
 import java.util.ArrayList;
@@ -50,11 +52,9 @@ public class SaveManger {
                         String[] parts = cell.split(",");
                         int row = Integer.parseInt(parts[0]);
                         int col = Integer.parseInt(parts[1]);
-
+                        Image lockedView =new Image(getClass().getResource("/CellLock.png").toExternalForm());
                         Rectangle burned = new Rectangle(Yard.CELL_WIDTH,Yard.Cell_HEIGHT);
-                        burned.setFill(Color.DARKGRAY);
-                        burned.setOpacity(0.6);
-
+                        burned.setFill(new ImagePattern(lockedView));
                         yard.getGridPane().add(burned, col, row);
                     }
                 }
