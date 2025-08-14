@@ -24,16 +24,16 @@ public class Doomshroom extends Planet implements Act{
     public void act(Pane root, ArrayList<Zombies> Zombies) {
         setActive(true);
 
-        double cherryX = Yard.GRID_X + getCol()* Yard.CELL_WIDTH + (Yard.CELL_WIDTH- 70) / 2;
-        double cherryY = Yard.GRID_Y + getRow()* Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT - 90) / 2;
+        double X = Yard.GRID_X + getCol()* Yard.CELL_WIDTH + (Yard.CELL_WIDTH- 70) / 2;
+        double Y = Yard.GRID_Y + getRow()* Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT - 90) / 2;
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             for (Zombies z : Zombies) {
+
                 double zombieX = z.getImage().getLayoutX() + z.getImage().getTranslateX();
                 double zombieY = z.getImage().getLayoutY() + z.getImage().getTranslateY();
-                double distanceX = Math.abs(zombieX - cherryX);
-                double distanceY = Math.abs(zombieY - cherryY);
-
+                double distanceX = Math.abs(zombieX - X);
+                double distanceY = Math.abs(zombieY - Y);
 
                 if (distanceX <= Yard.CELL_WIDTH/ 2 * 4 && distanceY <= Yard.Cell_HEIGHT / 2 * 4) {
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
@@ -45,7 +45,6 @@ public class Doomshroom extends Planet implements Act{
                 }
             } }));
         AnimationManager.register(timeline);
-
         timeline.setCycleCount(1);
         timeline.play();
     }
