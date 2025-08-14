@@ -13,7 +13,7 @@ public class Cherry extends Planet implements Act {
 
     public Cherry(int x, int y) {
         super(x,y);
-        this.setWaitingTime(2);
+        this.setWaitingTime(7);
         this.setHealth(4);
         this.setDayPlanet(true);
         this.setImage(new ImageView(new Image(getClass().getResource("/newCherryBomb.gif").toExternalForm())));

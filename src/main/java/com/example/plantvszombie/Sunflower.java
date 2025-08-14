@@ -12,7 +12,7 @@ public class Sunflower extends Planet implements specialAct{
 
     public Sunflower(int x, int y) {
         super(x, y);
-        setWaitingTime(5);
+        setWaitingTime(3);
         setHealth(4);
         this.setDayPlanet(true);
         setImage(new ImageView(new Image(getClass().getResource("/sunflower.gif").toExternalForm())));

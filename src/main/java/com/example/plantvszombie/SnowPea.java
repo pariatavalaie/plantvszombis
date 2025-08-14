@@ -9,7 +9,7 @@ public class SnowPea extends Shooter{
     public SnowPea(int x , int y) {
        super(x,y);
         this.setHealth(4);
-        this.setWaitingTime(8);
+        this.setWaitingTime(7);
         this.setDayPlanet(true);
         this.setImage(new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm())));
         this.setEatimage(new ImageView( new Image(getClass().getResource("/SnowPea.gif").toExternalForm())));

@@ -13,7 +13,7 @@ public class Scaredy extends Shooter{
 
     public Scaredy(int x,int y) {
        super(x,y);
-        this.setWaitingTime(2);
+        this.setWaitingTime(3);
         this.setDayPlanet(false);
         this.setHealth(3);
         this.setImage(new ImageView( new Image(getClass().getResource("/Scaredy-shroom.png").toExternalForm())));

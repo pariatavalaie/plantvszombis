@@ -12,7 +12,7 @@ public class Hypnoshroom extends Planet implements Act{
 
     public Hypnoshroom(int x,int y) {
         super(x,y);
-        this.setWaitingTime(2);
+        this.setWaitingTime(5);
         this.setDayPlanet(false);
         this.setHealth(3);
         this.setImage(new ImageView( new Image(getClass().getResource("/Animated_HypnoShroom.gif").toExternalForm())));

@@ -7,7 +7,7 @@ public class WallNut extends Planet{
 
     public WallNut(int x,int y){
         super(x,y);
-        setWaitingTime(5);
+        setWaitingTime(6);
         this.setHealth(10);
         this.setDayPlanet(true);
         this.setEatimage(new ImageView(new Image(getClass().getResource("/walnut_half_life.gif").toExternalForm())));

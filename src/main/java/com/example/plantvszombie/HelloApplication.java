@@ -30,12 +30,7 @@ public class HelloApplication extends Application {
         yard.setFitHeight(626);
         yard.setFitWidth(1024);
         Pane pane = new Pane();
-        pane.getChildren().addAll(yard, menu.Loadgame, menu.Exit, menu.StartGame);
-
-        Button multiplayer = new Button("🌐 Multiplayer");
-        multiplayer.setLayoutX(450);
-        multiplayer.setLayoutY(450);
-        pane.getChildren().add(multiplayer);
+        pane.getChildren().addAll(yard, menu.Loadgame, menu.Exit, menu.StartGame,menu.MultiPlayer);
         Scene scene = new Scene(pane, 1024, 626);
         stage.setScene(scene);
         stage.show();
@@ -49,7 +44,7 @@ public class HelloApplication extends Application {
             Scene scene1 = new Scene(yard1.getYardPane(), 1024, 626);
             stage.setScene(scene1);
         });
-        multiplayer.setOnAction(e -> showMultiplayerMenu());
+        menu.MultiPlayer.setOnAction(e -> showMultiplayerMenu());
     }
 
     public static void showGameResult(boolean isWin,Pane root) {

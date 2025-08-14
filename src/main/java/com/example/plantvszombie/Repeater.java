@@ -9,7 +9,7 @@ public class Repeater extends Shooter{
     public Repeater(int x, int y) {
         super(x,y);
         this.setDayPlanet(true);
-        this.setWaitingTime(7);
+        this.setWaitingTime(8);
         this.setHealth(4);
         this.setImage(new ImageView( new Image(getClass().getResource("/repeater.gif").toExternalForm())));
         this.setEatimage(new ImageView( new Image(getClass().getResource("/repeater.gif").toExternalForm())));

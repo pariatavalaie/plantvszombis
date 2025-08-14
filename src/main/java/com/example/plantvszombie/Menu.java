@@ -29,6 +29,7 @@ public class Menu {
     public Button Night;
     public Button Back;
     public Button Loadgame;
+    public Button MultiPlayer;
     public int countPlant = 0;
 
     Menu() {
@@ -79,12 +80,22 @@ public class Menu {
         imageView4.setFitWidth(194);
         Night.setBackground(null);
         Night.setGraphic(imageView4);
-        ImageView back = new ImageView(getClass().getResource("/back.png").toExternalForm());
         Back=new Button();
+        ImageView back = new ImageView(getClass().getResource("/back.png").toExternalForm());
         Back.setShape( new Circle());
         Back.setGraphic(back);
         Back.setLayoutX(900);
         Back.setLayoutY(10);
+        MultiPlayer = new Button();
+        Image image5 = new Image(getClass().getResource("/multiplayer.png").toExternalForm());
+        ImageView imageView5 = new ImageView(image5);
+        imageView5.setPreserveRatio(true);
+        imageView5.setFitHeight(100);
+        imageView5.setFitWidth(170);
+        MultiPlayer.setLayoutX(900);
+        MultiPlayer.setLayoutY(510);
+        MultiPlayer.setBackground(null);
+        MultiPlayer.setGraphic(imageView5);
     }
 
     public VBox getMenuPane() {
