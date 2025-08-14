@@ -3,10 +3,10 @@ package com.example.plantvszombie;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Bean extends Planet{
+public class Bean extends Planet {
 
     public Bean(int x, int y) {
-        super(x,y);
+        super(x, y);
         this.setWaitingTime(5);
         this.setHealth(4);
         this.setDayPlanet(true);
@@ -16,6 +16,6 @@ public class Bean extends Planet{
 
     @Override
     String gettype() {
-        return"bean";
+        return "bean";
     }
 }

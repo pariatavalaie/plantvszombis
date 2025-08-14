@@ -4,9 +4,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public class ConeheadZombie extends Zombies{
+public class ConeheadZombie extends Zombies {
 
-    public ConeheadZombie(int x, int y,Pane root) {
+    public ConeheadZombie(int x, int y, Pane root) {
         this.setX(x);
         this.setY(y);
         this.setHp(7);

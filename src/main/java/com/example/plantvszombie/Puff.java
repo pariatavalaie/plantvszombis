@@ -6,37 +6,39 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import java.util.ArrayList;
 
-public class Puff extends Shooter{
+public class Puff extends Shooter {
 
-    public Puff(int x , int y) {
-        super(x,y);
+    public Puff(int x, int y) {
+        super(x, y);
         this.setHealth(4);
         this.setWaitingTime(2);
         this.setDayPlanet(false);
         setImage(new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm())));
         setEatimage(new ImageView(new Image(getClass().getResource("/PuffShroom1 (10).gif").toExternalForm())));
     }
+
     @Override
-    public void act(Pane root,ArrayList<Zombies>zombies){
+    public void act(Pane root, ArrayList<Zombies> zombies) {
         setActive(true);
-        final double[]XZ={0};
-        double x = Yard.GRID_X + getCol() * Yard.CELL_WIDTH + (Yard.CELL_WIDTH - 70) / 2;
-        double y = Yard.GRID_Y+ getRow() * Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT- 90) / 2;
+        final double[] XZ = {0};
+        double x = Yard.GRID_X + getCol() * Yard.CELL_WIDTH + ( Yard.CELL_WIDTH - 70 ) / 2;
+        double y = Yard.GRID_Y + getRow() * Yard.Cell_HEIGHT + ( Yard.Cell_HEIGHT - 90 ) / 2;
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             boolean shouldShoot = false;
-            for (Zombies z :zombies ) {
+            for (Zombies z : zombies) {
                 double zombieX = z.getImage().getLayoutX() + z.getImage().getTranslateX();
-                if (z.getY() == getRow() && z.getX() -getCol()<=4 && z.getX() <=8&&zombieX>x) {
+                if (z.getY() == getRow() && z.getX() - getCol() <= 4 && z.getX() <= 8 && zombieX > x) {
                     shouldShoot = true;
                     XZ[0] = zombieX;
                     break;
                 }
             }
-            if (shouldShoot&&!isDead()) {
-                shoot(root,x,XZ[0], y);
+            if (shouldShoot && !isDead()) {
+                shoot(root, x, XZ[0], y);
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -46,9 +48,9 @@ public class Puff extends Shooter{
 
     @Override
     void shoot(Pane root, double x, double xzombie, double y) {
-        double speed=((xzombie-x)/Yard.Cell_HEIGHT)*0.5;
-        Bullet puff = new Bullet(getCol(), getRow(), speed,"PUFF");
-        puff.shoot(root, x + 60,xzombie , y+40);
+        double speed = ( ( xzombie - x ) / Yard.Cell_HEIGHT ) * 0.5;
+        Bullet puff = new Bullet(getCol(), getRow(), speed, "PUFF");
+        puff.shoot(root, x + 60, xzombie, y + 40);
         bullets.add(puff);
     }
 

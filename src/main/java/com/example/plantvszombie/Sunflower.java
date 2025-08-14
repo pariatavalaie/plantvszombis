@@ -6,9 +6,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import java.util.Random;
 
-public class Sunflower extends Planet implements specialAct{
+public class Sunflower extends Planet implements specialAct {
 
     public Sunflower(int x, int y) {
         super(x, y);
@@ -21,14 +22,15 @@ public class Sunflower extends Planet implements specialAct{
 
     @Override
     public void act(Pane root) {
-        double x = Yard.GRID_X+ getCol() * Yard.CELL_WIDTH+ (Yard.CELL_WIDTH - 70) / 2;
-        double y = Yard.GRID_Y + getRow()*Yard.Cell_HEIGHT+ (Yard.Cell_HEIGHT - 90) / 2;
-        int timeFall =new Random().nextInt(11)+20;
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(timeFall), event ->{
-            if (!isDead()){
-            Sun sun=new Sun();
-            Sun.getSuns().add(sun);
-            sun.sunflower(root,x,y);}
+        double x = Yard.GRID_X + getCol() * Yard.CELL_WIDTH + ( Yard.CELL_WIDTH - 70 ) / 2;
+        double y = Yard.GRID_Y + getRow() * Yard.Cell_HEIGHT + ( Yard.Cell_HEIGHT - 90 ) / 2;
+        int timeFall = new Random().nextInt(11) + 20;
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(timeFall), event -> {
+            if (!isDead()) {
+                Sun sun = new Sun();
+                Sun.getSuns().add(sun);
+                sun.sunflower(root, x, y);
+            }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();

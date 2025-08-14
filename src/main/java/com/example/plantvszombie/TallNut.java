@@ -5,8 +5,8 @@ import javafx.scene.image.ImageView;
 
 public class TallNut extends Planet {
 
-    public TallNut(int x,int y) {
-        super(x,y);
+    public TallNut(int x, int y) {
+        super(x, y);
         this.setHealth(16);
         this.setDayPlanet(true);
         setWaitingTime(3);
@@ -14,8 +14,9 @@ public class TallNut extends Planet {
         this.setImage(new ImageView(new Image(getClass().getResource("/TallNut1.gif").toExternalForm())));
 
     }
+
     @Override
     String gettype() {
-        return"Tall-nut";
+        return "Tall-nut";
     }
 }

@@ -17,7 +17,7 @@ public class Bullet {
     public boolean hit;
     public String type;
 
-    public Bullet(int x, int y, double speed,String type) {
+    public Bullet(int x, int y, double speed, String type) {
         this.x = x;
         this.y = y;
         this.speed = speed;
@@ -25,7 +25,7 @@ public class Bullet {
         this.type = type;
     }
 
-    public void shoot(Pane pane, double xPlant, double xZombie,  double yPlant) {
+    public void shoot(Pane pane, double xPlant, double xZombie, double yPlant) {
         Image bullet = null;
         if (type.equals("ICY")) {
             bullet = new Image(getClass().getResource("/snow bullet.png").toExternalForm());
@@ -33,7 +33,7 @@ public class Bullet {
             bullet = new Image(getClass().getResource("/pea.png").toExternalForm());
         } else if (type.equals("MUSHROOM")) {
             bullet = new Image(getClass().getResource("/bullet_11zon.png").toExternalForm());
-        } else if(type.equals("PUFF")) {
+        } else if (type.equals("PUFF")) {
             bullet = new Image(getClass().getResource("/mushroom.bullet_11zon.png").toExternalForm());
         }
         imageBullet = new ImageView(bullet);
@@ -50,7 +50,7 @@ public class Bullet {
         move.setToY(yPlant);
         move.play();
         move.setOnFinished(e -> {
-            if(!hit){
+            if (!hit) {
                 pane.getChildren().remove(imageBullet);
             }
         });

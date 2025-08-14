@@ -8,12 +8,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import java.util.ArrayList;
 
 public class Sun {
     private static int collectedpoint = 0;
     private ImageView sunImage;
-    private boolean collected ;
+    private boolean collected;
     private static ArrayList<Sun> suns = new ArrayList<Sun>();
     private boolean isFalling = false;
 
@@ -50,7 +51,7 @@ public class Sun {
         fall.setFromY(startY);
         fall.setToY(400);
         fall.setOnFinished(e -> {
-           startLifespanTimer(root);
+            startLifespanTimer(root);
         });
         fall.play();
         AnimationManager.register(fall);
@@ -60,8 +61,8 @@ public class Sun {
                 getSuns().remove(this);
                 root.getChildren().remove(getSunImage());
                 System.out.println("Sun collected!");
-                setCollectedpoint(getCollectedpoint() +25);
-                System.out.println("collectedpoint: "+ getCollectedpoint());
+                setCollectedpoint(getCollectedpoint() + 25);
+                System.out.println("collectedpoint: " + getCollectedpoint());
 
             }
         });
@@ -79,21 +80,21 @@ public class Sun {
         AnimationManager.register(delay);
     }
 
-     static void fall(Pane root) {
+    static void fall(Pane root) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
-            double randomX = 245 + Math.random() * (9 * 80); // روی زمین
+            double randomX = 245 + Math.random() * ( 9 * 80 ); // روی زمین
             Sun sun = new Sun();
             sun.setFalling(true);
             getSuns().add(sun);
-           sun.fallingSun (root, randomX, 0);
-           GameServer.notifySunSpawn(sun.getState());
+            sun.fallingSun(root, randomX, 0);
+            GameServer.notifySunSpawn(sun.getState());
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
         AnimationManager.register(timeline);
     }
 
-    public void sunflower(Pane root,double x,double y){
+    public void sunflower(Pane root, double x, double y) {
         getSunImage().setLayoutX(x);
         getSunImage().setLayoutY(y);
         root.getChildren().add(getSunImage());
@@ -103,12 +104,13 @@ public class Sun {
                 getSuns().remove(this);
                 root.getChildren().remove(getSunImage());
                 System.out.println("Sun collected!");
-                setCollectedpoint(getCollectedpoint() +25);
-                System.out.println("collectedpoint: "+ getCollectedpoint());
+                setCollectedpoint(getCollectedpoint() + 25);
+                System.out.println("collectedpoint: " + getCollectedpoint());
             }
         });
         startLifespanTimer(root);
     }
+
     public SunState getState() {
         SunState state = new SunState();
         state.setX(getSunImage().getLayoutX());
@@ -117,6 +119,7 @@ public class Sun {
         state.setFalling(isFalling());
         return state;
     }
+
     public static Sun fromState(SunState state, Pane root) {
         Sun sun = new Sun();
         if (state.isFalling()) {

@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+
 import java.util.*;
 
 public class ButtonManager {
@@ -53,7 +54,7 @@ public class ButtonManager {
             btn.setGraphic(createImageView(imagePath));
             btn.setStyle("-fx-background-color: #fff");
             btn.setOnDragDetected(event -> {
-                dragAction(btn,name);
+                dragAction(btn, name);
                 event.consume();
             });
             buttons.put(name, btn);
@@ -67,17 +68,18 @@ public class ButtonManager {
         shovelButton.setGraphic(shovelView);
         shovelButton.setStyle("-fx-background-color: #fff");
         shovelButton.setOnDragDetected(event -> {
-            dragAction(shovelButton,"shovel");
+            dragAction(shovelButton, "shovel");
             event.consume();
         });
     }
-    private void dragAction(Button btn,String name) {
+
+    private void dragAction(Button btn, String name) {
         Dragboard db = btn.startDragAndDrop(TransferMode.COPY);
         ClipboardContent content = new ClipboardContent();
         content.putString(name);
         db.setContent(content);
 
-        String dragImagePath =getImagePathDrag(name);
+        String dragImagePath = getImagePathDrag(name);
         Image dragImage = new Image(getClass().getResource(dragImagePath).toExternalForm());
         ImageView preview = new ImageView(dragImage);
         preview.setFitWidth(60);
@@ -117,6 +119,7 @@ public class ButtonManager {
     public Button getButton(String name) {
         return buttons.get(name);
     }
+
     private ImageView createImageView(String path) {
         Image image = new Image(getClass().getResource(path).toExternalForm());
         ImageView iv = new ImageView(image);
@@ -127,47 +130,85 @@ public class ButtonManager {
 
     private String getImagePath(String name) {
         switch (name) {
-            case "Snow Pea": return "/SnowPea.png";
-            case "Peashooter": return "/com/example/plantvszombie/peashooterCard.png";
-            case "Repeater": return "/com/example/plantvszombie/repeaterCard.png";
-            case "Tall-nut": return "/TallNut.png";
-            case "Wall-nut": return "/com/example/plantvszombie/wallnutCard.png";
-            case "Cherry Bomb": return "/com/example/plantvszombie/cherrybombCard.png";
-            case "jalapeno": return "/com/example/plantvszombie/jalapenoCard.png";
-            case "Sunflower": return "/com/example/plantvszombie/sunflowerCard.png";
-            case "Hypno": return "/HypnoShroomSeed.png";
-            case "Puff": return "/PuffShroomSeed.png";
-            case "Scaredy": return "/ScaredyShroomSeed.png";
-            case "Doom": return "/DoomShroomSeed.png";
-            case "Ice": return "/IceShroomSeed.png";
-            case "bean": return "/bean.png";
-            case "plantern": return "/PlanternSeed.png";
-            case "blover": return "/BloverSeed.png";
-            case "Grave": return "/GraveBusterSeed.png";
-            default: return "/bean.png";
+            case "Snow Pea":
+                return "/SnowPea.png";
+            case "Peashooter":
+                return "/com/example/plantvszombie/peashooterCard.png";
+            case "Repeater":
+                return "/com/example/plantvszombie/repeaterCard.png";
+            case "Tall-nut":
+                return "/TallNut.png";
+            case "Wall-nut":
+                return "/com/example/plantvszombie/wallnutCard.png";
+            case "Cherry Bomb":
+                return "/com/example/plantvszombie/cherrybombCard.png";
+            case "jalapeno":
+                return "/com/example/plantvszombie/jalapenoCard.png";
+            case "Sunflower":
+                return "/com/example/plantvszombie/sunflowerCard.png";
+            case "Hypno":
+                return "/HypnoShroomSeed.png";
+            case "Puff":
+                return "/PuffShroomSeed.png";
+            case "Scaredy":
+                return "/ScaredyShroomSeed.png";
+            case "Doom":
+                return "/DoomShroomSeed.png";
+            case "Ice":
+                return "/IceShroomSeed.png";
+            case "bean":
+                return "/bean.png";
+            case "plantern":
+                return "/PlanternSeed.png";
+            case "blover":
+                return "/BloverSeed.png";
+            case "Grave":
+                return "/GraveBusterSeed.png";
+            default:
+                return "/bean.png";
         }
     }
+
     private String getImagePathDrag(String name) {
         switch (name) {
-            case "Snow Pea": return "/SnowPea.gif";
-            case "Peashooter": return "/peashooter.gif";
-            case "Repeater": return "/repeater.gif";
-            case "Tall-nut": return "/TallNut1.gif";
-            case "Wall-nut": return "/walnut_full_life.gif";
-            case "Cherry Bomb": return "/newCherryBomb.gif";
-            case "jalapeno": return "/jalapeno.gif";
-            case "Sunflower": return "/sunflower.gif";
-            case "Hypno": return "/HypnoShroomSleep.gif";
-            case "Puff": return "/PuffShroom1 (10).gif";
-            case "Scaredy": return "/Scaredy-shroom.png";
-            case "Doom": return "/DoomShroom3.gif";
-            case "Ice": return "/IceShroom2.gif";
-            case "bean": return "/CoffeeBean2.gif";
-            case "plantern": return"/Animated_Plantern.gif";
-            case "blover": return "/75f44f529822720e5a77af436ccb0a46f31fabd6.gif";
-            case "Grave": return "/Transparent_grave_digger.gif";
-            case "shovel": return "/Shovel.jpg";
-            default: return "/bean.png";
+            case "Snow Pea":
+                return "/SnowPea.gif";
+            case "Peashooter":
+                return "/peashooter.gif";
+            case "Repeater":
+                return "/repeater.gif";
+            case "Tall-nut":
+                return "/TallNut1.gif";
+            case "Wall-nut":
+                return "/walnut_full_life.gif";
+            case "Cherry Bomb":
+                return "/newCherryBomb.gif";
+            case "jalapeno":
+                return "/jalapeno.gif";
+            case "Sunflower":
+                return "/sunflower.gif";
+            case "Hypno":
+                return "/HypnoShroomSleep.gif";
+            case "Puff":
+                return "/PuffShroom1 (10).gif";
+            case "Scaredy":
+                return "/Scaredy-shroom.png";
+            case "Doom":
+                return "/DoomShroom3.gif";
+            case "Ice":
+                return "/IceShroom2.gif";
+            case "bean":
+                return "/CoffeeBean2.gif";
+            case "plantern":
+                return "/Animated_Plantern.gif";
+            case "blover":
+                return "/75f44f529822720e5a77af436ccb0a46f31fabd6.gif";
+            case "Grave":
+                return "/Transparent_grave_digger.gif";
+            case "shovel":
+                return "/Shovel.jpg";
+            default:
+                return "/bean.png";
         }
     }
 

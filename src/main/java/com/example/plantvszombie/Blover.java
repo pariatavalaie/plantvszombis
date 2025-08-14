@@ -7,11 +7,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-public class Blover extends Planet implements specialAct{
+public class Blover extends Planet implements specialAct {
     private Fog fog;
 
     public Blover(int x, int y, Fog fog) {
-        super(x,y);
+        super(x, y);
         this.fog = fog;
         this.setWaitingTime(6);
         this.setDayPlanet(false);
@@ -21,19 +21,17 @@ public class Blover extends Planet implements specialAct{
     }
 
     @Override
-   public void act(Pane root) {
+    public void act(Pane root) {
         setActive(true);
         fog.hideTemporarily();
         Timeline restoreTimeline = new Timeline(new KeyFrame(Duration.seconds(5), e -> fog.restore()));
         restoreTimeline.play();
-        restoreTimeline.setOnFinished(e -> {
-            this.remove(root);
-        });
+        restoreTimeline.setOnFinished(e -> this.remove(root));
         AnimationManager.register(restoreTimeline);
     }
 
     @Override
     String gettype() {
-        return  "blover";
+        return "blover";
     }
 }

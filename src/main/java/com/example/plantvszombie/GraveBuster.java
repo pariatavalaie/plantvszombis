@@ -6,15 +6,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-public class GraveBuster extends Planet implements specialAct{
+public class GraveBuster extends Planet implements specialAct {
 
-    public GraveBuster(int x,int y) {
-        super(x,y);
+    public GraveBuster(int x, int y) {
+        super(x, y);
         this.setWaitingTime(3);
         this.setDayPlanet(false);
         this.setHealth(4);
-        this.setImage(new ImageView( new Image(getClass().getResource("/Transparent_grave_digger.gif").toExternalForm())));
-        this.setEatimage(new ImageView( new Image(getClass().getResource("/Transparent_grave_digger.gif").toExternalForm())));
+        this.setImage(new ImageView(new Image(getClass().getResource("/Transparent_grave_digger.gif").toExternalForm())));
+        this.setEatimage(new ImageView(new Image(getClass().getResource("/Transparent_grave_digger.gif").toExternalForm())));
     }
 
     @Override

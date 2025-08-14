@@ -30,7 +30,7 @@ public class ClientHandler extends Thread {
         switch (msg.type) {
             case "GAME_OVER" -> {
                 System.out.println("Client lost! Server wins.");
-                boolean gameOver=(Boolean)msg.data;
+                boolean gameOver = (Boolean) msg.data;
                 GameServer.yard.triggerGameEnd(gameOver);
             }
             case "MY_KILLS" -> {

@@ -14,10 +14,8 @@ public class GameServer {
 
         new Thread(() -> {
             try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-                System.out.println("Server started on port " + PORT);
                 while (true) {
                     Socket socket = serverSocket.accept();
-                    System.out.println("Client connected: " + socket.getInetAddress());
                     ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                     ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
                     out.writeObject(new NetworkMessage("initial", yard.getSelected()));
@@ -51,8 +49,8 @@ public class GameServer {
                 currentZombies.add(z.getState());
             }
             List<SunState> currentSuns = new ArrayList<>();
-            for (Sun s: Sun.getSuns()) {
-                if(s.isFalling()){
+            for (Sun s : Sun.getSuns()) {
+                if (s.isFalling()) {
                     currentSuns.add(s.getState());
                 }
             }
@@ -71,13 +69,15 @@ public class GameServer {
         broadcast(new NetworkMessage("GAME_OVER", gameOver));
     }
 
-    public static void notifyFog(){
-        broadcast(new NetworkMessage("FOG",null));
+    public static void notifyFog() {
+        broadcast(new NetworkMessage("FOG", null));
     }
+
     public static void notifyGrave(stoneGraveState grave) {
         broadcast(new NetworkMessage("GRAVE", grave));
 
     }
+
     public static void notifyZombieOut(stoneGraveState s) {
         broadcast(new NetworkMessage("ZOMBIE OUT", s));
     }
@@ -95,7 +95,7 @@ public class GameServer {
     }
 }
 
- class NetworkMessage implements Serializable {
+class NetworkMessage implements Serializable {
     public String type;
     public Object data;
 

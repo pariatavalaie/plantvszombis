@@ -4,9 +4,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public class ImpZombie extends Zombies{
+public class ImpZombie extends Zombies {
 
-    public ImpZombie(int x,int y,Pane root) {
+    public ImpZombie(int x, int y, Pane root) {
         this.setX(x);
         this.setY(y);
         this.setHp(3);

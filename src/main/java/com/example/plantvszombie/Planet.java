@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +22,7 @@ public abstract class Planet {
     private boolean dead = false;
     private PauseTransition cooldown;
     private boolean dayPlanet;
-    private boolean active=false;
+    private boolean active = false;
 
     public Planet(int x, int y) {
         this.row = y;
@@ -29,12 +30,12 @@ public abstract class Planet {
     }
 
     public static Map<String, Boolean> canPlaceMap = new HashMap<>();
-    public static  Map<String, Integer> costMap = new HashMap<>();
+    public static Map<String, Integer> costMap = new HashMap<>();
 
     static {
-        int[] costs = {100, 200, 50, 50,125, 175, 150,125, 125,25,100, 75, 75, 75, 75, 0, 25,};
-        String[] names={"Peashooter","Repeater","Sunflower", "Wall-nut","Tall-nut","Snow Pea","Cherry Bomb","jalapeno",
-                "Doom", "plantern","blover", "bean", "Ice", "Hypno","Grave","Puff","Scaredy" };
+        int[] costs = {100, 200, 50, 50, 125, 175, 150, 125, 125, 25, 100, 75, 75, 75, 75, 0, 25,};
+        String[] names = {"Peashooter", "Repeater", "Sunflower", "Wall-nut", "Tall-nut", "Snow Pea", "Cherry Bomb", "jalapeno",
+                "Doom", "plantern", "blover", "bean", "Ice", "Hypno", "Grave", "Puff", "Scaredy"};
 
         for (int i = 0; i < costs.length; i++) {
             canPlaceMap.put(names[i], true);
@@ -42,9 +43,13 @@ public abstract class Planet {
         }
     }
 
-    public int getCol() {return col;}
+    public int getCol() {
+        return col;
+    }
 
-    public int getRow() {return row;}
+    public int getRow() {
+        return row;
+    }
 
     public void remove(Pane root) {
         root.getChildren().remove(getImage());
@@ -75,9 +80,9 @@ public abstract class Planet {
     }
 
     static void on() {
-       for (String name : canPlaceMap.keySet()) {
-           canPlaceMap.put(name, true);
-       }
+        for (String name : canPlaceMap.keySet()) {
+            canPlaceMap.put(name, true);
+        }
     }
 
     public void cooldown(Button b, int cost) {
@@ -88,7 +93,6 @@ public abstract class Planet {
                 Platform.runLater(() -> {
                     b.setDisable(false);
                     b.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
-                    System.out.println("✅ You can place another Sunflower now");
                 });
             }
 
@@ -163,9 +167,11 @@ public abstract class Planet {
         this.active = active;
     }
 }
- interface Act {
+
+interface Act {
     void act(Pane root, ArrayList<Zombies> Zombies);
 }
+
 interface specialAct {
     void act(Pane root);
 }

@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 public class HelloApplication extends Application {
@@ -30,7 +31,7 @@ public class HelloApplication extends Application {
         yard.setFitHeight(626);
         yard.setFitWidth(1024);
         Pane pane = new Pane();
-        pane.getChildren().addAll(yard, menu.Loadgame, menu.Exit, menu.StartGame,menu.MultiPlayer);
+        pane.getChildren().addAll(yard, menu.Loadgame, menu.Exit, menu.StartGame, menu.MultiPlayer);
         Scene scene = new Scene(pane, 1024, 626);
         stage.setScene(scene);
         stage.show();
@@ -47,17 +48,18 @@ public class HelloApplication extends Application {
         menu.MultiPlayer.setOnAction(e -> showMultiplayerMenu());
     }
 
-    public static void showGameResult(boolean isWin,Pane root) {
-            AnimationManager.pauseAll();
-            if (isWin) {
-                ImageView winImage=new ImageView(new Image("/LevelWin.png"));
-                winImage.setX(300);;
-                root.getChildren().add(winImage);
-            } else {
-                ImageView winImage=new ImageView(new Image("/ZombiesAteYourBrains.png"));
-                winImage.setX(300);
-                root.getChildren().add(winImage);
-            }
+    public static void showGameResult(boolean isWin, Pane root) {
+        AnimationManager.pauseAll();
+        if (isWin) {
+            ImageView winImage = new ImageView(new Image("/LevelWin.png"));
+            winImage.setX(300);
+            ;
+            root.getChildren().add(winImage);
+        } else {
+            ImageView winImage = new ImageView(new Image("/ZombiesAteYourBrains.png"));
+            winImage.setX(300);
+            root.getChildren().add(winImage);
+        }
         Rectangle blocker = new Rectangle(1024, 626, Color.TRANSPARENT);
         blocker.setMouseTransparent(false);
         root.getChildren().add(blocker);
@@ -120,8 +122,9 @@ public class HelloApplication extends Application {
                 if (yard.isDay()) Sun.fall(yard.getYardPane());
                 ZombieWaveManger zw = new ZombieWaveManger(yard);
                 zw.start();
-                if(!yard.isDay()){
-                    zw.PaintStone(yard.getYardPane(),9,5);}
+                if (!yard.isDay()) {
+                    zw.PaintStone(yard.getYardPane(), 9, 5);
+                }
 
                 Scene scene = new Scene(yard.getYardPane(), 1024, 626);
                 stage.setScene(scene);
@@ -147,8 +150,9 @@ public class HelloApplication extends Application {
         if (menu.day) Sun.fall(yard.getYardPane());
         ZombieWaveManger zw = new ZombieWaveManger(yard);
         zw.start();
-        if(!yard.isDay()){
-           zw.PaintStone(yard.getYardPane(),9,5);}
+        if (!yard.isDay()) {
+            zw.PaintStone(yard.getYardPane(), 9, 5);
+        }
         yard.updateButtons();
         Scene scene1 = new Scene(yard.getYardPane(), 1024, 626);
         stage.setScene(scene1);
@@ -169,10 +173,10 @@ public class HelloApplication extends Application {
         stage.setScene(menuScene);
 
         menu.Play.setOnAction(e -> {
-            if (menu.countPlant == 6&&!isMultiplayer) play();
-            else if(isMultiplayer&&menu.countPlant == 6) startMultiplayerGame(true);
+            if (menu.countPlant == 6 && !isMultiplayer) play();
+            else if (isMultiplayer && menu.countPlant == 6) startMultiplayerGame(true);
             else {
-               showError("You have to choose 6 plants");
+                showError("You have to choose 6 plants");
             }
         });
 
@@ -188,10 +192,10 @@ public class HelloApplication extends Application {
         yard.setFitHeight(626);
         yard.setFitWidth(1024);
         Pane pane = new Pane(yard);
-        HBox menuPane = new HBox(menu.Day,menu.Night);
+        HBox menuPane = new HBox(menu.Day, menu.Night);
         menuPane.setLayoutX(300);
         menuPane.setLayoutY(201);
-        pane.getChildren().addAll(menuPane ,menu.Back);
+        pane.getChildren().addAll(menuPane, menu.Back);
         Scene menuScene = new Scene(pane, 1024, 626);
         stage.setScene(menuScene);
 
@@ -223,10 +227,9 @@ public class HelloApplication extends Application {
 
         Button resumeButton = new Button("▶ resume");
         Button saveButton = new Button("💾 save");
-        Button menuButton=new Button("☰ menu");
         Button exitButton = new Button("❌ exit");
 
-        pauseMenu.getChildren().addAll(resumeButton, saveButton,menuButton ,exitButton);
+        pauseMenu.getChildren().addAll(resumeButton, saveButton, exitButton);
         StackPane pauseGroup = new StackPane(overlay, pauseMenu);
         yard.getYardPane().getChildren().add(pauseGroup);
 
@@ -241,14 +244,6 @@ public class HelloApplication extends Application {
             AnimationManager.resumeAll();
         });
 
-        menuButton.setOnAction(e -> {
-            HelloApplication helloApp = new HelloApplication();
-            try {
-                helloApp.start(stage);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
 
         exitButton.setOnAction(e -> Platform.exit());
     }

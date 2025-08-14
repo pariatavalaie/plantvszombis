@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -41,8 +42,9 @@ public class ZombieWaveManger {
     private void setupTimeline() {
         setMaintimeline(new Timeline(new KeyFrame(Duration.seconds(1), e -> tick())));
         getMaintimeline().setOnFinished(event -> {
-            if(!isWin()){
-                setLose(true);}
+            if (!isWin()) {
+                setLose(true);
+            }
         });
         getMaintimeline().setCycleCount(260);
     }
@@ -55,14 +57,14 @@ public class ZombieWaveManger {
     private void tick() {
         setGameTime(getGameTime() + 1);
 
-        if (getGameTime() >=5 && getGameTime() <= 40) waveStage1();
-        else if ( getGameTime() >=40 && getGameTime() <= 110 ) waveStage2();
-        else if (getGameTime() >= 120 && getGameTime() <= 180)waveStage3();
-        else if (getGameTime()>=180 && getGameTime() <= 240) waveStage4();
+        if (getGameTime() >= 5 && getGameTime() <= 40) waveStage1();
+        else if (getGameTime() >= 40 && getGameTime() <= 110) waveStage2();
+        else if (getGameTime() >= 120 && getGameTime() <= 180) waveStage3();
+        else if (getGameTime() >= 180 && getGameTime() <= 240) waveStage4();
 
         if (getGameTime() >= 80 && getGameTime() <= 140) halfAttack();
         if (getGameTime() >= 200 && getGameTime() <= 230) finalAttack();
-        if(!yard.isDay()&&gameTime==160){
+        if (!yard.isDay() && gameTime == 160) {
             getYard().getFog().enterSlowly();
             GameServer.notifyFog();
         }
@@ -79,12 +81,12 @@ public class ZombieWaveManger {
             }
         }
         if (getGameTime() >= 260 && !isLose()) {
-            if(!getYard().isServer()){
+            if (!getYard().isServer()) {
                 setWin(true);
                 getMaintimeline().stop();
                 System.out.println("Time's up! You win.");
-                Platform.runLater(() -> getYard().triggerGameEnd(true));}
-            else {
+                Platform.runLater(() -> getYard().triggerGameEnd(true));
+            } else {
                 GameServer.broadcast(new NetworkMessage("REQUEST_KILLS", null));
             }
         }
@@ -204,9 +206,10 @@ public class ZombieWaveManger {
             }
         }
     }
+
     public void PaintStone(Pane pane, int x, int y) {
         Random random = new Random();
-        int numberOfGraves = random.nextInt(2)+5;
+        int numberOfGraves = random.nextInt(2) + 5;
 
         for (int i = 0; i < numberOfGraves; i++) {
             int col, row;
@@ -217,7 +220,7 @@ public class ZombieWaveManger {
                 row = random.nextInt(y);
                 positionOccupied = false;
 
-                for (Planet planet :getYard().getPlanets()) {
+                for (Planet planet : getYard().getPlanets()) {
                     if (planet.getCol() == col && planet.getRow() == row) {
                         positionOccupied = true;
                         break;
@@ -225,10 +228,10 @@ public class ZombieWaveManger {
                 }
 
 
-                for (StoneGrave grave :getYard().getGraves()) {
+                for (StoneGrave grave : getYard().getGraves()) {
                     int dx = Math.abs(grave.getX() - col);
                     int dy = Math.abs(grave.getY() - row);
-                    if ((dx == 0) || (dx + dy == 1)) {
+                    if (( dx == 0 ) || ( dx + dy == 1 )) {
                         positionOccupied = true;
                         break;
                     }
@@ -236,10 +239,10 @@ public class ZombieWaveManger {
 
             } while (positionOccupied);
             double Start = random.nextDouble(41) + 200;
-            StoneGrave grave = new StoneGrave(col, row, pane,Start);
+            StoneGrave grave = new StoneGrave(col, row, pane, Start);
             GameServer.notifyGrave(grave.getState());
             getYard().getGraves().add(grave);
-            grave.spawnZombie(getYard().getZombies(),getYard().getGraves());
+            grave.spawnZombie(getYard().getZombies(), getYard().getGraves());
         }
     }
 

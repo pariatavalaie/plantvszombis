@@ -5,6 +5,7 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -15,27 +16,27 @@ public abstract class Zombies {
     private int speed;
     private ImageView image;
     private ImageView deadZombie;
-    private TranslateTransition walker=null;
-    private Timeline eating=null;
-    private boolean inHouse=false;
-    private boolean isHypnotized=false;
-    private boolean fighting=false;
+    private TranslateTransition walker = null;
+    private Timeline eating = null;
+    private boolean inHouse = false;
+    private boolean isHypnotized = false;
+    private boolean fighting = false;
     private int direction = -1;
 
-    protected void move(){
+    protected void move() {
         double distance = 79;
         double durationInSeconds = getSpeed();
         setWalker(new TranslateTransition(Duration.seconds(durationInSeconds), getImage()));
         getWalker().setByX(getDirection() * distance);
         getWalker().setOnFinished(e -> {
-             setX(getX() + getDirection());
+            setX(getX() + getDirection());
 
-            if(( getX() < 0 && getDirection() == -1)){//If zombies get in the house
+            if (( getX() < 0 && getDirection() == -1 )) {//If zombies get in the house
                 setInHouse(true);
                 getWalker().stop();
                 return;
             }
-            if (( getX() >8 && getDirection() == 1) || getHp() <= 0) {//if Hypnotized zombie reach the end
+            if (( getX() > 8 && getDirection() == 1 ) || getHp() <= 0) {//if Hypnotized zombie reach the end
                 setHp(0);
                 getWalker().stop();
                 return;
@@ -46,70 +47,75 @@ public abstract class Zombies {
         AnimationManager.register(getWalker());
     }
 
-     protected void reverseDirection() {
-        if(isHypnotized()){
-        setDirection(getDirection() * -1); //reverse direction
-        getImage().setScaleX(getImage().getScaleX() * -1); //reverse image
-        if (getWalker() != null) {
-            getWalker().pause();
-        }
+    protected void reverseDirection() {
+        if (isHypnotized()) {
+            setDirection(getDirection() * -1); //reverse direction
+            getImage().setScaleX(getImage().getScaleX() * -1); //reverse image
+            if (getWalker() != null) {
+                getWalker().pause();
+            }
             move();
             //red tint
             ColorAdjust blueTint = new ColorAdjust();
             blueTint.setHue(-0.6);
             blueTint.setSaturation(1.0);
             blueTint.setBrightness(0.5);
-            getImage().setEffect(blueTint);}
+            getImage().setEffect(blueTint);
+        }
     }
 
-    protected void damage (ArrayList<Planet> planets,Pane root) {
+    protected void damage(ArrayList<Planet> planets, Pane root) {
         for (Planet p : planets) {
-            if(p instanceof Shooter){
-            Iterator<Bullet> it =((Shooter)p).bullets.iterator();
-            while (it.hasNext()) {
-                Bullet b = it.next();
-                if (isAlive() && this.collidesWith(b,root)) {
-                    setHp(getHp() - 1);
-                    if((b.type).equals("ICY")){ //if snowPea shoot
-                        this.setSpeed(this.getSpeed() / 2);
-                        if (getWalker() != null) {
-                            getWalker().setRate(0.5);
+            if (p instanceof Shooter) {
+                Iterator<Bullet> it = ( (Shooter) p ).bullets.iterator();
+                while (it.hasNext()) {
+                    Bullet b = it.next();
+                    if (isAlive() && this.collidesWith(b, root)) {
+                        setHp(getHp() - 1);
+                        if (( b.type ).equals("ICY")) { //if snowPea shoot
+                            this.setSpeed(this.getSpeed() / 2);
+                            if (getWalker() != null) {
+                                getWalker().setRate(0.5);
+                            }
                         }
+                        ColorAdjust blueTint = new ColorAdjust();
+                        blueTint.setHue(-0.7);
+                        blueTint.setSaturation(1.0);
+                        blueTint.setBrightness(0.5);
+                        getImage().setEffect(blueTint);
+                        PauseTransition pa = new PauseTransition(Duration.seconds(0.1));
+                        pa.setOnFinished(e -> {
+                            if (getImage().getEffect() != null) getImage().setEffect(null);
+                        });
+                        pa.play();
+                        it.remove();
                     }
-                    ColorAdjust blueTint = new ColorAdjust();
-                    blueTint.setHue(-0.7);
-                    blueTint.setSaturation(1.0);
-                    blueTint.setBrightness(0.5);
-                    getImage().setEffect(blueTint);
-                    PauseTransition pa=new PauseTransition(Duration.seconds(0.1));
-                    pa.setOnFinished(e -> {if(getImage().getEffect()!=null) getImage().setEffect(null);});
-                    pa.play();
-                    it.remove();
                 }
             }
-        }}}
+        }
+    }
 
-    private boolean collidesWith(Bullet b,Pane root) {
-      if(Math.abs(getImage().getLayoutX()+ getImage().getTranslateX() - (b.imageBullet.getLayoutX()+b.imageBullet.getTranslateX())) <= 80&&Math.abs(getImage().getLayoutY()+ getImage().getTranslateY() - (b.imageBullet.getLayoutY()+b.imageBullet.getTranslateY())) <= 100&& getY() ==b.y) {
-          root.getChildren().remove(b.imageBullet);
-          b.hit=true;
-          return true;
-      }
-      return false;
+    private boolean collidesWith(Bullet b, Pane root) {
+        if (Math.abs(getImage().getLayoutX() + getImage().getTranslateX() - ( b.imageBullet.getLayoutX() + b.imageBullet.getTranslateX() )) <= 80 && Math.abs(getImage().getLayoutY() + getImage().getTranslateY() - ( b.imageBullet.getLayoutY() + b.imageBullet.getTranslateY() )) <= 100 && getY() == b.y) {
+            root.getChildren().remove(b.imageBullet);
+            b.hit = true;
+            return true;
+        }
+        return false;
     }
 
     public boolean isAlive() {
-        return getHp() >0;
+        return getHp() > 0;
     }
 
     public void checkAndEatPlant(ArrayList<Planet> planets, Pane root) {
         for (Planet p : planets) {
-            if (p.getRow()== this.getY() && p.getCol()== this.getX()) {
+            if (p.getRow() == this.getY() && p.getCol() == this.getX()) {
 
                 if (getWalker() != null) getWalker().pause();
 
                 Timeline[] eatingRef = new Timeline[1];
-                 setEating(new Timeline(new KeyFrame(Duration.seconds(0.5), e -> {
+                setEating(new Timeline(new KeyFrame(Duration.seconds(0.5), e -> {
                     if (!isAlive()) {
                         if (getWalker() != null) getWalker().play();
                         eatingRef[0].stop();
@@ -117,7 +123,7 @@ public abstract class Zombies {
                     }
                     p.setHealth(p.getHealth() - 1);
                     p.getImage().setImage(p.getEatimage().getImage());
-                    if ( p.getHealth() < 0) {
+                    if (p.getHealth() < 0) {
                         getWalker().play();
                         p.remove(root);
                         planets.remove(p);
@@ -186,8 +192,8 @@ public abstract class Zombies {
     }
 
     public void freezeZombie() {
-        if(Iceshroom.activate){
-            if(this.isAlive()) {
+        if (Iceshroom.activate) {
+            if (this.isAlive()) {
                 if (this.getWalker() != null) {
                     this.getWalker().pause();
                 }
@@ -202,11 +208,14 @@ public abstract class Zombies {
                 this.getImage().setEffect(blueTint);
             }
         }
-        if(!Iceshroom.activate&&!isHypnotized&&!AnimationManager.isPaused){
+        if (!Iceshroom.activate && !isHypnotized && !AnimationManager.isPaused) {
             if (this.isAlive()) {
-                if (this.getWalker() != null&&this.getWalker().getStatus() != Animation.Status.PAUSED) this.getWalker().play();
-                if (this.getEating() != null&&this.getEating().getStatus() != Animation.Status.PAUSED) this.getEating().play();
-                this.getImage().setEffect(null);}
+                if (this.getWalker() != null && this.getWalker().getStatus() != Animation.Status.PAUSED)
+                    this.getWalker().play();
+                if (this.getEating() != null && this.getEating().getStatus() != Animation.Status.PAUSED)
+                    this.getEating().play();
+                this.getImage().setEffect(null);
+            }
         }
 
     }

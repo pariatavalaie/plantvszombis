@@ -1,6 +1,7 @@
 package com.example.plantvszombie;
 
 import javafx.scene.layout.Pane;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,58 +15,58 @@ public class GameState implements Serializable {
     private int sunPoint;
     private FogState fogState;
     private ArrayList<SunState> suns;
-    private ArrayList<PlanetState>planets;
+    private ArrayList<PlanetState> planets;
     private ArrayList<stoneGraveState> StoneGraves;
     private List<String> selected;
 
-     GameState(ArrayList<ZombieState> zombies,  Set<String> lockedCells, boolean day, int gametime, int sunpoint,Fog fog,ArrayList<SunState>suns,ArrayList<PlanetState>planets,ArrayList<stoneGraveState>stoneGraves,List<String>selected) {
-         this.setZombies(zombies);
-         this.setLockedCells(lockedCells);
-         this.setDay(day);
-         this.setGameTime(gametime);
-         this.setSunPoint(sunpoint);
-         this.setFogState(fog.buildState());
-         this.setSuns(suns);
-         this.setPlanets(planets);
-         this.setStoneGraves(stoneGraves);
-         this.setSelected(selected);
-     }
+    GameState(ArrayList<ZombieState> zombies, Set<String> lockedCells, boolean day, int gametime, int sunpoint, Fog fog, ArrayList<SunState> suns, ArrayList<PlanetState> planets, ArrayList<stoneGraveState> stoneGraves, List<String> selected) {
+        this.setZombies(zombies);
+        this.setLockedCells(lockedCells);
+        this.setDay(day);
+        this.setGameTime(gametime);
+        this.setSunPoint(sunpoint);
+        this.setFogState(fog.buildState());
+        this.setSuns(suns);
+        this.setPlanets(planets);
+        this.setStoneGraves(stoneGraves);
+        this.setSelected(selected);
+    }
 
-     public int getGametime() {
-         return getGameTime();
-     }
+    public int getGametime() {
+        return getGameTime();
+    }
 
-     public int getSunpoint() {
-         return getSunPoint();
-     }
+    public int getSunpoint() {
+        return getSunPoint();
+    }
 
-     public boolean isDay() {
-         return day;
-     }
+    public boolean isDay() {
+        return day;
+    }
 
-     public FogState getFogState() {
-         return fogState;
-     }
+    public FogState getFogState() {
+        return fogState;
+    }
 
-     public ArrayList<SunState> getSuns() {
-         return suns;
-     }
+    public ArrayList<SunState> getSuns() {
+        return suns;
+    }
 
-     public ArrayList<PlanetState> getPlanets() {
-         return planets;
-     }
+    public ArrayList<PlanetState> getPlanets() {
+        return planets;
+    }
 
-     public ArrayList<ZombieState> getZombies() {
-         return zombies;
-     }
+    public ArrayList<ZombieState> getZombies() {
+        return zombies;
+    }
 
-     public List<String> getSelected() {
-         return selected;
-     }
+    public List<String> getSelected() {
+        return selected;
+    }
 
-     public ArrayList<stoneGraveState> getStoneGraves() {
-         return StoneGraves;
-     }
+    public ArrayList<stoneGraveState> getStoneGraves() {
+        return StoneGraves;
+    }
 
     public void setZombies(ArrayList<ZombieState> zombies) {
         this.zombies = zombies;
@@ -120,7 +121,7 @@ public class GameState implements Serializable {
     }
 }
 
- class ZombieState implements Serializable {
+class ZombieState implements Serializable {
     private String type;
     private int x, y;
     private int hp;
@@ -140,6 +141,7 @@ public class GameState implements Serializable {
         this.inHouse = inHouse;
         this.fighting = fighting;
     }
+
     public String getType() {
         return type;
     }
@@ -172,16 +174,17 @@ public class GameState implements Serializable {
         return fighting;
     }
 }
- class PlanetState implements Serializable {
+
+class PlanetState implements Serializable {
     private int col;
-     private int row;
+    private int row;
     private String type;
     private int health;
     private boolean dead;
     private double remainingCooldown;
     private boolean active;
 
-    public PlanetState(int col, int row, String type, int health, boolean dead, double remainingCooldown,boolean active) {
+    public PlanetState(int col, int row, String type, int health, boolean dead, double remainingCooldown, boolean active) {
         this.setCol(col);
         this.setRow(row);
         this.setType(type);
@@ -191,66 +194,67 @@ public class GameState implements Serializable {
         this.setActive(active);
     }
 
-     public int getCol() {
-         return col;
-     }
+    public int getCol() {
+        return col;
+    }
 
-     public void setCol(int col) {
-         this.col = col;
-     }
+    public void setCol(int col) {
+        this.col = col;
+    }
 
-     public int getRow() {
-         return row;
-     }
+    public int getRow() {
+        return row;
+    }
 
-     public void setRow(int row) {
-         this.row = row;
-     }
+    public void setRow(int row) {
+        this.row = row;
+    }
 
-     public String getType() {
-         return type;
-     }
+    public String getType() {
+        return type;
+    }
 
-     public void setType(String type) {
-         this.type = type;
-     }
+    public void setType(String type) {
+        this.type = type;
+    }
 
-     public int getHealth() {
-         return health;
-     }
+    public int getHealth() {
+        return health;
+    }
 
-     public void setHealth(int health) {
-         this.health = health;
-     }
+    public void setHealth(int health) {
+        this.health = health;
+    }
 
-     public boolean isDead() {
-         return dead;
-     }
+    public boolean isDead() {
+        return dead;
+    }
 
-     public void setDead(boolean dead) {
-         this.dead = dead;
-     }
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
 
-     public double getRemainingCooldown() {
-         return remainingCooldown;
-     }
+    public double getRemainingCooldown() {
+        return remainingCooldown;
+    }
 
-     public void setRemainingCooldown(double remainingCooldown) {
-         this.remainingCooldown = remainingCooldown;
-     }
+    public void setRemainingCooldown(double remainingCooldown) {
+        this.remainingCooldown = remainingCooldown;
+    }
 
-     public boolean isActive() {
-         return active;
-     }
+    public boolean isActive() {
+        return active;
+    }
 
-     public void setActive(boolean active) {
-         this.active = active;
-     }
- }
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+}
+
 class OtherPlanetState extends PlanetState implements Serializable {
     private boolean other;
 
-    public OtherPlanetState(int col, int row, String type, int health, boolean dead, double remainingCooldown, boolean other,boolean active) {
+    public OtherPlanetState(int col, int row, String type, int health, boolean dead, double remainingCooldown, boolean other, boolean active) {
         super(col, row, type, health, dead, remainingCooldown, active);
         this.setOther(other);
     }
@@ -263,11 +267,12 @@ class OtherPlanetState extends PlanetState implements Serializable {
         this.other = other;
     }
 }
-class ShooterState extends PlanetState implements Serializable {
-    private ArrayList<BulletState>bulletStates;
 
-    ShooterState(int col, int row, String type, int health, boolean dead, ArrayList<BulletState> bulletStates, double remainingCooldown,boolean active) {
-        super(col, row, type, health, dead, remainingCooldown,active);
+class ShooterState extends PlanetState implements Serializable {
+    private ArrayList<BulletState> bulletStates;
+
+    ShooterState(int col, int row, String type, int health, boolean dead, ArrayList<BulletState> bulletStates, double remainingCooldown, boolean active) {
+        super(col, row, type, health, dead, remainingCooldown, active);
         this.setBulletStates(bulletStates);
     }
 
@@ -279,11 +284,12 @@ class ShooterState extends PlanetState implements Serializable {
         this.bulletStates = bulletStates;
     }
 }
+
 class scardyState extends ShooterState implements Serializable {
     private boolean scardy;
 
-    public scardyState(int col, int row, String type, int health, boolean dead, ArrayList<BulletState> bulletStates, double remainingCooldown,boolean scardy,boolean active) {
-        super(col, row, type, health, dead,bulletStates,remainingCooldown,active);
+    public scardyState(int col, int row, String type, int health, boolean dead, ArrayList<BulletState> bulletStates, double remainingCooldown, boolean scardy, boolean active) {
+        super(col, row, type, health, dead, bulletStates, remainingCooldown, active);
         this.setScardy(scardy);
 
     }
@@ -296,6 +302,7 @@ class scardyState extends ShooterState implements Serializable {
         this.scardy = scardy;
     }
 }
+
 class BulletState implements Serializable {
     private int x;
     private int y;
@@ -316,6 +323,7 @@ class BulletState implements Serializable {
         this.setXzombie(xzombie);
         this.setHit(hit);
     }
+
     public int getX() {
         return x;
     }
@@ -337,10 +345,12 @@ class BulletState implements Serializable {
     }
 
     public double getTranslateY() {
-        return translateY;}
+        return translateY;
+    }
 
     public double getXzombie() {
-        return xzombie;}
+        return xzombie;
+    }
 
     public void setX(int x) {
         this.x = x;
@@ -375,27 +385,28 @@ class BulletState implements Serializable {
     }
 }
 
- class FogState implements Serializable {
+class FogState implements Serializable {
     private double currentTranslateX;
     private boolean isVisible;
     public List<LanternHoleState> holes = new ArrayList<>();
 
-     public double getCurrentTranslateX() {
-         return currentTranslateX;
-     }
+    public double getCurrentTranslateX() {
+        return currentTranslateX;
+    }
 
-     public void setCurrentTranslateX(double currentTranslateX) {
-         this.currentTranslateX = currentTranslateX;
-     }
+    public void setCurrentTranslateX(double currentTranslateX) {
+        this.currentTranslateX = currentTranslateX;
+    }
 
-     public boolean isVisible() {
-         return isVisible;
-     }
+    public boolean isVisible() {
+        return isVisible;
+    }
 
-     public void setVisible(boolean visible) {
-         isVisible = visible;
-     }
- }
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
+}
+
 class LanternHoleState implements Serializable {
     private double centerX;
     private double centerY;
@@ -406,6 +417,7 @@ class LanternHoleState implements Serializable {
         this.setCenterY(y);
         this.setRadius(r);
     }
+
     public double getCenterX() {
         return centerX;
     }
@@ -431,72 +443,73 @@ class LanternHoleState implements Serializable {
     }
 }
 
- class SunState implements Serializable {
-     private double x;
-     private double y;
-     private double z;
-     private boolean isFalling;
-     // true: fallingSun | false: sunflower
+class SunState implements Serializable {
+    private double x;
+    private double y;
+    private double z;
+    private boolean isFalling;
+    // true: fallingSun | false: sunflower
 
-     public double getX() {
-         return x;
-     }
+    public double getX() {
+        return x;
+    }
 
-     public double getY() {
-         return y;
-     }
+    public double getY() {
+        return y;
+    }
 
-     public double getZ() {
-         return z;
-     }
+    public double getZ() {
+        return z;
+    }
 
-     public void setX(double x) {
-         this.x = x;
-     }
+    public void setX(double x) {
+        this.x = x;
+    }
 
-     public void setY(double y) {
-         this.y = y;
-     }
+    public void setY(double y) {
+        this.y = y;
+    }
 
-     public void setZ(double z) {
-         this.z = z;
-     }
+    public void setZ(double z) {
+        this.z = z;
+    }
 
-     public boolean isFalling() {
-         return isFalling;
-     }
+    public boolean isFalling() {
+        return isFalling;
+    }
 
-     public void setFalling(boolean falling) {
-         isFalling = falling;
-     }
- }
- class stoneGraveState implements Serializable {
-     private int x;
-     private int y;
-     private double StartComing;
+    public void setFalling(boolean falling) {
+        isFalling = falling;
+    }
+}
 
-     public stoneGraveState(int x, int y,double time) {
-         this.x = x;
-         this.y = y;
-         this.StartComing = time;
-     }
+class stoneGraveState implements Serializable {
+    private int x;
+    private int y;
+    private double StartComing;
 
-     public int getX() {
-         return x;
-     }
+    public stoneGraveState(int x, int y, double time) {
+        this.x = x;
+        this.y = y;
+        this.StartComing = time;
+    }
 
-     public int getY() {
-         return y;
-     }
+    public int getX() {
+        return x;
+    }
 
-     public double getStartComing() {
-         return StartComing;
-     }
+    public int getY() {
+        return y;
+    }
 
-     public StoneGrave getStoneGrave(Pane pane) {
-         return new StoneGrave(getX(),getY(),pane,getStartComing());
-     }
- }
+    public double getStartComing() {
+        return StartComing;
+    }
+
+    public StoneGrave getStoneGrave(Pane pane) {
+        return new StoneGrave(getX(), getY(), pane, getStartComing());
+    }
+}
 
 
 

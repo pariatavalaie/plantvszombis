@@ -6,26 +6,27 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import java.util.ArrayList;
 
-public class Scaredy extends Shooter{
+public class Scaredy extends Shooter {
     public boolean scared;
 
-    public Scaredy(int x,int y) {
-       super(x,y);
+    public Scaredy(int x, int y) {
+        super(x, y);
         this.setWaitingTime(3);
         this.setDayPlanet(false);
         this.setHealth(3);
-        this.setImage(new ImageView( new Image(getClass().getResource("/Scaredy-shroom.png").toExternalForm())));
-        this.setEatimage(new ImageView( new Image(getClass().getResource("/Scaredy-Shroom_Hiding.png").toExternalForm())));
-        scared=false;
+        this.setImage(new ImageView(new Image(getClass().getResource("/Scaredy-shroom.png").toExternalForm())));
+        this.setEatimage(new ImageView(new Image(getClass().getResource("/Scaredy-Shroom_Hiding.png").toExternalForm())));
+        scared = false;
     }
 
     @Override
-    public void act(Pane root , ArrayList<Zombies> zombies) {
+    public void act(Pane root, ArrayList<Zombies> zombies) {
         setActive(true);
-        double x = Yard.GRID_X + getCol() * Yard.CELL_WIDTH+ (Yard.CELL_WIDTH - 70) / 2;
-        double y = Yard.GRID_Y + getRow()* Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT - 90) / 2;
+        double x = Yard.GRID_X + getCol() * Yard.CELL_WIDTH + ( Yard.CELL_WIDTH - 70 ) / 2;
+        double y = Yard.GRID_Y + getRow() * Yard.Cell_HEIGHT + ( Yard.Cell_HEIGHT - 90 ) / 2;
         final double[] XZ = {0};
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             boolean shouldShoot = false;
@@ -41,7 +42,7 @@ public class Scaredy extends Shooter{
                 }
             }
             if (shouldShoot && !isDead()) {
-                shoot(root,x,XZ[0],y);
+                shoot(root, x, XZ[0], y);
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -51,15 +52,15 @@ public class Scaredy extends Shooter{
 
     @Override
     void shoot(Pane root, double x, double xzombie, double y) {
-        double speed=((xzombie-x)/Yard.Cell_HEIGHT)*0.5;
+        double speed = ( ( xzombie - x ) / Yard.Cell_HEIGHT ) * 0.5;
         Bullet scary = new Bullet(getCol(), getRow(), speed, "MUSHROOM");
-        scary.shoot(root, x + 60,xzombie, y + 20);
+        scary.shoot(root, x + 60, xzombie, y + 20);
         bullets.add(scary);
     }
 
     @Override
     String gettype() {
-        return  "Scaredy";
+        return "Scaredy";
     }
 
     @Override
@@ -83,6 +84,6 @@ public class Scaredy extends Shooter{
     @Override
     public void loadplanet(PlanetState planetState, Pane root) {
         super.loadplanet(planetState, root);
-        this.scared= ( (scardyState) planetState ).isScardy();
+        this.scared = ( (scardyState) planetState ).isScardy();
     }
 }

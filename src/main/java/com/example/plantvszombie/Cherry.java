@@ -7,12 +7,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import java.util.ArrayList;
 
 public class Cherry extends Planet implements Act {
 
     public Cherry(int x, int y) {
-        super(x,y);
+        super(x, y);
         this.setWaitingTime(7);
         this.setHealth(4);
         this.setDayPlanet(true);
@@ -22,9 +23,9 @@ public class Cherry extends Planet implements Act {
 
     @Override
     public void act(Pane root, ArrayList<Zombies> Zombies) {
-         setActive(true);
-        double cherryX = Yard.GRID_X + getCol()* Yard.CELL_WIDTH + (Yard.CELL_WIDTH- 70) / 2;
-        double cherryY = Yard.GRID_Y + getRow()* Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT - 90) / 2;
+        setActive(true);
+        double cherryX = Yard.GRID_X + getCol() * Yard.CELL_WIDTH + ( Yard.CELL_WIDTH - 70 ) / 2;
+        double cherryY = Yard.GRID_Y + getRow() * Yard.Cell_HEIGHT + ( Yard.Cell_HEIGHT - 90 ) / 2;
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             for (Zombies z : Zombies) {
@@ -35,13 +36,14 @@ public class Cherry extends Planet implements Act {
 
                 if (distanceX <= Yard.CELL_WIDTH / 2 * 3 && distanceY <= Yard.Cell_HEIGHT / 2 * 3) {
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
-                    pause.setOnFinished(ev-> {
+                    pause.setOnFinished(ev -> {
                         z.setHp(0);
                     });
                     pause.play();
                     z.getImage().setImage(z.getDeadZombie().getImage());
                 }
-            } }));
+            }
+        }));
         AnimationManager.register(timeline);
         timeline.setCycleCount(1);
         timeline.play();

@@ -6,13 +6,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import java.util.ArrayList;
 
-public class Iceshroom extends Planet implements Act{
+public class Iceshroom extends Planet implements Act {
     static boolean activate = false;
 
-    public Iceshroom(int x,int y) {
-        super(x,y);
+    public Iceshroom(int x, int y) {
+        super(x, y);
         this.setHealth(4);
         this.setWaitingTime(5);
         this.setDayPlanet(false);
@@ -23,15 +24,15 @@ public class Iceshroom extends Planet implements Act{
     @Override
     public void act(Pane root, ArrayList<Zombies> Zombies) {
         setActive(true);
-        activate =true;
+        activate = true;
         Timeline unfreeze = new Timeline(new KeyFrame(Duration.seconds(4), e -> {
-            activate =false;
+            activate = false;
 
         }));
         unfreeze.play();
         unfreeze.setOnFinished(event -> {
-                remove(root);
-                setDead(true);
+            remove(root);
+            setDead(true);
         });
         AnimationManager.register(unfreeze);
     }

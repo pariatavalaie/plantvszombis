@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -16,11 +17,11 @@ public class StoneGrave {
     private Pane pane;
     private PauseTransition stop;
 
-    public StoneGrave(int x, int y, Pane root,double StartComing) {
+    public StoneGrave(int x, int y, Pane root, double StartComing) {
         this.setX(x);
         this.setY(y);
         setZombieSpawned(false);
-        setImage(new ImageView( new Image(getClass().getResource("/Grave8-removebg-preview.png").toExternalForm())));
+        setImage(new ImageView(new Image(getClass().getResource("/Grave8-removebg-preview.png").toExternalForm())));
         getImage().setFitHeight(70);
         getImage().setFitWidth(90);
         double startX = 245 + x * 80 + 5;
@@ -32,14 +33,14 @@ public class StoneGrave {
         setStop(new PauseTransition(Duration.seconds(StartComing)));
     }
 
-    public void spawnZombie(ArrayList<Zombies>z,ArrayList<StoneGrave>graves) {
+    public void spawnZombie(ArrayList<Zombies> z, ArrayList<StoneGrave> graves) {
         Random random = new Random();
-      if (isZombieSpawned()) return;
+        if (isZombieSpawned()) return;
 
-      getStop().setOnFinished(event -> {
-        setZombieSpawned(true);
-        Zombies zombie;
-        double chance = random.nextFloat();
+        getStop().setOnFinished(event -> {
+            setZombieSpawned(true);
+            Zombies zombie;
+            double chance = random.nextFloat();
             if (chance < 0.6) {
                 zombie = new ImpZombie(getX(), getY(), getPane());
                 GameServer.notifyZombieSpawn(zombie.getState());
@@ -71,17 +72,18 @@ public class StoneGrave {
     }
 
     public stoneGraveState getState() {
-        return new stoneGraveState(getX(), getY(),getStartComing());
+        return new stoneGraveState(getX(), getY(), getStartComing());
     }
 
-    public void remove(ArrayList<StoneGrave>graves) {
+    public void remove(ArrayList<StoneGrave> graves) {
         getPane().getChildren().remove(getImage());
         graves.remove(this);
-        if(getStop()!=null){
-          getStop().stop();}
+        if (getStop() != null) {
+            getStop().stop();
+        }
     }
 
-    public double getStartComing(){
+    public double getStartComing() {
         double remaining;
         remaining = getStop().getCurrentTime().toSeconds();
         return remaining;

@@ -4,34 +4,35 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import java.util.ArrayList;
 
 abstract class Shooter extends Planet implements Act {
     ArrayList<Bullet> bullets;
 
-    public Shooter(int x,int y) {
-        super(x,y);
+    public Shooter(int x, int y) {
+        super(x, y);
         bullets = new ArrayList<>();
     }
 
     @Override
     public void act(Pane root, ArrayList<Zombies> Zombies) {
         setActive(true);
-        final double[]XZ={0};
-        double x = Yard.GRID_X + getCol() * Yard.CELL_WIDTH+ (Yard.CELL_WIDTH - 70) / 2;
-        double y = Yard.GRID_Y+ getRow() * Yard.Cell_HEIGHT + (Yard.Cell_HEIGHT - 90) / 2;
+        final double[] XZ = {0};
+        double x = Yard.GRID_X + getCol() * Yard.CELL_WIDTH + ( Yard.CELL_WIDTH - 70 ) / 2;
+        double y = Yard.GRID_Y + getRow() * Yard.Cell_HEIGHT + ( Yard.Cell_HEIGHT - 90 ) / 2;
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), event -> {
             boolean shouldShoot = false;
-            for (Zombies z :Zombies ) {
+            for (Zombies z : Zombies) {
                 double zombieX = z.getImage().getLayoutX() + z.getImage().getTranslateX();
-                if (z.getY() == getRow() && z.getX() >=getCol()&& z.getX() <=8) {
+                if (z.getY() == getRow() && z.getX() >= getCol() && z.getX() <= 8) {
                     shouldShoot = true;
                     XZ[0] = zombieX;
                     break;
                 }
             }
-            if (shouldShoot&&!isDead()) {
-                shoot(root,x,XZ[0],y) ;
+            if (shouldShoot && !isDead()) {
+                shoot(root, x, XZ[0], y);
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -39,16 +40,16 @@ abstract class Shooter extends Planet implements Act {
         AnimationManager.register(timeline);
     }
 
-    abstract void shoot(Pane root,double x,double xzombie,double y);
+    abstract void shoot(Pane root, double x, double xzombie, double y);
 
     @Override
     public PlanetState getState() {
-        PlanetState s=super.getState();
+        PlanetState s = super.getState();
         ArrayList<BulletState> bulletStates = new ArrayList<>();
         for (Bullet b : bullets) {
             bulletStates.add(new BulletState(b.x, b.y, b.speed, b.type, b.imageBullet.getTranslateX() + b.imageBullet.getLayoutX(), b.imageBullet.getTranslateY() + b.imageBullet.getLayoutY(), b.xzombie, b.hit));
         }
-        return new ShooterState(s.getCol(), s.getRow(), s.getType(), s.getHealth(), s.isDead(),bulletStates, s.getRemainingCooldown(), isActive());
+        return new ShooterState(s.getCol(), s.getRow(), s.getType(), s.getHealth(), s.isDead(), bulletStates, s.getRemainingCooldown(), isActive());
     }
 
     @Override

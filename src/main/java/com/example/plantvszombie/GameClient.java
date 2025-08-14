@@ -3,6 +3,7 @@ package com.example.plantvszombie;
 import java.io.*;
 import java.net.*;
 import java.util.List;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -10,7 +11,7 @@ import javafx.util.Duration;
 
 public class GameClient {
     private ObjectOutputStream out;
-     private Yard clientYard;
+    private Yard clientYard;
 
     public GameClient(String host, int port) throws IOException, ClassNotFoundException {
         Socket socket = new Socket(host, port);
@@ -59,32 +60,34 @@ public class GameClient {
                 }
                 case "SPAWN_SUN" -> {
                     SunState ss = (SunState) msg.data;
-                     Sun S=new Sun();
-                     Sun.getSuns().add(S);
-                    S.fallingSun(getClientYard().getYardPane(), ss.getX(),0);
+                    Sun S = new Sun();
+                    Sun.getSuns().add(S);
+                    S.fallingSun(getClientYard().getYardPane(), ss.getX(), 0);
                 }
                 case "INITIAL_ZOMBIES" -> {
                     List<ZombieState> zsList = (List<ZombieState>) msg.data;
                     for (ZombieState zs : zsList) {
-                            Zombies z = ZombieFactory.createFromState(zs, getClientYard().getYardPane());
-                            getClientYard().getZombies().add(z);
+                        Zombies z = ZombieFactory.createFromState(zs, getClientYard().getYardPane());
+                        getClientYard().getZombies().add(z);
                     }
                 }
-                case ("INITIAL_SUNS") ->{
+                case ( "INITIAL_SUNS" ) -> {
                     List<SunState> sunsList = (List<SunState>) msg.data;
                     for (SunState sun : sunsList) {
-                        Sun s=new Sun();
+                        Sun s = new Sun();
                         Sun.getSuns().add(s);
-                        s.fallingSun(getClientYard().getYardPane(), sun.getX(),sun.getZ());
+                        s.fallingSun(getClientYard().getYardPane(), sun.getX(), sun.getZ());
                     }
-                } case("GAME_OVER") ->{
+                }
+                case ( "GAME_OVER" ) -> {
                     boolean gameOver = (Boolean) msg.data;
                     getClientYard().triggerGameEnd(gameOver);
                 }
                 case "REQUEST_KILLS" -> {
                     int clientKills = getClientYard().getKilledZombies();
                     sendMessage(new NetworkMessage("MY_KILLS", clientKills));
-                }case "FOG"->{
+                }
+                case "FOG" -> {
                     getClientYard().getFog().enterSlowly();
                     Timeline timeline = new Timeline(new KeyFrame(Duration.millis(0.5), event -> {
                         getClientYard().getFog().bringFogToFront(getClientYard().getYardPane());
@@ -92,14 +95,16 @@ public class GameClient {
                     timeline.setCycleCount(Timeline.INDEFINITE);
                     timeline.play();
                     AnimationManager.register(timeline);
-                }case "ZOMBIE OUT"->{
+                }
+                case "ZOMBIE OUT" -> {
                     stoneGraveState sa = (stoneGraveState) msg.data;
-                    StoneGrave s=clientYard.findStoneGrave(sa.getX(),sa.getY());
+                    StoneGrave s = clientYard.findStoneGrave(sa.getX(), sa.getY());
                     s.setZombieSpawned(true);
                     s.remove(getClientYard().getGraves());
 
-                }case "GRAVE"->{
-                    stoneGraveState g=(stoneGraveState) msg.data;
+                }
+                case "GRAVE" -> {
+                    stoneGraveState g = (stoneGraveState) msg.data;
                     getClientYard().getGraves().add(g.getStoneGrave(getClientYard().getYardPane()));
                 }
             }
@@ -114,7 +119,7 @@ public class GameClient {
                     for (Zombies z : getClientYard().getZombies()) {
                         if (z.isInHouse()) {
                             System.out.println("Client lost!");
-                            sendMessage(new NetworkMessage("GAME_OVER",true));
+                            sendMessage(new NetworkMessage("GAME_OVER", true));
                             Platform.runLater(() -> getClientYard().triggerGameEnd(false));
                             return;
                         }

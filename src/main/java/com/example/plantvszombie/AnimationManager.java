@@ -1,6 +1,7 @@
 package com.example.plantvszombie;
 
 import javafx.animation.Animation;
+
 import java.util.ArrayList;
 
 public class AnimationManager {

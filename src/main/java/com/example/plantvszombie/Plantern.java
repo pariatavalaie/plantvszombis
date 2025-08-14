@@ -8,13 +8,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
-public class Plantern extends Planet implements specialAct{
+public class Plantern extends Planet implements specialAct {
     private Fog fog;
     private Timeline lightUpdater;
     private Circle currentHole;
 
     public Plantern(int x, int y, Fog fog) {
-        super(x,y);
+        super(x, y);
         this.fog = fog;
         this.setWaitingTime(3);
         this.setHealth(4);
@@ -24,7 +24,7 @@ public class Plantern extends Planet implements specialAct{
     }
 
     @Override
-   public void act(Pane root) {
+    public void act(Pane root) {
         setActive(true);
         if (!isDead() && lightUpdater == null) {
             lightUpdater = new Timeline(new KeyFrame(Duration.seconds(0.3), e -> updateLight()));

@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class Menu {
         imageView2.setFitHeight(190);
         imageView2.setPreserveRatio(true);
         StartGame.setGraphic(imageView2);
-        StartGame.setLayoutX(360 );
+        StartGame.setLayoutX(360);
         StartGame.setLayoutY(400);
         Loadgame = new Button();
         Image image = new Image(getClass().getResource("/loadgame.png").toExternalForm());
@@ -80,9 +81,9 @@ public class Menu {
         imageView4.setFitWidth(194);
         Night.setBackground(null);
         Night.setGraphic(imageView4);
-        Back=new Button();
+        Back = new Button();
         ImageView back = new ImageView(getClass().getResource("/back.png").toExternalForm());
-        Back.setShape( new Circle());
+        Back.setShape(new Circle());
         Back.setGraphic(back);
         Back.setLayoutX(900);
         Back.setLayoutY(10);
@@ -129,13 +130,12 @@ public class Menu {
             String name = plantNames[i];
             Image image;
             ImageView view = null;
-            if (day && (name.equals("Grave") || name.equals("plantern") || name.equals("blover"))) {
+            if (day && ( name.equals("Grave") || name.equals("plantern") || name.equals("blover") )) {
                 continue;
             }
-            if(!day && name.equals("bean")){
+            if (!day && name.equals("bean")) {
                 continue;
-            }
-             else if (name.equals("Sunflower")) {
+            } else if (name.equals("Sunflower")) {
                 image = new Image(getClass().getResource("/com/example/plantvszombie/sunflowerCard.png").toExternalForm());
                 view = new ImageView(image);
                 view.setFitHeight(64);
