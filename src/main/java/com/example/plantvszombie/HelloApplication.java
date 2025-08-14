@@ -11,8 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
-
 import java.io.IOException;
 
 public class HelloApplication extends Application {
@@ -20,7 +18,6 @@ public class HelloApplication extends Application {
     public Menu menu = new Menu();
     SaveManger saveManger = new SaveManger();
     boolean isMultiplayer = false;
-
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -38,11 +35,9 @@ public class HelloApplication extends Application {
         multiplayer.setLayoutX(450);
         multiplayer.setLayoutY(450);
         pane.getChildren().add(multiplayer);
-
         Scene scene = new Scene(pane, 1024, 626);
         stage.setScene(scene);
         stage.show();
-
         menu.Exit.setOnAction(event -> stage.close());
         menu.StartGame.setOnAction(e -> chooseDayMenu());
         menu.Loadgame.setOnAction(e -> {
@@ -53,17 +48,15 @@ public class HelloApplication extends Application {
             Scene scene1 = new Scene(yard1.getYardPane(), 1024, 626);
             stage.setScene(scene1);
         });
-
         multiplayer.setOnAction(e -> showMultiplayerMenu());
     }
-    public static void showGameResult(boolean isWin,Pane root) {
 
+    public static void showGameResult(boolean isWin,Pane root) {
             AnimationManager.pauseAll();
             if (isWin) {
                 ImageView winImage=new ImageView(new Image("/LevelWin.png"));
                 winImage.setX(300);;
                 root.getChildren().add(winImage);
-
             } else {
                 ImageView winImage=new ImageView(new Image("/ZombiesAteYourBrains.png"));
                 winImage.setX(300);
@@ -72,12 +65,7 @@ public class HelloApplication extends Application {
         Rectangle blocker = new Rectangle(1024, 626, Color.TRANSPARENT);
         blocker.setMouseTransparent(false);
         root.getChildren().add(blocker);
-
-
-
     }
-
-
 
     private void showMultiplayerMenu() {
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -107,13 +95,11 @@ public class HelloApplication extends Application {
             ipDialog.setHeaderText("Join as Client");
             ipDialog.setContentText("Server IP:");
             ipDialog.getEditor().requestFocus();
-
             ipDialog.showAndWait().ifPresent(ip -> {
                 System.out.println("Entered IP: " + ip); // فقط تست
                 startMultiplayerGame(false, ip);
             });
         });
-
         dialog.showAndWait();
     }
 
@@ -135,9 +121,7 @@ public class HelloApplication extends Application {
             Scene loadingScene = new Scene(loadingPane, 1024, 626);
             stage.setScene(loadingScene);
 
-
             GameServer.start(yard, () -> {
-
                 if (yard.isDay()) Sun.fall(yard.getYardPane());
                 ZombieWaveManger zw = new ZombieWaveManger(yard);
                 zw.start();
@@ -147,7 +131,6 @@ public class HelloApplication extends Application {
                 Scene scene = new Scene(yard.getYardPane(), 1024, 626);
                 stage.setScene(scene);
             });
-
         } else {
             try {
                 GameClient client = new GameClient(host, 54321);
@@ -162,8 +145,6 @@ public class HelloApplication extends Application {
             }
         }
     }
-
-
 
     private void play() {
         Yard yard = new Yard(menu.getSelectedPlantsNames(), menu.day);
@@ -264,6 +245,7 @@ public class HelloApplication extends Application {
             yard.getYardPane().getChildren().remove(pauseGroup);
             AnimationManager.resumeAll();
         });
+
         menuButton.setOnAction(e -> {
             HelloApplication helloApp = new HelloApplication();
             try {
@@ -300,6 +282,5 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
-
     }
 }
