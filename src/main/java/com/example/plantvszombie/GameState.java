@@ -1,7 +1,6 @@
 package com.example.plantvszombie;
-import javafx.animation.PauseTransition;
-import javafx.scene.layout.Pane;
 
+import javafx.scene.layout.Pane;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

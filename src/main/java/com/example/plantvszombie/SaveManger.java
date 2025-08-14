@@ -3,7 +3,6 @@ package com.example.plantvszombie;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Set;

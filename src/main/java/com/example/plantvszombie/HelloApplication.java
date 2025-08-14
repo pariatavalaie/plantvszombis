@@ -1,4 +1,5 @@
 package com.example.plantvszombie;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -96,7 +97,6 @@ public class HelloApplication extends Application {
             ipDialog.setContentText("Server IP:");
             ipDialog.getEditor().requestFocus();
             ipDialog.showAndWait().ifPresent(ip -> {
-                System.out.println("Entered IP: " + ip); // فقط تست
                 startMultiplayerGame(false, ip);
             });
         });

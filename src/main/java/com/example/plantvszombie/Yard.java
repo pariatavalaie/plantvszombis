@@ -1,6 +1,5 @@
 package com.example.plantvszombie;
 
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
@@ -18,7 +17,7 @@ public class Yard {
     private GridPane gridPane;
     static final double CELL_WIDTH =80;
     static final double Cell_HEIGHT =100;
-     static final double GRID_X = 245.0;
+    static final double GRID_X = 245.0;
     static  final double GRID_Y = 60.0;
     private List <String> selected;
     private ImageView yardView;
@@ -27,7 +26,7 @@ public class Yard {
     private ArrayList<StoneGrave>graves=new ArrayList<>();
     private Fog fog;
     private boolean day;
-   private Set<String> lockedCells = new HashSet<>();
+    private Set<String> lockedCells = new HashSet<>();
     private ButtonManager buttonManager;
     private boolean isServer;
     private int killedZombies=0;
@@ -117,7 +116,6 @@ public class Yard {
                 });
             }
         }
-
         getYardPane().getChildren().add(getGridPane());
         startMovingAndDetecting();
         AnchorPane.setTopAnchor(getGridPane(), Yard.GRID_Y);
@@ -131,8 +129,6 @@ public class Yard {
         ).contains(sel);
     }
 
-
-
     public Planet findPlanet(int col, int row) {
         for (Planet planet : getPlanets()) {
             if (planet.getRow()== row && planet.getCol()== col) {
@@ -141,6 +137,7 @@ public class Yard {
         }
         return null;
     }
+
     public void startMovingAndDetecting() {
         Timeline s=new Timeline(new KeyFrame(Duration.seconds(1),event -> {
         ArrayList<Zombies> zombieCopy = new ArrayList<>(getZombies());
@@ -171,6 +168,7 @@ public class Yard {
         planet.remove(getYardPane());
         getPlanets().remove(planet);
     }
+
     protected StoneGrave findStoneGrave(int col, int row) {
         for (StoneGrave grave : getGraves()) {
             if(grave.getX() == col && grave.getY() == row) {
@@ -244,6 +242,7 @@ public class Yard {
 
         timeline.play();}
     }
+
     protected void activatePlanet(Planet x) {
         if (x instanceof Act) {((Act)x).act(getYardPane(), getZombies());}
 
@@ -260,7 +259,6 @@ public class Yard {
         if(x instanceof Hypnoshroom){
             x.getEatimage().setImage(x.getImage().getImage());}
     }
-
 
     public Planet createPlanet(String planetName, int col, int row) {
         switch (planetName) {
@@ -313,6 +311,7 @@ public class Yard {
         timeline.play();
         AnimationManager.register(timeline);
     }
+
     public void triggerGameEnd(boolean isWin) {
         HelloApplication.showGameResult(isWin, getYardPane());
     }
@@ -320,69 +319,91 @@ public class Yard {
     public AnchorPane getYardPane() {
         return yardPane;
     }
+
     public void setYardPane(AnchorPane yardPane) {
         this.yardPane = yardPane;
     }
+
     public GridPane getGridPane() {
         return gridPane;
     }
+
     public void setGridPane(GridPane gridPane) {
         this.gridPane = gridPane;
     }
+
     public List<String> getSelected() {
         return selected;
     }
+
     public void setSelected(List<String> selected) {
         this.selected = selected;
     }
+
     public ImageView getYardView() {
         return yardView;
     }
+
     public void setYardView(ImageView yardView) {
         this.yardView = yardView;
     }
+
     public ArrayList<Planet> getPlanets() {
         return planets;
     }
+
     public ArrayList<Zombies> getZombies() {
         return Zombies;
     }
+
     public void setZombies(ArrayList<Zombies> zombies) {
         Zombies = zombies;
     }
+
     public ArrayList<StoneGrave> getGraves() {
         return graves;
     }
+
     public Fog getFog() {
         return fog;
     }
+
     public void setFog(Fog fog) {
         this.fog = fog;
     }
+
     public boolean isDay() {
         return day;
     }
+
     public void setDay(boolean day) {
         this.day = day;
     }
+
     public Set<String> getLockedCells() {
         return lockedCells;
     }
+
     public ButtonManager getButtonManager() {
         return buttonManager;
     }
+
     public void setButtonManager(ButtonManager buttonManager) {
         this.buttonManager = buttonManager;
     }
+
     public boolean isServer() {
         return isServer;
     }
+
     public void setServer(boolean server) {
         isServer = server;
     }
+
     public int getKilledZombies() {
         return killedZombies;
     }
+
     public void setKilledZombies(int killedZombies) {
         this.killedZombies = killedZombies;
     }

@@ -3,7 +3,6 @@ package com.example.plantvszombie;
 import java.io.*;
 import java.net.*;
 import java.util.List;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;

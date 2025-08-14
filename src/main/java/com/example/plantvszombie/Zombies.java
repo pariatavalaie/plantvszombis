@@ -48,13 +48,13 @@ public abstract class Zombies {
 
      protected void reverseDirection() {
         if(isHypnotized()){
-        setDirection(getDirection() * -1);//reverse direction
-        getImage().setScaleX(getImage().getScaleX() * -1);//reverse image
+        setDirection(getDirection() * -1); //reverse direction
+        getImage().setScaleX(getImage().getScaleX() * -1); //reverse image
         if (getWalker() != null) {
             getWalker().pause();
         }
             move();
-        //red tint
+            //red tint
             ColorAdjust blueTint = new ColorAdjust();
             blueTint.setHue(-0.6);
             blueTint.setSaturation(1.0);
@@ -70,7 +70,7 @@ public abstract class Zombies {
                 Bullet b = it.next();
                 if (isAlive() && this.collidesWith(b,root)) {
                     setHp(getHp() - 1);
-                    if((b.type).equals("ICY")){//if snowpea shoot
+                    if((b.type).equals("ICY")){ //if snowPea shoot
                         this.setSpeed(this.getSpeed() / 2);
                         if (getWalker() != null) {
                             getWalker().setRate(0.5);

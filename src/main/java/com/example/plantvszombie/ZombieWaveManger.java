@@ -5,7 +5,6 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -92,7 +91,7 @@ public class ZombieWaveManger {
     }
 
     private void waveStage1() {
-        if (getGameTime() % 7 == 0) { //5 zombie
+        if (getGameTime() % 7 == 0) {
             spawnZombie("Normal", 1);
         }
     }
