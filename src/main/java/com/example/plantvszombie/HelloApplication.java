@@ -71,11 +71,24 @@ public class HelloApplication extends Application {
     private void showMultiplayerMenu() {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Multiplayer Setup");
-        VBox content = new VBox(10);
-        content.setAlignment(Pos.CENTER_LEFT);
+        VBox content = new VBox(20);
 
-        Button serverBtn = new Button("👑 Host Game (Server)");
-        Button clientBtn = new Button("🔌 Join Game (Client)");
+        Button serverBtn = new Button("👑 Host Game");
+        Image server = new Image(getClass().getResource("/Server..png").toExternalForm());
+        ImageView serverImg = new ImageView(server);
+        serverImg.setFitHeight(65);
+        serverImg.setFitWidth(70);
+        serverBtn.setGraphic(serverImg);
+        serverBtn.setLayoutX(500);
+        serverBtn.setLayoutY(400);
+        Button clientBtn = new Button("🔌 Join Game");
+        Image client = new Image(getClass().getResource("/client.png").toExternalForm());
+        ImageView clientImg = new ImageView(client);
+        clientImg.setFitHeight(65);
+        clientImg.setFitWidth(70);
+        clientBtn.setGraphic(clientImg);
+        clientBtn.setLayoutX(500);
+        clientBtn.setLayoutY(300);
         content.getChildren().addAll(serverBtn, clientBtn);
 
         dialog.getDialogPane().setContent(content);
