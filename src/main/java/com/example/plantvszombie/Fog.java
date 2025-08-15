@@ -34,8 +34,10 @@ public class Fog {
     public void enterSlowly() {
         double currentX = fogRect.getTranslateX();
         double targetX = -512;
-
-        TranslateTransition fogTransition = new TranslateTransition(Duration.seconds(20), fogRect);
+        double distance = Math.abs(currentX - targetX);
+        double speed = 20;
+        double durationSeconds = distance / speed;
+        TranslateTransition fogTransition = new TranslateTransition(Duration.seconds(durationSeconds), fogRect);
         fogTransition.setFromX(currentX);
         fogTransition.setToX(targetX);
         fogTransition.play();

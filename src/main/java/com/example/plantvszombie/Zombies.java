@@ -72,7 +72,7 @@ public abstract class Zombies {
                     Bullet b = it.next();
                     if (isAlive() && this.collidesWith(b, root)) {
                         setHp(getHp() - 1);
-                        if (( b.type ).equals("ICY")) { //if snowPea shoot
+                        if (( b.getType() ).equals("ICY")) { //if snowPea shoot
                             this.setSpeed(this.getSpeed() / 2);
                             if (getWalker() != null) {
                                 getWalker().setRate(0.5);
@@ -96,9 +96,9 @@ public abstract class Zombies {
     }
 
     private boolean collidesWith(Bullet b, Pane root) {
-        if (Math.abs(getImage().getLayoutX() + getImage().getTranslateX() - ( b.imageBullet.getLayoutX() + b.imageBullet.getTranslateX() )) <= 80 && Math.abs(getImage().getLayoutY() + getImage().getTranslateY() - ( b.imageBullet.getLayoutY() + b.imageBullet.getTranslateY() )) <= 100 && getY() == b.y) {
-            root.getChildren().remove(b.imageBullet);
-            b.hit = true;
+        if (Math.abs(getImage().getLayoutX() + getImage().getTranslateX() - ( b.getImageBullet().getLayoutX() + b.getImageBullet().getTranslateX() )) <= 80 && Math.abs(getImage().getLayoutY() + getImage().getTranslateY() - ( b.getImageBullet().getLayoutY() + b.getImageBullet().getTranslateY() )) <= 100 && getY() == b.getY()) {
+            root.getChildren().remove(b.getImageBullet());
+            b.setHit(true);
             return true;
         }
         return false;

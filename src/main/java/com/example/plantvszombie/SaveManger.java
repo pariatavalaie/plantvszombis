@@ -78,13 +78,12 @@ public class SaveManger {
                 yard.getGraves().add(s);
             }
             yard.getFog().restoreState(gameState.getFogState());
-            if (ZombieWaveManger.getGameTime() >= 160) {
-                yard.getFog().enterSlowly();
-            }
-
             ZombieWaveManger zw = new ZombieWaveManger(yard);
             ZombieWaveManger.setGameTime(gameState.getGametime());
             zw.start();
+            if (ZombieWaveManger.getGameTime() >= 160&&!yard.isDay()) {
+                yard.getFog().enterSlowly();
+            }
             Sun.setCollectedpoint(gameState.getSunpoint());
             return yard;
         } catch (IOException | ClassNotFoundException e) {

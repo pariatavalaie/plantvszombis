@@ -47,7 +47,7 @@ abstract class Shooter extends Plant implements Act {
         PlanetState s = super.getState();
         ArrayList<BulletState> bulletStates = new ArrayList<>();
         for (Bullet b : bullets) {
-            bulletStates.add(new BulletState(b.x, b.y, b.speed, b.type, b.imageBullet.getTranslateX() + b.imageBullet.getLayoutX(), b.imageBullet.getTranslateY() + b.imageBullet.getLayoutY(), b.xzombie, b.hit));
+            bulletStates.add(new BulletState(b.getX(), b.getY(), b.getSpeed(), b.getType(), b.getImageBullet().getTranslateX() + b.getImageBullet().getLayoutX(), b.getImageBullet().getTranslateY() + b.getImageBullet().getLayoutY(), b.getXzombie(), b.isHit()));
         }
         return new ShooterState(s.getCol(), s.getRow(), s.getType(), s.getHealth(), s.isDead(), bulletStates, s.getRemainingCooldown(), isActive());
     }

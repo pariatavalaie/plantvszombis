@@ -21,7 +21,6 @@ import java.util.*;
 public class ButtonManager {
     private final Map<String, Button> buttons = new LinkedHashMap<>();
     private final VBox panel = new VBox(10);
-    private String selected = null;
     private final List<String> selectedList;
     private final Button shovelButton;
     private Text number;
@@ -101,8 +100,8 @@ public class ButtonManager {
     public void update(Map<String, Boolean> canPlaceMap, Map<String, Integer> costMap, int sunPoints) {
         for (String name : buttons.keySet()) {
             Button btn = buttons.get(name);
-            boolean canPlace = canPlaceMap.getOrDefault(name, false);
-            int cost = costMap.getOrDefault(name, 9999);
+            boolean canPlace = canPlaceMap.get(name);
+            int cost = costMap.get(name);
             if (canPlace && sunPoints >= cost) {
                 btn.setDisable(false);
                 btn.setStyle("-fx-opacity: 1.0; -fx-background-color: #fff;");
