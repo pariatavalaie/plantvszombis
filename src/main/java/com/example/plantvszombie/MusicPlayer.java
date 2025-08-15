@@ -29,18 +29,4 @@ public class MusicPlayer {
             e.printStackTrace();
         }
     }
-
-
-    public void stop() {
-        if (clip != null && clip.isRunning()) {
-            clip.stop();
-        }
-    }
-
-
-    public void close() {
-        if (clip != null) {
-            clip.close();
-        }
-    }
 }

@@ -97,8 +97,6 @@ public class Fog {
         this.currentTranslateX = state.getCurrentTranslateX();
         fogRect.setTranslateX(state.getCurrentTranslateX());
         fogRect.setVisible(state.isVisible());
-
-        System.out.println("S");
         holes.clear();
         for (LanternHoleState hs : state.holes) {
             Circle hole = new Circle(hs.getCenterX(), hs.getCenterY(), hs.getRadius());
